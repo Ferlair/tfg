@@ -1,83 +1,146 @@
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
 body {
-  padding: 0;
+  background: orange;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
+#container2 {
+  max-width: 500px;
+  height: 500px;
+  margin-left: 20px;
+  margin-top: 100px;
+  background-color: black;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+div.upload {
+    width: 250px;
+    height: 50px;
+    background: url('../images/botones_opciones/cargar_grafo.png');
+    overflow: hidden;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+div.upload input {
+    display: block !important;
+    width: 250px !important;
+    height: 50px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    cursor: pointer;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
+div.upload:hover {
+  width: 250px;
+  height: 50px;
+  background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
+  overflow: hidden;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+#boton_grafo {
+  background: url('../images/botones_opciones/mostrar_grafo.png');
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+#boton_grafo:hover {
+  background: url('../images/botones_opciones/mostrar_grafo_pulsado.png');
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+#boton_pagina_principal {
+  background: url('../images/botones_opciones/principal.png');
+}
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+#boton_pagina_principal:hover {
+  background: url('../images/botones_opciones/principal_pulsado.png');
+}
+
+#boton_cargar_grafo {
+  background: url('../images/botones_opciones/cargar_grafo.png');
+}
+
+#boton_cargar_grafo:hover {
+  background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
+}
+
+#botones_opciones {
+  margin-right: 250px;
+  margin-left: 600px;
+  margin-top: 100px;
+  max-width: 150px;
+  float:right;
+}
+
+#botones_opciones img {
+  width: 250px;
+  height: 50px;
+  background-color: black;
+  color: orange;
+  overflow: hidden !important;
+}
+
+#botones_opciones input:hover {
+  background-color: orange;
+  color: black;
+}
+
+#container1 {
+  max-width: 500px;
+  height: 400px;
+  margin: auto;
+}
+
+canvas{
+    display: block;
+    margin: 0 auto;
+}
+
+.image-zone {
+  border-color: #000;
+  margin-top: 30px;
+}
+
+.container1 {
+  border-color: #000;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+  height: 500px;
+  background-color: black;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    height:300px;
+}
+
+
+.separador {
+  margin: 0 auto;
+  margin-top: 50px;
+  border-bottom: 3px solid #000;
+  size:1px;
+}
+
+table {
+	border:1px solid rgba(133,6,3,0);
+	border-collapse: collapse;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+table td{
+	border:1px solid rgb(133,6,3);
+	padding:10px;
+}
+
+table tr:hover{
+	background:gray;
+}
+
+table td:hover{
+	background:orange;
+	color:black;
+}
+
+table td img {
+	height:auto;
+	width:100px;
+	margin:auto;
+	display:block;
 }

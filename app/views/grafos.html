@@ -1,0 +1,21 @@
+<!--Panel opciones en la parte derecha de la página -->
+<div id="botones_opciones">
+
+  <img id="boton_grafo" ng-click="generarGrafo(345)">
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="upload">
+        <input id="boton_cargar_grafo" type="file" accept=".json" on-read-file="cargarGrafo($fileContent)"/>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <a href="#/"><img id="boton_pagina_principal"></a>
+
+</div>
+
+<!-- Contenedor que muestra la imagen generada por WebGL-->
+<div id="container2" ng-controller="GrafosCtrl" height="500px"></div>
