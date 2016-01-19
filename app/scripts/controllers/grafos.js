@@ -35,83 +35,38 @@ angular
     }
 
     $scope.generarGrafo = function($nodos) {
-      /*var numero = {
-                      [
-                        {
-                          "id": "n"+$nodos,
-                          "label":"$nodos",
-                          "x": 1,
-                          "y": 2,
-                          "size": 4
-                        },
-                        {
-                          "id": "n1",
-                          "label": "Another node",
-                          "x": 3,
-                          "y": 1,
-                          "size": 2
-                        }
-                      ],
-                      [
-                        {
-                          "id": "e0",
-                          "source": "n"+$nodos,
-                          "target": "n1"
-                        }
-                      ]
-                    };
-          //console.log(str);
-        //  $scope.numeros = JSON.parse($scope.numeros);
-        grafoFactory.cargar(numero);*/
-        var jsonObj = { nodes: [
-                            {
-                              /*id: "n0",
-                              label: "nodo1",
-                              x: "1",
-                              y: "2",
-                              size: "4"*/
-                            }
-                          ],
-                        edges: [
-                          {
-                             "id": "e0",
-                             "source": "n0",
-                             "target": "n1"
-                          }
-                        ]};
+      refresh();
 
-      /*  var nodes =
-                            {
-                              //id: "n0",
-                              label: "nodo1",
-                              x: "1",
-                              y: "2",
-                              size: "4"
-                            };*/
-      //  var nodo = $nodos;
+        //Creación del objeto json que alberga la información de nodos y aristas a dibujar
+        var jsonObj = { nodes: [{}], edges: [{}]};
 
-        //nodes.id = "n"+$nodos;
+        //Proporciona valores por defecto a la variable nodo usada en el bucle
+        function getNodo() {
+          return {
+            id: "",
+            label: "",
+            x: "",
+            y: "",
+            size: ""
+          }
+        };
 
-        //var aleatorio = Math.floor((Math.random() * 20) + 1);
-        //console.log (aleatorio);
+        //Proporciona valores por defecto a la variable arista usada en el bucle
+        function getAristas() {
+          return {
+            id: "",
+            source: "",
+            target: ""
+          }
+        }
 
-        var nodo = {
-                      id: "",
-                      label: "",
-                      x: "",
-                      y: "",
-                      size: ""
-                    }; //Almacena las características de cada nodo
-
-
-        var arista = {
-                       "id": "e0",
-                       "source": "n0",
-                       "target": "n1"
-                      }; //Almacena las características de cada arista
-
+        //Creación de valores aleatorios de nodos y aristas
+        //Input: número de nodos que el usuario desea representar en pantalla
+        //Output: Objeto json con el número de nodos deseados, completados con valores aleatorios
         for (var i=0; i < $nodos; i++) {
-          console.log(i);
+          var nodo = getNodo();
+          var arista = getAristas();
+
           nodo.id = "n"+i;
           nodo.label = "nodo"+i;
           nodo.x = "" + (Math.floor((Math.random()*20)+1));
@@ -122,13 +77,14 @@ angular
 
           //Creación de aristas
           arista.id = "e"+i;
-          arista.source = "n" + (Math.floor((Math.random()*i)+1));
+          arista.source = "n" + (Math.floor((Math.random()*i)));
           arista.target = "n" + (Math.floor((Math.random()*i)+1));
 
           jsonObj.edges[i] = arista;
         }
 
-        console.log(jsonObj);
+        //Mostramos el grafo por pantalla
+        grafoFactory.cargar(jsonObj);
 
     }
 
