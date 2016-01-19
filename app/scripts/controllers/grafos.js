@@ -65,11 +65,11 @@ angular
         grafoFactory.cargar(numero);*/
         var jsonObj = { nodes: [
                             {
-                              id: "n0",
+                              /*id: "n0",
                               label: "nodo1",
                               x: "1",
                               y: "2",
-                              size: "4"
+                              size: "4"*/
                             }
                           ],
                         edges: [
@@ -80,18 +80,55 @@ angular
                           }
                         ]};
 
-        var nodes =
+      /*  var nodes =
                             {
-                              id: "n0",
+                              //id: "n0",
                               label: "nodo1",
                               x: "1",
                               y: "2",
                               size: "4"
-                            };
+                            };*/
+      //  var nodo = $nodos;
 
+        //nodes.id = "n"+$nodos;
+
+        //var aleatorio = Math.floor((Math.random() * 20) + 1);
+        //console.log (aleatorio);
+
+        var nodo = {
+                      id: "",
+                      label: "",
+                      x: "",
+                      y: "",
+                      size: ""
+                    }; //Almacena las características de cada nodo
+
+
+        var arista = {
+                       "id": "e0",
+                       "source": "n0",
+                       "target": "n1"
+                      }; //Almacena las características de cada arista
+
+        for (var i=0; i < $nodos; i++) {
+          console.log(i);
+          nodo.id = "n"+i;
+          nodo.label = "nodo"+i;
+          nodo.x = "" + (Math.floor((Math.random()*20)+1));
+          nodo.y = "" + (Math.floor((Math.random()*20)+1));
+          nodo.size = "" + (Math.floor((Math.random()*20)+1));
+
+          jsonObj.nodes[i] = nodo;
+
+          //Creación de aristas
+          arista.id = "e"+i;
+          arista.source = "n" + (Math.floor((Math.random()*i)+1));
+          arista.target = "n" + (Math.floor((Math.random()*i)+1));
+
+          jsonObj.edges[i] = arista;
+        }
 
         console.log(jsonObj);
-        jsonObj.nodes[1] = nodes;
 
     }
 
