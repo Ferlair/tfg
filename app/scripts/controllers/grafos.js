@@ -68,16 +68,16 @@ angular
           var arista = getAristas();
 
           nodo.id = "n"+i;
-          nodo.label = "nodo"+i;
-          nodo.x = "" + (Math.floor((Math.random()*20)+1));
-          nodo.y = "" + (Math.floor((Math.random()*20)+1));
-          nodo.size = "" + (Math.floor((Math.random()*20)+1));
+          nodo.label = "neurona"+i;
+          nodo.x = "" + (Math.floor((Math.random()*100)+1));
+          nodo.y = "" + (Math.floor((Math.random()*100)+1));
+          nodo.size = "" + (Math.floor((Math.random()*40)+1));
 
           jsonObj.nodes[i] = nodo;
 
           //Creación de aristas
           arista.id = "e"+i;
-          arista.source = "n" + (Math.floor((Math.random()*i)));
+          arista.source = "n" + i;
           arista.target = "n" + (Math.floor((Math.random()*i)+1));
 
           jsonObj.edges[i] = arista;
@@ -121,8 +121,12 @@ angular
             container: document.getElementById('container2')
           },
           settings: {
-            defaultNodeColor: '#ef9c04',
-            defaultLabelColor: '#ef9c04'
+            defaultHoverLabelBGColor: "#0010ff",
+            edgeColor: "#a30707",
+            defaultLabelHoverColor: "#ffffff",
+            NodeColor: '#000001',
+            defaultLabelColor: '#0010ff'
+
           }
         })
       }

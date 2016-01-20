@@ -24,8 +24,6 @@
     if (!(options.container instanceof HTMLElement))
       throw 'Container not found.';
 
-      console.log('estoy en webgl');
-
     var k,
         i,
         l,
