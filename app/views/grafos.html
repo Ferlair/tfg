@@ -1,8 +1,11 @@
 <!--Panel opciones en la parte derecha de la página -->
 <div id="botones_opciones">
 
-  <img id="boton_grafo" ng-click="generarGrafo(40)">
+  <img id="boton_grafo" ng-click="visibilidad(true)">
   <br>
+  <div id="hidden generar_grafo" ng-show="checked">
+  <input id="textoGenerar" type="text" placeholder="Número mínimo: 2"ng-model="numeroNodos"><input type="button" value="Generar" ng-click="generarGrafo(numeroNodos);visibilidad(false);resetTexto()">
+  </div>
   <br>
   <br>
   <br>

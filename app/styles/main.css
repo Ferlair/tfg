@@ -34,11 +34,11 @@ div.upload:hover {
 }
 
 #boton_grafo {
-  background: url('../images/botones_opciones/mostrar_grafo.png');
+  background: url('../images/botones_opciones/generar_grafo.png');
 }
 
 #boton_grafo:hover {
-  background: url('../images/botones_opciones/mostrar_grafo_pulsado.png');
+  background: url('../images/botones_opciones/generar_grafo_pulsado.png');
 }
 
 #boton_pagina_principal {

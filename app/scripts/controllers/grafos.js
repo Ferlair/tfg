@@ -12,6 +12,11 @@ angular
 
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
+    //Función para mostrar/esconder el html de generar grafo
+    $scope.visibilidad = function(visible) {
+      $scope.checked = visible;
+    }
+
     //Función que reinicia el elemento 'container',
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
     function refresh() {
@@ -34,6 +39,9 @@ angular
       grafoFactory.cargar ($fileContent);
     }
 
+
+    //Input: número de nodos que el usuario desea representar en pantalla
+    //Output: Objeto json con el número de nodos deseados, completados con valores aleatorios
     $scope.generarGrafo = function($nodos) {
       refresh();
 
@@ -61,8 +69,6 @@ angular
         }
 
         //Creación de valores aleatorios de nodos y aristas
-        //Input: número de nodos que el usuario desea representar en pantalla
-        //Output: Objeto json con el número de nodos deseados, completados con valores aleatorios
         for (var i=0; i < $nodos; i++) {
           var nodo = getNodo();
           var arista = getAristas();
@@ -122,11 +128,12 @@ angular
           },
           settings: {
             defaultHoverLabelBGColor: "#0010ff",
+            nodeHoverColor: "#fff",
+            defaultNodeHoverColor: "#fff",
             edgeColor: "#a30707",
             defaultLabelHoverColor: "#ffffff",
             NodeColor: '#000001',
             defaultLabelColor: '#0010ff'
-
           }
         })
       }
