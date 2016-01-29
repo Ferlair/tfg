@@ -12,12 +12,46 @@ angular
 
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
+    $scope.cargarNeuronas = function($fileContent) {
+      /*var str = "Hola mundo \nadios \nhasta luego";
+      var n = str.split("\n");
+      console.log(str);
+      console.log("n: "+n);
+      var palabra = n[0].split(" ");
+      var pal2 = n[2].split(" ");
+      console.log ("palabra: "+palabra);
+      console.log(palabra[0]);
+      console.log(pal2[1]);*/
+
+      var lineas = $fileContent.split("\n");
+      var palabrasPorLineas;
+      var origen = [];
+      var destino = [];
+
+      for (var i=0; i<lineas.length; i++) {
+        palabrasPorLineas = lineas[i].split(" ");
+        //console.log ("str: "+str[i]);
+        //console.log("linea: "+palabrasPorLineas[0]);
+        origen[i] = palabrasPorLineas[0];
+        destino[i] = palabrasPorLineas[2];
+        //console.log ("origen: "+origen);
+        //console.log("destino: "+destino);
+      }
+
+      console.log(lineas);
+      console.log("cantidad origen: "+origen.length);
+      console.log("primeros origen: "+origen[0]+origen[1] +origen[2]);
+      console.log("cantidad destino: "+destino.length);
+      console.log("primeros destino: "+destino[0]+destino[1]+destino[2]);
+
+    }
+
     //Función para mostrar/esconder el html de generar grafo
     $scope.visibilidad = function(visible) {
       $scope.checked = visible;
     }
 
-    //Función que reinicia el elemento 'container',
+    //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
     function refresh() {
       var g = document.querySelector('#container2');
