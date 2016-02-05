@@ -12,37 +12,187 @@ angular
 
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
+
+    $scope.mostrarNeuronasLeidas = function($fileContent) {
+
+        refresh();
+
+        //Creación del objeto json que alberga la información de nodos y aristas a dibujar
+        var jsonObj = { nodes: [{}], edges: [{}]};
+
+        //Proporciona valores por defecto a la variable nodo usada en el bucle
+        function getNodo() {
+          return {
+            id: "",
+            label: "",
+            x: "",
+            y: "",
+            size: ""
+          }
+        };
+
+        //Proporciona valores por defecto a la variable arista usada en el bucle
+        function getAristas() {
+          return {
+            id: "",
+            source: "",
+            target: ""
+          }
+        };
+
+        //Creación del lienzo inicial
+        for (var i=0; i<1870; i++) {
+          var nodo = getNodo();
+          var arista = getAristas();
+          nodo.id = "n"+i;
+          nodo.label = "neurona "+i;
+
+          //Mosey Fibers
+          if (i>=0 && i<248) {
+            var radius = 1;
+            var angle = Math.random()*Math.PI*2;
+            var x = Math.cos(angle)*radius;
+            var y = Math.sin(angle)*radius;
+            nodo.x=x;
+            nodo.y=y;
+            nodo.size = 1;
+
+            jsonObj.nodes[i] = nodo;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + i;
+            jsonObj.edges[i] = arista;
+          }
+
+          //Granulle Cells
+          else if (i>=248 && i<1748){
+            var radius = 4;
+            var angle = Math.random()*Math.PI*2;
+            var x = Math.cos(angle)*radius;
+            var y = Math.sin(angle)*radius;
+            nodo.x=x;
+            nodo.y=y;
+            nodo.size = 1;
+
+            jsonObj.nodes[i] = nodo;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + i;
+            jsonObj.edges[i] = arista;
+          }
+
+          //Purkinje Cells
+          else if(i>=1748 && i<1796) {
+            var radius = 6;
+            var angle = Math.random()*Math.PI*2;
+            var x = Math.cos(angle)*radius;
+            var y = Math.sin(angle)*radius;
+            nodo.x=x;
+            nodo.y=y;
+            nodo.size = 2;
+
+            jsonObj.nodes[i] = nodo;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + i;
+            jsonObj.edges[i] = arista;
+          }
+
+          //DCN Cells
+          else if(i>=1796 && i<1820){
+            var radius = 8;
+            var angle = Math.random()*Math.PI*2;
+            var x = Math.cos(angle)*radius;
+            var y = Math.sin(angle)*radius;
+            nodo.x=x;
+            nodo.y=y;
+            nodo.size = 1;
+
+            jsonObj.nodes[i] = nodo;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + i;
+            jsonObj.edges[i] = arista;
+          }
+
+          //Golgi Cells
+          else if(i>=1820 && i<1823){
+            var radius = 10;
+            var angle = Math.random()*Math.PI*2;
+            var x = Math.cos(angle)*radius;
+            var y = Math.sin(angle)*radius;
+            nodo.x=x;
+            nodo.y=y;
+            nodo.size = 1;
+
+            jsonObj.nodes[i] = nodo;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + i;
+            jsonObj.edges[i] = arista;
+          }
+
+          //IO Cells
+          else if(i>=1823 && i<=1870){
+            var radius = 12;
+            var angle = Math.random()*Math.PI*2;
+            var x = Math.cos(angle)*radius;
+            var y = Math.sin(angle)*radius;
+            nodo.x=x;
+            nodo.y=y;
+            nodo.size = 1;
+
+            jsonObj.nodes[i] = nodo;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + i;
+            jsonObj.edges[i] = arista;
+          }
+
+        }
+        grafoFactory.cargar(jsonObj);
+    }
+
     $scope.cargarNeuronas = function($fileContent) {
-      /*var str = "Hola mundo \nadios \nhasta luego";
-      var n = str.split("\n");
-      console.log(str);
-      console.log("n: "+n);
-      var palabra = n[0].split(" ");
-      var pal2 = n[2].split(" ");
-      console.log ("palabra: "+palabra);
-      console.log(palabra[0]);
-      console.log(pal2[1]);*/
 
       var lineas = $fileContent.split("\n");
       var palabrasPorLineas;
       var origen = [];
       var destino = [];
 
+      var items = [[0,0,0]];
+      console.log('bidimensional: '+items[0][0]);
+      items.push([2,3]);
+      console.log('bidimensional: '+items[1][0]);
+      items.push(2);
+      items.push(3);
+      items[0].push(4);
+      //items[1].push(2);
+      //items[2].push(7);
+      console.log('bidimensional 3: '+items[3]);
+
+      console.log('bidimensional capacidad: '+items.length);
+
       for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
-        //console.log ("str: "+str[i]);
-        //console.log("linea: "+palabrasPorLineas[0]);
         origen[i] = palabrasPorLineas[0];
         destino[i] = palabrasPorLineas[2];
-        //console.log ("origen: "+origen);
-        //console.log("destino: "+destino);
       }
 
-      console.log(lineas);
+      /*arraySalida[0].push("Hola");
+      console.log ('arraySalida: '+arraySalida);*/
+
+      /*console.log(lineas);
       console.log("cantidad origen: "+origen.length);
       console.log("primeros origen: "+origen[0]+origen[1] +origen[2]);
       console.log("cantidad destino: "+destino.length);
-      console.log("primeros destino: "+destino[0]+destino[1]+destino[2]);
+      console.log("primeros destino: "+destino[0]+destino[1]+destino[2]);*/
 
     }
 
@@ -161,12 +311,12 @@ angular
             container: document.getElementById('container2')
           },
           settings: {
-            defaultHoverLabelBGColor: "#0010ff",
-            nodeHoverColor: "#fff",
-            defaultNodeHoverColor: "#fff",
-            edgeColor: "#a30707",
-            defaultLabelHoverColor: "#ffffff",
-            NodeColor: '#000001',
+            defaultNodeColor: "#000000",
+            nodeHoverColor: "#0000ff",
+            defaultNodeHoverColor: "#0000ff",
+            defaultEdgeColor: "#003300",
+            edgeColor: "#003300",
+            defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'
           }
         })
