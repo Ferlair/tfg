@@ -13,9 +13,11 @@ angular
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
 
-    $scope.mostrarNeuronasLeidas = function($fileContent) {
+    $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
 
         refresh();
+
+        console.log('tamaño TOTAL de arrayneuronal: '+arrayNeuronal.length);
 
         //Creación del objeto json que alberga la información de nodos y aristas a dibujar
         var jsonObj = { nodes: [{}], edges: [{}]};
@@ -41,7 +43,7 @@ angular
         };
 
         //Creación del lienzo inicial
-        for (var i=0; i<1870; i++) {
+        for (var i=0; i<1871; i++) {
           var nodo = getNodo();
           var arista = getAristas();
           nodo.id = "n"+i;
@@ -49,6 +51,7 @@ angular
 
           //Mosey Fibers
           if (i>=0 && i<248) {
+            //console.log('estamos en bucle 1');
             var radius = 1;
             var angle = Math.random()*Math.PI*2;
             var x = Math.cos(angle)*radius;
@@ -63,10 +66,33 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
+
+            /*arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + 2;
+            jsonObj.edges[i] = arista;
+
+            arista.id = "e"+i;
+            arista.source = "n" + i;
+            arista.target = "n" + 3;
+            jsonObj.edges[i] = arista;*/
+            //console.log('arrayneuronal tamaño: '+arrayNeuronal[i].length);
+
+            for (var j=1; j<arrayNeuronal[i].length;j++){
+              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
+              //console.log('neurona '+i+': ');
+              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
+              arista.id="e"+i;
+              arista.source="n"+i;
+              arista.target="n"+arrayNeuronal[i][j];
+              jsonObj.edges[i]=arista;
+            }
+
           }
 
           //Granulle Cells
           else if (i>=248 && i<1748){
+            console.log('estamos en bucle 2');
             var radius = 4;
             var angle = Math.random()*Math.PI*2;
             var x = Math.cos(angle)*radius;
@@ -81,6 +107,16 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
+
+            for (var j=1; j<arrayNeuronal[i].length;j++){
+              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
+              //console.log('neurona '+i+': ');
+              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
+              arista.id="e"+i;
+              arista.source="n"+i;
+              arista.target="n"+arrayNeuronal[i][j];
+              jsonObj.edges[i]=arista;
+            }
           }
 
           //Purkinje Cells
@@ -99,6 +135,16 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
+
+            for (var j=1; j<arrayNeuronal[i].length;j++){
+              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
+              //console.log('neurona '+i+': ');
+              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
+              arista.id="e"+i;
+              arista.source="n"+i;
+              arista.target="n"+arrayNeuronal[i][j];
+              jsonObj.edges[i]=arista;
+            }
           }
 
           //DCN Cells
@@ -159,6 +205,8 @@ angular
         grafoFactory.cargar(jsonObj);
     }
 
+    //Entrada: fichero de texto con datos neuronales
+    //Salida: array bidimensional con las aristas para cada neurona
     $scope.cargarNeuronas = function($fileContent) {
 
       var lineas = $fileContent.split("\n");
@@ -166,33 +214,32 @@ angular
       var origen = [];
       var destino = [];
 
-      var items = [[0,0,0]];
-      console.log('bidimensional: '+items[0][0]);
-      items.push([2,3]);
-      console.log('bidimensional: '+items[1][0]);
-      items.push(2);
-      items.push(3);
-      items[0].push(4);
-      //items[1].push(2);
-      //items[2].push(7);
-      console.log('bidimensional 3: '+items[3]);
-
-      console.log('bidimensional capacidad: '+items.length);
-
       for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
-        origen[i] = palabrasPorLineas[0];
-        destino[i] = palabrasPorLineas[2];
+        origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
+        destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
       }
 
-      /*arraySalida[0].push("Hola");
-      console.log ('arraySalida: '+arraySalida);*/
+      var items = [[0]];
 
-      /*console.log(lineas);
-      console.log("cantidad origen: "+origen.length);
-      console.log("primeros origen: "+origen[0]+origen[1] +origen[2]);
-      console.log("cantidad destino: "+destino.length);
-      console.log("primeros destino: "+destino[0]+destino[1]+destino[2]);*/
+      //Creamos el array con el número de neuronas deseados
+      for (var j=0; j<1871; j++){
+        items.push([0]);
+      }
+
+      for (var k=0; k<items.length;k++){
+        items[[origen[k]]].push(destino[k]);
+      }
+
+
+
+      console.log('tamaño array: '+items.length);
+
+      for (var m=0; m<items.length;m++){
+        console.log(m+'mi array: '+items[m]);
+      }
+
+      $scope.mostrarNeuronasLeidas(items);
 
     }
 
