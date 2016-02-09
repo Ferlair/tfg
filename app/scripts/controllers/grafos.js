@@ -218,16 +218,18 @@ angular
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
+        //console.log('neurona'+i+': '+origen[i]+" y destino: "+destino[i]);
       }
 
       var items = [[0]];
 
       //Creamos el array con el número de neuronas deseados
-      for (var j=0; j<1871; j++){
+      for (var j=0; j<lineas.length; j++){
         items.push([0]);
       }
 
-      for (var k=0; k<items.length;k++){
+      for (var k=0; k<items.length-1;k++){
+        //console.log('hola'+k);
         items[[origen[k]]].push(destino[k]);
       }
 
@@ -235,9 +237,9 @@ angular
 
       console.log('tamaño array: '+items.length);
 
-      for (var m=0; m<items.length;m++){
+      /*for (var m=0; m<items.length;m++){
         console.log(m+'mi array: '+items[m]);
-      }
+      }*/
 
       $scope.mostrarNeuronasLeidas(items);
 
