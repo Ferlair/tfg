@@ -108,7 +108,7 @@ angular
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
 
-            for (var j=1; j<arrayNeuronal[i].length;j++){
+            /*for (var j=1; j<arrayNeuronal[i].length;j++){
               //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
               //console.log('neurona '+i+': ');
               //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
@@ -116,7 +116,7 @@ angular
               arista.source="n"+i;
               arista.target="n"+arrayNeuronal[i][j];
               jsonObj.edges[i]=arista;
-            }
+            }*/
           }
 
           //Purkinje Cells
@@ -136,7 +136,7 @@ angular
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
 
-            for (var j=1; j<arrayNeuronal[i].length;j++){
+          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
               //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
               //console.log('neurona '+i+': ');
               //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
@@ -144,7 +144,7 @@ angular
               arista.source="n"+i;
               arista.target="n"+arrayNeuronal[i][j];
               jsonObj.edges[i]=arista;
-            }
+            }*/
           }
 
           //DCN Cells
@@ -163,6 +163,16 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
+
+          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
+              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
+              //console.log('neurona '+i+': ');
+              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
+              arista.id="e"+i;
+              arista.source="n"+i;
+              arista.target="n"+arrayNeuronal[i][j];
+              jsonObj.edges[i]=arista;
+            }*/
           }
 
           //Golgi Cells
@@ -181,6 +191,16 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
+
+          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
+              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
+              //console.log('neurona '+i+': ');
+              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
+              arista.id="e"+i;
+              arista.source="n"+i;
+              arista.target="n"+arrayNeuronal[i][j];
+              jsonObj.edges[i]=arista;
+            }*/
           }
 
           //IO Cells
@@ -199,6 +219,16 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
+
+          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
+              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
+              //console.log('neurona '+i+': ');
+              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
+              arista.id="e"+i;
+              arista.source="n"+i;
+              arista.target="n"+arrayNeuronal[i][j];
+              jsonObj.edges[i]=arista;
+            }*/
           }
 
         }
@@ -360,10 +390,10 @@ angular
             container: document.getElementById('container2')
           },
           settings: {
-            defaultNodeColor: "#000000",
+            defaultNodeColor: "#f0e8b1",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            defaultEdgeColor: "#003300",
+            defaultEdgeColor: "#000000",
             edgeColor: "#003300",
             defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'

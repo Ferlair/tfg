@@ -7,7 +7,7 @@ body {
   height: 660px;
   margin-left: 20px;
   /*margin-top: 20px;*/
-  background-color: grey;
+  background-color: rgb(72,133,156);
 
 }
 
@@ -16,7 +16,6 @@ div.upload {
     height: 50px;
     background: url('../images/botones_opciones/cargar_grafo.png');
     overflow: hidden;
-    visibility:hidden;
 }
 
 div.upload input {
@@ -26,7 +25,6 @@ div.upload input {
     opacity: 0 !important;
     overflow: hidden !important;
     cursor: pointer;
-    visibility:hidden;
 }
 
 div.upload:hover {
@@ -34,45 +32,38 @@ div.upload:hover {
   height: 50px;
   background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
   overflow: hidden;
-  visibility:hidden;
 }
 
 #boton_grafo {
   background: url('../images/botones_opciones/generar_grafo.png');
-  visibility:hidden;
 }
 
 #boton_grafo:hover {
   background: url('../images/botones_opciones/generar_grafo_pulsado.png');
-  visibility:hidden;
 }
 
 #boton_pagina_principal {
   background: url('../images/botones_opciones/principal.png');
-  visibility:hidden;
 }
 
 #boton_pagina_principal:hover {
   background: url('../images/botones_opciones/principal_pulsado.png');
-  visibility:hidden;
 }
 
 #boton_cargar_grafo {
   background: url('../images/botones_opciones/cargar_grafo.png');
-  visibility:hidden;
 }
 
 #boton_cargar_grafo:hover {
   background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
-  visibility:hidden;
 }
 
 #botones_opciones {
   margin-right: 250px;
-  margin-left: 600px;
+  margin-left: 20px;
   margin-top: 100px;
   max-width: 150px;
-  float:right;
+  display: inline-block;
 }
 
 #botones_opciones img {
@@ -81,6 +72,16 @@ div.upload:hover {
   background-color: black;
   color: orange;
   overflow: hidden !important;
+  float: left;
+}
+
+#botones_opciones div {
+  width: 250px;
+  height: 50px;
+  background-color: black;
+  color: orange;
+  overflow: hidden !important;
+  float: right;
 }
 
 #botones_opciones input:hover {
