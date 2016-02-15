@@ -108,7 +108,7 @@ angular
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
 
-            /*for (var j=1; j<arrayNeuronal[i].length;j++){
+            for (var j=1; j<arrayNeuronal[i].length;j++){
               //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
               //console.log('neurona '+i+': ');
               //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
@@ -116,7 +116,7 @@ angular
               arista.source="n"+i;
               arista.target="n"+arrayNeuronal[i][j];
               jsonObj.edges[i]=arista;
-            }*/
+            }
           }
 
           //Purkinje Cells
@@ -136,7 +136,7 @@ angular
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
 
-          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
+            for (var j=1; j<arrayNeuronal[i].length;j++){
               //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
               //console.log('neurona '+i+': ');
               //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
@@ -144,7 +144,7 @@ angular
               arista.source="n"+i;
               arista.target="n"+arrayNeuronal[i][j];
               jsonObj.edges[i]=arista;
-            }*/
+            }
           }
 
           //DCN Cells
@@ -163,16 +163,6 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
-
-          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
-              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
-              //console.log('neurona '+i+': ');
-              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
-              arista.id="e"+i;
-              arista.source="n"+i;
-              arista.target="n"+arrayNeuronal[i][j];
-              jsonObj.edges[i]=arista;
-            }*/
           }
 
           //Golgi Cells
@@ -191,16 +181,6 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
-
-          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
-              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
-              //console.log('neurona '+i+': ');
-              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
-              arista.id="e"+i;
-              arista.source="n"+i;
-              arista.target="n"+arrayNeuronal[i][j];
-              jsonObj.edges[i]=arista;
-            }*/
           }
 
           //IO Cells
@@ -219,16 +199,6 @@ angular
             arista.source = "n" + i;
             arista.target = "n" + i;
             jsonObj.edges[i] = arista;
-
-          /*  for (var j=1; j<arrayNeuronal[i].length;j++){
-              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
-              //console.log('neurona '+i+': ');
-              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
-              arista.id="e"+i;
-              arista.source="n"+i;
-              arista.target="n"+arrayNeuronal[i][j];
-              jsonObj.edges[i]=arista;
-            }*/
           }
 
         }
@@ -248,18 +218,16 @@ angular
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
-        //console.log('neurona'+i+': '+origen[i]+" y destino: "+destino[i]);
       }
 
       var items = [[0]];
 
       //Creamos el array con el número de neuronas deseados
-      for (var j=0; j<lineas.length; j++){
+      for (var j=0; j<1871; j++){
         items.push([0]);
       }
 
-      for (var k=0; k<items.length-1;k++){
-        //console.log('hola'+k);
+      for (var k=0; k<items.length;k++){
         items[[origen[k]]].push(destino[k]);
       }
 
@@ -267,9 +235,9 @@ angular
 
       console.log('tamaño array: '+items.length);
 
-      /*for (var m=0; m<items.length;m++){
+      for (var m=0; m<items.length;m++){
         console.log(m+'mi array: '+items[m]);
-      }*/
+      }
 
       $scope.mostrarNeuronasLeidas(items);
 
@@ -390,10 +358,10 @@ angular
             container: document.getElementById('container2')
           },
           settings: {
-            defaultNodeColor: "#f0e8b1",
+            defaultNodeColor: "#000000",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            defaultEdgeColor: "#000000",
+            defaultEdgeColor: "#003300",
             edgeColor: "#003300",
             defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'

@@ -8,6 +8,7 @@
   <div id="hidden generar_grafo" ng-show="checked">
   <input id="textoGenerar" type="text" placeholder="Número mínimo: 2"ng-model="numeroNodos"><input type="button" value="Generar" ng-click="generarGrafo(numeroNodos);visibilidad(false);resetTexto()">
   </div>
+
   <div class="upload">
         <input id="boton_cargar_grafo" type="file" accept=".json" on-read-file="cargarGrafo($fileContent)"/>
   </div>
