@@ -51,7 +51,6 @@ angular
 
           //Mosey Fibers
           if (i>=0 && i<248) {
-            //console.log('estamos en bucle 1');
             var radius = 1;
             var angle = Math.random()*Math.PI*2;
             var x = Math.cos(angle)*radius;
@@ -79,9 +78,6 @@ angular
             //console.log('arrayneuronal tamaño: '+arrayNeuronal[i].length);
 
             for (var j=1; j<arrayNeuronal[i].length;j++){
-              //console.log('tamaño arrayneuronal en la posición i: '+arrayNeuronal[i].length);
-              //console.log('neurona '+i+': ');
-              //console.log('arista número '+j+': '+arrayNeuronal[i][j]);
               arista.id="e"+i;
               arista.source="n"+i;
               arista.target="n"+arrayNeuronal[i][j];
