@@ -3,12 +3,11 @@ body {
 }
 
 #container2 {
-  max-width: 1600px;
-  height: 660px;
-  margin-left: 20px;
-  /*margin-top: 20px;*/
-  background-color: grey;
-
+  max-width: 900px;
+  height: 600px;
+  margin-left: 5px;
+  margin-top: 10px;
+  background-color: black;
 }
 
 div.upload {
@@ -16,7 +15,6 @@ div.upload {
     height: 50px;
     background: url('../images/botones_opciones/cargar_grafo.png');
     overflow: hidden;
-    visibility:hidden;
 }
 
 div.upload input {
@@ -26,7 +24,6 @@ div.upload input {
     opacity: 0 !important;
     overflow: hidden !important;
     cursor: pointer;
-    visibility:hidden;
 }
 
 div.upload:hover {
@@ -34,42 +31,35 @@ div.upload:hover {
   height: 50px;
   background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
   overflow: hidden;
-  visibility:hidden;
 }
 
 #boton_grafo {
-  background: url('../images/botones_opciones/generar_grafo.png');
-  visibility:hidden;
+  background: url('../images/botones_opciones/mostrar_grafo.png');
 }
 
 #boton_grafo:hover {
-  background: url('../images/botones_opciones/generar_grafo_pulsado.png');
-  visibility:hidden;
+  background: url('../images/botones_opciones/mostrar_grafo_pulsado.png');
 }
 
 #boton_pagina_principal {
   background: url('../images/botones_opciones/principal.png');
-  visibility:hidden;
 }
 
 #boton_pagina_principal:hover {
   background: url('../images/botones_opciones/principal_pulsado.png');
-  visibility:hidden;
 }
 
 #boton_cargar_grafo {
   background: url('../images/botones_opciones/cargar_grafo.png');
-  visibility:hidden;
 }
 
 #boton_cargar_grafo:hover {
   background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
-  visibility:hidden;
 }
 
 #botones_opciones {
-  margin-right: 250px;
-  margin-left: 600px;
+  margin-right: 25px;
+  margin-left: 900px;
   margin-top: 100px;
   max-width: 150px;
   float:right;

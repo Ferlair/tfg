@@ -76,7 +76,6 @@ angular
             arista.target = "n" + 3;
             jsonObj.edges[i] = arista;*/
             //console.log('arrayneuronal tamaño: '+arrayNeuronal[i].length);
-
             for (var j=1; j<arrayNeuronal[i].length;j++){
               arista.id="e"+i;
               arista.source="n"+i;

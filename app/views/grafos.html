@@ -1,18 +1,32 @@
-<!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container2" ng-controller="GrafosCtrl"></div>
+
+
+
+
+<!-- PARTE FUNCIONAL, NO TOCAR -->
 
 <!--Panel opciones en la parte derecha de la página -->
 <div id="botones_opciones">
 
   <img id="boton_grafo" ng-click="visibilidad(true)">
+  <br>
   <div id="hidden generar_grafo" ng-show="checked">
   <input id="textoGenerar" type="text" placeholder="Número mínimo: 2"ng-model="numeroNodos"><input type="button" value="Generar" ng-click="generarGrafo(numeroNodos);visibilidad(false);resetTexto()">
   </div>
-
+  <br>
+  <br>
+  <br>
   <div class="upload">
         <input id="boton_cargar_grafo" type="file" accept=".json" on-read-file="cargarGrafo($fileContent)"/>
   </div>
-  <!--<a href="#/"><img id="boton_pagina_principal"></a>
-  <input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)" />-->
+  <br>
+  <br>
+  <br>
+  <br>
+  <a href="#/"><img id="boton_pagina_principal"></a>
+  <!--<input type="file" accept=".txt" on-read-file="mostrarNeuronasLeidas($fileContent)" />-->
+  <input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)" />
 
 </div>
+
+<!-- Contenedor que muestra la imagen generada por WebGL-->
+<div id="container2" ng-controller="GrafosCtrl"></div>
