@@ -353,6 +353,8 @@ angular
       var golgi = document.getElementById('5');
       var io = document.getElementById('6');
 
+      var valorDefecto = 2;
+
       console.log ('tamaño datosArray: '+datosArray.length);
       refresh();
 
@@ -389,7 +391,9 @@ angular
         //Mosey Fibers
         if (i>=0 && i<248) {
           var radius = 1;
-          var angle = Math.random()*Math.PI*2;
+          //var angle = Math.random()*Math.PI*2;
+          var angle = valorDefecto*Math.PI*2;
+          valorDefecto = valorDefecto * 10;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -446,7 +450,10 @@ angular
         //Purkinje Cells
         else if(i>=1748 && i<1796) {
           var radius = 6;
-          var angle = Math.random()*Math.PI*2;
+          //var angle = Math.random()*Math.PI*2;
+          //valorDefecto = 4;
+          var angle = valorDefecto*Math.PI*2;
+          valorDefecto = valorDefecto * 10;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -474,7 +481,10 @@ angular
         //DCN Cells
         else if(i>=1796 && i<1820){
           var radius = 8;
-          var angle = Math.random()*Math.PI*2;
+          //var angle = Math.random()*Math.PI*2;
+          valorDefecto = 2;
+          var angle = valorDefecto*Math.PI*2;
+          valorDefecto = valorDefecto * 10;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -495,7 +505,9 @@ angular
         //Golgi Cells
         else if(i>=1820 && i<1823){
           var radius = 10;
-          var angle = Math.random()*Math.PI*2;
+          //var angle = Math.random()*Math.PI*2;
+          var angle = valorDefecto*Math.PI*2;
+          valorDefecto = valorDefecto * 10;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -516,7 +528,10 @@ angular
         //IO Cells
         else if(i>=1823 && i<=1870){
           var radius = 12;
-          var angle = Math.random()*Math.PI*2;
+          //var angle = Math.random()*Math.PI*2;
+          valorDefecto = 8;
+          var angle = valorDefecto*Math.PI*2;
+          valorDefecto = valorDefecto * 10;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
