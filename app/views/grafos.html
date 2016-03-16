@@ -1,7 +1,3 @@
-
-
-
-
 <!-- PARTE FUNCIONAL, NO TOCAR -->
 
 <!--Panel opciones en la parte derecha de la página -->
@@ -10,7 +6,8 @@
   <img id="boton_grafo" ng-click="visibilidad(true)">
   <br>
   <div id="hidden generar_grafo" ng-show="checked">
-  <input id="textoGenerar" type="text" placeholder="Número mínimo: 2"ng-model="numeroNodos"><input type="button" value="Generar" ng-click="generarGrafo(numeroNodos);visibilidad(false);resetTexto()">
+  <input id="textoGenerar" type="text" placeholder="Número mínimo: 2"ng-model="numeroNodos">
+  <input type="button" value="Generar" ng-click="generarGrafo(numeroNodos);visibilidad(false);resetTexto()">
   </div>
   <br>
   <br>
@@ -28,5 +25,17 @@
 
 </div>
 
+
+
 <!-- Contenedor que muestra la imagen generada por WebGL-->
 <div id="container2" ng-controller="GrafosCtrl"></div>
+
+<div id="seleccion_neuronas">
+    Selecciona las neuronas que quieres visualizar: <br><br>
+    <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="mostrarDatos()"> Mosey Fibers<br>
+    <input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="mostrarDatos()"> Granulle Cells<br>
+    <input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="mostrarDatos()"> Purkinje Cells<br>
+    <input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="mostrarDatos()"> DCN Cells<br>
+    <input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="mostrarDatos()"> Golgi Cells <br>
+    <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="mostrarDatos()"> IO Cells<br>
+</div>
