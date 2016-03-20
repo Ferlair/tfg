@@ -13,6 +13,7 @@ angular
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
     var datosArray;
+    var jsonCopy;
 
     $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
 
@@ -171,6 +172,9 @@ angular
             nodo.y=y;
             nodo.size = 1;
 
+            //if (i==1822)
+             //nodo.hidden = true;
+
             jsonObj.nodes[i] = nodo;
 
             arista.id = "e"+i;
@@ -198,6 +202,12 @@ angular
           }
 
         }
+
+        jsonCopy = jsonObj;
+
+        //obj =JSON.parse(jsonObj.nodes[0]);
+        //jsonObj.nodes[1822].hidden = true;
+        //console.log(jsonObj.nodes[1822]);
         grafoFactory.cargar(jsonObj);
     }
 
@@ -228,10 +238,10 @@ angular
 
 
 
-      console.log('tamaño array: '+items.length);
+      //console.log('tamaño array: '+items.length);
 
       for (var m=0; m<items.length;m++){
-        console.log(m+'mi array: '+items[m]);
+        //console.log(m+'mi array: '+items[m]);
       }
 
       datosArray = items;
@@ -323,11 +333,15 @@ angular
           jsonObj.edges[i] = arista;
         }
 
+        jsonCopy = jsonObj;
+
         //Mostramos el grafo por pantalla
         grafoFactory.cargar(jsonObj);
 
 
     }
+
+
 
     //Función para mostrar un grafo por defecto
     $scope.mostrar_grafo = function() {
@@ -345,7 +359,9 @@ angular
       }
     }
 
-    $scope.mostrarDatos = function(check) {
+    // FUNCIÓN DE PRUEBA -----------------------------------------------------------------------------------------
+    $scope.comprobar = function() {
+
       var mosey = document.getElementById('1');
       var granulle = document.getElementById('2');
       var purkinje = document.getElementById('3');
@@ -353,7 +369,82 @@ angular
       var golgi = document.getElementById('5');
       var io = document.getElementById('6');
 
-      var valorDefecto = 2;
+      //Mostrar/ocultar neuronas mosey
+      if (!mosey.checked) {
+        for (var i=0; i<248; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+        for (var i=0; i<248; i++)
+          jsonCopy.nodes[i].hidden = false;
+      }
+
+      //Mostrar/ocultar neuronas granulle
+      if (!granulle.checked) {
+        for (var i=248; i<1748;i++)
+        jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+        for (var i=248; i<1748;i++)
+        jsonCopy.nodes[i].hidden = false;
+      }
+
+      //Mostrar/ocultar neuronas purkinje
+      if (!purkinje.checked) {
+        for (var i=1748; i<1796;i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+        for (var i=1748; i<1796;i++)
+          jsonCopy.nodes[i].hidden = false;
+      }
+
+      //Mostrar/ocultar neuronas dcn
+      if (!dcn.checked) {
+        for (var i=1796; i<1820;i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+        for (var i=1796; i<1820;i++)
+          jsonCopy.nodes[i].hidden = false;
+      }
+
+      //Mostrar/ocultar neuronas golgi
+      if (!golgi.checked) {
+        for (var i=1820; i<1823;i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+        for (var i=1820; i<1823;i++)
+          jsonCopy.nodes[i].hidden = false;
+      }
+
+      //Mostrar/ocultar neuronas io
+      if (!io.checked) {
+        for (var i=1823; i<=1870;i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+        for (var i=1823; i<=1870;i++)
+          jsonCopy.nodes[i].hidden = false;
+      }
+
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+
+    }
+
+    /*$scope.mostrarDatos = function(check) {
+      var mosey = document.getElementById('1');
+      var granulle = document.getElementById('2');
+      var purkinje = document.getElementById('3');
+      var dcn = document.getElementById('4');
+      var golgi = document.getElementById('5');
+      var io = document.getElementById('6');
+
+      var valorMosey = 2;
+      var valorGranulle = 3;
+      var valorpurkinje = 4;
 
       console.log ('tamaño datosArray: '+datosArray.length);
       refresh();
@@ -391,9 +482,9 @@ angular
         //Mosey Fibers
         if (i>=0 && i<248) {
           var radius = 1;
-          //var angle = Math.random()*Math.PI*2;
-          var angle = valorDefecto*Math.PI*2;
-          valorDefecto = valorDefecto * 10;
+          var angle = Math.random()*Math.PI*2;
+          //var angle = valorMosey*Math.PI*2;
+          //valorMosey = valorMosey * 10;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -450,10 +541,7 @@ angular
         //Purkinje Cells
         else if(i>=1748 && i<1796) {
           var radius = 6;
-          //var angle = Math.random()*Math.PI*2;
-          //valorDefecto = 4;
-          var angle = valorDefecto*Math.PI*2;
-          valorDefecto = valorDefecto * 10;
+          var angle = Math.random()*Math.PI*2;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -481,10 +569,7 @@ angular
         //DCN Cells
         else if(i>=1796 && i<1820){
           var radius = 8;
-          //var angle = Math.random()*Math.PI*2;
-          valorDefecto = 2;
-          var angle = valorDefecto*Math.PI*2;
-          valorDefecto = valorDefecto * 10;
+          var angle = Math.random()*Math.PI*2;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -505,9 +590,7 @@ angular
         //Golgi Cells
         else if(i>=1820 && i<1823){
           var radius = 10;
-          //var angle = Math.random()*Math.PI*2;
-          var angle = valorDefecto*Math.PI*2;
-          valorDefecto = valorDefecto * 10;
+          var angle = Math.random()*Math.PI*2;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -528,10 +611,7 @@ angular
         //IO Cells
         else if(i>=1823 && i<=1870){
           var radius = 12;
-          //var angle = Math.random()*Math.PI*2;
-          valorDefecto = 8;
-          var angle = valorDefecto*Math.PI*2;
-          valorDefecto = valorDefecto * 10;
+          var angle = Math.random()*Math.PI*2;
           var x = Math.cos(angle)*radius;
           var y = Math.sin(angle)*radius;
           nodo.x=x;
@@ -548,10 +628,13 @@ angular
           arista.target = "n" + i;
           jsonObj.edges[i] = arista;
         }
+        //jsonCopy = jsonObj;
+      //  console.log("Valor angle: "+ angle);
+
 
       }
       grafoFactory.cargar(jsonObj);
-    }
+    }*/
 
   }])
 
