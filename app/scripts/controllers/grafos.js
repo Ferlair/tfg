@@ -12,7 +12,7 @@ angular
 
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
-    var datosArray;
+    //var datosArray;
     var jsonCopy;
 
     $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
@@ -247,13 +247,6 @@ angular
       datosArray = items;
 
       $scope.mostrarNeuronasLeidas(items);
-
-      //Ocultamos los botones de opciones y activamos la selección de neuronas
-      document.getElementById("botones_opciones").style.display = 'none';
-      document.getElementById("seleccion_neuronas").style.display = 'block';
-
-
-
     }
 
     //Función para mostrar/esconder el html de generar grafo

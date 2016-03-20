@@ -1,7 +1,16 @@
 <!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container1" ng-controller="MainCtrl" height="500px"></div>
+<!--<div id="container1" ng-controller="MainCtrl" height="500px"></div>-->
+<input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)"/>
+
+<input type="button" value="cambiar" ng-click="escribirDatos()">
+
+<div id="especificaciones">
+
+</div>
 
 <hr class="separador" style="color:#000;" width="50%">
+
+
 
 <!-- Slider de opciones de visualización -->
 <table>
@@ -9,9 +18,9 @@
 <tr >
   <td><a href="#/grafos"><img src = "../app/images/grafico_grafos.jpg" /></a></td>
   <td><img src = "../app/images/grafico_circular.png" ng-click="mostrar(2)"/></td>
-  <td><img src = "../app/images/grafico_dispersion.png" ng-click="mostrar(3)"/></td>
+  <!--<td><img src = "../app/images/grafico_dispersion.png" ng-click="mostrar(3)"/></td>
   <td><img src = "../app/images/grafico_lineal.jpg" ng-click="mostrar(4)"/></td>
-  <td><img src = "../app/images/grafico_tarta.png" ng-click="mostrar(5)"/></td>
+  <td><img src = "../app/images/grafico_tarta.png" ng-click="mostrar(5)"/></td>-->
 </tr>
 </span>
 </table>
