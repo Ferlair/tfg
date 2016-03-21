@@ -46,7 +46,6 @@ div.mascara:hover {
 }
 
 #seleccion_neuronas {
-  /*margin-right: 5px;*/
   margin-left: 200px;
   margin-top: 75px;
   max-width: 500px;
@@ -91,6 +90,15 @@ div.upload:hover {
 
 #boton_pagina_principal {
   background: url('../images/botones_opciones/principal.png');
+  /*margin-left: 50px;*/
+  margin-top: 650px;
+  max-width: 500px;
+  float:left;
+  width: 250px;
+  height: 50px;
+  background-color: black;
+  color: orange;
+  overflow: hidden !important;
 }
 
 #boton_pagina_principal:hover {
