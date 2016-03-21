@@ -10,10 +10,35 @@ body {
   width: 500px;
   height: 350px;
   border: 2px solid #000000;
+
+}
+
+div.mascara {
+    width: 250px;
+    height: 50px;
+    background: url('../images/botones_opciones/cargar_grafo.png');
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+div.mascara input {
+    display: block !important;
+    width: 250px !important;
+    height: 50px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    cursor: pointer;
+}
+
+div.mascara:hover {
+  width: 250px;
+  height: 50px;
+  background: url('../images/botones_opciones/cargar_grafo_pulsado.png');
+  overflow: hidden;
 }
 
 #container2 {
-  max-width: 900px;
+  max-width: 800px;
   height: 600px;
   margin-left: 5px;
   margin-top: 10px;
@@ -21,12 +46,16 @@ body {
 }
 
 #seleccion_neuronas {
-  margin-right: 25px;
-  margin-left: 25px;
-  margin-top: 700px;
+  /*margin-right: 5px;*/
+  margin-left: 200px;
+  margin-top: 75px;
   max-width: 500px;
-  float:left;
-  display: none;
+  float:right;
+
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
 }
 
 div.upload {

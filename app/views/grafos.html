@@ -1,7 +1,7 @@
 <!-- PARTE FUNCIONAL, NO TOCAR -->
 
 <!--Panel opciones en la parte derecha de la página -->
-<div id="botones_opciones">
+<!--<div id="botones_opciones">
 
   <img id="boton_grafo" ng-click="visibilidad(true)">
   <br>
@@ -23,19 +23,22 @@
 
   <input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)"/>
 
-</div>
+</div>-->
 
 
 
-<!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container2" ng-controller="GrafosCtrl"></div>
+<!-- Contenedor que muestra la imagen generada por WebGL
+<div id="container2" ng-controller="GrafosCtrl"></div>-->
 
 <div id="seleccion_neuronas">
     Selecciona las neuronas que quieres visualizar: <br><br>
-    <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="comprobar()"> Mosey Fibers<br>
-    <input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="comprobar()"> Granulle Cells<br>
-    <input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="comprobar()"> Purkinje Cells<br>
-    <input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="comprobar()"> DCN Cells<br>
-    <input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="comprobar()"> Golgi Cells <br>
-    <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="comprobar()"> IO Cells<br>
+    <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="comprobar()"> Mosey Fibers<br><br>
+    <input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="comprobar()"> Granulle Cells<br><br>
+    <input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="comprobar()"> Purkinje Cells<br><br>
+    <input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="comprobar()"> DCN Cells<br><br>
+    <input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="comprobar()"> Golgi Cells<br><br>
+    <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="comprobar()"> IO Cells<br><br>
 </div>
+
+<!-- Contenedor que muestra la imagen generada por WebGL-->
+<div id="container2" ng-controller="GrafosCtrl"></div>
