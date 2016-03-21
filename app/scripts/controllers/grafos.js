@@ -15,7 +15,7 @@ angular
     //var datosArray;
     var jsonCopy;
 
-    $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
+  /*  $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
 
         refresh();
 
@@ -78,7 +78,7 @@ angular
             arista.target = "n" + 3;
             jsonObj.edges[i] = arista;*/
             //console.log('arrayneuronal tamaño: '+arrayNeuronal[i].length);
-            for (var j=1; j<arrayNeuronal[i].length;j++){
+            /*for (var j=1; j<arrayNeuronal[i].length;j++){
               arista.id="e"+i;
               arista.source="n"+i;
               arista.target="n"+arrayNeuronal[i][j];
@@ -247,7 +247,7 @@ angular
       datosArray = items;
 
       $scope.mostrarNeuronasLeidas(items);
-    }
+    }*/
 
     //Función para mostrar/esconder el html de generar grafo
     $scope.visibilidad = function(visible) {
@@ -331,9 +331,7 @@ angular
         //Mostramos el grafo por pantalla
         grafoFactory.cargar(jsonObj);
 
-
     }
-
 
 
     //Función para mostrar un grafo por defecto

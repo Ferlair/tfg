@@ -10,13 +10,6 @@
 angular
   .module('tfgApp')
 
-  /*.controller ('GrafosCtrl', ['$scope', function($scope){
-
-        $scope.otro = "Hola";
-
-
-  }])*/
-
   .controller('MainCtrl',['$scope','renderFactory','grafoFactory', function($scope, renderFactory, grafoFactory){
 
     var datosArray;
@@ -49,8 +42,8 @@ angular
     div.innerHTML = div.innerHTML + '<br><br>';
     div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + numeroIo;
 
-    var g = document.getElementById('especificaciones').style.visibility = 'visible';
-    console.log ('lo hacemos visible');
+    $scope.checked = true;
+
     }
 
     $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
@@ -232,9 +225,8 @@ angular
         }
 
         jsonCopy = jsonObj;
-        var g = document.getElementById('especificaciones').style.visibility = 'hidden';
 
-        console.log (jsonCopy);
+        $scope.escribirDatos();
 
     }
 
@@ -276,10 +268,6 @@ angular
       $scope.mostrarNeuronasLeidas(items);
     }
 
-
-
-    //Código para Sigma.js
-    //grafoFactory.crearGrafo();
 
 
     //Código para la visualización con WebGl, descomentar para funcionalidad
