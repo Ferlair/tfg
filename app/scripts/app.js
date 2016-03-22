@@ -18,6 +18,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'rzModule'
   ])
 
   .directive('onReadFile', function ($parse) {
