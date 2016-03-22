@@ -56,7 +56,9 @@ div.mascara:hover {
 }
 
 #slider {
- margin-left: 200px; 
+ margin-left: 200px;
+  margin-top: 400px;
+  float: right;
 }
 
 div.upload {
