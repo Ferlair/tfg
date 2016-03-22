@@ -187,6 +187,15 @@ angular
       grafoFactory.cargar(jsonCopy);
     }
 
+    $scope.slider = {
+        min: 0,
+        max: 248,
+        options: {
+        floor: 0,
+        ceil: 248
+      }
+    };
+
   }])
 
   .factory('grafoFactory', function grafoFactory(){

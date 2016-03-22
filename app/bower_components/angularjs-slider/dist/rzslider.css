@@ -1,14 +1,8 @@
-/*! angularjs-slider - v2.10.4 - 
- (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
- https://github.com/angular-slider/angularjs-slider - 
- 2016-03-16 */
 rzslider {
   position: relative;
   display: inline-block;
-  width: 100%;
+  width: 200px;
   height: 4px;
-  margin: 35px 0 15px 0;
-  vertical-align: middle;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -61,21 +55,23 @@ rzslider .rz-bar {
           border-radius: 2px;
 }
 
+/*Línea horizontal del slider*/
 rzslider .rz-bar.rz-selection {
   z-index: 2;
-  background: #0db9f0;
+  background: #f3c230;
   -webkit-border-radius: 2px;
      -moz-border-radius: 2px;
           border-radius: 2px;
 }
 
+/*Círculos exteriores del slider*/
 rzslider .rz-pointer {
   top: -14px;
   z-index: 3;
   width: 32px;
   height: 32px;
   cursor: pointer;
-  background-color: #0db9f0;
+  background-color: #f3c230;
   -webkit-border-radius: 16px;
      -moz-border-radius: 16px;
           border-radius: 16px;
@@ -103,13 +99,13 @@ rzslider .rz-pointer.rz-active {
 }
 
 rzslider .rz-pointer.rz-active:after {
-  background-color: #451aff;
+  background-color: #ffffff;
 }
 
 rzslider .rz-bubble {
   bottom: 16px;
   padding: 1px 3px;
-  color: #55637d;
+  color: #000000;
   cursor: default;
 }
 

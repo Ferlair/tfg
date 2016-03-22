@@ -10,7 +10,6 @@ body {
   width: 500px;
   height: 350px;
   border: 2px solid #000000;
-
 }
 
 div.mascara {
@@ -50,11 +49,14 @@ div.mascara:hover {
   margin-top: 75px;
   max-width: 500px;
   float:right;
-
   background: rgb(243,194,48);
   border-radius: 25px;
   padding: 8px;
   border: 2px solid #000000;
+}
+
+#slider {
+ margin-left: 200px; 
 }
 
 div.upload {
