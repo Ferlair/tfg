@@ -12,9 +12,10 @@ angular
 
   .controller('MainCtrl',['$scope','renderFactory','grafoFactory', function($scope, renderFactory, grafoFactory){
 
-    var datosArray;
+    //Variable destinada a almacenar el json con información de nodos y aristas
     var jsonCopy;
 
+    //Almacenamiento del número de neuronas de cada tipo
     var numeroMosey = 0;
     var numeroGranulle = 0;
     var numeroPurkinje = 0;
@@ -25,24 +26,25 @@ angular
 
     $scope.escribirDatos = function(){
 
-    var div =  document.getElementById('especificaciones');
-    div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número total de neuronas: </b>'+ numeroTotalNeuronas;
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Mosey: </b>' + numeroMosey;
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Granulle: </b>' + numeroGranulle;
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Purkinje: </b>' + numeroPurkinje;
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo DCN: </b>' + numeroDcn;
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Golgi: </b>' + numeroGolgi;
-    div.innerHTML = div.innerHTML + '<br><br>';
-    div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + numeroIo;
+      var div =  document.getElementById('especificaciones');
 
-    $scope.checked = true;
+      div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número total de neuronas: </b>'+ numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Mosey: </b>' + numeroMosey;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Granulle: </b>' + numeroGranulle;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Purkinje: </b>' + numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo DCN: </b>' + numeroDcn;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Golgi: </b>' + numeroGolgi;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + numeroIo;
+
+      $scope.checked = true;
 
     }
 
@@ -226,7 +228,9 @@ angular
 
         jsonCopy = jsonObj;
 
+
         $scope.escribirDatos();
+        grafoFactory.almacenarJSON(jsonCopy);
 
     }
 
@@ -255,49 +259,9 @@ angular
         items[[origen[k]]].push(destino[k]);
       }
 
-
-
-      //console.log('tamaño array: '+items.length);
-
-      for (var m=0; m<items.length;m++){
-        //console.log(m+'mi array: '+items[m]);
-      }
-
-      datosArray = items;
-
       $scope.mostrarNeuronasLeidas(items);
     }
 
-
-
-    //Código para la visualización con WebGl, descomentar para funcionalidad
-    /*init();
-
-    function init() {
-        renderFactory.createCamera();
-        renderFactory.createCube();
-        renderFactory.setup();
-        renderFactory.paint();
-    }*/
-
-
-
-    /*$scope.mostrar = function(numero){
-      switch (numero) {
-        case 1: //grafoFactory.crearGrafo();
-                break;
-        case 2: $scope.algo="nada que mostrar";
-                break;
-        case 3:
-                break;
-        case 4: $scope.algo="../app/images/grafico_lineal.jpg";
-                break;
-        case 5: $scope.algo="../app/images/grafico_tarta.png";
-                break;
-        default:
-
-      }
-    }*/
   }])
 
   .factory ('renderFactory', function renderFactory(){
@@ -394,19 +358,3 @@ angular
 
           };
   });
-
-/*  .factory('grafoFactory', function grafoFactory(){
-    return{
-      crearGrafo: function(){
-        sigma.parsers.json('data.json', {
-          renderer: {
-            type:'webgl',
-            container: document.getElementById('container1')
-          },
-          settings: {
-            defaultNodeColor: '#000'
-          }
-        });
-      }
-    }
-  });*/

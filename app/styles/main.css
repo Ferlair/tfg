@@ -90,7 +90,6 @@ div.upload:hover {
 
 #boton_pagina_principal {
   background: url('../images/botones_opciones/principal.png');
-  /*margin-left: 50px;*/
   margin-top: 650px;
   max-width: 500px;
   float:left;

@@ -20,8 +20,6 @@ angular
     'ngTouch',
   ])
 
-  
-
   .directive('onReadFile', function ($parse) {
   	return {
   		restrict: 'A',
