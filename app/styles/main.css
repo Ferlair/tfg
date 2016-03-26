@@ -46,7 +46,7 @@ div.mascara:hover {
 
 #seleccion_neuronas {
   margin-left: 200px;
-  margin-top: 75px;
+  /*margin-top: 5px;*/
   max-width: 500px;
   float:right;
   background: rgb(243,194,48);
@@ -57,7 +57,8 @@ div.mascara:hover {
 
 #slider {
  margin-left: 200px;
-  margin-top: 400px;
+ margin-right: 75px;
+  margin-top: 70px;
   float: right;
 }
 

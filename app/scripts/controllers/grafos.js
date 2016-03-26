@@ -12,21 +12,42 @@ angular
 
   .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
+    var mosey = document.getElementById('1');
+    var granulle = document.getElementById('2');
+    var purkinje = document.getElementById('3');
+    var dcn = document.getElementById('4');
+    var golgi = document.getElementById('5');
+    var io = document.getElementById('6');
+
 
     var jsonCopy;
+
+    $scope.obtenerReferencias = function() {
+      grafoFactory.iteracionesMosey = grafoFactory.numeroMosey;
+      grafoFactory.iteracionesGranulle = grafoFactory.numeroGranulle + grafoFactory.iteracionesMosey;
+      grafoFactory.iteracionesPurkinje = grafoFactory.numeroPurkinje + grafoFactory.iteracionesGranulle;
+      grafoFactory.iteracionesDCN = grafoFactory.numeroDcn + grafoFactory.iteracionesPurkinje;
+      grafoFactory.iteracionesGolgi = grafoFactory.numeroGolgi + grafoFactory.iteracionesDCN;
+      grafoFactory.iteracionesIO = grafoFactory.numeroIo + grafoFactory.iteracionesGolgi;
+
+      grafoFactory.iniMosey = 0;
+      grafoFactory.iniGranulle = grafoFactory.iteracionesMosey;
+      grafoFactory.iniPurkinje = grafoFactory.iteracionesGranulle;
+      grafoFactory.iniDCN = grafoFactory.iteracionesPurkinje;
+      grafoFactory.iniGolgi = grafoFactory.iteracionesDCN;
+      grafoFactory.iniIO = grafoFactory.iteracionesGolgi;
+    }
+
+
 
     $scope.inicio = function() {
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
+      $scope.obtenerReferencias();
       grafoFactory.cargar(jsonCopy);
     }
 
     $scope.inicio();
-
-    //Función para mostrar/esconder el html de generar grafo  ------
-    /*$scope.visibilidad = function(visible) {
-      $scope.checked = visible;
-    }*/
 
     //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
@@ -41,158 +62,198 @@ angular
       p.appendChild(c);
     }
 
-    //Función encargada de cargar el grafo seleccionado por el usuario
-    /*$scope.cargarGrafo = function($fileContent) {
-      refresh();
-      //Debe transformarse el texto al formato json para su correcta visualización
-      $fileContent = JSON.parse($fileContent);
+    //Función que muestra las neuronas seleccionadas por pantalla
+    $scope.ver = function() {
+      var inicioMosey = $scope.sliderMosey.min;
+      var finalMosey = $scope.sliderMosey.max;
 
-      grafoFactory.cargar ($fileContent);
-    }*/
+      var inicioGranulle = $scope.sliderGranulle.min;
+      var finalGranulle = $scope.sliderGranulle.max;
 
+      var inicioPurkinje = $scope.sliderPurkinje.min;
+      var finalPurkinje = $scope.sliderPurkinje.max;
 
-    //Input: número de nodos que el usuario desea representar en pantalla
-    //Output: Objeto json con el número de nodos deseados, completados con valores aleatorios
-    /*$scope.generarGrafo = function($nodos) {
-      refresh();
+      var inicioDCN = $scope.sliderDCN.min;
+      var finalDCN = $scope.sliderDCN.max;
 
-        //Creación del objeto json que alberga la información de nodos y aristas a dibujar
-        var jsonObj = { nodes: [{}], edges: [{}]};
+      var inicioGolgi = $scope.sliderGolgi.min;
+      var finalGolgi = $scope.sliderGolgi.max;
 
-        //Proporciona valores por defecto a la variable nodo usada en el bucle
-        function getNodo() {
-          return {
-            id: "",
-            label: "",
-            x: "",
-            y: "",
-            size: ""
-          }
-        };
+      var inicioIO = $scope.sliderIO.min;
+      var finalIO = $scope.sliderIO.max;
 
-        //Proporciona valores por defecto a la variable arista usada en el bucle
-        function getAristas() {
-          return {
-            id: "",
-            source: "",
-            target: ""
-          }
-        }
-
-        //Creación de valores aleatorios de nodos y aristas
-        for (var i=0; i < $nodos; i++) {
-          var nodo = getNodo();
-          var arista = getAristas();
-
-          nodo.id = "n"+i;
-          nodo.label = "neurona"+i;
-          nodo.x = "" + (Math.floor((Math.random()*100)+1));
-          nodo.y = "" + (Math.floor((Math.random()*100)+1));
-          nodo.size = "" + (Math.floor((Math.random()*40)+1));
-
-          jsonObj.nodes[i] = nodo;
-
-          //Creación de aristas
-          arista.id = "e"+i;
-          arista.source = "n" + i;
-          arista.target = "n" + (Math.floor((Math.random()*i)+1));
-
-          jsonObj.edges[i] = arista;
-        }
-
-        jsonCopy = jsonObj;
-
-        //Mostramos el grafo por pantalla
-        grafoFactory.cargar(jsonObj);
-
-    }*/
-
-
-    //Función para mostrar un grafo por defecto
-    /*$scope.mostrar_grafo = function() {
-        refresh();
-        grafoFactory.crearGrafo();
-    }*/
-
-    //
-    $scope.comprueba = function() {
-      var mosey = document.getElementById('1');
-      var granulle = document.getElementById('2');
-      var purkinje = document.getElementById('3');
-      var dcn = document.getElementById('4');
-      var golgi = document.getElementById('5');
-      var io = document.getElementById('6');
-
-      //Mostrar/ocultar neuronas mosey
-      if (!mosey.checked) {
-        for (var i=0; i<248; i++)
+      //Mostrar/ocultar neuronas de tipo mosey
+      if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
+        console.log ('mosey está deseleccionado');
+        for (var i=0; i<grafoFactory.iteracionesMosey; i++)
           jsonCopy.nodes[i].hidden = true;
       }
+      //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
+      //es decir, entre inicioMosey y finalMosey, ambos inclusive
       else {
-        for (var i=0; i<248; i++)
-          jsonCopy.nodes[i].hidden = false;
+         console.log ('mosey está seleccionado');
+          for (var j=0; j<grafoFactory.iteracionesMosey; j++) {
+            if (j >= inicioMosey && j <= finalMosey) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
       }
 
-      //Mostrar/ocultar neuronas granulle
+      //Mostrar/ocultar neuronas de tipo granulle
       if (!granulle.checked) {
-        for (var i=248; i<1748;i++)
-        jsonCopy.nodes[i].hidden = true;
+        console.log ('granulle está deseleccionado');
+        for (var i=grafoFactory.iteracionesMosey; i<grafoFactory.iteracionesGranulle; i++)
+          jsonCopy.nodes[i].hidden = true;
       }
       else {
-        for (var i=248; i<1748;i++)
-        jsonCopy.nodes[i].hidden = false;
+        console.log ('granulle está seleccionado');
+          for (var j=grafoFactory.iteracionesMosey; j<grafoFactory.iteracionesGranulle; j++) {
+            if (j >= inicioGranulle && j <= finalGranulle) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
       }
 
-      //Mostrar/ocultar neuronas purkinje
+      //Mostrar/ocultar neuronas de tipo purkinje
       if (!purkinje.checked) {
-        for (var i=1748; i<1796;i++)
+        console.log ('purkinje está deseleccionado');
+        for (var i=grafoFactory.iteracionesGranulle; i<grafoFactory.iteracionesPurkinje; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        for (var i=1748; i<1796;i++)
-          jsonCopy.nodes[i].hidden = false;
+        console.log ('purkinje está seleccionado');
+          for (var j=grafoFactory.iteracionesGranulle; j<grafoFactory.iteracionesPurkinje; j++) {
+            if (j >= inicioPurkinje && j <= finalPurkinje) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
       }
 
-      //Mostrar/ocultar neuronas dcn
+      //Mostrar/ocultar neuronas de tipo dcn
       if (!dcn.checked) {
-        for (var i=1796; i<1820;i++)
+        console.log ('dcn está deseleccionado');
+        for (var i=grafoFactory.iteracionesPurkinje; i<grafoFactory.iteracionesDCN; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        for (var i=1796; i<1820;i++)
-          jsonCopy.nodes[i].hidden = false;
+        console.log ('dcn está seleccionado');
+          for (var j=grafoFactory.iteracionesPurkinje; j<grafoFactory.iteracionesDCN; j++) {
+            if (j >= inicioDCN && j <= finalDCN) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
       }
 
-      //Mostrar/ocultar neuronas golgi
+      //Mostrar/ocultar neuronas de tipo golgi
       if (!golgi.checked) {
-        for (var i=1820; i<1823;i++)
+        console.log ('golgi está deseleccionado');
+        for (var i=grafoFactory.iteracionesDCN; i<grafoFactory.iteracionesGolgi; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        for (var i=1820; i<1823;i++)
-          jsonCopy.nodes[i].hidden = false;
+        console.log ('golgi está seleccionado');
+          for (var j=grafoFactory.iteracionesDCN; j<grafoFactory.iteracionesGolgi; j++) {
+            if (j >= inicioGolgi && j <= finalGolgi) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
       }
 
-      //Mostrar/ocultar neuronas io
+      //Mostrar/ocultar neuronas de tipo io
       if (!io.checked) {
-        for (var i=1823; i<=1870;i++)
+        console.log ('io está deseleccionado');
+        for (var i=grafoFactory.iteracionesGolgi; i<grafoFactory.iteracionesIO; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        for (var i=1823; i<=1870;i++)
-          jsonCopy.nodes[i].hidden = false;
+        console.log ('io está seleccionado');
+          for (var j=grafoFactory.iteracionesGolgi; j<grafoFactory.iteracionesIO; j++) {
+            if (j >= inicioIO && j <= finalIO) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
       }
 
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.slider = {
-        min: 0,
-        max: 248,
+    //Controladores para los diferentes sliders
+    $scope.sliderMosey = {
+        min: grafoFactory.iniMosey,
+        max: grafoFactory.iteracionesMosey,
         options: {
-        floor: 0,
-        ceil: 248
+          floor: grafoFactory.iniMosey,
+          ceil: grafoFactory.iteracionesMosey,
+          noSwitching: true
+        }
+    };
+
+    $scope.sliderGranulle = {
+        min: grafoFactory.iniGranulle,
+        max: grafoFactory.iteracionesGranulle,
+        options: {
+        floor: grafoFactory.iniGranulle,
+        ceil: grafoFactory.iteracionesGranulle,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderPurkinje = {
+        min: grafoFactory.iniPurkinje,
+        max: grafoFactory.iteracionesPurkinje,
+        options: {
+        floor: grafoFactory.iniPurkinje,
+        ceil: grafoFactory.iteracionesPurkinje,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderDCN = {
+        min: grafoFactory.iniDCN,
+        max: grafoFactory.iteracionesDCN,
+        options: {
+        floor: grafoFactory.iniDCN,
+        ceil: grafoFactory.iteracionesDCN,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderGolgi = {
+        min: grafoFactory.iniGolgi,
+        max: grafoFactory.iteracionesGolgi,
+        options: {
+        floor: grafoFactory.iniGolgi,
+        ceil: grafoFactory.iteracionesGolgi,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderIO = {
+        min: grafoFactory.iniIO,
+        max: grafoFactory.iteracionesIO,
+        options: {
+        floor: grafoFactory.iniIO,
+        ceil: grafoFactory.iteracionesIO,
+        noSwitching: true
       }
     };
 
@@ -200,6 +261,28 @@ angular
 
   .factory('grafoFactory', function grafoFactory(){
     var jsonRecibido;
+
+    var numeroMosey;
+    var numeroGranulle = 0;
+    var numeroPurkinje = 0;
+    var numeroDcn = 0;
+    var numeroGolgi = 0;
+    var numeroIo = 0;
+    var numeroTotalNeuronas = 0;
+
+    var iteracionesMosey;
+    var iteracionesGranulle;
+    var iteracionesPurkinje;
+    var iteracionesDCN;
+    var iteracionesGolgi;
+    var iteracionesIO;
+
+    var iniMosey;
+    var iniGranulle;
+    var iniPurkinje;
+    var iniDCN;
+    var iniGolgi;
+    var iniIO;
     return{
 
       recuperarJSON: function() {

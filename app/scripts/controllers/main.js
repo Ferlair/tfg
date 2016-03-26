@@ -30,19 +30,19 @@ angular
 
       div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número total de neuronas: </b>'+ numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<b>Número total de neuronas: </b>'+ grafoFactory.numeroTotalNeuronas;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Mosey: </b>' + numeroMosey;
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Mosey: </b>' + grafoFactory.numeroMosey;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Granulle: </b>' + numeroGranulle;
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Granulle: </b>' + grafoFactory.numeroGranulle;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Purkinje: </b>' + numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Purkinje: </b>' + grafoFactory.numeroPurkinje;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo DCN: </b>' + numeroDcn;
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo DCN: </b>' + grafoFactory.numeroDcn;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Golgi: </b>' + numeroGolgi;
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Golgi: </b>' + grafoFactory.numeroGolgi;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + numeroIo;
+      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + grafoFactory.numeroIo;
 
       $scope.checked = true;
 
@@ -105,6 +105,7 @@ angular
             }
 
             numeroMosey++;
+            grafoFactory.numeroMosey = numeroMosey;
 
           }
 
@@ -133,6 +134,7 @@ angular
             }
 
             numeroGranulle++;
+            grafoFactory.numeroGranulle = numeroGranulle;
           }
 
           //Purkinje Cells
@@ -160,6 +162,7 @@ angular
             }
 
             numeroPurkinje++;
+            grafoFactory.numeroPurkinje = numeroPurkinje;
           }
 
           //DCN Cells
@@ -180,6 +183,7 @@ angular
             jsonObj.edges[i] = arista;
 
             numeroDcn++;
+            grafoFactory.numeroDcn = numeroDcn;
           }
 
           //Golgi Cells
@@ -200,6 +204,7 @@ angular
             jsonObj.edges[i] = arista;
 
             numeroGolgi++;
+            grafoFactory.numeroGolgi = numeroGolgi;
           }
 
           //IO Cells
@@ -220,9 +225,11 @@ angular
             jsonObj.edges[i] = arista;
 
             numeroIo++;
+            grafoFactory.numeroIo = numeroIo;
           }
 
           numeroTotalNeuronas++;
+          grafoFactory.numeroTotalNeuronas = numeroTotalNeuronas;
 
         }
 
@@ -262,7 +269,7 @@ angular
       $scope.mostrarNeuronasLeidas(items);
     }
 
-    
+
 
   }])
 

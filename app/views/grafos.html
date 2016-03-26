@@ -27,12 +27,12 @@
 
 <div id="seleccion_neuronas">
     Selecciona las neuronas que quieres visualizar: <br><br>
-    <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="comprueba()" checked> Mosey Fibers<br><br>
-    <input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="comprueba()" checked> Granulle Cells<br><br>
-    <input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="comprueba()" checked> Purkinje Cells<br><br>
-    <input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="comprueba()" checked> DCN Cells<br><br>
-    <input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="comprueba()" checked> Golgi Cells<br><br>
-    <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="comprueba()" checked> IO Cells<br><br>
+    <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="ver()" checked> Mosey Fibers<br><br>
+    <input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="ver()" checked> Granulle Cells<br><br>
+    <input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="ver()" checked> Purkinje Cells<br><br>
+    <input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="ver()" checked> DCN Cells<br><br>
+    <input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="ver()" checked> Golgi Cells<br><br>
+    <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="ver()" checked> IO Cells<br><br>
 </div>
 
 <a href="#/"><img id="boton_pagina_principal"></a>
@@ -42,10 +42,64 @@
 <!-- Contenedor que muestra la imagen generada por WebGL-->
 <div id="container2" ng-controller="GrafosCtrl"></div>
 
+<!-- Contenedor para los sliders -->
 <div id="slider">
+<div><b>Mosey: </b></div><br>
 <rzslider
-    rz-slider-model="slider.min"
-    rz-slider-high="slider.max"
-    rz-slider-options="slider.options">
+    rz-slider-model="sliderMosey.min"
+    rz-slider-high="sliderMosey.max"
+    rz-slider-options="sliderMosey.options"
+    ng-mouseup = "ver()">
 </rzslider>
+<br>
+<br>
+<br>
+<div><b>Granulle: </b></div><br>
+<rzslider
+    rz-slider-model="sliderGranulle.min"
+    rz-slider-high="sliderGranulle.max"
+    rz-slider-options="sliderGranulle.options"
+    ng-mouseup = "ver()">
+</rzslider>
+<br>
+<br>
+<br>
+<div><b>Purkinje: </b></div><br>
+<rzslider
+    rz-slider-model="sliderPurkinje.min"
+    rz-slider-high="sliderPurkinje.max"
+    rz-slider-options="sliderPurkinje.options"
+    ng-mouseup = "ver()">
+</rzslider>
+<br>
+<br>
+<br>
+<div><b>DCN: </b></div><br>
+<rzslider
+    rz-slider-model="sliderDCN.min"
+    rz-slider-high="sliderDCN.max"
+    rz-slider-options="sliderDCN.options"
+    ng-mouseup = "ver()">
+</rzslider>
+<br>
+<br>
+<br>
+<div><b>Golgi: </b></div><br>
+<rzslider
+    rz-slider-model="sliderGolgi.min"
+    rz-slider-high="sliderGolgi.max"
+    rz-slider-options="sliderGolgi.options"
+    ng-mouseup = "ver()">
+</rzslider>
+<br>
+<br>
+<br>
+<div><b>IO: </b></div><br>
+<rzslider
+    rz-slider-model="sliderIO.min"
+    rz-slider-high="sliderIO.max"
+    rz-slider-options="sliderIO.options"
+    ng-mouseup = "ver()">
+</rzslider>
+
 </div>
