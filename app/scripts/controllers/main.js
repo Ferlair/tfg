@@ -249,11 +249,20 @@ angular
       var origen = [];
       var destino = [];
 
-      for (var i=0; i<lineas.length; i++) {
+      //VÁLIDO, DESCOMENTAR PARA OBTENER VALORES REALES DEL FICHERO
+      /*for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
+      }*/
+
+      //BUCLE QUE TOMA VALORES DE ORIGEN Y DESTINO ALEATORIOS PARA PRUEBAS
+      for (var i=0; i<lineas.length; i++) {
+        palabrasPorLineas = lineas[i].split(" ");
+        origen[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
+        destino[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
       }
+
 
       var items = [[0]];
 
