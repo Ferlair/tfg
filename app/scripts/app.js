@@ -1,3 +1,4 @@
+
 'use strict';
 
 /**
@@ -52,5 +53,10 @@ angular
       .when('/grafos', {
         templateUrl: 'views/grafos.html',
         controller: 'GrafosCtrl'
+      })
+      .when('/visualizacion2', {
+        templateUrl: 'views/visualizacion2.html',
+        controller: 'Visualizacion2Ctrl',
+        controllerAs: 'visualizacion2'
       })
   });
