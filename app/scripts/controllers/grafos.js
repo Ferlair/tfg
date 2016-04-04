@@ -36,6 +36,29 @@ angular
       grafoFactory.iniDCN = grafoFactory.iteracionesPurkinje;
       grafoFactory.iniGolgi = grafoFactory.iteracionesDCN;
       grafoFactory.iniIO = grafoFactory.iteracionesGolgi;
+
+      grafoFactory.minPeso = 0;
+      grafoFactory.maxPeso = 10;
+    }
+
+    $scope.crearPesos = function() {
+      var pesos = [];
+      var pesoAleatorio;
+      //console.log ('estamos en crear pesos');
+      for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
+        pesoAleatorio = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
+        pesos.push(pesoAleatorio);
+      }
+
+      //prueba
+      /*for (var j=0; j<pesos.length; j++) {
+        console.log ("numero array: "+pesos[j]);
+      }*/
+
+      //console.log ('el tamaño del array de pesos es: '+pesos.length);
+
+      grafoFactory.pesoGlobal = pesos;
+      //console.log ('eltamaño del array auxiliar es: '+grafoFactory.pesoGlobal.length);
     }
 
 
@@ -43,6 +66,7 @@ angular
     $scope.inicio = function() {
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
+      $scope.crearPesos();
       $scope.obtenerReferencias();
       grafoFactory.cargar(jsonCopy);
     }
@@ -95,6 +119,7 @@ angular
           for (var j=0; j<grafoFactory.iteracionesMosey; j++) {
             if (j >= inicioMosey && j <= finalMosey) {
               jsonCopy.nodes[j].hidden = false;
+              jsonCopy.edges[j].color = '#ff0000';
             }
             else {
               jsonCopy.nodes[j].hidden = true;
@@ -257,6 +282,76 @@ angular
       }
     };
 
+    $scope.sliderPeso = {
+        min: grafoFactory.minPeso,
+        max: grafoFactory.maxPeso,
+        options: {
+        floor: grafoFactory.minPeso,
+        ceil: grafoFactory.maxPeso,
+        noSwitching: true
+      }
+    };
+
+
+    $scope.coloreado = function(numeroRedondeado) {
+      var color;
+      switch (numeroRedondeado) {
+        case 10: {
+          color = "#FF0000";
+          break;
+        }
+        case 9: {
+          color = "#F70029";
+          break;
+        }
+        case 8: {
+          color = "#E30026";
+          break;
+        }
+        case 7: {
+          color = "#E60049";
+          break;
+        }
+        case 6: {
+          color = "#DC0046";
+          break;
+        }
+        case 5: {
+          color = "#D80061";
+          break;
+        }
+        case 4: {
+          color = "#D800C6";
+          break;
+        }
+        case 3: {
+          color = "#C00008";
+          break;
+        }
+        case 2: {
+          color = "#770008";
+          break;
+        }
+        case 1: {
+          color = "#5600D8";
+          break;
+        }
+        case 0: {
+          color = "#1200D8";
+          break;
+        }
+      }
+      for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
+        jsonCopy.edges[i].color = color;
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+
+
+
+
   }])
 
   .factory('grafoFactory', function grafoFactory(){
@@ -283,6 +378,10 @@ angular
     var iniDCN;
     var iniGolgi;
     var iniIO;
+
+    var minPeso;
+    var maxPeso;
+    var pesoGlobal = [];
     return{
 
       recuperarJSON: function() {
@@ -318,8 +417,8 @@ angular
             defaultNodeColor: "#ffffff",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            defaultEdgeColor: "#00ff00",
-            edgeColor: "#00ff00",
+            //defaultEdgeColor: "#00ff00",
+            //edgeColor: "#00ff00",
             defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'
           }

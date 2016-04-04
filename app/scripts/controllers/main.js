@@ -278,7 +278,12 @@ angular
       $scope.mostrarNeuronasLeidas(items);
     }
 
-
+    //FUNCIONES PRUEBAS
+    $scope.conversion = function() {
+      var valor = 100;
+      var hexaValor = valor.toString(16);
+      console.log ('El valor hexadecimal es: '+hexaValor);
+    }
 
   }])
 

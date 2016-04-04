@@ -8,6 +8,6 @@
  * Controller of the tfgApp
  */
 angular.module('tfgApp')
-  .controller('Visualizacion2Ctrl', ['$scope','grafoFactory', function($scope, grafoFactory){
+  .controller('Visualizacion2Ctrl', ['$scope','grafoFactory', function($scope, grafoFactory) {
 
-  });
+  }]);

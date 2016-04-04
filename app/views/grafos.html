@@ -25,6 +25,15 @@
 
 </div>-->
 
+<input type="button" value="nuevoColor" ng-click="coloreado(1)">
+
+<form>
+  <select id="filtrado" size="1">
+    <option>ID neuronal</option>
+    <option>Peso</option>
+  </select>
+</form>
+
 <div id="seleccion_neuronas">
     Selecciona las neuronas que quieres visualizar: <br><br>
     <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="ver()" checked> Mosey Fibers<br><br>
@@ -102,4 +111,14 @@
     ng-mouseup = "ver()">
 </rzslider>
 
+</div>
+
+<div id="sliderPeso">
+  <div><b>Filtrado por peso: </b></div><br>
+  <rzslider
+      rz-slider-model="sliderPeso.min"
+      rz-slider-high="sliderPeso.max"
+      rz-slider-options="sliderPeso.options"
+      ng-mouseup = "verPeso()">
+  </rzslider>
 </div>
