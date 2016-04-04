@@ -48,10 +48,29 @@ angular
 
     }
 
+    $scope.crearPesos = function() {
+      var pesos = [];
+      var pesoAleatorio;
+
+      for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
+        pesoAleatorio = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
+        pesos.push(pesoAleatorio);
+      }
+
+      grafoFactory.pesoGlobal = pesos;
+      console.log ('tamaño total de neuronas '+grafoFactory.numeroTotalNeuronas);
+      console.log ('tamaño array de pesos: '+pesos.length);
+      console.log ('tamaño grafofactory pesos: '+grafoFactory.pesoGlobal.length);
+    }
+
     $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
 
         //Creación del objeto json que alberga la información de nodos y aristas a dibujar
         var jsonObj = { nodes: [{}], edges: [{}]};
+
+        var color;
+
+        $scope.crearPesos();
 
         //Proporciona valores por defecto a la variable nodo usada en el bucle
         function getNodo() {
@@ -104,6 +123,7 @@ angular
               jsonObj.edges[i]=arista;
             }
 
+            //jsonObj.edges[i].color = "#ff0000";
             numeroMosey++;
             grafoFactory.numeroMosey = numeroMosey;
 
@@ -133,6 +153,9 @@ angular
               jsonObj.edges[i]=arista;
             }
 
+            //console.log(grafoFactory.pesoGlobal.length);
+            //color = $scope.getColor(grafoFactory.pesoGlobal[i]);
+            //jsonObj.edges[i].color = color;
             numeroGranulle++;
             grafoFactory.numeroGranulle = numeroGranulle;
           }
@@ -283,6 +306,58 @@ angular
       var valor = 100;
       var hexaValor = valor.toString(16);
       console.log ('El valor hexadecimal es: '+hexaValor);
+    }
+
+    $scope.getColor = function(numeroRedondeado) {
+      var color;
+      switch (numeroRedondeado) {
+        case 10: {
+          color = "#FF0000";
+          break;
+        }
+        case 9: {
+          color = "#F70029";
+          break;
+        }
+        case 8: {
+          color = "#E30026";
+          break;
+        }
+        case 7: {
+          color = "#E60049";
+          break;
+        }
+        case 6: {
+          color = "#DC0046";
+          break;
+        }
+        case 5: {
+          color = "#D80061";
+          break;
+        }
+        case 4: {
+          color = "#D800C6";
+          break;
+        }
+        case 3: {
+          color = "#C00008";
+          break;
+        }
+        case 2: {
+          color = "#770008";
+          break;
+        }
+        case 1: {
+          color = "#5600D8";
+          break;
+        }
+        case 0: {
+          color = "#1200D8";
+          break;
+        }
+      }
+
+      return color;
     }
 
   }])

@@ -41,7 +41,7 @@ angular
       grafoFactory.maxPeso = 10;
     }
 
-    $scope.crearPesos = function() {
+    /*$scope.crearPesos = function() {
       var pesos = [];
       var pesoAleatorio;
       //console.log ('estamos en crear pesos');
@@ -57,16 +57,16 @@ angular
 
       //console.log ('el tamaño del array de pesos es: '+pesos.length);
 
-      grafoFactory.pesoGlobal = pesos;
+      /*grafoFactory.pesoGlobal = pesos;
       //console.log ('eltamaño del array auxiliar es: '+grafoFactory.pesoGlobal.length);
-    }
+    }*/
 
 
 
     $scope.inicio = function() {
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
-      $scope.crearPesos();
+      //$scope.crearPesos();
       $scope.obtenerReferencias();
       grafoFactory.cargar(jsonCopy);
     }
@@ -348,10 +348,6 @@ angular
       grafoFactory.cargar(jsonCopy);
     }
 
-
-
-
-
   }])
 
   .factory('grafoFactory', function grafoFactory(){
@@ -417,7 +413,7 @@ angular
             defaultNodeColor: "#ffffff",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            //defaultEdgeColor: "#00ff00",
+            defaultEdgeColor: "#00ff00",
             //edgeColor: "#00ff00",
             defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'
