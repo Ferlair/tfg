@@ -348,6 +348,20 @@ angular
       grafoFactory.cargar(jsonCopy);
     }
 
+    $scope.verPeso = function() {
+      /*for (var i=0; i< grafoFactory.numeroTotalNeuronas; i++) {
+        if ((grafoFactory.pesoGlobal[i]>=$scope.sliderPeso.min)&&(grafoFactory.pesoGlobal[i]<=$scope.sliderPeso.max)) {
+            jsonCopy.edges[i].hidden = false;
+            console.log('hemos encontrado false');
+          }
+        else {
+            jsonCopy.edges[i].hidden = true;
+        }
+      }*/
+
+      for ()
+    }
+
   }])
 
   .factory('grafoFactory', function grafoFactory(){
