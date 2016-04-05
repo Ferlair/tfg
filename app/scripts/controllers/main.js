@@ -24,6 +24,58 @@ angular
     var numeroIo = 0;
     var numeroTotalNeuronas = 0;
 
+    $scope.getColor = function(numeroRedondeado) {
+      var color;
+      switch (numeroRedondeado) {
+        case 10: {
+          color = "#FF0000";
+          break;
+        }
+        case 9: {
+          color = "#F70029";
+          break;
+        }
+        case 8: {
+          color = "#E30026";
+          break;
+        }
+        case 7: {
+          color = "#E60049";
+          break;
+        }
+        case 6: {
+          color = "#DC0046";
+          break;
+        }
+        case 5: {
+          color = "#D80061";
+          break;
+        }
+        case 4: {
+          color = "#D800C6";
+          break;
+        }
+        case 3: {
+          color = "#C00008";
+          break;
+        }
+        case 2: {
+          color = "#770008";
+          break;
+        }
+        case 1: {
+          color = "#5600D8";
+          break;
+        }
+        case 0: {
+          color = "#1200D8";
+          break;
+        }
+      }
+
+      return color;
+    }
+
     $scope.escribirDatos = function(){
 
       var div =  document.getElementById('especificaciones');
@@ -63,14 +115,19 @@ angular
       console.log ('tamaño grafofactory pesos: '+grafoFactory.pesoGlobal.length);
     }
 
+    $scope.colorearAristas = function() {
+      var color;
+
+      for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
+        color = $scope.getColor(grafoFactory.pesoGlobal[i]);
+        jsonCopy.edges[i].color = color;
+      }
+    }
+
     $scope.mostrarNeuronasLeidas = function(arrayNeuronal) {
 
         //Creación del objeto json que alberga la información de nodos y aristas a dibujar
         var jsonObj = { nodes: [{}], edges: [{}]};
-
-        var color;
-
-        $scope.crearPesos();
 
         //Proporciona valores por defecto a la variable nodo usada en el bucle
         function getNodo() {
@@ -257,10 +314,11 @@ angular
         }
 
         jsonCopy = jsonObj;
-
+        $scope.crearPesos();
 
         $scope.escribirDatos();
         grafoFactory.almacenarJSON(jsonCopy);
+        $scope.colorearAristas();
 
     }
 
@@ -308,57 +366,7 @@ angular
       console.log ('El valor hexadecimal es: '+hexaValor);
     }
 
-    $scope.getColor = function(numeroRedondeado) {
-      var color;
-      switch (numeroRedondeado) {
-        case 10: {
-          color = "#FF0000";
-          break;
-        }
-        case 9: {
-          color = "#F70029";
-          break;
-        }
-        case 8: {
-          color = "#E30026";
-          break;
-        }
-        case 7: {
-          color = "#E60049";
-          break;
-        }
-        case 6: {
-          color = "#DC0046";
-          break;
-        }
-        case 5: {
-          color = "#D80061";
-          break;
-        }
-        case 4: {
-          color = "#D800C6";
-          break;
-        }
-        case 3: {
-          color = "#C00008";
-          break;
-        }
-        case 2: {
-          color = "#770008";
-          break;
-        }
-        case 1: {
-          color = "#5600D8";
-          break;
-        }
-        case 0: {
-          color = "#1200D8";
-          break;
-        }
-      }
 
-      return color;
-    }
 
   }])
 
