@@ -358,8 +358,6 @@ angular
             jsonCopy.edges[i].hidden = true;
         }
       }*/
-
-      for ()
     }
 
   }])
