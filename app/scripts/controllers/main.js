@@ -582,61 +582,16 @@ angular
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
       }
 
-      for (var j=0; j<10; j++) {
+      for (var j=0; j<lineas.length; j++) {
         arrayNeuronal = $scope.asignarNeurona(origen[j],destino[j], arrayNeuronal);
       }
 
       //Bucle solamente de prueba
-      /*for (var k=0; k<6; k++) {
-        console.log ('id arrayNeuronal: '+arrayNeuronal[0].id);
-        console.log ('destino arrayNeuronal: '+arrayNeuronal[0].destino);
-        console.log ('peso arrayNeuronal: '+arrayNeuronal[0].peso);
-      }*/
-
-
-      //console.log ('numero de lineas: '+lineas.length);
-
-      //BUCLE QUE TOMA VALORES DE ORIGEN Y DESTINO ALEATORIOS PARA PRUEBAS
-      /*for (var i=0; i<lineas.length; i++) {
-        palabrasPorLineas = lineas[i].split(" ");
-        origen[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
-        destino[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
-      }*/
-
-      //console.log ('numero de origen: '+ origen.length);
-
-      //var items = [[0]];
-
-      //var numeroNeuronas = $scope.obtenerNumeroNeuronas(origen);
-
-      //Creamos el array con el número de neuronas deseados
-      /*for (var j=0; j<numeroNeuronas; j++){
-        items.push([0]);
+      for (var k=0; k<arrayNeuronal.length; k++) {
+        console.log ('id arrayNeuronal: '+arrayNeuronal[k].id);
+        console.log ('destino arrayNeuronal: '+arrayNeuronal[k].destino);
+        console.log ('peso arrayNeuronal: '+arrayNeuronal[k].peso);
       }
-
-      for (var k=0; k<items.length;k++){
-        items[[origen[k]]].push(destino[k]);
-      }
-
-      console.log ('items: '+items);*/
-
-      //$scope.mostrarNeuronasLeidas(items);
-    }
-
-
-    //Prueba creación array de objetos
-    $scope.pruebaCreacion = function() {
-      var seguimientoNeuronas = new Array();
-      var neurona = new Array();
-      for (var i=0; i<2; i++) {
-        neurona.id = i;
-        neurona.destinos = [130];
-        neurona.destinos.push(230);
-        neurona.pesos = [i+3];
-        seguimientoNeuronas.push(neurona);
-      }
-      console.log (neurona);
-      console.log (seguimientoNeuronas);
     }
 
     $scope.obtenerNumeroNeuronas = function(origen) {
@@ -659,11 +614,6 @@ angular
       neurona.destino = [];
       neurona.peso = [];
 
-      console.log ('-------------------------------');
-      console.log ('');
-      console.log ('origen es: '+origen);
-      console.log ('destino es: '+ destino);
-
       //Buscamos si la neurona se encontraba previamente en nuestro array de neuronas
       while ((!esta) && (i<arrayNeuronal.length)) {
         esta = (origen==arrayNeuronal[i].id);
@@ -672,32 +622,15 @@ angular
 
 
       if (esta) {
-        console.log('esta');
-        console.log ('neurona encontrada en la posición: '+i);
         arrayNeuronal[i-1].destino.push(destino);
         arrayNeuronal[i-1].peso.push(peso);
       }
       else { //Creamos un nuevo objeto y lo añadimos al array de neuronas
-        console.log ('no está');
         neurona.id = origen;
         neurona.destino.push(destino);
         neurona.peso.push(peso);
         arrayNeuronal.push(neurona);
       }
-
-      console.log ('neurona id: '+neurona.id);
-      console.log ('neurona destino: '+neurona.destino);
-      console.log ('neurona peso: '+ neurona.peso);
-
-      for (var i=0; i<arrayNeuronal.length;i++) {
-        console.log ('id arrayneuronal en asignar neurona: '+arrayNeuronal[i].id);
-        console.log ('destino arrayneuronal en asignar neurona: '+arrayNeuronal[i].destino);
-        console.log ('peso arrayneuronal en asignar neurona: '+arrayNeuronal[i].peso);
-      }
-
-      console.log('');
-
-
 
       return arrayNeuronal;
 
