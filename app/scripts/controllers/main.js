@@ -808,8 +808,21 @@ angular
         console.log ('peso: '+arrayNeuronal[i].peso);
       }*/
 
+      var aux;
+
       for (var j=0; j<10; j++) {
-        $scope.asignarNeurona(origen[j],destino[j], arrayNeuronal);
+        //$scope.asignarNeurona(origen[j],destino[j], arrayNeuronal);
+        //arrayNeuronal[origen[j]].destino.push(destino[j]);
+        var aux = [];
+        aux.id = 0;
+        aux.destino = [];
+        aux.peso = [];
+        aux = arrayNeuronal[j];
+        console.log('aux id: '+ aux.id);
+        aux.destino.push(43+j);
+
+        console.log('aux destino: '+aux.destino);
+        //console.log(arrayNeuronal[origen[j]].destino);
       }
 
       //console.log ('numero total de arrayneuronal: '+arrayNeuronal.length);
