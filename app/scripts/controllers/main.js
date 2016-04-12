@@ -158,7 +158,7 @@ angular
           nodo.label = "neurona "+i;
 
           //Mosey Fibers
-          if (i>=0 && i<248) {
+          /*if (i>=0 && i<248) {
             var radius = 1;
             var angle = Math.random()*Math.PI*2;
             var x = Math.cos(angle)*radius;
@@ -312,7 +312,7 @@ angular
           numeroTotalNeuronas++;
           grafoFactory.numeroTotalNeuronas = numeroTotalNeuronas;
 
-        }
+        }*/
 
         jsonCopy = jsonObj;
         $scope.crearPesos();
@@ -719,7 +719,7 @@ angular
 
     //Entrada: fichero de texto con datos neuronales
     //Salida: array bidimensional con las aristas para cada neurona
-    $scope.cargarNeuronas = function($fileContent) {
+    /*$scope.cargarNeuronas = function($fileContent) {
       var lineas = $fileContent.split("\n");
       var palabrasPorLineas;
       var origen = [];
@@ -741,7 +741,7 @@ angular
         destino[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
       }*/
 
-      console.log ('numero de origen: '+ origen.length);
+      /*console.log ('numero de origen: '+ origen.length);
 
       var items = [[0]];
 
@@ -761,9 +761,8 @@ angular
       console.log ('items: '+items);
 
       $scope.mostrarNeuronasLeidas(items);
-    }
+    }*/
 
-    //EN PRUEBAS ------------------------------------------------------------------------
     //Entrada: fichero de texto con datos neuronales
     //Salida: array bidimensional con las aristas para cada neurona
     $scope.nuevoCargarNeuronas = function($fileContent) {
@@ -772,65 +771,32 @@ angular
       var origen = [];
       var destino = [];
       var arrayNeuronal = new Array();
-      //arrayNeuronal.destino = [];
-      //arrayNeuronal.peso = [];
 
-      //VÁLIDO, DESCOMENTAR PARA OBTENER VALORES REALES DEL FICHERO
-      /*for (var i=0; i<lineas.length; i++) {
+      for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
-      }*/
-
-      //ELIMINAR, SÓLO PRUEBAS
-      for (var i=0; i<lineas.length; i++) {
-        palabrasPorLineas = lineas[i].split(" ");
-        origen[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
-        destino[i] = Math.floor(Math.random() * (1870 - 1 + 1)) + 1;
       }
-
-      //console.log ('origen: '+origen.length);
 
       //Obtenemos el número total de neuronas que contiene el archivo
       grafoFactory.numeroTotalNeuronas = $scope.obtenerNumeroNeuronas(origen,destino);
 
-      //console.log ('numero de neuronas en el fichero: '+grafoFactory.numeroTotalNeuronas);
-
-      //console.log('numeroTotalNeuronas'+grafoFactory.numeroTotalNeuronas);
-
+      //Inicializamos el array con un valor para cada una de las neuronas que hay en el fichero
+      //El valor inicial es de id igual al número de neurona, destino la propia neurona y peso 0
       arrayNeuronal = $scope.inicializarArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal);
 
+      //A continuación se lee una a una cada neurona y se agrega su neurona de destino y un peso
+      for (var j=0; j<origen.length; j++) {
+        var peso = Math.floor(Math.random() * (10-1+1)+1); //Agregramos un peso aleatorio hasta que se incluyan los definitivos
+        arrayNeuronal[origen[j]].peso.push(peso);
+        arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
 
-
-      /*for (var i=0; i<arrayNeuronal.length;i++) {
-        console.log ('id: '+arrayNeuronal[i].id);
-        console.log ('destino: '+arrayNeuronal[i].destino);
-        console.log ('peso: '+arrayNeuronal[i].peso);
-      }*/
-
-      var aux;
-
-      for (var j=0; j<10; j++) {
-        //$scope.asignarNeurona(origen[j],destino[j], arrayNeuronal);
-        //arrayNeuronal[origen[j]].destino.push(destino[j]);
-        var aux = [];
-        aux.id = 0;
-        aux.destino = [];
-        aux.peso = [];
-        aux = arrayNeuronal[j];
-        console.log('aux id: '+ aux.id);
-        aux.destino.push(43+j);
-
-        console.log('aux destino: '+aux.destino);
-        //console.log(arrayNeuronal[origen[j]].destino);
       }
-
-      //console.log ('numero total de arrayneuronal: '+arrayNeuronal.length);
-
-      //console.log ('arrayNeuronal: '+arrayNeuronal);
 
     }
 
+    //Se obtiene el número de neurona más alto, teniendo en cuenta tanto las neuronas de origen como de destino
+    //de esta manera, se inicializará el array con los valores de id del 0 al número más alto obtenido en esta función
     $scope.obtenerNumeroNeuronas = function(origen,destino) {
       var maximoOrigen = Math.max.apply(null,origen);
       var maximoDestino = Math.max.apply(null, destino);
@@ -839,53 +805,15 @@ angular
       return max;
     }
 
-    //Prueba para asignar una neurona dentro de nuestro array de neuronas
-    //VÁLIDO
-    $scope.asignarNeurona = function(origen, destino, arrayNeuronal) {
-      /*var esta = false;
-      var i=0;
-      var peso = Math.floor(Math.random() * (10-1+1)+1);
-      var neurona = new Array();
-      neurona.destino = [];
-      neurona.peso = [];
-
-      //console.log ('aqui: '+arrayNeuronal);
-
-      //Buscamos si la neurona se encontraba previamente en nuestro array de neuronas
-      while ((!esta) && (i<arrayNeuronal.length)) {
-        esta = (origen==arrayNeuronal[i].id);
-        i++;
-      }
-
-      if (esta) {
-        console.log('esta');
-        arrayNeuronal[i-1].destino.push(destino);
-        arrayNeuronal[i-1].peso.push(peso);
-      }
-      else { //Creamos un nuevo objeto y lo añadimos al array de neuronas
-        console.log('no está');
-        //neurona.id = origen;
-        //neurona.destino.push(destino);
-        //neurona.peso.push(peso);
-        //arrayNeuronal.push(neurona);
-      }
-
-      //console.log('array: '+arrayNeuronal);
-      //return arrayNeuronal;*/
-      var peso = Math.floor(Math.random() * (10-1+1)+1);
-
-      arrayNeuronal[0].destino.push(destino);
-      //arrayNeuronal[origen].peso.push(peso);
-    }
-
-    //Prueba para la inicialización del arrayNeuronal
     //Debemos crear una celda del array para cada una de las neuronas, con valores iniciales por defecto
     $scope.inicializarArray = function(limite, arrayNeuronal) {
       for (var i=0; i<limite; i++) {
         var neurona = new Array();
+        neurona.destino = [];
+        neurona.peso = [];
         neurona.id = i;
-        neurona.destino = i;
-        neurona.peso = 0;
+        neurona.destino.push(i);
+        neurona.peso.push(0);
         arrayNeuronal.push(neurona);
       }
       return arrayNeuronal;
