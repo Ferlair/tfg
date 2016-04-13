@@ -112,16 +112,89 @@ angular
       grafoFactory.pesoGlobal = pesos;
     }
 
-    $scope.colorearAristas = function() {
-      var color;
+    $scope.colorearAristas = function(arrayNeuronal) {
+      /*var color;
 
       for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
         color = $scope.getColor(grafoFactory.pesoGlobal[i]);
         jsonCopy.edges[i].color = color;
+      }*/
+      //console.log(jsonCopy.edges.length);
+
+      /*var color;
+      var origen = jsonCopy.edges[0].source.substr(1);
+      var destino = jsonCopy.edges[0].target.substr(1);
+      console.log(jsonCopy.edges);
+      console.log ('el origen es '+origen);
+      console.log ('el destino es '+destino);
+
+      //Buscamos el peso correspondiente
+      var i=-1;
+      var esta = false;
+      while (!esta) {
+        i++;
+        esta = arrayNeuronal[origen].destino[i] == destino;
+      }
+
+      var peso = arrayNeuronal[origen].peso[i];
+      color = $scope.getColor(peso);
+      jsonCopy.edges[0].color = color;
+      console.log ('la posición en la que se ha encontrado es: '+i);
+      console.log ('el destino encontrado es '+arrayNeuronal[origen].destino[i]);
+      console.log ('el peso encontrado es '+arrayNeuronal[origen].peso[i]);
+      console.log ('el color es '+color);
+
+
+      for (var i=0; i<arrayNeuronal[origen].destino.length;i++) {
+        console.log('i: '+i);
+        console.log('valor: '+arrayNeuronal[origen].destino[i]);
+        console.log('peso: '+arrayNeuronal[origen].peso[i]);
+      }*/
+
+      var color;
+      var origen;
+      var destino;
+
+      for (var i=0; i<2; i++) {
+        origen = jsonCopy.edges[i].source.substr(1);
+        destino = jsonCopy.edges[i].target.substr(1);
+
+        var posicion=-1;
+        var esta = false;
+
+        while (!esta) {
+          posicion++;
+          esta = arrayNeuronal[origen].destino[posicion] == destino;
+          console.log ('posicion: '+posicion);
+        }
+
+        console.log('LA POSICION ES '+posicion);
+        console.log ('destino en array neuronal '+arrayNeuronal[origen].destino[171]);
+        console.log ('destino buscado '+destino);
+
+        var peso = arrayNeuronal[origen].peso[posicion];
+        color = $scope.getColor(peso);
+        jsonCopy.edges[i].color = color;
+
+        console.log ('el origen es '+origen);
+        console.log ('el destino es '+destino);
+
+        console.log ('la posición en la que se ha encontrado es: '+posicion);
+        console.log ('el destino encontrado es '+arrayNeuronal[origen].destino[posicion]);
+        console.log ('el peso encontrado es '+arrayNeuronal[origen].peso[posicion]);
+        console.log ('el color es '+color);
+      }
+
+      console.log ('tamaño destinos: '+arrayNeuronal[0].destino.length);
+
+      for (var i=0; i<arrayNeuronal[1].destino.length;i++) {
+        console.log('i: '+i);
+        console.log('valor: '+arrayNeuronal[1].destino[i]);
+        console.log('peso: '+arrayNeuronal[1].peso[i]);
       }
     }
 
-    //PRUEBA -----------------------------------------------------------------------------------
+
     $scope.generarJSON = function(arrayNeuronal) {
 
         var nombreArista = 0;
@@ -149,7 +222,6 @@ angular
           }
         };
 
-        console.log ('tamaño arrayNeuronal: '+arrayNeuronal.length);
         //Creación del lienzo inicial
         for (var i=0; i<arrayNeuronal.length; i++) {
           var nodo = getNodo();
@@ -174,8 +246,6 @@ angular
             arista.target = "n" + arrayNeuronal[i].id;
             jsonObj.edges[i] = arista;
 
-            console.log ('estamos en la id: '+arrayNeuronal[i].id);
-
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
               nombreArista = arrayNeuronal[i].id;
               nombreArista = nombreArista+arrayNeuronal[i].destino[j];
@@ -183,7 +253,6 @@ angular
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               jsonObj.edges[i]=arista;
-              console.log ('nombre de la arista: '+arista.id);
             }
 
             numeroMosey++;
@@ -356,7 +425,7 @@ angular
         //$scope.crearPesos();
         $scope.escribirDatos();
         grafoFactory.almacenarJSON(jsonCopy);
-        //$scope.colorearAristas();
+        $scope.colorearAristas(arrayNeuronal);
 
     }
 
