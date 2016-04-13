@@ -122,6 +122,10 @@ angular
         color = $scope.getColor(peso);
         jsonCopy.edges[i].color = color;
       }
+      for (var i=0; i<10;i++) {
+        console.log(jsonCopy.edges[0].color);
+      }
+
     }
 
 
