@@ -120,10 +120,11 @@ angular
 
         var peso = arrayNeuronal[origen].peso[posicion];
         color = $scope.getColor(peso);
+        console.log('color: '+color);
         jsonCopy.edges[i].color = color;
       }
-      for (var i=0; i<10;i++) {
-        console.log(jsonCopy.edges[0].color);
+      for (var i=0; i<2;i++) {
+        console.log(jsonCopy.edges[i].color);
       }
 
     }
@@ -215,6 +216,7 @@ angular
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
               nombreArista = arrayNeuronal[i].destino[j];
+              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
               arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
@@ -246,6 +248,7 @@ angular
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
               nombreArista = arrayNeuronal[i].destino[j];
+              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
               arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
@@ -277,6 +280,7 @@ angular
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
               nombreArista = arrayNeuronal[i].destino[j];
+              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
               arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
@@ -308,6 +312,7 @@ angular
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
               nombreArista = arrayNeuronal[i].destino[j];
+              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
               arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
@@ -340,6 +345,7 @@ angular
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
               nombreArista = arrayNeuronal[i].destino[j];
+              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
               arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
@@ -372,11 +378,22 @@ angular
       var destino = [];
       var arrayNeuronal = new Array();
 
-      for (var i=0; i<lineas.length; i++) {
+      /*for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
+      }*/
+
+
+      for (var i=0; i<lineas.length; i++) {
+        palabrasPorLineas = lineas[i].split(" ");
+        origen[i] = Math.floor(Math.random() * (1870-1+1)+1);; //Almacenamos la neurona origen
+        destino[i] = Math.floor(Math.random() * (1870-1+1)+1); //Almacenamos la neurona destino
       }
+
+      /*for (var j=0; j<origen.length;j++){
+        console.log(origen[j]);
+      }*/
 
       //Obtenemos el número total de neuronas que contiene el archivo
       grafoFactory.numeroTotalNeuronas = $scope.obtenerNumeroNeuronas(origen,destino);
