@@ -24,6 +24,7 @@ angular
     var numeroIo = 0;
     var numeroTotalNeuronas = 0;
 
+    //Devuelve el color de la arista en función del peso introducido
     $scope.getColor = function(numeroRedondeado) {
       var color;
       switch (numeroRedondeado) {
