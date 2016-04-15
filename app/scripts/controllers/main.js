@@ -134,6 +134,7 @@ angular
     $scope.generarJSON = function(arrayNeuronal) {
 
         var nombreArista = 0;
+        var index=0;
 
         //Creación del objeto json que alberga la información de nodos y aristas a dibujar
         var jsonObj = { nodes: [{}], edges: [{}]};
@@ -177,18 +178,28 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.id = "e"+arrayNeuronal[i].id;
+            index = 1;
+            str = index.toString(index);
+            nombreArista = arrayNeuronal[i].id+str;
+            nombreArista = nombreArista+nombreArista;
+            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
+            console.log('primera arista: '+arista.id);
+            console.log('primer origen: '+arista.source);
+            console.log('primer destino: '+arista.target);
             jsonObj.edges[i] = arista;
 
+
+
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].id;
+              nombreArista = arrayNeuronal[i].id + index;
               nombreArista = nombreArista+arrayNeuronal[i].destino[j];
               arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               jsonObj.edges[i]=arista;
+              index++;
             }
 
             numeroMosey++;
@@ -210,7 +221,9 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.id = "e"+arrayNeuronal[i].id;
+            nombreArista = arrayNeuronal[i].id;
+            nombreArista = nombreArista+nombreArista;
+            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
             jsonObj.edges[i] = arista;
@@ -242,7 +255,9 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.id = "e"+arrayNeuronal[i].id;
+            nombreArista = arrayNeuronal[i].id;
+            nombreArista = nombreArista+nombreArista;
+            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
             jsonObj.edges[i] = arista;
@@ -274,7 +289,9 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.id = "e"+arrayNeuronal[i].id;
+            nombreArista = arrayNeuronal[i].id;
+            nombreArista = nombreArista+nombreArista;
+            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
             jsonObj.edges[i] = arista;
@@ -306,7 +323,9 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.id = "e"+arrayNeuronal[i].id;
+            nombreArista = arrayNeuronal[i].id;
+            nombreArista = nombreArista+nombreArista;
+            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
             jsonObj.edges[i] = arista;
@@ -338,7 +357,9 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.id = "e"+arrayNeuronal[i].id;
+            nombreArista = arrayNeuronal[i].id;
+            nombreArista = nombreArista+nombreArista;
+            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
             jsonObj.edges[i] = arista;
