@@ -425,7 +425,7 @@ angular
             defaultNodeColor: "#ffffff",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            defaultEdgeColor: "#00ff00",
+            //defaultEdgeColor: "#00ff00",
             //edgeColor: "#00ff00",
             defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'

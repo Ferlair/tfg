@@ -107,9 +107,11 @@ angular
       var origen;
       var destino;
 
-      for (var i=0; i<2; i++) {
+      for (var i=0; i<20; i++) {
         origen = jsonCopy.edges[i].source.substr(1);
         destino = jsonCopy.edges[i].target.substr(1);
+
+        console.log('edge: '+jsonCopy.edges[i].id);
 
         var posicion=-1;
         var esta = false;
@@ -121,12 +123,16 @@ angular
 
         var peso = arrayNeuronal[origen].peso[posicion];
         color = $scope.getColor(peso);
-        console.log('color: '+color);
+        //console.log('color: '+color);
         jsonCopy.edges[i].color = color;
       }
-      for (var i=0; i<2;i++) {
-        console.log(jsonCopy.edges[i].color);
+
+      //DEPURACIÓN
+      for (var i=0; i<20;i++) {
+        //console.log(jsonCopy.edges[i].color);
       }
+
+      console.log(jsonCopy);
 
     }
 
@@ -164,6 +170,8 @@ angular
           var nodo = getNodo();
           var arista = getAristas();
 
+          //console.log('valor de i: '+i+' y nodo id: '+arrayNeuronal[i].id);
+
           //Mosey Fibers
           if (i>=0 && i<248) {
             nodo.id = "n"+arrayNeuronal[i].id;
@@ -175,31 +183,34 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 1;
-
             jsonObj.nodes[i] = nodo;
 
-            index = 1;
-            str = index.toString(index);
-            nombreArista = arrayNeuronal[i].id+str;
-            nombreArista = nombreArista+nombreArista;
-            arista.id = "e"+nombreArista;
+            //index = 1;
+            //str = index.toString(index);
+            //nombreArista = arrayNeuronal[i].id+str;
+            //nombreArista = nombreArista+nombreArista;
+
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
-            console.log('primera arista: '+arista.id);
-            console.log('primer origen: '+arista.source);
-            console.log('primer destino: '+arista.target);
-            jsonObj.edges[i] = arista;
+            arista.id = "e"+arista.source+'+'+arista.target;
+            //console.log('primera arista: '+arista.id);
+            //console.log('primer origen: '+arista.source);
+            //console.log('primer destino: '+arista.target);
+            jsonObj.edges[0].push(arista);
 
-
+            //console.log ('nodo id: '+nodo.id+' arista origen: '+arista.source+' destino de arista: '+arista.target);
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].id + index;
-              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-              arista.id="e"+ nombreArista;
+              //nombreArista = arrayNeuronal[i].id + index;
+              //nombreArista = nombreArista+arrayNeuronal[i].destino[j];
+
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
+              arista.id="e"+ arista.source+'+'+arista.target;
               jsonObj.edges[i]=arista;
-              index++;
+
+              //console.log ('nodo id: '+nodo.id+' arista origen: '+arista.source+' destino de arista: '+arista.target);
+              //console.log ('AQUÍ PASAMOS');
             }
 
             numeroMosey++;
@@ -221,19 +232,15 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            nombreArista = arrayNeuronal[i].id;
-            nombreArista = nombreArista+nombreArista;
-            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
+            arista.id = "e"+arista.source+'+'+arista.target;
             jsonObj.edges[i] = arista;
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].destino[j];
-              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-              arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
+              arista.id="e"+ arista.source+'+'+arista.target;
               jsonObj.edges[i]=arista;
             }
 
@@ -255,20 +262,20 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            nombreArista = arrayNeuronal[i].id;
-            nombreArista = nombreArista+nombreArista;
-            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
-            jsonObj.edges[i] = arista;
+            arista.id = "e"+arista.source+'+'+arista.target;
+            /*jsonObj[i].addEdge({
+              id:'1',
+              source:arista.source,
+              target:arista.target
+            });*/
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].destino[j];
-              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-              arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
-              jsonObj.edges[i]=arista;
+              arista.id="e"+ arista.source+'+'+arista.target;
+              /*jsonObj.edges.addEdge(arista*/
             }
 
             numeroPurkinje++;
@@ -289,19 +296,15 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            nombreArista = arrayNeuronal[i].id;
-            nombreArista = nombreArista+nombreArista;
-            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
+            arista.id = "e"+arista.source+'+'+arista.target;
             jsonObj.edges[i] = arista;
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].destino[j];
-              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-              arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
+              arista.id="e"+ arista.source+'+'+arista.target;
               jsonObj.edges[i]=arista;
             }
 
@@ -323,19 +326,15 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            nombreArista = arrayNeuronal[i].id;
-            nombreArista = nombreArista+nombreArista;
-            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
+            arista.id = "e"+arista.source+'+'+arista.target;
             jsonObj.edges[i] = arista;
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].destino[j];
-              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-              arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
+              arista.id="e"+ arista.source+'+'+arista.target;
               jsonObj.edges[i]=arista;
             }
 
@@ -357,20 +356,16 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            nombreArista = arrayNeuronal[i].id;
-            nombreArista = nombreArista+nombreArista;
-            arista.id = "e"+nombreArista;
             arista.source = "n" + arrayNeuronal[i].id;
             arista.target = "n" + arrayNeuronal[i].id;
+            arista.id = "e"+arista.source+'+'+arista.target;
             jsonObj.edges[i] = arista;
 
 
             for (var j=1; j<arrayNeuronal[i].destino.length;j++){
-              nombreArista = arrayNeuronal[i].destino[j];
-              nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-              arista.id="e"+ nombreArista;
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
+              arista.id="e"+ arista.source+'+'+arista.target;
               jsonObj.edges[i]=arista;
             }
 
@@ -400,18 +395,18 @@ angular
       var destino = [];
       var arrayNeuronal = new Array();
 
-      /*for (var i=0; i<lineas.length; i++) {
+      for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
         destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
-      }*/
+      }
 
 
-      for (var i=0; i<lineas.length; i++) {
+      /*for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = Math.floor(Math.random() * (1870-1+1)+1);; //Almacenamos la neurona origen
         destino[i] = Math.floor(Math.random() * (1870-1+1)+1); //Almacenamos la neurona destino
-      }
+      }*/
 
       /*for (var j=0; j<origen.length;j++){
         console.log(origen[j]);
