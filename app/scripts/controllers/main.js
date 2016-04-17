@@ -106,8 +106,9 @@ angular
       var color;
       var origen;
       var destino;
+      //console.log ('COPY: '+jsonCopy.edges[1].source.substring(1));
 
-      for (var i=0; i<20; i++) {
+      for (var i=1; i<arrayNeuronal.length; i++) {
         origen = jsonCopy.edges[i].source.substr(1);
         destino = jsonCopy.edges[i].target.substr(1);
 
@@ -168,7 +169,7 @@ angular
         //Creación del lienzo inicial
         for (var i=0; i<arrayNeuronal.length; i++) {
           var nodo = getNodo();
-          var arista = getAristas();
+          //var arista = getAristas();
 
           //console.log('valor de i: '+i+' y nodo id: '+arrayNeuronal[i].id);
 
@@ -190,28 +191,38 @@ angular
             //nombreArista = arrayNeuronal[i].id+str;
             //nombreArista = nombreArista+nombreArista;
 
-            arista.source = "n" + arrayNeuronal[i].id;
-            arista.target = "n" + arrayNeuronal[i].id;
-            arista.id = "e"+arista.source+'+'+arista.target;
+            //for (var k=0;k<3;k++){
+            //arista.source = "n" + arrayNeuronal[i].id;
+            //arista.target = "n" + arrayNeuronal[i].id;
+            //arista.id = "e"+arista.source+'+'+arista.target;
             //console.log('primera arista: '+arista.id);
             //console.log('primer origen: '+arista.source);
             //console.log('primer destino: '+arista.target);
-            jsonObj.edges[0].push(arista);
+            //jsonObj.edges.push(arista);
+           //}
 
             //console.log ('nodo id: '+nodo.id+' arista origen: '+arista.source+' destino de arista: '+arista.target);
 
-            for (var j=1; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+
               //nombreArista = arrayNeuronal[i].id + index;
               //nombreArista = nombreArista+arrayNeuronal[i].destino[j];
-
+              var arista = getAristas();
+              //console.log ('nodo id: '+nodo.id+' arista origen: '+arista.source+' destino de arista: '+arista.target);
+              //console.log ('AQUÍ PASAMOS');
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
-              jsonObj.edges[i]=arista;
+              if (i==0 && j==0) {
+                jsonObj.edges[0] = arista;
+              }
+              else {
+                jsonObj.edges.push(arista);
+              }
 
-              //console.log ('nodo id: '+nodo.id+' arista origen: '+arista.source+' destino de arista: '+arista.target);
-              //console.log ('AQUÍ PASAMOS');
             }
+
+
 
             numeroMosey++;
             grafoFactory.numeroMosey = numeroMosey;
@@ -232,16 +243,23 @@ angular
 
             jsonObj.nodes[i] = nodo;
 
-            arista.source = "n" + arrayNeuronal[i].id;
-            arista.target = "n" + arrayNeuronal[i].id;
-            arista.id = "e"+arista.source+'+'+arista.target;
-            jsonObj.edges[i] = arista;
+            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
 
-            for (var j=1; j<arrayNeuronal[i].destino.length;j++){
+              //nombreArista = arrayNeuronal[i].id + index;
+              //nombreArista = nombreArista+arrayNeuronal[i].destino[j];
+              var arista = getAristas();
+              //console.log ('nodo id: '+nodo.id+' arista origen: '+arista.source+' destino de arista: '+arista.target);
+              //console.log ('AQUÍ PASAMOS');
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
-              jsonObj.edges[i]=arista;
+              if (i==0 && j==0) {
+                jsonObj.edges[0] = arista;
+              }
+              else {
+                jsonObj.edges.push(arista);
+              }
+
             }
 
             numeroGranulle++;
@@ -382,6 +400,7 @@ angular
         //$scope.crearPesos();
         $scope.escribirDatos();
         grafoFactory.almacenarJSON(jsonCopy);
+        console.log(jsonObj);
         $scope.colorearAristas(arrayNeuronal);
 
     }
