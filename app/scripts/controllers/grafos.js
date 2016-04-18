@@ -422,6 +422,8 @@ angular
             container: document.getElementById('container2')
           },
           settings: {
+            drawLabels: 'false',
+            enableHovering: 'false',
             defaultNodeColor: "#ffffff",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
@@ -429,6 +431,7 @@ angular
             //edgeColor: "#00ff00",
             defaultLabelHoverColor: "#0010ff",
             defaultLabelColor: '#0010ff'
+
           }
         })
       }
