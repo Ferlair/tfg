@@ -119,7 +119,6 @@ angular
           for (var j=0; j<grafoFactory.iteracionesMosey; j++) {
             if (j >= inicioMosey && j <= finalMosey) {
               jsonCopy.nodes[j].hidden = false;
-              jsonCopy.edges[j].color = '#ff0000';
             }
             else {
               jsonCopy.nodes[j].hidden = true;
