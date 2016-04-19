@@ -21,6 +21,7 @@ angular
 
 
     var jsonCopy;
+    var arrayNeuronal;
 
     $scope.obtenerReferencias = function() {
       grafoFactory.iteracionesMosey = grafoFactory.numeroMosey;
@@ -41,33 +42,29 @@ angular
       grafoFactory.maxPeso = 10;
     }
 
-    /*$scope.crearPesos = function() {
-      var pesos = [];
-      var pesoAleatorio;
-      //console.log ('estamos en crear pesos');
-      for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
-        pesoAleatorio = Math.floor(Math.random() * (10 - 0 + 1)) + 0;
-        pesos.push(pesoAleatorio);
+    //Función que devuelve la posición de una determinada arista dentro
+    //del json del grafo
+    $scope.buscarArista = function (origen, destino){
+      var nombreABuscar = 'en'+origen+'+'+'n'+destino;
+      var pos;
+      for (var i=0; i<jsonCopy.edges.length; i++) {
+        var id= jsonCopy.edges[i].id;
+        if (id == nombreABuscar)
+            pos = i;
       }
-
-      //prueba
-      /*for (var j=0; j<pesos.length; j++) {
-        console.log ("numero array: "+pesos[j]);
-      }*/
-
-      //console.log ('el tamaño del array de pesos es: '+pesos.length);
-
-      /*grafoFactory.pesoGlobal = pesos;
-      //console.log ('eltamaño del array auxiliar es: '+grafoFactory.pesoGlobal.length);
-    }*/
+      return pos;
+    }
 
 
 
     $scope.inicio = function() {
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
-      //$scope.crearPesos();
+      arrayNeuronal = grafoFactory.recuperarArrayNeuronal();
       $scope.obtenerReferencias();
+      //console.log(jsonCopy);
+      console.log('array: '+arrayNeuronal[0].id);
+      $scope.buscarArista(1536,1772);
       grafoFactory.cargar(jsonCopy);
     }
 
@@ -291,73 +288,30 @@ angular
       }
     };
 
-
-    $scope.coloreado = function(numeroRedondeado) {
-      var color;
-      switch (numeroRedondeado) {
-        case 10: {
-          color = "#FF0000";
-          break;
-        }
-        case 9: {
-          color = "#F70029";
-          break;
-        }
-        case 8: {
-          color = "#E30026";
-          break;
-        }
-        case 7: {
-          color = "#E60049";
-          break;
-        }
-        case 6: {
-          color = "#DC0046";
-          break;
-        }
-        case 5: {
-          color = "#D80061";
-          break;
-        }
-        case 4: {
-          color = "#D800C6";
-          break;
-        }
-        case 3: {
-          color = "#C00008";
-          break;
-        }
-        case 2: {
-          color = "#770008";
-          break;
-        }
-        case 1: {
-          color = "#5600D8";
-          break;
-        }
-        case 0: {
-          color = "#1200D8";
-          break;
-        }
-      }
-      for (var i=0; i<grafoFactory.numeroTotalNeuronas; i++) {
-        jsonCopy.edges[i].color = color;
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
     $scope.verPeso = function() {
-      /*for (var i=0; i< grafoFactory.numeroTotalNeuronas; i++) {
-        if ((grafoFactory.pesoGlobal[i]>=$scope.sliderPeso.min)&&(grafoFactory.pesoGlobal[i]<=$scope.sliderPeso.max)) {
-            jsonCopy.edges[i].hidden = false;
-            console.log('hemos encontrado false');
-          }
-        else {
-            jsonCopy.edges[i].hidden = true;
+      console.log('estamos en verpeso');
+      var inicioMosey = $scope.sliderMosey.min;
+      var finalMosey = $scope.sliderMosey.max;
+
+      var inicioPeso = $scope.sliderPeso.min;
+      var finalPeso = $scope.sliderPeso.max;
+
+      console.log('inicioMosey: '+inicioMosey);
+      console.log ('finalMosey: '+finalMosey);
+      console.log('inicioPeso: '+inicioPeso);
+      console.log('finalPeso: '+finalPeso);
+
+      console.log('array '+grafoFactory.arrayNeuronal[0]);
+
+      for (var i=0; i<finalMosey;i++) {
+        console.log('valor de i: '+i);
+        for (var j=0;j<arrayNeuronal[i].peso.length;j++) {
+          if ((arrayNeuronal[i].peso[j] >= pesoMin) && (arrayNeuronal[i].peso[j] <= pesoMax))
+              console.log('el peso '+arrayNeuronal[i].peso[j]+ ' se encuentra en el rango seleccionado');
         }
-      }*/
+      }
     }
+
 
   }])
 
@@ -389,7 +343,18 @@ angular
     var minPeso;
     var maxPeso;
     var pesoGlobal = [];
+
+    var arrayNeuronal = new Array();
     return{
+
+      almacenarArrayNeuronal: function(array) {
+        arrayNeuronal = array;
+        console.log('array almacenado');
+      },
+
+      recuperarArrayNeuronal: function() {
+        return arrayNeuronal;
+      },
 
       recuperarJSON: function() {
         return jsonRecibido;

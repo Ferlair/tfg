@@ -387,7 +387,7 @@ angular
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
         }
       }
-
+      grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
 
     }
