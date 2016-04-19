@@ -304,10 +304,15 @@ angular
       console.log('array '+grafoFactory.arrayNeuronal[0]);
 
       for (var i=0; i<finalMosey;i++) {
-        console.log('valor de i: '+i);
-        for (var j=0;j<arrayNeuronal[i].peso.length;j++) {
-          if ((arrayNeuronal[i].peso[j] >= pesoMin) && (arrayNeuronal[i].peso[j] <= pesoMax))
-              console.log('el peso '+arrayNeuronal[i].peso[j]+ ' se encuentra en el rango seleccionado');
+        for (var j=0; j<arrayNeuronal[i].peso[j].length;j++) {
+          var peso = arrayNeuronal[i].peso[j];
+          var pos = buscarArista(origen, destino);
+          if (peso >=inicioPeso && peso<=finalpeso) {
+            jsonCopy.edges[pos].hidden = false;
+          }
+          else {
+            jsonCopy.edges[pos].hidden = true;
+          }
         }
       }
     }
