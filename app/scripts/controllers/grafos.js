@@ -288,34 +288,156 @@ angular
       }
     };
 
-    $scope.verPeso = function() {
-      console.log('estamos en verpeso');
+    $scope.modificarPesoMosey = function() {
       var inicioMosey = $scope.sliderMosey.min;
       var finalMosey = $scope.sliderMosey.max;
 
       var inicioPeso = $scope.sliderPeso.min;
       var finalPeso = $scope.sliderPeso.max;
-      
-      for (var i=0; i<finalMosey;i++) {
-        console.log('entramos en el primer bucle');
+
+      for (var i=inicioMosey; i<finalMosey;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
-          console.log('entramos en el segundo bucle');
           var peso = arrayNeuronal[i].peso[j];
           var origen = arrayNeuronal[i].id;
           var destino = arrayNeuronal[i].destino[j];
           var pos = $scope.buscarArista(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
-            console.log('peso incluido: '+peso);
           }
           else {
             jsonCopy.edges[pos].hidden = true;
-            console.log('peso excluido: '+peso);
           }
         }
-        console.log('saliendo del bucle');
       }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
     }
+
+    $scope.modificarPesoGranulle = function () {
+      var inicioGranulle = $scope.sliderGranulle.min;
+      var finalGranulle = $scope.sliderGranulle.max;
+
+      var inicioPeso = $scope.sliderPeso.min;
+      var finalPeso = $scope.sliderPeso.max;
+
+      for (var i=inicioGranulle; i<finalGranulle;i++) {
+        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
+          var peso = arrayNeuronal[i].peso[j];
+          var origen = arrayNeuronal[i].id;
+          var destino = arrayNeuronal[i].destino[j];
+          var pos = $scope.buscarArista(origen, destino);
+          if (peso >=inicioPeso && peso<=finalPeso) {
+            jsonCopy.edges[pos].hidden = false;
+          }
+          else {
+            jsonCopy.edges[pos].hidden = true;
+          }
+        }
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.modificarPesoPurkinje = function () {
+      var inicioPurkinje = $scope.sliderPurkinje.min;
+      var finalPurkinje = $scope.sliderPurkinje.max;
+
+      var inicioPeso = $scope.sliderPeso.min;
+      var finalPeso = $scope.sliderPeso.max;
+
+      for (var i=inicioPurkinje; i<finalPurkinje;i++) {
+        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
+          var peso = arrayNeuronal[i].peso[j];
+          var origen = arrayNeuronal[i].id;
+          var destino = arrayNeuronal[i].destino[j];
+          var pos = $scope.buscarArista(origen, destino);
+          if (peso >=inicioPeso && peso<=finalPeso) {
+            jsonCopy.edges[pos].hidden = false;
+          }
+          else {
+            jsonCopy.edges[pos].hidden = true;
+          }
+        }
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.modificarPesoDCN = function () {
+      var inicioDCN = $scope.sliderDCN.min;
+      var finalDCN = $scope.sliderDCN.max;
+
+      var inicioPeso = $scope.sliderPeso.min;
+      var finalPeso = $scope.sliderPeso.max;
+
+      for (var i=inicioDCN; i<finalDCN;i++) {
+        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
+          var peso = arrayNeuronal[i].peso[j];
+          var origen = arrayNeuronal[i].id;
+          var destino = arrayNeuronal[i].destino[j];
+          var pos = $scope.buscarArista(origen, destino);
+          if (peso >=inicioPeso && peso<=finalPeso) {
+            jsonCopy.edges[pos].hidden = false;
+          }
+          else {
+            jsonCopy.edges[pos].hidden = true;
+          }
+        }
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.modificarPesoGolgi = function () {
+      var inicioGolgi = $scope.sliderGolgi.min;
+      var finalGolgi = $scope.sliderGolgi.max;
+
+      var inicioPeso = $scope.sliderPeso.min;
+      var finalPeso = $scope.sliderPeso.max;
+
+      for (var i=inicioGolgi; i<finalGolgi;i++) {
+        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
+          var peso = arrayNeuronal[i].peso[j];
+          var origen = arrayNeuronal[i].id;
+          var destino = arrayNeuronal[i].destino[j];
+          var pos = $scope.buscarArista(origen, destino);
+          if (peso >=inicioPeso && peso<=finalPeso) {
+            jsonCopy.edges[pos].hidden = false;
+          }
+          else {
+            jsonCopy.edges[pos].hidden = true;
+          }
+        }
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.modificarPesoIO = function () {
+      var inicioIO = $scope.sliderIO.min;
+      var finalIO = $scope.sliderIO.max;
+
+      var inicioPeso = $scope.sliderPeso.min;
+      var finalPeso = $scope.sliderPeso.max;
+
+      for (var i=inicioIO; i<finalIO;i++) {
+        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
+          var peso = arrayNeuronal[i].peso[j];
+          var origen = arrayNeuronal[i].id;
+          var destino = arrayNeuronal[i].destino[j];
+          var pos = $scope.buscarArista(origen, destino);
+          if (peso >=inicioPeso && peso<=finalPeso) {
+            jsonCopy.edges[pos].hidden = false;
+          }
+          else {
+            jsonCopy.edges[pos].hidden = true;
+          }
+        }
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
 
 
   }])
