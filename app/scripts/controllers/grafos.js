@@ -280,10 +280,11 @@ angular
 
     $scope.sliderPesoMosey = {
         min: grafoFactory.minPeso,
-        max: grafoFactory.maxPeso,
+        max: 50,
         options: {
         floor: grafoFactory.minPeso,
-        ceil: grafoFactory.maxPeso,
+        ceil: 100,
+        //ceil: grafoFactory.maxPeso,
         noSwitching: true
       }
     };
@@ -488,9 +489,14 @@ angular
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.esconderId = function() {
+    $scope.mostrarPeso = function() {
       document.getElementById('slider').style.display = "none";
-      document.getElementById('sliderPeso').style.display = "block";
+      document.getElementById('sliderPeso').style.display = "inline";
+    }
+
+    $scope.mostrarId = function() {
+      document.getElementById('slider').style.display = "block";
+      document.getElementById('sliderPeso').style.display = "none";
     }
 
 
