@@ -105,14 +105,14 @@ angular
 
       //Mostrar/ocultar neuronas de tipo mosey
       if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
-        console.log ('mosey está deseleccionado');
+        //console.log ('mosey está deseleccionado');
         for (var i=0; i<grafoFactory.iteracionesMosey; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
       //es decir, entre inicioMosey y finalMosey, ambos inclusive
       else {
-         console.log ('mosey está seleccionado');
+         //console.log ('mosey está seleccionado');
           for (var j=0; j<grafoFactory.iteracionesMosey; j++) {
             if (j >= inicioMosey && j <= finalMosey) {
               jsonCopy.nodes[j].hidden = false;
@@ -125,12 +125,12 @@ angular
 
       //Mostrar/ocultar neuronas de tipo granulle
       if (!granulle.checked) {
-        console.log ('granulle está deseleccionado');
+        //console.log ('granulle está deseleccionado');
         for (var i=grafoFactory.iteracionesMosey; i<grafoFactory.iteracionesGranulle; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        console.log ('granulle está seleccionado');
+        //console.log ('granulle está seleccionado');
           for (var j=grafoFactory.iteracionesMosey; j<grafoFactory.iteracionesGranulle; j++) {
             if (j >= inicioGranulle && j <= finalGranulle) {
               jsonCopy.nodes[j].hidden = false;
@@ -143,12 +143,12 @@ angular
 
       //Mostrar/ocultar neuronas de tipo purkinje
       if (!purkinje.checked) {
-        console.log ('purkinje está deseleccionado');
+        //console.log ('purkinje está deseleccionado');
         for (var i=grafoFactory.iteracionesGranulle; i<grafoFactory.iteracionesPurkinje; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        console.log ('purkinje está seleccionado');
+        //console.log ('purkinje está seleccionado');
           for (var j=grafoFactory.iteracionesGranulle; j<grafoFactory.iteracionesPurkinje; j++) {
             if (j >= inicioPurkinje && j <= finalPurkinje) {
               jsonCopy.nodes[j].hidden = false;
@@ -161,12 +161,12 @@ angular
 
       //Mostrar/ocultar neuronas de tipo dcn
       if (!dcn.checked) {
-        console.log ('dcn está deseleccionado');
+        //console.log ('dcn está deseleccionado');
         for (var i=grafoFactory.iteracionesPurkinje; i<grafoFactory.iteracionesDCN; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        console.log ('dcn está seleccionado');
+        //console.log ('dcn está seleccionado');
           for (var j=grafoFactory.iteracionesPurkinje; j<grafoFactory.iteracionesDCN; j++) {
             if (j >= inicioDCN && j <= finalDCN) {
               jsonCopy.nodes[j].hidden = false;
@@ -179,12 +179,12 @@ angular
 
       //Mostrar/ocultar neuronas de tipo golgi
       if (!golgi.checked) {
-        console.log ('golgi está deseleccionado');
+        //console.log ('golgi está deseleccionado');
         for (var i=grafoFactory.iteracionesDCN; i<grafoFactory.iteracionesGolgi; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        console.log ('golgi está seleccionado');
+        //console.log ('golgi está seleccionado');
           for (var j=grafoFactory.iteracionesDCN; j<grafoFactory.iteracionesGolgi; j++) {
             if (j >= inicioGolgi && j <= finalGolgi) {
               jsonCopy.nodes[j].hidden = false;
@@ -197,12 +197,12 @@ angular
 
       //Mostrar/ocultar neuronas de tipo io
       if (!io.checked) {
-        console.log ('io está deseleccionado');
+        //console.log ('io está deseleccionado');
         for (var i=grafoFactory.iteracionesGolgi; i<grafoFactory.iteracionesIO; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        console.log ('io está seleccionado');
+        //console.log ('io está seleccionado');
           for (var j=grafoFactory.iteracionesGolgi; j<grafoFactory.iteracionesIO; j++) {
             if (j >= inicioIO && j <= finalIO) {
               jsonCopy.nodes[j].hidden = false;
@@ -278,7 +278,57 @@ angular
       }
     };
 
-    $scope.sliderPeso = {
+    $scope.sliderPesoMosey = {
+        min: grafoFactory.minPeso,
+        max: grafoFactory.maxPeso,
+        options: {
+        floor: grafoFactory.minPeso,
+        ceil: grafoFactory.maxPeso,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderPesoGranulle = {
+        min: grafoFactory.minPeso,
+        max: grafoFactory.maxPeso,
+        options: {
+        floor: grafoFactory.minPeso,
+        ceil: grafoFactory.maxPeso,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderPesoPurkinje = {
+        min: grafoFactory.minPeso,
+        max: grafoFactory.maxPeso,
+        options: {
+        floor: grafoFactory.minPeso,
+        ceil: grafoFactory.maxPeso,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderPesoDCN = {
+        min: grafoFactory.minPeso,
+        max: grafoFactory.maxPeso,
+        options: {
+        floor: grafoFactory.minPeso,
+        ceil: grafoFactory.maxPeso,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderPesoGolgi = {
+        min: grafoFactory.minPeso,
+        max: grafoFactory.maxPeso,
+        options: {
+        floor: grafoFactory.minPeso,
+        ceil: grafoFactory.maxPeso,
+        noSwitching: true
+      }
+    };
+
+    $scope.sliderPesoIO = {
         min: grafoFactory.minPeso,
         max: grafoFactory.maxPeso,
         options: {
@@ -292,8 +342,8 @@ angular
       var inicioMosey = $scope.sliderMosey.min;
       var finalMosey = $scope.sliderMosey.max;
 
-      var inicioPeso = $scope.sliderPeso.min;
-      var finalPeso = $scope.sliderPeso.max;
+      var inicioPeso = $scope.sliderPesoMosey.min;
+      var finalPeso = $scope.sliderPesoMosey.max;
 
       for (var i=inicioMosey; i<finalMosey;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
@@ -317,8 +367,8 @@ angular
       var inicioGranulle = $scope.sliderGranulle.min;
       var finalGranulle = $scope.sliderGranulle.max;
 
-      var inicioPeso = $scope.sliderPeso.min;
-      var finalPeso = $scope.sliderPeso.max;
+      var inicioPeso = $scope.sliderPesoGranulle.min;
+      var finalPeso = $scope.sliderPesoGranulle.max;
 
       for (var i=inicioGranulle; i<finalGranulle;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
@@ -342,8 +392,8 @@ angular
       var inicioPurkinje = $scope.sliderPurkinje.min;
       var finalPurkinje = $scope.sliderPurkinje.max;
 
-      var inicioPeso = $scope.sliderPeso.min;
-      var finalPeso = $scope.sliderPeso.max;
+      var inicioPeso = $scope.sliderPesoPurkinje.min;
+      var finalPeso = $scope.sliderPesoPurkinje.max;
 
       for (var i=inicioPurkinje; i<finalPurkinje;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
@@ -367,8 +417,8 @@ angular
       var inicioDCN = $scope.sliderDCN.min;
       var finalDCN = $scope.sliderDCN.max;
 
-      var inicioPeso = $scope.sliderPeso.min;
-      var finalPeso = $scope.sliderPeso.max;
+      var inicioPeso = $scope.sliderPesoDCN.min;
+      var finalPeso = $scope.sliderPesoDCN.max;
 
       for (var i=inicioDCN; i<finalDCN;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
@@ -392,8 +442,8 @@ angular
       var inicioGolgi = $scope.sliderGolgi.min;
       var finalGolgi = $scope.sliderGolgi.max;
 
-      var inicioPeso = $scope.sliderPeso.min;
-      var finalPeso = $scope.sliderPeso.max;
+      var inicioPeso = $scope.sliderPesoGolgi.min;
+      var finalPeso = $scope.sliderPesoGolgi.max;
 
       for (var i=inicioGolgi; i<finalGolgi;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
@@ -417,8 +467,8 @@ angular
       var inicioIO = $scope.sliderIO.min;
       var finalIO = $scope.sliderIO.max;
 
-      var inicioPeso = $scope.sliderPeso.min;
-      var finalPeso = $scope.sliderPeso.max;
+      var inicioPeso = $scope.sliderPesoIO.min;
+      var finalPeso = $scope.sliderPesoIO.max;
 
       for (var i=inicioIO; i<finalIO;i++) {
         for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
@@ -436,6 +486,11 @@ angular
       }
       refresh();
       grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.esconderId = function() {
+      document.getElementById('slider').style.display = "none";
+      document.getElementById('sliderPeso').style.display = "block";
     }
 
 

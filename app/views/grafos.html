@@ -44,6 +44,12 @@
 <!-- Contenedor que muestra la imagen generada por WebGL-->
 <div id="container2" ng-controller="GrafosCtrl"></div>
 
+<div id="radioFiltrado">
+  <b>Filtrado por:</b><br>
+  <input type="radio" name="filtrado" id="id" ng-click="esconderId()"> ID<br>
+  <input type="radio" name="filtrado" id="peso"> Peso
+</div>
+
 <!-- Contenedor para los sliders -->
 <div id="slider">
 <div><b>Mosey: </b></div><br>
@@ -106,16 +112,19 @@
 
 </div>
 
-<div id="sliderPeso">
-  <div><b>Filtrado por peso: </b></div><br>
+<div id="sliderPeso" style="display:none">
+<div id="sliderPesoMosey">
+  <div><b>Filtrado por peso de neuronas Mosey: </b></div><br>
   <rzslider
-      rz-slider-model="sliderPeso.min"
-      rz-slider-high="sliderPeso.max"
-      rz-slider-options="sliderPeso.options"
+      rz-slider-model="sliderPesoMosey.min"
+      rz-slider-high="sliderPesoMosey.max"
+      rz-slider-options="sliderPesoMosey.options"
       ng-mouseup = "modificarPesoMosey()">
   </rzslider>
 </div>
-
+<br>
+<br>
+<br>
 <div id="sliderPesoGranulle">
   <div><b>Filtrado por peso de neuronas granulle: </b></div><br>
   <rzslider
@@ -125,7 +134,9 @@
       ng-mouseup = "modificarPesoGranulle()">
   </rzslider>
 </div>
-
+<br>
+<br>
+<br>
 <div id="sliderPesoPurkinje">
   <div><b>Filtrado por peso de neuronas Purkinje: </b></div><br>
   <rzslider
@@ -135,7 +146,9 @@
       ng-mouseup = "modificarPesoPurkinje()">
   </rzslider>
 </div>
-
+<br>
+<br>
+<br>
 <div id="sliderPesoDCN">
   <div><b>Filtrado por peso de neuronas DCN: </b></div><br>
   <rzslider
@@ -145,7 +158,9 @@
       ng-mouseup = "modificarPesoDCN()">
   </rzslider>
 </div>
-
+<br>
+<br>
+<br>
 <div id="sliderPesoGolgi">
   <div><b>Filtrado por peso de neuronas Golgi: </b></div><br>
   <rzslider
@@ -155,7 +170,9 @@
       ng-mouseup = "modificarPesoGolgi()">
   </rzslider>
 </div>
-
+<br>
+<br>
+<br>
 <div id="sliderPesoIO">
   <div><b>Filtrado por peso de neuronas IO: </b></div><br>
   <rzslider
@@ -165,10 +182,4 @@
       ng-mouseup = "modificarPesoIO()">
   </rzslider>
 </div>
-
-<!--<form>
-  <select id="filtrado" size="1">
-    <option>ID neuronal</option>
-    <option>Peso</option>
-  </select>
-</form>-->
+</div>
