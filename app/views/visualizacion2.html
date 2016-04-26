@@ -13,10 +13,16 @@
 
 
 <!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container2" ng-controller="GrafosCtrl"></div>
+<div id="container2" ng-controller="Visualizacion2Ctrl"></div>
+
+<div id="radioFiltrado">
+  <b>Filtrado por:</b><br>
+  <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
+  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso
+</div>
 
 <!-- Contenedor para los sliders -->
-<div id="slider">
+<div id="slider" style="visibility: hidden">
 <div><b>Mosey: </b></div><br>
 <rzslider
     rz-slider-model="sliderMosey.min"
@@ -75,4 +81,76 @@
     ng-mouseup = "ver()">
 </rzslider>
 
+</div>
+
+<div id="sliderPeso" style="visibility: hidden">
+<div id="sliderPesoMosey">
+  <div><b>Filtrado por peso de neuronas Mosey: </b></div><br>
+  <rzslider
+      rz-slider-model="sliderPesoMosey.min"
+      rz-slider-high="sliderPesoMosey.max"
+      rz-slider-options="sliderPesoMosey.options"
+      ng-mouseup = "modificarPesoMosey()">
+  </rzslider>
+</div>
+<br>
+<br>
+<br>
+<div id="sliderPesoGranulle">
+  <div><b>Filtrado por peso de neuronas Granulle: </b></div><br>
+  <rzslider
+      rz-slider-model="sliderPesoGranulle.min"
+      rz-slider-high="sliderPesoGranulle.max"
+      rz-slider-options="sliderPesoGranulle.options"
+      ng-mouseup = "modificarPesoGranulle()">
+  </rzslider>
+</div>
+<br>
+<br>
+<br>
+<div id="sliderPesoPurkinje">
+  <div><b>Filtrado por peso de neuronas Purkinje: </b></div><br>
+  <rzslider
+      rz-slider-model="sliderPesoPurkinje.min"
+      rz-slider-high="sliderPesoPurkinje.max"
+      rz-slider-options="sliderPesoPurkinje.options"
+      ng-mouseup = "modificarPesoPurkinje()">
+  </rzslider>
+</div>
+<br>
+<br>
+<br>
+<div id="sliderPesoDCN">
+  <div><b>Filtrado por peso de neuronas DCN: </b></div><br>
+  <rzslider
+      rz-slider-model="sliderPesoDCN.min"
+      rz-slider-high="sliderPesoDCN.max"
+      rz-slider-options="sliderPesoDCN.options"
+      ng-mouseup = "modificarPesoDCN()">
+  </rzslider>
+</div>
+<br>
+<br>
+<br>
+<div id="sliderPesoGolgi">
+  <div><b>Filtrado por peso de neuronas Golgi: </b></div>
+  <rzslider
+      rz-slider-model="sliderPesoGolgi.min"
+      rz-slider-high="sliderPesoGolgi.max"
+      rz-slider-options="sliderPesoGolgi.options"
+      ng-mouseup = "modificarPesoGolgi()">
+  </rzslider>
+</div>
+<br>
+<br>
+<br>
+<div id="sliderPesoIO">
+  <div><b>Filtrado por peso de neuronas IO: </b></div><br>
+  <rzslider
+      rz-slider-model="sliderPesoIO.min"
+      rz-slider-high="sliderPesoIO.max"
+      rz-slider-options="sliderPesoIO.options"
+      ng-mouseup = "modificarPesoIO()">
+  </rzslider>
+</div>
 </div>

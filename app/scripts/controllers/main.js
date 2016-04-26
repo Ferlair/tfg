@@ -24,6 +24,20 @@ angular
     var numeroIo = 0;
     var numeroTotalNeuronas = 0;
 
+
+
+    $scope.activarVisualizaciones = function() {
+      document.getElementById('color').style.display = 'inline';
+      document.getElementById('bn').style.display = 'none';
+    }
+
+    $scope.desactivarVisualizaciones = function() {
+      document.getElementById('color').style.display = 'none';
+      document.getElementById('bn').style.display = 'inline';
+    }
+
+    $scope.desactivarVisualizaciones();
+
     //Devuelve el color de la arista en función del peso introducido
     $scope.getColor = function(numeroRedondeado) {
       var color;
@@ -227,7 +241,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 2;
+            nodo.size = 1;
 
             jsonObj.nodes[i] = nodo;
 
@@ -350,6 +364,7 @@ angular
         $scope.escribirDatos();
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
+        $scope.activarVisualizaciones();
 
     }
 

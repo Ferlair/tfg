@@ -51,7 +51,7 @@
 </div>
 
 <!-- Contenedor para los sliders -->
-<div id="slider">
+<div id="slider" style="visibility: hidden">
 <div><b>Mosey: </b></div><br>
 <rzslider
     rz-slider-model="sliderMosey.min"
@@ -112,9 +112,9 @@
 
 </div>
 
-<div id="sliderPeso" style="display:none">
+<div id="sliderPeso" style="visibility: hidden">
 <div id="sliderPesoMosey">
-  <div><b>Filtrado: </b></div><br>
+  <div><b>Filtrado por peso de neuronas Mosey: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoMosey.min"
       rz-slider-high="sliderPesoMosey.max"
@@ -126,7 +126,7 @@
 <br>
 <br>
 <div id="sliderPesoGranulle">
-  <div><b>Filtrado por peso de neuronas granulle: </b></div><br>
+  <div><b>Filtrado por peso de neuronas Granulle: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGranulle.min"
       rz-slider-high="sliderPesoGranulle.max"
@@ -162,7 +162,7 @@
 <br>
 <br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtrado por peso de neuronas Golgi: </b></div><br>
+  <div><b>Filtrado por peso de neuronas Golgi: </b></div>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"

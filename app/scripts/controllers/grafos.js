@@ -62,13 +62,11 @@ angular
       jsonCopy = grafoFactory.recuperarJSON();
       arrayNeuronal = grafoFactory.recuperarArrayNeuronal();
       $scope.obtenerReferencias();
-      //console.log(jsonCopy);
-      console.log('array: '+arrayNeuronal[0].id);
-      $scope.buscarArista(1536,1772);
       grafoFactory.cargar(jsonCopy);
     }
 
     $scope.inicio();
+    //grafoFactory.eliminarSlider();
 
     //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
@@ -105,14 +103,12 @@ angular
 
       //Mostrar/ocultar neuronas de tipo mosey
       if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
-        //console.log ('mosey está deseleccionado');
         for (var i=0; i<grafoFactory.iteracionesMosey; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
       //es decir, entre inicioMosey y finalMosey, ambos inclusive
       else {
-         //console.log ('mosey está seleccionado');
           for (var j=0; j<grafoFactory.iteracionesMosey; j++) {
             if (j >= inicioMosey && j <= finalMosey) {
               jsonCopy.nodes[j].hidden = false;
@@ -125,12 +121,10 @@ angular
 
       //Mostrar/ocultar neuronas de tipo granulle
       if (!granulle.checked) {
-        //console.log ('granulle está deseleccionado');
         for (var i=grafoFactory.iteracionesMosey; i<grafoFactory.iteracionesGranulle; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        //console.log ('granulle está seleccionado');
           for (var j=grafoFactory.iteracionesMosey; j<grafoFactory.iteracionesGranulle; j++) {
             if (j >= inicioGranulle && j <= finalGranulle) {
               jsonCopy.nodes[j].hidden = false;
@@ -143,12 +137,10 @@ angular
 
       //Mostrar/ocultar neuronas de tipo purkinje
       if (!purkinje.checked) {
-        //console.log ('purkinje está deseleccionado');
         for (var i=grafoFactory.iteracionesGranulle; i<grafoFactory.iteracionesPurkinje; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        //console.log ('purkinje está seleccionado');
           for (var j=grafoFactory.iteracionesGranulle; j<grafoFactory.iteracionesPurkinje; j++) {
             if (j >= inicioPurkinje && j <= finalPurkinje) {
               jsonCopy.nodes[j].hidden = false;
@@ -161,12 +153,10 @@ angular
 
       //Mostrar/ocultar neuronas de tipo dcn
       if (!dcn.checked) {
-        //console.log ('dcn está deseleccionado');
         for (var i=grafoFactory.iteracionesPurkinje; i<grafoFactory.iteracionesDCN; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        //console.log ('dcn está seleccionado');
           for (var j=grafoFactory.iteracionesPurkinje; j<grafoFactory.iteracionesDCN; j++) {
             if (j >= inicioDCN && j <= finalDCN) {
               jsonCopy.nodes[j].hidden = false;
@@ -179,12 +169,10 @@ angular
 
       //Mostrar/ocultar neuronas de tipo golgi
       if (!golgi.checked) {
-        //console.log ('golgi está deseleccionado');
         for (var i=grafoFactory.iteracionesDCN; i<grafoFactory.iteracionesGolgi; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        //console.log ('golgi está seleccionado');
           for (var j=grafoFactory.iteracionesDCN; j<grafoFactory.iteracionesGolgi; j++) {
             if (j >= inicioGolgi && j <= finalGolgi) {
               jsonCopy.nodes[j].hidden = false;
@@ -197,12 +185,10 @@ angular
 
       //Mostrar/ocultar neuronas de tipo io
       if (!io.checked) {
-        //console.log ('io está deseleccionado');
         for (var i=grafoFactory.iteracionesGolgi; i<grafoFactory.iteracionesIO; i++)
           jsonCopy.nodes[i].hidden = true;
       }
       else {
-        //console.log ('io está seleccionado');
           for (var j=grafoFactory.iteracionesGolgi; j<grafoFactory.iteracionesIO; j++) {
             if (j >= inicioIO && j <= finalIO) {
               jsonCopy.nodes[j].hidden = false;
@@ -280,11 +266,10 @@ angular
 
     $scope.sliderPesoMosey = {
         min: grafoFactory.minPeso,
-        max: 50,
+        max: grafoFactory.maxPeso,
         options: {
         floor: grafoFactory.minPeso,
-        ceil: 100,
-        //ceil: grafoFactory.maxPeso,
+        ceil: grafoFactory.maxPeso,
         noSwitching: true
       }
     };
@@ -491,12 +476,14 @@ angular
 
     $scope.mostrarPeso = function() {
       document.getElementById('slider').style.display = "none";
+      document.getElementById('sliderPeso').style.visibility = "visible";
       document.getElementById('sliderPeso').style.display = "inline";
     }
 
     $scope.mostrarId = function() {
-      document.getElementById('slider').style.display = "block";
       document.getElementById('sliderPeso').style.display = "none";
+      document.getElementById('slider').style.visibility = "visible";
+      document.getElementById('slider').style.display = "inline";
     }
 
 
@@ -535,9 +522,12 @@ angular
     var arrayNeuronal = new Array();
     return{
 
+      eliminarSlider: function() {
+        document.getElementById('sliderPeso').style.display = "none";
+      },
+
       almacenarArrayNeuronal: function(array) {
         arrayNeuronal = array;
-        console.log('array almacenado');
       },
 
       recuperarArrayNeuronal: function() {
@@ -581,8 +571,9 @@ angular
             defaultNodeHoverColor: "#0000ff",
             //defaultEdgeColor: "#00ff00",
             //edgeColor: "#00ff00",
-            defaultLabelHoverColor: "#0010ff",
-            defaultLabelColor: '#0010ff'
+            defaultLabelHoverColor: 'false',
+            defaultLabelColor: 'false',
+            defaultLabelSize: '0'
 
           }
         })
