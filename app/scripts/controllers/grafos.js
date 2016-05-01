@@ -488,6 +488,7 @@ angular
 
 
 
+
   }])
 
   .factory('grafoFactory', function grafoFactory(){
@@ -520,6 +521,8 @@ angular
     var pesoGlobal = [];
 
     var arrayNeuronal = new Array();
+
+    var s;
     return{
 
       eliminarSlider: function() {
@@ -557,7 +560,7 @@ angular
 
       //Muestra el grafo seleccionado por el usuario
       cargar: function(grafo) {
-        new sigma ({
+      s =  new sigma ({
           graph: grafo,
           renderer: {
             type: 'webgl',
@@ -569,14 +572,17 @@ angular
             defaultNodeColor: "#ffffff",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            //defaultEdgeColor: "#00ff00",
-            //edgeColor: "#00ff00",
             defaultLabelHoverColor: 'false',
             defaultLabelColor: 'false',
             defaultLabelSize: '0'
 
           }
         })
+
+        //enlazamos el evento de click de ratón sobre un nodo, mostrando el nombre del nodo por consola
+        s.bind('clickNode', function(e) {
+            console.log(e.data.node.label);
+        });
       }
     }
   });

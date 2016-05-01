@@ -24,8 +24,6 @@ angular
     var numeroIo = 0;
     var numeroTotalNeuronas = 0;
 
-
-
     $scope.activarVisualizaciones = function() {
       document.getElementById('color').style.display = 'inline';
       document.getElementById('bn').style.display = 'none';
