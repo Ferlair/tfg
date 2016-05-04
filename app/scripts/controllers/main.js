@@ -40,52 +40,53 @@ angular
     $scope.getColor = function(numeroRedondeado) {
       var color;
       switch (numeroRedondeado) {
-        case 10: {
+        case '10': {
           color = "#FF0000";
           break;
         }
-        case 9: {
+        case '9': {
           color = "#F70029";
           break;
         }
-        case 8: {
+        case '8': {
           color = "#E30026";
           break;
         }
-        case 7: {
+        case '7': {
           color = "#E60049";
           break;
         }
-        case 6: {
+        case '6': {
           color = "#DC0046";
           break;
         }
-        case 5: {
+        case '5': {
           color = "#D80061";
           break;
         }
-        case 4: {
+        case '4': {
           color = "#D800C6";
           break;
         }
-        case 3: {
+        case '3': {
           color = "#C00008";
           break;
         }
-        case 2: {
+        case '2': {
           color = "#770008";
           break;
         }
-        case 1: {
+        case '1': {
           color = "#5600D8";
           break;
         }
-        case 0: {
+        case '0': {
           color = "#1200D8";
           break;
         }
       }
-
+      console.log('EL PESO CANDIDATO ES: '+numeroRedondeado);
+      console.log('EL COLOR CANDIDATO ES: '+color);
       return color;
     }
 
@@ -119,6 +120,8 @@ angular
       var origen;
       var destino;
 
+      console.log('PASAMOS POR COLOREAR');
+
       for (var i=1; i<jsonCopy.edges.length; i++) {
         origen = jsonCopy.edges[i].source.substr(1);
         destino = jsonCopy.edges[i].target.substr(1);
@@ -131,7 +134,9 @@ angular
         }
 
         var peso = arrayNeuronal[origen].peso[posicion];
+        console.log('el peso seleccionado para la neurona '+arrayNeuronal[origen].id+ ' es '+peso);
         color = $scope.getColor(peso);
+        console.log('y le corresponde el color '+color);
         jsonCopy.edges[i].color = color;
       }
     }
@@ -649,26 +654,38 @@ angular
 
       }
 
+      var total = arrayNeuronal.length;
+      total = total-1;
+      console.log('origen tiene una extension de '+origen.length);
+      console.log('origen en su ultima posicion tiene un valor de '+origen[1267]);
+      console.log('arrayneuronal menos 1 '+(total));
+
+      console.log('total: '+total+' vs origen: '+origen.length);
+
       //Asignación del tipo de neurona
-      for (var i=0; i<arrayNeuronal.length; i++) {
+      for (var i=0; i<origen.length; i++) {
         var auxTipo = tipo[i];
         var auxPos = origen[i];
 
+        console.log('comprobamos la neurona: '+i);
+        console.log('estamos en la posición '+auxPos+' buscando el tipo');
         //Inicialmente cada neurona no tiene un tipo asignado, se inicializa
         //con el primer valor que encuentra como tipo, mientras que rechaza los siguientes
         //para evitar múltiples valores para el tipo para la misma neurona
         if (arrayNeuronal[auxPos].tipo == '-') {
+
           arrayNeuronal[auxPos].tipo = auxTipo;
         }
       }
 
       //Las neuronas que no tenían un tipo asignado en el fichero reciben el valor 0 por defecto
-      for (var i=0; i<arrayNeuronal.length; i++) {
+      for (var i=0; i<(arrayNeuronal.length); i++) {
         var pesoPorDefecto = 0;
         if (arrayNeuronal[i].tipo == '-')
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
 
+      console.log('HOLA');
       console.log(arrayNeuronal);
 
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
