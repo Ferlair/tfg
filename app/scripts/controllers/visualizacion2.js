@@ -172,6 +172,19 @@ angular.module('tfgApp')
       var inicioIO = $scope.sliderIO.min;
       var finalIO = $scope.sliderIO.max;
 
+      /*console.log('inicioMosey '+inicioMosey);
+      console.log('finalMosey '+finalMosey);
+      console.log('inicioGranulle '+inicioGranulle);
+      console.log('finalGranulle '+finalGranulle);
+      console.log('inicioPurkinje '+inicioPurkinje);
+      console.log('finalPurkinje '+finalPurkinje);
+      console.log('inicioDCN '+inicioDCN);
+      console.log('finalDCN '+finalDCN);
+      console.log('inicioGolgi '+inicioGolgi);
+      console.log('finalGolgi '+finalGolgi);
+      console.log('inicioIO '+inicioIO);
+      console.log('finalIO '+finalIO);*/
+
       //Mostrar/ocultar neuronas de tipo mosey
       if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
         for (var i=0; i<grafoFactory.iteracionesMosey; i++)

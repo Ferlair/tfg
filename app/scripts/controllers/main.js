@@ -85,8 +85,6 @@ angular
           break;
         }
       }
-      console.log('EL PESO CANDIDATO ES: '+numeroRedondeado);
-      console.log('EL COLOR CANDIDATO ES: '+color);
       return color;
     }
 
@@ -120,8 +118,6 @@ angular
       var origen;
       var destino;
 
-      console.log('PASAMOS POR COLOREAR');
-
       for (var i=1; i<jsonCopy.edges.length; i++) {
         origen = jsonCopy.edges[i].source.substr(1);
         destino = jsonCopy.edges[i].target.substr(1);
@@ -134,9 +130,7 @@ angular
         }
 
         var peso = arrayNeuronal[origen].peso[posicion];
-        console.log('el peso seleccionado para la neurona '+arrayNeuronal[origen].id+ ' es '+peso);
         color = $scope.getColor(peso);
-        console.log('y le corresponde el color '+color);
         jsonCopy.edges[i].color = color;
       }
     }
@@ -175,7 +169,7 @@ angular
 
           //Mosey Fibers
           if (arrayNeuronal[i].tipo == '0') {
-            console.log('neurona '+i+' es de tipo Mosey (valor 0)');
+            console.log('la neurona '+arrayNeuronal[i].id+' es de tipo Mosey');
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 1;
@@ -205,7 +199,6 @@ angular
 
           //Granulle Cells
           else if (arrayNeuronal[i].tipo == '1'){
-            console.log('la neurona '+i+' es de tipo Granulle (valor 1)');
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 4;
@@ -237,7 +230,6 @@ angular
 
           //Purkinje Cells
           else if(arrayNeuronal[i].tipo == '2') {
-            console.log('la neurona '+i+' es de tipo Purkinje (valor 2)');
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 6;
@@ -269,7 +261,6 @@ angular
 
           //DCN Cells
           else if(arrayNeuronal[i].tipo == '3'){
-            console.log('la neurona '+i+' es de tipo DCN (valor 3)');
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 8;
@@ -301,7 +292,6 @@ angular
 
           //Golgi Cells
           else if(arrayNeuronal[i].tipo == '4'){
-            console.log('la neurona '+i+' es de tipo Golgi (valor 4)');
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 10;
@@ -333,7 +323,6 @@ angular
 
           //IO Cells
           else if(arrayNeuronal[i].tipo == '5'){
-            console.log('la neurona '+i+' es de tipo IO (valor 5)');
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 12;
@@ -375,236 +364,6 @@ angular
         $scope.activarVisualizaciones();
 
     }
-
-    //Función encargada de generar el json para representar el grafo
-    /*$scope.generarJSON = function(arrayNeuronal) {
-
-        var nombreArista = 0;
-        var index=0;
-
-        //Creación del objeto json que alberga la información de nodos y aristas a dibujar
-        var jsonObj = { nodes: [{}], edges: [{}]};
-
-        //Proporciona valores por defecto a la variable nodo usada en el bucle
-        function getNodo() {
-          return {
-            id: "",
-            label: "",
-            x: "",
-            y: "",
-            size: ""
-          }
-        };
-
-        //Proporciona valores por defecto a la variable arista usada en el bucle
-        function getAristas() {
-          return {
-            id: "",
-            source: "",
-            target: ""
-          }
-        };
-
-        //Creación del lienzo inicial
-        for (var i=0; i<arrayNeuronal.length; i++) {
-          var nodo = getNodo();
-
-          //Mosey Fibers
-          if (i>=0 && i<248) {
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
-            var radius = 1;
-            var angle = Math.random()*Math.PI*2;
-            var x = Math.cos(angle)*radius;
-            var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 1;
-            jsonObj.nodes[i] = nodo;
-
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
-              if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
-              }
-              else {
-                jsonObj.edges.push(arista);
-              }
-            }
-            numeroMosey++;
-            grafoFactory.numeroMosey = numeroMosey;
-          }
-
-          //Granulle Cells
-          else if (i>=248 && i<1748){
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
-            var radius = 4;
-            var angle = Math.random()*Math.PI*2;
-            var x = Math.cos(angle)*radius;
-            var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 1;
-
-            jsonObj.nodes[i] = nodo;
-
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
-              if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
-              }
-              else {
-                jsonObj.edges.push(arista);
-              }
-            }
-
-            numeroGranulle++;
-            grafoFactory.numeroGranulle = numeroGranulle;
-          }
-
-          //Purkinje Cells
-          else if(i>=1748 && i<1796) {
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
-            var radius = 6;
-            var angle = Math.random()*Math.PI*2;
-            var x = Math.cos(angle)*radius;
-            var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 1;
-
-            jsonObj.nodes[i] = nodo;
-
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
-              if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
-              }
-              else {
-                jsonObj.edges.push(arista);
-              }
-            }
-
-            numeroPurkinje++;
-            grafoFactory.numeroPurkinje = numeroPurkinje;
-          }
-
-          //DCN Cells
-          else if(i>=1796 && i<1820){
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
-            var radius = 8;
-            var angle = Math.random()*Math.PI*2;
-            var x = Math.cos(angle)*radius;
-            var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 1;
-
-            jsonObj.nodes[i] = nodo;
-
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
-              if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
-              }
-              else {
-                jsonObj.edges.push(arista);
-              }
-            }
-
-            numeroDcn++;
-            grafoFactory.numeroDcn = numeroDcn;
-          }
-
-          //Golgi Cells
-          else if(i>=1820 && i<1823){
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
-            var radius = 10;
-            var angle = Math.random()*Math.PI*2;
-            var x = Math.cos(angle)*radius;
-            var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 1;
-
-            jsonObj.nodes[i] = nodo;
-
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
-              if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
-              }
-              else {
-                jsonObj.edges.push(arista);
-              }
-            }
-
-            numeroGolgi++;
-            grafoFactory.numeroGolgi = numeroGolgi;
-          }
-
-          //IO Cells
-          else if(i>=1823 && i<=1870){
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
-            var radius = 12;
-            var angle = Math.random()*Math.PI*2;
-            var x = Math.cos(angle)*radius;
-            var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 1;
-
-            jsonObj.nodes[i] = nodo;
-
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
-              if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
-              }
-              else {
-                jsonObj.edges.push(arista);
-              }
-            }
-
-            numeroIo++;
-            grafoFactory.numeroIo = numeroIo;
-          }
-
-          numeroTotalNeuronas++;
-          grafoFactory.numeroTotalNeuronas = numeroTotalNeuronas;
-
-        }
-
-        jsonCopy = jsonObj;
-        $scope.escribirDatos();
-        grafoFactory.almacenarJSON(jsonCopy);
-        $scope.colorearAristas(arrayNeuronal);
-        $scope.activarVisualizaciones();
-
-    }*/
 
     //Entrada: fichero de texto con datos neuronales
     //Salida: array bidimensional con las aristas para cada neurona
@@ -654,21 +413,11 @@ angular
 
       }
 
-      var total = arrayNeuronal.length;
-      total = total-1;
-      console.log('origen tiene una extension de '+origen.length);
-      console.log('origen en su ultima posicion tiene un valor de '+origen[1267]);
-      console.log('arrayneuronal menos 1 '+(total));
-
-      console.log('total: '+total+' vs origen: '+origen.length);
-
       //Asignación del tipo de neurona
       for (var i=0; i<origen.length; i++) {
         var auxTipo = tipo[i];
         var auxPos = origen[i];
 
-        console.log('comprobamos la neurona: '+i);
-        console.log('estamos en la posición '+auxPos+' buscando el tipo');
         //Inicialmente cada neurona no tiene un tipo asignado, se inicializa
         //con el primer valor que encuentra como tipo, mientras que rechaza los siguientes
         //para evitar múltiples valores para el tipo para la misma neurona
@@ -685,7 +434,6 @@ angular
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
 
-      console.log('HOLA');
       console.log(arrayNeuronal);
 
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
