@@ -65,6 +65,8 @@ angular
       grafoFactory.cargar(jsonCopy);
     }
 
+    $scope.nombreNeurona;
+
     $scope.inicio();
     //grafoFactory.eliminarSlider();
 
