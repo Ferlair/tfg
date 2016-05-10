@@ -23,6 +23,14 @@ angular
     var jsonCopy;
     var arrayNeuronal;
 
+    //arrays auxiliares para cada uno de los tipos de neuronas
+    var arrayMosey;
+    var arrayGranulle;
+    var arrayPurkinje;
+    var arrayDCN;
+    var arrayGolgi;
+    var arrayIO;
+
     $scope.obtenerReferencias = function() {
       grafoFactory.iteracionesMosey = grafoFactory.numeroMosey;
       grafoFactory.iteracionesGranulle = grafoFactory.numeroGranulle + grafoFactory.iteracionesMosey;
@@ -37,6 +45,8 @@ angular
       grafoFactory.iniDCN = grafoFactory.iteracionesPurkinje;
       grafoFactory.iniGolgi = grafoFactory.iteracionesDCN;
       grafoFactory.iniIO = grafoFactory.iteracionesGolgi;
+
+
 
       grafoFactory.minPeso = 0;
       grafoFactory.maxPeso = 10;
@@ -61,6 +71,12 @@ angular
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
       arrayNeuronal = grafoFactory.recuperarArrayNeuronal();
+      arrayMosey = grafoFactory.recuperarArrayMosey();
+      arrayGranulle = grafoFactory.recuperarArrayGranulle();
+      arrayPurkinje = grafoFactory.recuperarArrayPurkinje();
+      arrayDCN = grafoFactory.recuperarArrayDCN();
+      arrayGolgi = grafoFactory.recuperarArrayGolgi();
+      arrayIO = grafoFactory.recuperarArrayIO();
       $scope.obtenerReferencias();
       grafoFactory.cargar(jsonCopy);
     }
@@ -68,7 +84,6 @@ angular
     $scope.nombreNeurona;
 
     $scope.inicio();
-    //grafoFactory.eliminarSlider();
 
     //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
@@ -102,19 +117,6 @@ angular
 
       var inicioIO = $scope.sliderIO.min;
       var finalIO = $scope.sliderIO.max;
-
-      /*console.log('inicioMosey '+inicioMosey);
-      console.log('finalMosey '+finalMosey);
-      console.log('inicioGranulle '+inicioGranulle);
-      console.log('finalGranulle '+finalGranulle);
-      console.log('inicioPurkinje '+inicioPurkinje);
-      console.log('finalPurkinje '+finalPurkinje);
-      console.log('inicioDCN '+inicioDCN);
-      console.log('finalDCN '+finalDCN);
-      console.log('inicioGolgi '+inicioGolgi);
-      console.log('finalGolgi '+finalGolgi);
-      console.log('inicioIO '+inicioIO);
-      console.log('finalIO '+finalIO);*/
 
       //Mostrar/ocultar neuronas de tipo mosey
       if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
@@ -217,6 +219,128 @@ angular
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
+
+    //Función que muestra las neuronas seleccionadas por pantalla
+    /*$scope.ver = function() {
+      var inicioMosey = $scope.sliderMosey.min;
+      var finalMosey = $scope.sliderMosey.max;
+
+      var inicioGranulle = $scope.sliderGranulle.min;
+      var finalGranulle = $scope.sliderGranulle.max;
+
+      var inicioPurkinje = $scope.sliderPurkinje.min;
+      var finalPurkinje = $scope.sliderPurkinje.max;
+
+      var inicioDCN = $scope.sliderDCN.min;
+      var finalDCN = $scope.sliderDCN.max;
+
+      var inicioGolgi = $scope.sliderGolgi.min;
+      var finalGolgi = $scope.sliderGolgi.max;
+
+      var inicioIO = $scope.sliderIO.min;
+      var finalIO = $scope.sliderIO.max;
+
+      //Mostrar/ocultar neuronas de tipo mosey
+      if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
+        for (var i=0; i<grafoFactory.iteracionesMosey; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
+      //es decir, entre inicioMosey y finalMosey, ambos inclusive
+      else {
+          for (var j=0; j<grafoFactory.iteracionesMosey; j++) {
+            if (j >= inicioMosey && j <= finalMosey) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
+      }
+
+      //Mostrar/ocultar neuronas de tipo granulle
+      if (!granulle.checked) {
+        for (var i=grafoFactory.iteracionesMosey; i<grafoFactory.iteracionesGranulle; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+          for (var j=grafoFactory.iteracionesMosey; j<grafoFactory.iteracionesGranulle; j++) {
+            if (j >= inicioGranulle && j <= finalGranulle) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
+      }
+
+      //Mostrar/ocultar neuronas de tipo purkinje
+      if (!purkinje.checked) {
+        for (var i=grafoFactory.iteracionesGranulle; i<grafoFactory.iteracionesPurkinje; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+          for (var j=grafoFactory.iteracionesGranulle; j<grafoFactory.iteracionesPurkinje; j++) {
+            if (j >= inicioPurkinje && j <= finalPurkinje) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
+      }
+
+      //Mostrar/ocultar neuronas de tipo dcn
+      if (!dcn.checked) {
+        for (var i=grafoFactory.iteracionesPurkinje; i<grafoFactory.iteracionesDCN; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+          for (var j=grafoFactory.iteracionesPurkinje; j<grafoFactory.iteracionesDCN; j++) {
+            if (j >= inicioDCN && j <= finalDCN) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
+      }
+
+      //Mostrar/ocultar neuronas de tipo golgi
+      if (!golgi.checked) {
+        for (var i=grafoFactory.iteracionesDCN; i<grafoFactory.iteracionesGolgi; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+          for (var j=grafoFactory.iteracionesDCN; j<grafoFactory.iteracionesGolgi; j++) {
+            if (j >= inicioGolgi && j <= finalGolgi) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
+      }
+
+      //Mostrar/ocultar neuronas de tipo io
+      if (!io.checked) {
+        for (var i=grafoFactory.iteracionesGolgi; i<grafoFactory.iteracionesIO; i++)
+          jsonCopy.nodes[i].hidden = true;
+      }
+      else {
+          for (var j=grafoFactory.iteracionesGolgi; j<grafoFactory.iteracionesIO; j++) {
+            if (j >= inicioIO && j <= finalIO) {
+              jsonCopy.nodes[j].hidden = false;
+            }
+            else {
+              jsonCopy.nodes[j].hidden = true;
+            }
+          }
+      }
+
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }*/
 
     //Controladores para los diferentes sliders
     $scope.sliderMosey = {
@@ -531,17 +655,75 @@ angular
     var iniGolgi;
     var iniIO;
 
+    var finMosey;
+    var finGranulle;
+    var finPurkinje;
+    var finDCN;
+    var finGolgi;
+    var finIO;
+
     var minPeso;
     var maxPeso;
-    var pesoGlobal = [];
 
     var arrayNeuronal = new Array();
 
     var s;
-    return{
 
-      eliminarSlider: function() {
-        document.getElementById('sliderPeso').style.display = "none";
+    var arrayMosey = new Array();
+    var arrayGranulle = new Array();
+    var arrayPurkinje = new Array();
+    var arrayDCN = new Array();
+    var arrayGolgi = new Array();
+    var arrayIO = new Array();
+
+    return {
+
+      almacenarArrayMosey: function (mosey) {
+        arrayMosey = mosey;
+      },
+
+      recuperarArrayMosey: function() {
+        return arrayMosey;
+      },
+
+      almacenarArrayGranulle: function(granulle) {
+        arrayGranulle = granulle;
+      },
+
+      recuperarArrayGranulle: function() {
+        return arrayGranulle;
+      },
+
+      almacenarArrayPurkinje: function(purkinje) {
+        arrayPurkinje = purkinje;
+      },
+
+      recuperarArrayPurkinje: function() {
+        return arrayPurkinje;
+      },
+
+      almacenarArrayDCN: function(dcn) {
+        arrayDCN = dcn;
+      },
+
+      recuperarArrayDCN: function() {
+        return arrayDCN;
+      },
+
+      almacenarArrayGolgi: function(golgi) {
+        arrayGolgi = golgi;
+      },
+
+      recuperarArrayGolgi: function() {
+        return arrayGolgi;
+      },
+
+      almacenarArrayIO: function(io) {
+        arrayIO = io;
+      },
+
+      recuperarArrayIO: function() {
+        return arrayIO;
       },
 
       almacenarArrayNeuronal: function(array) {

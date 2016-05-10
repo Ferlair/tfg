@@ -178,7 +178,6 @@ angular
           //Mosey Fibers
           if (arrayNeuronal[i].tipo == '0') {
             arrayMosey.push(arrayNeuronal[i].id);
-            console.log('mosey: '+arrayNeuronal[i].id);
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 1;
@@ -370,15 +369,17 @@ angular
           grafoFactory.numeroTotalNeuronas = numeroTotalNeuronas;
 
         }
-
-        console.log(arrayMosey);
-        console.log(arrayGranulle);
         jsonCopy = jsonObj;
         $scope.escribirDatos();
+        grafoFactory.almacenarArrayMosey(arrayMosey);
+        grafoFactory.almacenarArrayGranulle(arrayGranulle);
+        grafoFactory.almacenarArrayPurkinje(arrayPurkinje);
+        grafoFactory.almacenarArrayDCN(arrayDCN);
+        grafoFactory.almacenarArrayGolgi(arrayGolgi);
+        grafoFactory.almacenarArrayIO(arrayIO);
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
         $scope.activarVisualizaciones();
-
     }
 
     //Entrada: fichero de texto con datos neuronales
