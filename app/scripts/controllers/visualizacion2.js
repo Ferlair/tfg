@@ -38,13 +38,6 @@ angular.module('tfgApp')
       grafoFactory.iteracionesGolgi = grafoFactory.numeroGolgi + grafoFactory.iteracionesDCN;
       grafoFactory.iteracionesIO = grafoFactory.numeroIo + grafoFactory.iteracionesGolgi;
 
-      /*grafoFactory.iniMosey = 0;
-      grafoFactory.iniGranulle = grafoFactory.iteracionesMosey;
-      grafoFactory.iniPurkinje = grafoFactory.iteracionesGranulle;
-      grafoFactory.iniDCN = grafoFactory.iteracionesPurkinje;
-      grafoFactory.iniGolgi = grafoFactory.iteracionesDCN;
-      grafoFactory.iniIO = grafoFactory.iteracionesGolgi;*/
-
       grafoFactory.iniMosey = Math.min.apply(null,arrayMosey);
       grafoFactory.iniGranulle = Math.min.apply(null,arrayGranulle);
       grafoFactory.iniPurkinje = Math.min.apply(null,arrayPurkinje);
@@ -513,22 +506,12 @@ angular.module('tfgApp')
       var inicioPeso = $scope.sliderPesoDCN.min;
       var finalPeso = $scope.sliderPesoDCN.max;
 
-      console.log('inicioDCN: '+inicioDCN);
-      console.log('finalDCN: '+finalDCN);
-      console.log('inicioPeso: '+inicioPeso);
-      console.log('finalPeso: '+finalPeso);
-      console.log(jsonCopy);
-
       for (var i=0; i<arrayDCN.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayDCN[i]].peso.length;j++) {
           var peso = arrayNeuronal[arrayDCN[i]].peso[j];
           var origen = arrayNeuronal[arrayDCN[i]].id;
           var destino = arrayNeuronal[arrayDCN[i]].destino[j];
           var pos = $scope.buscarArista(origen, destino);
-          console.log('peso: '+peso);
-          console.log('origen: '+origen);
-          console.log('destino: '+destino);
-          console.log('pos: '+pos);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -537,12 +520,6 @@ angular.module('tfgApp')
           }
         }
       }
-      for (var i=0; i<arrayNeuronal.length;i++) {
-        console.log('origen: '+arrayNeuronal[i].id);
-        console.log('destino: '+arrayNeuronal[i].destino);
-        console.log('peso: '+arrayNeuronal[i].peso);
-      }
-
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -608,9 +585,5 @@ angular.module('tfgApp')
       document.getElementById('slider').style.visibility = "visible";
       document.getElementById('slider').style.display = "inline";
     }
-
-
-
-
 
   }]);
