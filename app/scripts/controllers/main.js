@@ -390,6 +390,7 @@ angular
       var origen = [];
       var destino = [];
       var tipo = [];
+      var peso = [];
       var arrayNeuronal = new Array();
 
       for (var j=0; j<lineas.length; j++) {
@@ -402,14 +403,8 @@ angular
         origen[i] = palabrasPorLineas[0];
         destino[i] = palabrasPorLineas[1];
         tipo[i] = palabrasPorLineas[4];
+        peso[i] = palabrasPorLineas[5];
       }
-
-      //VÁLIDO, DESCOMENTAR!!!!!
-      /*for (var i=0; i<lineas.length; i++) {
-        palabrasPorLineas = lineas[i].split(" ");
-        origen[i] = palabrasPorLineas[0]; //Almacenamos la neurona origen
-        destino[i] = palabrasPorLineas[2]; //Almacenamos la neurona destino
-      }*/
 
       //Obtenemos el número total de neuronas que contiene el archivo
       grafoFactory.numeroTotalNeuronas = $scope.obtenerNumeroNeuronas(origen,destino);
@@ -420,11 +415,10 @@ angular
 
       //A continuación se lee una a una cada neurona y se agrega su neurona de destino y un peso
       for (var j=0; j<destino.length; j++) {
-
         var elementoRepetido = arrayNeuronal[origen[j]].destino.indexOf(destino[j]);
         if (elementoRepetido==-1) {
-          var peso = Math.floor(Math.random() * (10-1+1)+1); //Agregramos un peso aleatorio hasta que se incluyan los definitivos
-          arrayNeuronal[origen[j]].peso.push(peso.toString());
+          var p = peso[j];
+          arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
         }
 
@@ -450,7 +444,6 @@ angular
         if (arrayNeuronal[i].tipo == '-')
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
-
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
     }

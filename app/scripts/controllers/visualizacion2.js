@@ -438,11 +438,11 @@ angular.module('tfgApp')
       var inicioPeso = $scope.sliderPesoMosey.min;
       var finalPeso = $scope.sliderPesoMosey.max;
 
-      for (var i=inicioMosey; i<finalMosey;i++) {
-        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
-          var peso = arrayNeuronal[i].peso[j];
-          var origen = arrayNeuronal[i].id;
-          var destino = arrayNeuronal[i].destino[j];
+      for (var i=0; i<arrayMosey.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
+          var peso = arrayNeuronal[arrayMosey[i]].peso[j];
+          var origen = arrayNeuronal[arrayMosey[i]].id;
+          var destino = arrayNeuronal[arrayMosey[i]].destino[j];
           var pos = $scope.buscarArista(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
@@ -463,11 +463,11 @@ angular.module('tfgApp')
       var inicioPeso = $scope.sliderPesoGranulle.min;
       var finalPeso = $scope.sliderPesoGranulle.max;
 
-      for (var i=inicioGranulle; i<finalGranulle;i++) {
-        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
-          var peso = arrayNeuronal[i].peso[j];
-          var origen = arrayNeuronal[i].id;
-          var destino = arrayNeuronal[i].destino[j];
+      for (var i=0; i<arrayGranulle.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayGranulle[i]].peso.length;j++) {
+          var peso = arrayNeuronal[arrayGranulle[i]].peso[j];
+          var origen = arrayNeuronal[arrayGranulle[i]].id;
+          var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
           var pos = $scope.buscarArista(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
@@ -488,11 +488,11 @@ angular.module('tfgApp')
       var inicioPeso = $scope.sliderPesoPurkinje.min;
       var finalPeso = $scope.sliderPesoPurkinje.max;
 
-      for (var i=inicioPurkinje; i<finalPurkinje;i++) {
-        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
-          var peso = arrayNeuronal[i].peso[j];
-          var origen = arrayNeuronal[i].id;
-          var destino = arrayNeuronal[i].destino[j];
+      for (var i=0; i<arrayPurkinje.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].peso.length;j++) {
+          var peso = arrayNeuronal[arrayPurkinje[i]].peso[j];
+          var origen = arrayNeuronal[arrayPurkinje[i]].id;
+          var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
           var pos = $scope.buscarArista(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
@@ -537,6 +537,12 @@ angular.module('tfgApp')
           }
         }
       }
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        console.log('origen: '+arrayNeuronal[i].id);
+        console.log('destino: '+arrayNeuronal[i].destino);
+        console.log('peso: '+arrayNeuronal[i].peso);
+      }
+
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -548,11 +554,11 @@ angular.module('tfgApp')
       var inicioPeso = $scope.sliderPesoGolgi.min;
       var finalPeso = $scope.sliderPesoGolgi.max;
 
-      for (var i=inicioGolgi; i<finalGolgi;i++) {
-        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
-          var peso = arrayNeuronal[i].peso[j];
-          var origen = arrayNeuronal[i].id;
-          var destino = arrayNeuronal[i].destino[j];
+      for (var i=0; i<arrayGolgi.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayGolgi[i]].peso.length;j++) {
+          var peso = arrayNeuronal[arrayGolgi[i]].peso[j];
+          var origen = arrayNeuronal[arrayGolgi[i]].id;
+          var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
           var pos = $scope.buscarArista(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
@@ -573,11 +579,11 @@ angular.module('tfgApp')
       var inicioPeso = $scope.sliderPesoIO.min;
       var finalPeso = $scope.sliderPesoIO.max;
 
-      for (var i=inicioIO; i<finalIO;i++) {
-        for (var j=0; j<arrayNeuronal[i].peso.length;j++) {
-          var peso = arrayNeuronal[i].peso[j];
-          var origen = arrayNeuronal[i].id;
-          var destino = arrayNeuronal[i].destino[j];
+      for (var i=0; i<arrayIO.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayIO[i]].peso.length;j++) {
+          var peso = arrayNeuronal[arrayIO[i]].peso[j];
+          var origen = arrayNeuronal[arrayIO[i]].id;
+          var destino = arrayNeuronal[arrayIO[i]].destino[j];
           var pos = $scope.buscarArista(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
