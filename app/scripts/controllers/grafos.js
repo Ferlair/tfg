@@ -22,6 +22,7 @@ angular
 
     var jsonCopy;
     var arrayNeuronal;
+    var grafoDevuelto;
 
     //arrays auxiliares para cada uno de los tipos de neuronas
     var arrayMosey;
@@ -30,6 +31,8 @@ angular
     var arrayDCN;
     var arrayGolgi;
     var arrayIO;
+
+    $scope.s = grafoFactory.datoNombreNeurona;
 
     $scope.obtenerReferencias = function() {
 
@@ -513,6 +516,10 @@ angular
       document.getElementById('slider').style.display = "inline";
     }
 
+    $scope.resultado = function() {
+      console.log("funciona");
+    }
+
 
 
 
@@ -563,6 +570,13 @@ angular
     var arrayDCN = new Array();
     var arrayGolgi = new Array();
     var arrayIO = new Array();
+
+    var datoNombreNeurona;
+
+    function saludo(s) {
+      console.log('hola ' + s);
+      return resultado();
+    }
 
     return {
 
@@ -630,6 +644,10 @@ angular
         jsonRecibido = js;
       },
 
+      devolverNombre: function() {
+        return datoNombreNeurona;
+      },
+
       //Muestra un grafo por defecto
       crearGrafo: function(){
         sigma.parsers.json('data.json', {
@@ -666,7 +684,7 @@ angular
 
         //enlazamos el evento de click de ratón sobre un nodo, mostrando el nombre del nodo por consola
         s.bind('clickNode', function(e) {
-            console.log(e.data.node.label);
+            datoNombreNeurona = e.data.node.label;
         });
       }
     }

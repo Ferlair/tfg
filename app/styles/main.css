@@ -46,7 +46,6 @@ div.mascara:hover {
 
 #seleccion_neuronas {
   margin-left: 200px;
-  /*margin-top: 5px;*/
   max-width: 500px;
   float:right;
   background: rgb(243,194,48);
@@ -55,9 +54,20 @@ div.mascara:hover {
   border: 2px solid #000000;
 }
 
+#infoNeurona {
+  margin-top: 240px;
+  max-width: 200px;
+  width: 200px;
+  float: right;
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
+}
+
 #slider {
- margin-left: 350px;
- margin-right: 100px;
+  margin-left: 350px;
+  margin-right: 100px;
   margin-top: 50px;
   float: right;
 }

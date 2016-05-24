@@ -418,6 +418,7 @@ angular
         var elementoRepetido = arrayNeuronal[origen[j]].destino.indexOf(destino[j]);
         if (elementoRepetido==-1) {
           var p = peso[j];
+          console.log('p: '+p);
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
         }
