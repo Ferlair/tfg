@@ -583,9 +583,40 @@ angular
 
     var d = "h";
 
-    function saludo(s) {
-      console.log('hola ' + s);
-      grafoFactory.d = s;
+    function encontrarTipo(neurona) {
+      var lineas = neurona.split(" ");
+      var numero = lineas[1];
+      var tipo = arrayNeuronal[numero].tipo;
+      var nombreTipo;
+
+      switch(tipo) {
+        case '0': {
+          nombreTipo = 'Mosey';
+          break;
+        }
+        case '1': {
+          nombreTipo = 'Granulle';
+          break;
+        }
+        case '2': {
+          nombreTipo = 'Purkinje';
+          break;
+        }
+        case '3': {
+          nombreTipo = 'DCN';
+          break;
+        }
+        case '4': {
+          nombreTipo = 'Golgi';
+          break;
+        }
+        case '5': {
+          nombreTipo = 'IO';
+          break;
+        }
+      }
+
+      return nombreTipo;
     }
 
     return {
@@ -699,16 +730,20 @@ angular
         //enlazamos el evento de click de ratón sobre un nodo, mostrando el nombre del nodo por consola
         s.bind('clickNode', function(e) {
             d = e.data.node.label;
+            var tipo;
 
             var myNode = document.getElementById("infoNeurona");
               while (myNode.firstChild) {
                   myNode.removeChild(myNode.firstChild);
               }
 
+            tipo = encontrarTipo(d);
+
             var div =  document.getElementById('infoNeurona');
             div.innerHTML = div.innerHTML + '<b>Nombre: </b>' + d;
             div.innerHTML = div.innerHTML + '<br><br>';
-            div.innerHTML = div.innerHTML + '<b>Tipo: </b>';
+            div.innerHTML = div.innerHTML + '<b>Tipo: </b>' + tipo;
+
         });
       }
     }
