@@ -32,7 +32,17 @@ angular
     var arrayGolgi;
     var arrayIO;
 
-    $scope.s = grafoFactory.datoNombreNeurona;
+
+    $scope.dn = grafoFactory.d;
+
+    document.getElementById("container2").addEventListener("click", $scope.saltar);
+
+    $scope.saltar = function() {
+      console.log('salto');
+    }
+
+
+
 
     $scope.obtenerReferencias = function() {
 
@@ -571,11 +581,11 @@ angular
     var arrayGolgi = new Array();
     var arrayIO = new Array();
 
-    var datoNombreNeurona;
+    var d = "h";
 
     function saludo(s) {
       console.log('hola ' + s);
-      return resultado();
+      grafoFactory.d = s;
     }
 
     return {
@@ -644,8 +654,12 @@ angular
         jsonRecibido = js;
       },
 
-      devolverNombre: function() {
-        return datoNombreNeurona;
+      setD: function(e) {
+        d = e;
+      },
+
+      getD: function() {
+        return d;
       },
 
       //Muestra un grafo por defecto
@@ -684,7 +698,17 @@ angular
 
         //enlazamos el evento de click de ratón sobre un nodo, mostrando el nombre del nodo por consola
         s.bind('clickNode', function(e) {
-            datoNombreNeurona = e.data.node.label;
+            d = e.data.node.label;
+
+            var myNode = document.getElementById("infoNeurona");
+              while (myNode.firstChild) {
+                  myNode.removeChild(myNode.firstChild);
+              }
+
+            var div =  document.getElementById('infoNeurona');
+            div.innerHTML = div.innerHTML + '<b>Nombre: </b>' + d;
+            div.innerHTML = div.innerHTML + '<br><br>';
+            div.innerHTML = div.innerHTML + '<b>Tipo: </b>';
         });
       }
     }

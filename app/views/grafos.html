@@ -15,7 +15,7 @@
 
 
 <!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container2" ng-controller="GrafosCtrl"></div>
+<div id="container2" ng-click="saltar()"></div>
 
 
 
@@ -161,8 +161,6 @@
 </div>
 </div>
 
-<div id="infoNeurona">
-    <b>Nombre:</b> {{s}} <br><br>
-    <b>Tipo:</b> <br><br>
-    <b>Nº Conexiones:</b> <br><br>
+<div id="infoNeurona" ng-model="grafoFactory.d">
+    
 </div>
