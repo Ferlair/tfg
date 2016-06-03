@@ -15,14 +15,15 @@
 
 
 <!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container2" ng-click="saltar()"></div>
+<div id="container2"></div>
 
 
 
 <div id="radioFiltrado">
   <b>Filtrado por:</b><br>
   <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
-  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso
+  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso <br>
+  <input type="radio" name="filtrado" id="individual"> Selección individual
 </div>
 
 
@@ -139,7 +140,7 @@
 <br>
 <br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtrado por peso de neuronas Golgi: </b></div>
+  <div><b>Filtrado por peso de neuronas Golgi: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
@@ -162,5 +163,5 @@
 </div>
 
 <div id="infoNeurona" ng-model="grafoFactory.d">
-    
+
 </div>

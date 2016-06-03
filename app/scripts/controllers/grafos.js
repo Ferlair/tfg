@@ -730,14 +730,12 @@ angular
         //enlazamos el evento de click de ratón sobre un nodo, mostrando el nombre del nodo por consola
         s.bind('clickNode', function(e) {
             d = e.data.node.label;
-            var tipo;
+            var tipo = encontrarTipo(d);
 
-            var myNode = document.getElementById("infoNeurona");
-              while (myNode.firstChild) {
-                  myNode.removeChild(myNode.firstChild);
+            var nodoABorrar = document.getElementById("infoNeurona");
+              while (nodoABorrar.firstChild) {
+                  nodoABorrar.removeChild(nodoABorrar.firstChild);
               }
-
-            tipo = encontrarTipo(d);
 
             var div =  document.getElementById('infoNeurona');
             div.innerHTML = div.innerHTML + '<b>Nombre: </b>' + d;

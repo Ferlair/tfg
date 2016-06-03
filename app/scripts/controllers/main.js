@@ -186,7 +186,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 1;
+            nodo.size = 0.000001;
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
@@ -216,7 +216,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 1;
+            nodo.size = 0.001;
 
             jsonObj.nodes[i] = nodo;
 
@@ -248,7 +248,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 1;
+            nodo.size = 0.0003;
 
             jsonObj.nodes[i] = nodo;
 
@@ -280,7 +280,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 1;
+            nodo.size = 0.0004;
 
             jsonObj.nodes[i] = nodo;
 
@@ -312,7 +312,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 1;
+            nodo.size = 0.0005;
 
             jsonObj.nodes[i] = nodo;
 
@@ -344,7 +344,7 @@ angular
             var y = Math.sin(angle)*radius;
             nodo.x=x;
             nodo.y=y;
-            nodo.size = 1;
+            nodo.size = 0.006;
 
             jsonObj.nodes[i] = nodo;
 
