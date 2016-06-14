@@ -22,7 +22,6 @@ angular
 
     var jsonCopy;
     var arrayNeuronal;
-    var grafoDevuelto;
 
     //arrays auxiliares para cada uno de los tipos de neuronas
     var arrayMosey;
@@ -35,13 +34,7 @@ angular
 
     $scope.dn = grafoFactory.d;
 
-    document.getElementById("container2").addEventListener("click", $scope.saltar);
-
-    $scope.saltar = function() {
-      console.log('salto');
-    }
-
-
+    //document.getElementById("container2").addEventListener("click");
 
 
     $scope.obtenerReferencias = function() {
@@ -525,13 +518,6 @@ angular
       document.getElementById('slider').style.visibility = "visible";
       document.getElementById('slider').style.display = "inline";
     }
-
-    $scope.resultado = function() {
-      console.log("funciona");
-    }
-
-
-
 
   }])
 
