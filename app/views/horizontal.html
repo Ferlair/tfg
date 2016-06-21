@@ -8,25 +8,18 @@
     <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="ver()" checked> IO Cells<br><br>
 </div>
 
-
-
 <a href="#/"><img id="boton_pagina_principal"></a>
 
 
 
 <!-- Contenedor que muestra la imagen generada por WebGL-->
-<div id="container2"></div>
-
-
+<div id="container2" ng-controller="horizontalCtrl"></div>
 
 <div id="radioFiltrado">
   <b>Filtrado por:</b><br>
   <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
-  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso <br>
-  <input type="radio" name="filtrado" id="individual"> Selección individual
+  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso
 </div>
-
-
 
 <!-- Contenedor para los sliders -->
 <div id="slider" style="visibility: hidden">
@@ -140,7 +133,7 @@
 <br>
 <br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtrado por peso de neuronas Golgi: </b></div><br>
+  <div><b>Filtrado por peso de neuronas Golgi: </b></div>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
@@ -160,8 +153,4 @@
       ng-mouseup = "modificarPesoIO()">
   </rzslider>
 </div>
-</div>
-
-<div id="infoNeurona" ng-model="grafoFactory.d">
-
 </div>

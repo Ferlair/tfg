@@ -1,14 +1,17 @@
+
+
+
 'use strict';
 
 /**
  * @ngdoc function
- * @name tfgApp.controller:Visualizacion2Ctrl
+ * @name tfgApp.controller:horizontalCtrl
  * @description
- * # Visualizacion2Ctrl
+ * # horizontalCtrl
  * Controller of the tfgApp
  */
 angular.module('tfgApp')
-  .controller('Visualizacion2Ctrl', ['$scope','grafoFactory', function($scope, grafoFactory) {
+  .controller('horizontalCtrl', ['$scope','grafoFactory', function($scope, grafoFactory) {
 
     var mosey = document.getElementById('1');
     var granulle = document.getElementById('2');
@@ -169,7 +172,7 @@ angular.module('tfgApp')
       p.removeChild(g);
       var c = document.createElement('div');
       c.setAttribute('id','container2');
-      c.setAttribute('ng-controller','GrafosCtrl');
+      c.setAttribute('ng-controller','circularCtrl');
       c.setAttribute('height','500 px');
       p.appendChild(c);
     }

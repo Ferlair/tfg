@@ -50,13 +50,13 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/grafos', {
-        templateUrl: 'views/grafos.html',
-        controller: 'GrafosCtrl'
+      .when('/circular', {
+        templateUrl: 'views/circular.html',
+        controller: 'circularCtrl'
       })
-      .when('/visualizacion2', {
-        templateUrl: 'views/visualizacion2.html',
-        controller: 'Visualizacion2Ctrl',
-        controllerAs: 'visualizacion2'
+      .when('/horizontal', {
+        templateUrl: 'views/horizontal.html',
+        controller: 'horizontalCtrl',
+        controllerAs: 'horizontal'
       })
   });

@@ -365,10 +365,15 @@ angular
             grafoFactory.numeroIo = numeroIo;
           }
 
+
+
           numeroTotalNeuronas++;
           grafoFactory.numeroTotalNeuronas = numeroTotalNeuronas;
 
         }
+
+        //console.log(arrayNeuronal);
+        //console.log('numero de mosey '+grafoFactory.numeroMosey);
         jsonCopy = jsonObj;
         $scope.escribirDatos();
         grafoFactory.almacenarArrayMosey(arrayMosey);
@@ -380,10 +385,11 @@ angular
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
         $scope.activarVisualizaciones();
+
     }
 
     //Entrada: fichero de texto con datos neuronales
-    //Salida: array bidimensional con las aristas para cada neurona
+    //Salida:
     $scope.nuevoCargarNeuronas = function($fileContent) {
       var lineas = $fileContent.split("\n");
       var palabrasPorLineas;
@@ -404,6 +410,7 @@ angular
         destino[i] = palabrasPorLineas[1];
         tipo[i] = palabrasPorLineas[4];
         peso[i] = palabrasPorLineas[5];
+        //console.log('origen '+origen[i]+' destino '+destino[i]+ 'tipo '+tipo[i]+ ' iteración '+i);
       }
 
       //Obtenemos el número total de neuronas que contiene el archivo
@@ -418,12 +425,12 @@ angular
         var elementoRepetido = arrayNeuronal[origen[j]].destino.indexOf(destino[j]);
         if (elementoRepetido==-1) {
           var p = peso[j];
-          console.log('p: '+p);
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
         }
 
       }
+      //console.log(arrayNeuronal);
 
       //Asignación del tipo de neurona
       for (var i=0; i<origen.length; i++) {

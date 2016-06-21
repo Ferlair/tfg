@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc function
- * @name tfgApp.controller:GrafosCtrl
+ * @name tfgApp.controller:circularCtrl
  * @description
- * # GrafosCtrl
+ * # circularCtrl
  * Controller of the tfgApp
  */
 angular
   .module('tfgApp')
 
-  .controller ('GrafosCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
+  .controller ('circularCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
     var mosey = document.getElementById('1');
     var granulle = document.getElementById('2');
@@ -34,7 +34,7 @@ angular
 
     $scope.dn = grafoFactory.d;
 
-    //document.getElementById("container2").addEventListener("click");
+
 
 
     $scope.obtenerReferencias = function() {
@@ -102,7 +102,7 @@ angular
       p.removeChild(g);
       var c = document.createElement('div');
       c.setAttribute('id','container2');
-      c.setAttribute('ng-controller','GrafosCtrl');
+      c.setAttribute('ng-controller','circularCtrl');
       c.setAttribute('height','500 px');
       p.appendChild(c);
     }
@@ -134,6 +134,10 @@ angular
         for (var i=0; i<arrayMosey.length; i++) {
           jsonCopy.nodes[arrayMosey[i]].hidden = true;
         }
+
+        //Deshabilitamos los slider de filtrado por id y peso para mosey
+        document.getElementById('idmosey').style.pointerEvents = "none";
+        document.getElementById('sliderPesoMosey').style.pointerEvents = "none";
       }
       //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
       //es decir, entre inicioMosey y finalMosey, ambos inclusive
@@ -146,6 +150,10 @@ angular
               jsonCopy.nodes[arrayMosey[j]].hidden = true;
             }
           }
+
+          //Habilitamos los slider de filtrado por id y peso para mosey
+          document.getElementById('idmosey').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoMosey').style.pointerEvents = "auto";
       }
 
       //Mostrar/ocultar neuronas de tipo granulle
@@ -153,6 +161,9 @@ angular
         for (var i=0; i<arrayGranulle.length; i++) {
           jsonCopy.nodes[arrayGranulle[i]].hidden = true;
         }
+        //Deshabilitamos los slider de filtrado por id y peso para granulle
+        document.getElementById("idgranulle").style.pointerEvents = "none";
+        document.getElementById("sliderPesoGranulle").style.pointerEvents = "none";
       }
       else {
           for (var j=0; j<arrayGranulle.length; j++) {
@@ -163,6 +174,10 @@ angular
               jsonCopy.nodes[arrayGranulle[j]].hidden = true;
             }
           }
+
+          //Habilitamos los slider de filtrado por id y peso para granulle
+          document.getElementById('idgranulle').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoGranulle').style.pointerEvents = "auto";
       }
 
       //Mostrar/ocultar neuronas de tipo purkinje
@@ -170,6 +185,9 @@ angular
         for (var i=0; i<arrayPurkinje.length; i++) {
           jsonCopy.nodes[arrayPurkinje[i]].hidden = true;
         }
+        //Deshabilitamos los slider de filtrado por id y peso para purkinje
+        document.getElementById("idpurkinje").style.pointerEvents = "none";
+        document.getElementById("sliderPesoPurkinje").style.pointerEvents = "none";
       }
       else {
           for (var j=0; j<arrayPurkinje.length; j++) {
@@ -180,6 +198,10 @@ angular
               jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
             }
           }
+
+          //Habilitamos los slider de filtrado por id y peso para purkinje
+          document.getElementById('idpurkinje').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoPurkinje').style.pointerEvents = "auto";
       }
 
       //Mostrar/ocultar neuronas de tipo dcn
@@ -187,6 +209,9 @@ angular
         for (var i=0; i<arrayDCN.length; i++) {
           jsonCopy.nodes[arrayDCN[i]].hidden = true;
         }
+        //Deshabilitamos los slider de filtrado por id y peso para dcn
+        document.getElementById("iddcn").style.pointerEvents = "none";
+        document.getElementById("sliderPesoDCN").style.pointerEvents = "none";
       }
       else {
           for (var j=0; j<arrayDCN.length; j++) {
@@ -197,6 +222,10 @@ angular
               jsonCopy.nodes[arrayDCN[j]].hidden = true;
             }
           }
+
+          //Habilitamos los slider de filtrado por id y peso para dcn
+          document.getElementById('iddcn').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoDCN').style.pointerEvents = "auto";
       }
 
       //Mostrar/ocultar neuronas de tipo golgi
@@ -204,6 +233,9 @@ angular
         for (var i=0; i<arrayGolgi.length; i++) {
           jsonCopy.nodes[arrayGolgi[i]].hidden = true;
         }
+        //Deshabilitamos los slider de filtrado por id y peso para golgi
+        document.getElementById("idgolgi").style.pointerEvents = "none";
+        document.getElementById("sliderPesoGolgi").style.pointerEvents = "none";
       }
       else {
           for (var j=0; j<arrayGolgi.length; j++) {
@@ -214,6 +246,10 @@ angular
               jsonCopy.nodes[arrayGolgi[j]].hidden = true;
             }
           }
+
+          //Habilitamos los slider de filtrado por id y peso para golgi
+          document.getElementById('idgolgi').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoGolgi').style.pointerEvents = "auto";
       }
 
       //Mostrar/ocultar neuronas de tipo io
@@ -221,6 +257,10 @@ angular
         for (var i=0; i<arrayIO.length; i++) {
           jsonCopy.nodes[arrayIO[i]].hidden = true;
         }
+
+        //Deshabilitamos los slider de filtrado por id y peso para IO
+        document.getElementById("idio").style.pointerEvents = "none";
+        document.getElementById("sliderPesoIO").style.pointerEvents = "none";
       }
       else {
           for (var j=0; j<arrayIO.length; j++) {
@@ -231,6 +271,10 @@ angular
               jsonCopy.nodes[arrayIO[j]].hidden = true;
             }
           }
+
+          //Habilitamos los slider de filtrado por id y peso para IO
+          document.getElementById('idio').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoIO').style.pointerEvents = "auto";
       }
       refresh();
       grafoFactory.cargar(jsonCopy);
@@ -509,14 +553,35 @@ angular
 
     $scope.mostrarPeso = function() {
       document.getElementById('slider').style.display = "none";
+      document.getElementById('seleccionManual').style.display = "none";
       document.getElementById('sliderPeso').style.visibility = "visible";
       document.getElementById('sliderPeso').style.display = "inline";
     }
 
     $scope.mostrarId = function() {
       document.getElementById('sliderPeso').style.display = "none";
+      document.getElementById('seleccionManual').style.display = "none";
       document.getElementById('slider').style.visibility = "visible";
       document.getElementById('slider').style.display = "inline";
+    }
+
+    $scope.mostrarSeleccionManual = function() {
+      document.getElementById('sliderPeso').style.display = "none";
+      document.getElementById('slider').style.display = "none";
+      document.getElementById('seleccionManual').style.visibility = "visible";
+      document.getElementById('seleccionManual').style.display = "inline";
+    }
+
+    $scope.neuronasSeleccionadas;
+
+    $scope.visualizar = function(){
+      /*var n = $scope.neuronasSeleccionadas.split(",");
+      for (var i=0;i<n.length;i++){
+        console.log(n[i]);
+      }*/
+      var n = new Array();
+      n = grafoFactory.getArrayPrueba();
+      console.log('probamos:'+n);
     }
 
   }])
@@ -568,6 +633,8 @@ angular
     var arrayIO = new Array();
 
     var d = "h";
+
+    var arrayPrueba = new Array();
 
     function encontrarTipo(neurona) {
       var lineas = neurona.split(" ");
@@ -679,6 +746,10 @@ angular
         return d;
       },
 
+      getArrayPrueba: function() {
+        return arrayPrueba;
+      },
+
       //Muestra un grafo por defecto
       crearGrafo: function(){
         sigma.parsers.json('data.json', {
@@ -716,9 +787,12 @@ angular
         //enlazamos el evento de click de ratón sobre un nodo, mostrando el nombre del nodo por consola
         s.bind('clickNode', function(e) {
             d = e.data.node.label;
+            var prev = d.split(" ");
+            var sig = prev[1];
+            arrayPrueba.push(sig);
             var tipo = encontrarTipo(d);
 
-            var nodoABorrar = document.getElementById("infoNeurona");
+            var nodoABorrar = document.getElementById('infoNeurona');
               while (nodoABorrar.firstChild) {
                   nodoABorrar.removeChild(nodoABorrar.firstChild);
               }
@@ -728,6 +802,7 @@ angular
             div.innerHTML = div.innerHTML + '<br><br>';
             div.innerHTML = div.innerHTML + '<b>Tipo: </b>' + tipo;
 
+            console.log(arrayPrueba);
         });
       }
     }
