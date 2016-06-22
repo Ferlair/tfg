@@ -576,34 +576,63 @@ angular
       var resultado;
       var iteraciones = arrayNeuronal[neurona].destino.length;
 
-      if (iteraciones>=2) {
-        for (var i=1; i<iteraciones;i++) {
-          console.log('destino '+i);
-          var aux = arrayNeuronal[neurona].destino[i];
-          aux = aux.toString();
-          console.log('aux'+aux);
+      for (var i=0; i<iteraciones;i++) {
+        var aux = arrayNeuronal[neurona].destino[i];
+        aux = aux.toString();
+        console.log('aux en posicion '+i+': '+aux);
+
+        if (i==0) {
+          resultado = aux;
+        }
+        else {
           resultado = resultado + ',' + aux;
         }
       }
+
       console.log('resultado'+resultado);
       return resultado;
     }
 
     $scope.filtradoManual = function(stringSeleccion) {
+      console.log(arrayNeuronal);
       var filtradoOrigen = stringSeleccion.split(',');
-
-      //console.log(arrayNeuronal);
-      //console.log('neurona origen '+neuronaOrigen);
 
       var arrayDatos = new Array();
 
       for (var i=0; i<filtradoOrigen.length;i++) {
         var neuronaOrigen = filtradoOrigen[i];
-        arrayDatos.push(neuronaOrigen);
         arrayDatos.push($scope.getDestinos(neuronaOrigen));
       }
 
       console.log(arrayDatos);
+      console.log('desglose: ');
+
+      var arrayAux = new Array();
+
+      for (var i=0; i<arrayDatos.length;i++) {
+          var auxN = arrayDatos[i];
+          auxN = auxN.split(',');
+          for (var j=0; j<auxN.length;j++) {
+            var auxJ = auxN[j];
+            arrayAux.push(auxJ);
+            //console.log('caso '+i+': '+ auxJ);
+          }
+
+      }
+      console.log('array final: ');
+      console.log(arrayAux);
+
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        jsonCopy.nodes[i].hidden = true;
+      }
+
+      for (var i=0; i<arrayAux.length;i++) {
+        var aux = parseInt(arrayAux[i]);
+        console.log('aux dentro brucle:'+aux);
+        jsonCopy.nodes[aux].hidden=false;
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
     }
 
     $scope.visualizar = function(){
