@@ -55,10 +55,11 @@ div.mascara:hover {
 }
 
 #infoNeurona {
-  margin-top: 240px;
+  margin-top: 650px;
+  margin-left: 150px;
   max-width: 200px;
   width: 200px;
-  float: right;
+  float: left;
   background: rgb(243,194,48);
   border-radius: 25px;
   padding: 8px;

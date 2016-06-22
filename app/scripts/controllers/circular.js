@@ -615,7 +615,6 @@ angular
           for (var j=0; j<auxN.length;j++) {
             var auxJ = auxN[j];
             arrayAux.push(auxJ);
-            //console.log('caso '+i+': '+ auxJ);
           }
 
       }
@@ -880,6 +879,9 @@ angular
             div.innerHTML = div.innerHTML + '<b>Nombre: </b>' + d;
             div.innerHTML = div.innerHTML + '<br><br>';
             div.innerHTML = div.innerHTML + '<b>Tipo: </b>' + tipo;
+
+            document.getElementById('infoNeurona').style.display="inline";
+            document.getElementById('infoNeurona').style.visibility="visible";
 
             //------------------------------------------------------------------------------------------------
 
