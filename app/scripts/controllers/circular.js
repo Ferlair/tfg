@@ -572,16 +572,32 @@ angular
       document.getElementById('seleccionManual').style.display = "inline";
     }
 
-    $scope.neuronasSeleccionadas;
-
     $scope.visualizar = function(){
-      /*var n = $scope.neuronasSeleccionadas.split(",");
-      for (var i=0;i<n.length;i++){
-        console.log(n[i]);
-      }*/
-      var n = new Array();
-      n = grafoFactory.getArrayPrueba();
-      console.log('probamos:'+n);
+
+      var valor = document.getElementById("inputNeuronas").value;
+      console.log('probamos:' + valor);
+
+      var admitido = true;
+
+      //Comprobación carácter por carácter de que sea un entero o una coma, e invalidarlo mediante
+      //admitido = false, en caso contrario, lo que evitará que se ejecute ninguna acción
+      for (var i=0; i<valor.length;i++) {
+        var aux = valor.charAt(i);
+        var t = !isNaN(String(aux) * 1);
+          console.log(aux+' '+t);
+          if (!t) {
+            if (aux != ',')
+             admitido = false;
+          }
+      }
+
+      if (!admitido) {
+        alert ('Error: Sólo se admiten números enteros separados por comas sin espacios');
+      }
+      else { //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
+        $scope.filtradoManual();
+      }
+
     }
 
   }])
@@ -801,6 +817,37 @@ angular
             div.innerHTML = div.innerHTML + '<b>Nombre: </b>' + d;
             div.innerHTML = div.innerHTML + '<br><br>';
             div.innerHTML = div.innerHTML + '<b>Tipo: </b>' + tipo;
+
+            //------------------------------------------------------------------------------------------------
+
+            var frase;
+
+            for (var i=0;i<arrayPrueba.length;i++) {
+
+              if (i==0) { //Primer elemento
+                frase = arrayPrueba[i];
+                frase = frase + ',';
+              }
+              else if (i==arrayPrueba.length-1) { //Si es la última neurona no debe llevar coma al final
+                frase = frase + arrayPrueba[i];
+              }
+
+              else { //elemento intermedio, debe llevar coma al final
+                frase = frase + arrayPrueba[i];
+                frase = frase + ','
+              }
+
+            }
+
+            console.log('frase'+frase);
+
+            var elementoABorrar = document.getElementById('barra');
+              while (elementoABorrar.firstChild) {
+                  elementoABorrar.removeChild(elementoABorrar.firstChild);
+              }
+
+            var div =  document.getElementById('barra');
+            div.innerHTML = div.innerHTML + '<input id="inputNeuronas" type="text" value="'+frase+'"><br><br>';
 
             console.log(arrayPrueba);
         });

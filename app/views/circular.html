@@ -164,9 +164,9 @@
 
 <div id="infoNeurona" ng-model="grafoFactory.d" style="visibility: hidden"></div>
 
-<div id="seleccionManual" style="visibility:visible">
-  Haz click sobre la/s neurona/s a visualizar <br>
-  Neuronas:
-  <input type="text" >
-  <input type="button" value="Visualizar" ng-click="visualizar()">
+<div id="seleccionManual" style="visibility: hidden">
+  <b>Haz click sobre la/s neurona/s a visualizar</b> <br><br>
+  <b>Neuronas:</b>
+  <div id="barra"><input id="inputNeuronas" type="text"><br><br></div>
+  <center><input type="button" value="Visualizar" ng-click="visualizar()"></center>
 </div>

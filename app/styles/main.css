@@ -80,12 +80,10 @@ div.mascara:hover {
 }
 
 #seleccionManual {
-  max-width: 350px;
-  max-heigth: 350px;
-  margin-left: 450px;
-  margin-right: 80px;
-  margin-top: 0px;
-  float: left;
+  margin-left: 350px;
+  margin-right: 0px;
+   margin-top: 0px;
+   float: right;
 }
 
 #radioFiltrado {
