@@ -572,6 +572,40 @@ angular
       document.getElementById('seleccionManual').style.display = "inline";
     }
 
+    $scope.getDestinos = function(neurona) {
+      var resultado;
+      var iteraciones = arrayNeuronal[neurona].destino.length;
+
+      if (iteraciones>=2) {
+        for (var i=1; i<iteraciones;i++) {
+          console.log('destino '+i);
+          var aux = arrayNeuronal[neurona].destino[i];
+          aux = aux.toString();
+          console.log('aux'+aux);
+          resultado = resultado + ',' + aux;
+        }
+      }
+      console.log('resultado'+resultado);
+      return resultado;
+    }
+
+    $scope.filtradoManual = function(stringSeleccion) {
+      var filtradoOrigen = stringSeleccion.split(',');
+
+      //console.log(arrayNeuronal);
+      //console.log('neurona origen '+neuronaOrigen);
+
+      var arrayDatos = new Array();
+
+      for (var i=0; i<filtradoOrigen.length;i++) {
+        var neuronaOrigen = filtradoOrigen[i];
+        arrayDatos.push(neuronaOrigen);
+        arrayDatos.push($scope.getDestinos(neuronaOrigen));
+      }
+
+      console.log(arrayDatos);
+    }
+
     $scope.visualizar = function(){
 
       var valor = document.getElementById("inputNeuronas").value;
@@ -595,7 +629,7 @@ angular
         alert ('Error: Sólo se admiten números enteros separados por comas sin espacios');
       }
       else { //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
-        $scope.filtradoManual();
+        $scope.filtradoManual(valor);
       }
 
     }

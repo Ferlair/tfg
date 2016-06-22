@@ -430,7 +430,6 @@ angular
         }
 
       }
-      //console.log(arrayNeuronal);
 
       //Asignación del tipo de neurona
       for (var i=0; i<origen.length; i++) {
