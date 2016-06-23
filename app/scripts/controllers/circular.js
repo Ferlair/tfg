@@ -65,6 +65,102 @@ angular
       grafoFactory.maxPeso = 10;
     }
 
+    $scope.sombrearMosey = function() {
+      for (var i=0;i<arrayMosey.length;i++) {
+        jsonCopy.nodes[arrayMosey[i]].color = "#ff0000";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.blanquearMosey = function() {
+      for (var i=0;i<arrayMosey.length;i++) {
+        jsonCopy.nodes[arrayMosey[i]].color = "#ffffff";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.sombrearGranulle = function() {
+      for (var i=0;i<arrayGranulle.length;i++) {
+        jsonCopy.nodes[arrayGranulle[i]].color = "#ff0000";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.blanquearGranulle = function() {
+      for (var i=0;i<arrayGranulle.length;i++) {
+        jsonCopy.nodes[arrayGranulle[i]].color = "#ffffff";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.sombrearPurkinje = function() {
+      for (var i=0;i<arrayPurkinje.length;i++) {
+        jsonCopy.nodes[arrayPurkinje[i]].color = "#ff0000";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.blanquarPurkinje = function() {
+      for (var i=0;i<arrayPurkinje.length;i++) {
+        jsonCopy.nodes[arrayPurkinje[i]].color = "#ffffff";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.sombrearDCN = function() {
+      for (var i=0;i<arrayDCN.length;i++) {
+        jsonCopy.nodes[arrayDCN[i]].color = "#ff0000";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.blanquearDCN = function() {
+      for (var i=0;i<arrayPurkinje.length;i++) {
+        jsonCopy.nodes[arrayPurkinje[i]].color = "#ffffff";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.sombrearGolgi = function() {
+      for (var i=0;i<arrayGolgi.length;i++) {
+        jsonCopy.nodes[arrayGolgi[i]].color = "#ff0000";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.blanquearGolgi = function() {
+      for (var i=0;i<arrayGolgi.length;i++) {
+        jsonCopy.nodes[arrayGolgi[i]].color = "#ffffff";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.sombrearIO = function() {
+      for (var i=0;i<arrayIO.length;i++) {
+        jsonCopy.nodes[arrayIO[i]].color = "#ff0000";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.blanquearIO = function() {
+      for (var i=0;i<arrayIO.length;i++) {
+        jsonCopy.nodes[arrayIO[i]].color = "#ffffff";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
     //Función que devuelve la posición de una determinada arista dentro
     //del json del grafo
     $scope.buscarArista = function (origen, destino){
@@ -143,12 +239,15 @@ angular
       //es decir, entre inicioMosey y finalMosey, ambos inclusive
       else {
           for (var j=0; j<arrayMosey.length; j++) {
-            if (arrayMosey[j] >= inicioMosey && arrayMosey[j] <= finalMosey) {
-              jsonCopy.nodes[arrayMosey[j]].hidden = false;
+            if (jsonCopy.nodes[arrayMosey[j]].hidden == false) {
+              if (arrayMosey[j] >= inicioMosey && arrayMosey[j] <= finalMosey) {
+                jsonCopy.nodes[arrayMosey[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayMosey[j]].hidden = true;
+              }
             }
-            else {
-              jsonCopy.nodes[arrayMosey[j]].hidden = true;
-            }
+
           }
 
           //Habilitamos los slider de filtrado por id y peso para mosey
@@ -167,12 +266,15 @@ angular
       }
       else {
           for (var j=0; j<arrayGranulle.length; j++) {
-            if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
-              jsonCopy.nodes[arrayGranulle[j]].hidden = false;
+            if (jsonCopy.nodes[arrayGranulle[j]].hidden == false) {
+              if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
+                jsonCopy.nodes[arrayGranulle[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayGranulle[j]].hidden = true;
+              }
             }
-            else {
-              jsonCopy.nodes[arrayGranulle[j]].hidden = true;
-            }
+
           }
 
           //Habilitamos los slider de filtrado por id y peso para granulle
@@ -191,12 +293,15 @@ angular
       }
       else {
           for (var j=0; j<arrayPurkinje.length; j++) {
-            if (arrayPurkinje[j] >= inicioPurkinje && arrayPurkinje[j] <= finalPurkinje) {
-              jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
+            if (jsonCopy.nodes[arrayPurkinje[j]].hidden == false) {
+              if (arrayPurkinje[j] >= inicioPurkinje && arrayPurkinje[j] <= finalPurkinje) {
+                jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
+              }
             }
-            else {
-              jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
-            }
+
           }
 
           //Habilitamos los slider de filtrado por id y peso para purkinje
@@ -215,12 +320,15 @@ angular
       }
       else {
           for (var j=0; j<arrayDCN.length; j++) {
-            if (arrayDCN[j] >= inicioDCN && arrayDCN[j] <= finalDCN) {
-              jsonCopy.nodes[arrayDCN[j]].hidden = false;
+            if (jsonCopy.nodes[arrayDCN[j]].hidden == false) {
+              if (arrayDCN[j] >= inicioDCN && arrayDCN[j] <= finalDCN) {
+                jsonCopy.nodes[arrayDCN[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayDCN[j]].hidden = true;
+              }
             }
-            else {
-              jsonCopy.nodes[arrayDCN[j]].hidden = true;
-            }
+
           }
 
           //Habilitamos los slider de filtrado por id y peso para dcn
@@ -239,12 +347,15 @@ angular
       }
       else {
           for (var j=0; j<arrayGolgi.length; j++) {
-            if (arrayGolgi[j] >= inicioGolgi && arrayGolgi[j] <= finalGolgi) {
-              jsonCopy.nodes[arrayGolgi[j]].hidden = false;
+            if (jsonCopy.nodes[arrayGolgi[j]].hidden == false) {
+              if (arrayGolgi[j] >= inicioGolgi && arrayGolgi[j] <= finalGolgi) {
+                jsonCopy.nodes[arrayGolgi[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayGolgi[j]].hidden = true;
+              }
             }
-            else {
-              jsonCopy.nodes[arrayGolgi[j]].hidden = true;
-            }
+
           }
 
           //Habilitamos los slider de filtrado por id y peso para golgi
@@ -264,12 +375,15 @@ angular
       }
       else {
           for (var j=0; j<arrayIO.length; j++) {
-            if (arrayIO[j] >= inicioIO && arrayIO[j] <= finalIO) {
-              jsonCopy.nodes[arrayIO[j]].hidden = false;
+            if (jsonCopy.nodes[arrayIO[j]].hidden == false) {
+              if (arrayIO[j] >= inicioIO && arrayIO[j] <= finalIO) {
+                jsonCopy.nodes[arrayIO[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayIO[j]].hidden = true;
+              }
             }
-            else {
-              jsonCopy.nodes[arrayIO[j]].hidden = true;
-            }
+
           }
 
           //Habilitamos los slider de filtrado por id y peso para IO

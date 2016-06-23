@@ -1,11 +1,11 @@
 <div id="seleccion_neuronas">
     Selecciona las neuronas que quieres visualizar: <br><br>
-    <input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="ver()" checked> Mosey Fibers<br><br>
-    <input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="ver()" checked> Granulle Cells<br><br>
-    <input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="ver()" checked> Purkinje Cells<br><br>
-    <input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="ver()" checked> DCN Cells<br><br>
-    <input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="ver()" checked> Golgi Cells<br><br>
-    <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="ver()" checked> IO Cells<br><br>
+    <label ng-mouseover="sombrearMosey()" ng-mouseleave="blanquearMosey()"><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="ver()" checked> Mosey Fibers</label><br><br>
+    <label ng-mouseover="sombrearGranulle()" ng-mouseleave="blanquearGranulle()"><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="ver()" checked> Granulle Cells</label><br><br>
+    <label ng-mouseover="sombrearPurkinje()" ng-mouseleave="blanquearPurkinje()"><input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="ver()" checked> Purkinje Cells</label><br><br>
+    <label ng-mouseover="sombrearDCN()" ng-mouseleave="blanquearDCN()"><input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="ver()" checked> DCN Cells</label><br><br>
+    <label ng-mouseover="sombrearGolgi()" ng-mouseleave="blanquearGolgi()"><input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="ver()" checked> Golgi Cells</label><br><br>
+    <label ng-mouseover="sombrearIO()" ng-mouseleave="blanquearIO()"><input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="ver()" checked> IO Cells</label><br><br>
 </div>
 
 
@@ -166,7 +166,7 @@
 
 <div id="seleccionManual" style="visibility: hidden">
   <b>Haz click sobre la/s neurona/s a visualizar</b> <br><br>
-  <b>Neuronas:</b>
+  <b>Neuronas: </b>
   <div id="barra"><input id="inputNeuronas" type="text"><br><br></div>
   <center><input type="button" value="Visualizar" ng-click="visualizar()"></center>
 </div>

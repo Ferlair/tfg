@@ -8,9 +8,9 @@
     <input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="ver()" checked> IO Cells<br><br>
 </div>
 
+<a href="#/"><img id="boton_pagina_principal"></a>
 
-
-
+<div id="infoNeurona" ng-model="grafoFactory.d" style="visibility:hidden"></div>
 
 <!-- Contenedor que muestra la imagen generada por WebGL-->
 <div id="container2" ng-controller="horizontalCtrl"></div>
@@ -18,10 +18,11 @@
 <div id="radioFiltrado">
   <b>Filtrado por:</b><br>
   <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
-  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso
+  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso <br>
+  <input type="radio" name="filtrado" id="individual" ng-click="mostrarSeleccionManual()"> Selección individual
 </div>
 
-<a href="#/"><img id="boton_pagina_principal"></a>
+
 
 <!-- Contenedor para los sliders -->
 <div id="slider" style="visibility: hidden">
@@ -155,4 +156,11 @@
       ng-mouseup = "modificarPesoIO()">
   </rzslider>
 </div>
+</div>
+
+<div id="seleccionManual" style="visibility: hidden">
+  <b>Haz click sobre la/s neurona/s a visualizar</b> <br><br>
+  <b>Neuronas: </b>
+  <div id="barra"><input id="inputNeuronas" type="text"><br><br></div>
+  <center><input type="button" value="Visualizar" ng-click="visualizar()"></center>
 </div>
