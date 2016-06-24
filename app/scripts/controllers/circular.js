@@ -22,6 +22,7 @@ angular
 
     var jsonCopy;
     var arrayNeuronal;
+    var arrayAux = new Array();
 
     //arrays auxiliares para cada uno de los tipos de neuronas
     var arrayMosey;
@@ -203,8 +204,222 @@ angular
       p.appendChild(c);
     }
 
+    //Mostrar/ocultar neuronas de tipo mosey
+    $scope.chequearMosey = function() {
+      var inicioMosey = $scope.sliderMosey.min;
+      var finalMosey = $scope.sliderMosey.max;
+
+
+      if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
+        for (var i=0; i<arrayMosey.length; i++) {
+          jsonCopy.nodes[arrayMosey[i]].hidden = true;
+        }
+
+        //Deshabilitamos los slider de filtrado por id y peso para mosey
+        document.getElementById('idmosey').style.pointerEvents = "none";
+        document.getElementById('sliderPesoMosey').style.pointerEvents = "none";
+      }
+      //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
+      //es decir, entre inicioMosey y finalMosey, ambos inclusive
+      else {
+          for (var j=0; j<arrayMosey.length; j++) {
+              if (arrayMosey[j] >= inicioMosey && arrayMosey[j] <= finalMosey) {
+                jsonCopy.nodes[arrayMosey[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayMosey[j]].hidden = true;
+              }
+          }
+
+          //Habilitamos los slider de filtrado por id y peso para mosey
+          document.getElementById('idmosey').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoMosey').style.pointerEvents = "auto";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    //Mostrar/ocultar neuronas de tipo granulle
+    $scope.chequearGranulle = function() {
+      var inicioGranulle = $scope.sliderGranulle.min;
+      var finalGranulle = $scope.sliderGranulle.max;
+
+
+      if (!granulle.checked) {
+        for (var i=0; i<arrayGranulle.length; i++) {
+          jsonCopy.nodes[arrayGranulle[i]].hidden = true;
+        }
+        //Deshabilitamos los slider de filtrado por id y peso para granulle
+        document.getElementById("idgranulle").style.pointerEvents = "none";
+        document.getElementById("sliderPesoGranulle").style.pointerEvents = "none";
+      }
+      else {
+          for (var j=0; j<arrayGranulle.length; j++) {
+              if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
+                jsonCopy.nodes[arrayGranulle[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayGranulle[j]].hidden = true;
+              }
+
+
+          }
+
+          //Habilitamos los slider de filtrado por id y peso para granulle
+          document.getElementById('idgranulle').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoGranulle').style.pointerEvents = "auto";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    //Mostrar/ocultar neuronas de tipo purkinje
+    $scope.chequearPurkinje = function() {
+      var inicioPurkinje = $scope.sliderPurkinje.min;
+      var finalPurkinje = $scope.sliderPurkinje.max;
+
+
+      if (!purkinje.checked) {
+        for (var i=0; i<arrayPurkinje.length; i++) {
+          jsonCopy.nodes[arrayPurkinje[i]].hidden = true;
+        }
+        //Deshabilitamos los slider de filtrado por id y peso para purkinje
+        document.getElementById("idpurkinje").style.pointerEvents = "none";
+        document.getElementById("sliderPesoPurkinje").style.pointerEvents = "none";
+      }
+      else {
+          for (var j=0; j<arrayPurkinje.length; j++) {
+              if (arrayPurkinje[j] >= inicioPurkinje && arrayPurkinje[j] <= finalPurkinje) {
+                jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
+              }
+
+
+          }
+
+          //Habilitamos los slider de filtrado por id y peso para purkinje
+          document.getElementById('idpurkinje').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoPurkinje').style.pointerEvents = "auto";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    //Mostrar/ocultar neuronas de tipo dcn
+    $scope.chequearDCN = function() {
+      var inicioDCN = $scope.sliderDCN.min;
+      var finalDCN = $scope.sliderDCN.max;
+
+
+      if (!dcn.checked) {
+        for (var i=0; i<arrayDCN.length; i++) {
+          jsonCopy.nodes[arrayDCN[i]].hidden = true;
+        }
+        //Deshabilitamos los slider de filtrado por id y peso para dcn
+        document.getElementById("iddcn").style.pointerEvents = "none";
+        document.getElementById("sliderPesoDCN").style.pointerEvents = "none";
+      }
+      else {
+          for (var j=0; j<arrayDCN.length; j++) {
+
+              if (arrayDCN[j] >= inicioDCN && arrayDCN[j] <= finalDCN) {
+                jsonCopy.nodes[arrayDCN[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayDCN[j]].hidden = true;
+              }
+
+
+          }
+
+          //Habilitamos los slider de filtrado por id y peso para dcn
+          document.getElementById('iddcn').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoDCN').style.pointerEvents = "auto";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    //Mostrar/ocultar neuronas de tipo golgi
+    $scope.chequearGolgi = function() {
+      var inicioGolgi = $scope.sliderGolgi.min;
+      var finalGolgi = $scope.sliderGolgi.max;
+
+
+      if (!golgi.checked) {
+        for (var i=0; i<arrayGolgi.length; i++) {
+          jsonCopy.nodes[arrayGolgi[i]].hidden = true;
+        }
+        //Deshabilitamos los slider de filtrado por id y peso para golgi
+        document.getElementById("idgolgi").style.pointerEvents = "none";
+        document.getElementById("sliderPesoGolgi").style.pointerEvents = "none";
+      }
+      else {
+          for (var j=0; j<arrayGolgi.length; j++) {
+              if (arrayGolgi[j] >= inicioGolgi && arrayGolgi[j] <= finalGolgi) {
+                jsonCopy.nodes[arrayGolgi[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayGolgi[j]].hidden = true;
+              }
+
+
+          }
+
+          //Habilitamos los slider de filtrado por id y peso para golgi
+          document.getElementById('idgolgi').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoGolgi').style.pointerEvents = "auto";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    //Mostrar/ocultar neuronas de tipo io
+    $scope.chequearIO = function() {
+      var inicioIO = $scope.sliderIO.min;
+      var finalIO = $scope.sliderIO.max;
+
+
+      if (!io.checked) {
+        for (var i=0; i<arrayIO.length; i++) {
+          jsonCopy.nodes[arrayIO[i]].hidden = true;
+        }
+
+        //Deshabilitamos los slider de filtrado por id y peso para IO
+        document.getElementById("idio").style.pointerEvents = "none";
+        document.getElementById("sliderPesoIO").style.pointerEvents = "none";
+      }
+      else {
+          for (var j=0; j<arrayIO.length; j++) {
+              if (arrayIO[j] >= inicioIO && arrayIO[j] <= finalIO) {
+                jsonCopy.nodes[arrayIO[j]].hidden = false;
+              }
+              else {
+                jsonCopy.nodes[arrayIO[j]].hidden = true;
+              }
+          }
+
+          //Habilitamos los slider de filtrado por id y peso para IO
+          document.getElementById('idio').style.pointerEvents = "auto";
+          document.getElementById('sliderPesoIO').style.pointerEvents = "auto";
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
+    $scope.restaurar = function() {
+      document.getElementById('inputNeuronas').value="";
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        jsonCopy.nodes[i].hidden = false;
+      }
+      refresh();
+      grafoFactory.cargar(jsonCopy);
+    }
+
     //Función que muestra las neuronas seleccionadas por pantalla
-    $scope.ver = function() {
+    /*$scope.ver = function() {
       var inicioMosey = $scope.sliderMosey.min;
       var finalMosey = $scope.sliderMosey.max;
 
@@ -392,7 +607,7 @@ angular
       }
       refresh();
       grafoFactory.cargar(jsonCopy);
-    }
+    }*/
 
     //Controladores para los diferentes sliders
     $scope.sliderMosey = {
@@ -670,6 +885,8 @@ angular
       document.getElementById('seleccionManual').style.display = "none";
       document.getElementById('sliderPeso').style.visibility = "visible";
       document.getElementById('sliderPeso').style.display = "inline";
+      document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      $scope.restaurar();
     }
 
     $scope.mostrarId = function() {
@@ -677,6 +894,8 @@ angular
       document.getElementById('seleccionManual').style.display = "none";
       document.getElementById('slider').style.visibility = "visible";
       document.getElementById('slider').style.display = "inline";
+      document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      $scope.restaurar();
     }
 
     $scope.mostrarSeleccionManual = function() {
@@ -684,6 +903,7 @@ angular
       document.getElementById('slider').style.display = "none";
       document.getElementById('seleccionManual').style.visibility = "visible";
       document.getElementById('seleccionManual').style.display = "inline";
+      document.getElementById('seleccion_neuronas').style.pointerEvents = "none";
     }
 
     $scope.getDestinos = function(neurona) {
@@ -721,7 +941,7 @@ angular
       console.log(arrayDatos);
       console.log('desglose: ');
 
-      var arrayAux = new Array();
+
 
       for (var i=0; i<arrayDatos.length;i++) {
           var auxN = arrayDatos[i];
@@ -755,20 +975,28 @@ angular
 
       var admitido = true;
 
-      //Comprobación carácter por carácter de que sea un entero o una coma, e invalidarlo mediante
-      //admitido = false, en caso contrario, lo que evitará que se ejecute ninguna acción
-      for (var i=0; i<valor.length;i++) {
-        var aux = valor.charAt(i);
-        var t = !isNaN(String(aux) * 1);
-          console.log(aux+' '+t);
-          if (!t) {
-            if (aux != ',')
-             admitido = false;
-          }
+      if (valor=="") {
+        admitido = false;
+        console.log('es nulo');
+      }
+
+      else {
+        console.log('no es nulo');
+        //Comprobación carácter por carácter de que sea un entero o una coma, e invalidarlo mediante
+        //admitido = false, en caso contrario, lo que evitará que se ejecute ninguna acción
+        for (var i=0; i<valor.length;i++) {
+          var aux = valor.charAt(i);
+          var t = !isNaN(String(aux) * 1);
+            console.log(aux+' '+t);
+            if (!t) {
+              if (aux != ',')
+               admitido = false;
+            }
+        }
       }
 
       if (!admitido) {
-        alert ('Error: Sólo se admiten números enteros separados por comas sin espacios');
+        alert ('Error: \n- Sólo se admiten números enteros separados por comas sin espacios \n- Alguna de las neuronas seleccionadas pueden estar fuera de rango \n- No se permite hacer una búsqueda en blanco');
       }
       else { //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
         $scope.filtradoManual(valor);
