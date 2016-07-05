@@ -59,4 +59,13 @@ angular
         controller: 'horizontalCtrl',
         controllerAs: 'horizontal'
       })
+      .when('/circular_eng', {
+        templateUrl: 'views/circular_eng.html',
+        controller: 'circularCtrl'
+      })
+      .when('/horizontal_eng', {
+        templateUrl: 'views/horizontal_eng.html',
+        controller: 'horizontalCtrl',
+        controllerAs: 'horizontal'
+      })
   });

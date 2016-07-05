@@ -2,7 +2,47 @@ body {
   background: orange;
 }
 
-#especificaciones {
+#titulo {
+  margin-left:50px;
+}
+
+#bandera_esp {
+  width: 65px;
+  height: 50px;
+  float:right;
+  margin-right: 80px;
+}
+
+#bandera_eng {
+  width: 65px;
+  height: 50px;
+  float:right;
+  margin-right: 40px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    width: 100%;
+    height: 100px;
+    color: orange;
+    float: left;
+    font-size:75%;
+}
+
+p {
+  font-size: 350%;
+}
+
+li a {
+    display: block;
+    width: 600px;
+    background-color: #dddddd;
+}
+
+#especificaciones-esp {
   background: rgb(255,212,127);
   margin: 0 auto;
   border-radius: 25px;
@@ -10,6 +50,20 @@ body {
   width: 500px;
   height: 350px;
   border: 2px solid #000000;
+}
+
+#especificaciones-eng {
+  background: rgb(255,212,127);
+  margin: 0 auto;
+  border-radius: 25px;
+  padding: 20px;
+  width: 500px;
+  height: 350px;
+  border: 2px solid #000000;
+}
+
+#todo {
+  margin-top:100px;
 }
 
 div.mascara {
@@ -36,6 +90,30 @@ div.mascara:hover {
   overflow: hidden;
 }
 
+div.mascara-eng {
+    width: 250px;
+    height: 50px;
+    background: url('../images/botones_opciones/cargar_grafo_eng.png');
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+div.mascara-eng input {
+    display: block !important;
+    width: 250px !important;
+    height: 50px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    cursor: pointer;
+}
+
+div.mascara-eng:hover {
+  width: 250px;
+  height: 50px;
+  background: url('../images/botones_opciones/cargar_grafo_pulsado_eng.png');
+  overflow: hidden;
+}
+
 #container2 {
   max-width: 800px;
   height: 600px;
@@ -46,7 +124,7 @@ div.mascara:hover {
 
 #seleccion_neuronas {
   margin-left: 200px;
-  max-width: 500px;
+  width: 300px;
   float:right;
   background: rgb(243,194,48);
   border-radius: 25px;
@@ -126,7 +204,7 @@ div.upload:hover {
   background: url('../images/botones_opciones/mostrar_grafo_pulsado.png');
 }
 
-#boton_pagina_principal {
+#boton_pagina_principal_esp {
   background: url('../images/botones_opciones/principal.png');
   margin-top: 650px;
   max-width: 500px;
@@ -138,8 +216,24 @@ div.upload:hover {
   overflow: hidden !important;
 }
 
-#boton_pagina_principal:hover {
+#boton_pagina_principal_esp:hover {
   background: url('../images/botones_opciones/principal_pulsado.png');
+}
+
+#boton_pagina_principal_eng {
+  background: url('../images/botones_opciones/principal_eng.png');
+  margin-top: 650px;
+  max-width: 500px;
+  float:left;
+  width: 250px;
+  height: 50px;
+  background-color: black;
+  color: orange;
+  overflow: hidden !important;
+}
+
+#boton_pagina_principal_eng:hover {
+  background: url('../images/botones_opciones/principal_pulsado_eng.png');
 }
 
 #boton_cargar_grafo {

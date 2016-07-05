@@ -904,6 +904,7 @@ angular
       document.getElementById('seleccionManual').style.visibility = "visible";
       document.getElementById('seleccionManual').style.display = "inline";
       document.getElementById('seleccion_neuronas').style.pointerEvents = "none";
+      document.getElmentById('inputNeuronas').value="";
     }
 
     $scope.getDestinos = function(neurona) {
@@ -996,7 +997,15 @@ angular
       }
 
       if (!admitido) {
-        alert ('Error: \n- Sólo se admiten números enteros separados por comas sin espacios \n- Alguna de las neuronas seleccionadas pueden estar fuera de rango \n- No se permite hacer una búsqueda en blanco');
+        console.log('spanish aqui'+grafoFactory.spanish);
+        console.log('english aqui'+grafoFactory.english);
+        if (grafoFactory.spanish) {
+          alert ('Error: \n- Sólo se admiten números enteros separados por comas sin espacios \n- Alguna de las neuronas seleccionadas pueden estar fuera de rango \n- No se permite hacer una búsqueda en blanco');
+        }
+
+        if (grafoFactory.english) {
+          alert ('Error: \n- Only integers separated by commas without spaces are valid \n- Some of the selected neurons may be out of range \n- Blank search not allowed');
+        }
       }
       else { //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
         $scope.filtradoManual(valor);
@@ -1040,6 +1049,9 @@ angular
 
     var minPeso;
     var maxPeso;
+
+    var spanish;
+    var english;
 
     var arrayNeuronal = new Array();
 

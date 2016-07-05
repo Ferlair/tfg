@@ -1,5 +1,5 @@
 <div id="seleccion_neuronas">
-    Selecciona las neuronas que quieres visualizar: <br><br>
+    Select neuron type: <br><br>
     <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="chequearMosey()" checked> Mosey Fibers</label><br><br>
     <label><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="chequearGranulle()" checked> Granulle Cells</label><br><br>
     <label><input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="chequearPurkinje()" checked> Purkinje Cells</label><br><br>
@@ -10,7 +10,7 @@
 
 
 
-<a href="#/"><img id="boton_pagina_principal_esp"></a>
+<a href="#/"><img id="boton_pagina_principal_eng"></a>
 
 <div id="infoNeurona" ng-model="grafoFactory.d" style="visibility:hidden"></div>
 
@@ -20,10 +20,10 @@
 
 
 <div id="radioFiltrado" >
-  <b>Filtrado por:</b><br>
+  <b>Filter by:</b><br>
   <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
-  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso <br>
-  <input type="radio" name="filtrado" id="individual" ng-click="mostrarSeleccionManual()"> Selección individual
+  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Weight <br>
+  <input type="radio" name="filtrado" id="individual" ng-click="mostrarSeleccionManual()"> Individual selection
 </div>
 
 
@@ -92,7 +92,7 @@
 
 <div id="sliderPeso" style="visibility: hidden">
 <div id="sliderPesoMosey">
-  <div><b>Filtrado por peso de neuronas Mosey: </b></div><br>
+  <div><b>Filtering by weight in Mosey: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoMosey.min"
       rz-slider-high="sliderPesoMosey.max"
@@ -104,7 +104,7 @@
 <br>
 <br>
 <div id="sliderPesoGranulle">
-  <div><b>Filtrado por peso de neuronas Granulle: </b></div><br>
+  <div><b>Filtering by weight in Granulle: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGranulle.min"
       rz-slider-high="sliderPesoGranulle.max"
@@ -116,7 +116,7 @@
 <br>
 <br>
 <div id="sliderPesoPurkinje">
-  <div><b>Filtrado por peso de neuronas Purkinje: </b></div><br>
+  <div><b>Filtering by weight in Purkinje: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoPurkinje.min"
       rz-slider-high="sliderPesoPurkinje.max"
@@ -128,7 +128,7 @@
 <br>
 <br>
 <div id="sliderPesoDCN">
-  <div><b>Filtrado por peso de neuronas DCN: </b></div><br>
+  <div><b>Filtering by weight in DCN: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoDCN.min"
       rz-slider-high="sliderPesoDCN.max"
@@ -140,7 +140,7 @@
 <br>
 <br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtrado por peso de neuronas Golgi: </b></div><br>
+  <div><b>Filtering by weight in Golgi: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
@@ -152,7 +152,7 @@
 <br>
 <br>
 <div id="sliderPesoIO">
-  <div><b>Filtrado por peso de neuronas IO: </b></div><br>
+  <div><b>Filtering by weight in IO: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoIO.min"
       rz-slider-high="sliderPesoIO.max"
@@ -165,9 +165,9 @@
 
 
 <div id="seleccionManual" style="visibility: hidden">
-  <b>Haz click sobre la/s neurona/s a visualizar</b> <br><br>
-  <b>Neuronas: </b>
+  <b>Push over the neuron(s) to visualize</b> <br><br>
+  <b>Neurons: </b>
   <div id="barra"><input id="inputNeuronas" type="text"><br><br></div>
-  <center><input type="button" value="Visualizar" ng-click="visualizar()"></center>
-  <center><input type="button" value="Restaurar" ng-click="restaurar()"></center>
+  <center><input type="button" value="Visualize" ng-click="visualizar()"></center>
+  <center><input type="button" value="Restore" ng-click="restaurar()"></center>
 </div>

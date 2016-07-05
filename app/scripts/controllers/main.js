@@ -32,20 +32,82 @@ angular
     var arrayGolgi = [];
     var arrayIO = [];
 
+    grafoFactory.spanish=true;
+    grafoFactory.english=false;
+
     $scope.activarVisualizaciones = function() {
-      document.getElementById('color').style.display = 'inline';
-      document.getElementById('bn').style.display = 'none';
+      document.getElementById('color-esp').style.display = 'inline';
+      document.getElementById('bn-esp').style.display = 'none';
+      document.getElementById('color-eng').style.display = 'inline';
+      document.getElementById('bn-eng').style.display = 'none';
     }
 
     $scope.desactivarVisualizaciones = function() {
-      document.getElementById('color').style.display = 'none';
-      document.getElementById('bn').style.display = 'inline';
+      document.getElementById('color-esp').style.display = 'none';
+      document.getElementById('bn-esp').style.display = 'inline';
+      document.getElementById('color-eng').style.display = 'none';
+      document.getElementById('bn-eng').style.display = 'inline';
     }
 
     $scope.desactivarVisualizaciones();
 
+    $scope.esp = function() {
+      grafoFactory.spanish = true;
+      grafoFactory.english = false;
+      document.getElementById('idioma-eng').style.display = "none";
+      document.getElementById('idioma-esp').style.display = "inline";
+    }
+
+    $scope.eng = function() {
+      grafoFactory.spanish = false;
+      grafoFactory.english = true;
+      document.getElementById('idioma-esp').style.display = "none";
+      document.getElementById('idioma-eng').style.display = "inline";
+    }
+
+    $scope.getColor = function(origen, destino) {
+      var color;
+      //Conexiones con origen Mossey
+      if (origen==0) {
+        console.log('conexion con origen mossey '+origen);
+
+        if (destino==1) {
+          console.log('y destino granulle'+destino);
+          color = "#01DF01";
+        }
+        if (destino == 4) {
+          console.log('y destino golgi'+destino);
+          color = "#0000FF";
+        }
+      }
+
+      //Conexiones con origen Granulle
+      if (origen == 1) {
+        console.log ('conexion con origen granulle '+origen);
+        if (destino == 4){
+          console.log('y destino golgi'+destino);
+          color = "#FF0000";
+        }
+      }
+
+      //Conexiones con origen Golgi
+      if (origen == 4) {
+        console.log('conexion con origen golgi '+origen);
+        if (destino == 1) {
+          console.log('y destino granulle'+destino);
+          color = "#FFFF00";
+        }
+        if (destino == 4) {
+          console.log('y destino golgi'+destino);
+          color = "#FF8000";
+        }
+      }
+
+      return color;
+    }
+
     //Devuelve el color de la arista en función del peso introducido
-    $scope.getColor = function(numeroRedondeado) {
+    /*$scope.getColor = function(numeroRedondeado) {
       var color;
       switch (numeroRedondeado) {
         case '10': {
@@ -94,11 +156,15 @@ angular
         }
       }
       return color;
-    }
+    }*/
+
+
 
     $scope.escribirDatos = function(){
 
-      var div =  document.getElementById('especificaciones');
+
+
+      var div =  document.getElementById('especificaciones-esp');
 
       div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
       div.innerHTML = div.innerHTML + '<br><br>';
@@ -116,8 +182,27 @@ angular
       div.innerHTML = div.innerHTML + '<br><br>';
       div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + grafoFactory.numeroIo;
 
-      $scope.checked = true;
+      var div =  document.getElementById('especificaciones-eng');
 
+      div.innerHTML = div.innerHTML + 'Loaded data info:';
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Total number of neurons: </b>'+ grafoFactory.numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Number of Mossey neurons: </b>' + grafoFactory.numeroMosey;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Number of Granulle neurons: </b>' + grafoFactory.numeroGranulle;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Number of Purkinje neurons: </b>' + grafoFactory.numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Number of DCN neurons: </b>' + grafoFactory.numeroDcn;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>Number of Golgi neurons: </b>' + grafoFactory.numeroGolgi;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>number of IO neurons: </b>' + grafoFactory.numeroIo;
+
+
+      $scope.checked = true;
+      $scope.activarVisualizaciones();
     }
 
     //Función que se encarga de asignar un color a cada una de las aristas del json
@@ -137,8 +222,10 @@ angular
           esta = arrayNeuronal[origen].destino[posicion] == destino;
         }
 
+
         var peso = arrayNeuronal[origen].peso[posicion];
-        color = $scope.getColor(peso);
+        //color = $scope.getColor(peso);
+        color = $scope.getColor(origen,destino);
         jsonCopy.edges[i].color = color;
       }
     }
@@ -384,7 +471,7 @@ angular
         grafoFactory.almacenarArrayIO(arrayIO);
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
-        $scope.activarVisualizaciones();
+        //$scope.activarVisualizaciones();
 
     }
 
@@ -410,7 +497,6 @@ angular
         destino[i] = palabrasPorLineas[1];
         tipo[i] = palabrasPorLineas[4];
         peso[i] = palabrasPorLineas[5];
-        //console.log('origen '+origen[i]+' destino '+destino[i]+ 'tipo '+tipo[i]+ ' iteración '+i);
       }
 
       //Obtenemos el número total de neuronas que contiene el archivo
@@ -428,7 +514,6 @@ angular
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
         }
-
       }
 
       //Asignación del tipo de neurona
@@ -451,6 +536,7 @@ angular
         if (arrayNeuronal[i].tipo == '-')
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
+      console.log(arrayNeuronal);
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
     }

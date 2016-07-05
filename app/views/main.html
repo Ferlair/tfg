@@ -1,10 +1,23 @@
-<!-- Contenedor que muestra la imagen generada por WebGL-->
-<!--<div id="container1" ng-controller="MainCtrl" height="500px"></div>-->
+<div id="idioma-esp">
+<ul>
+  <br>
+  <p id="titulo"> Visualización neuronal
+  <button id="bandera_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
+  <button id="bandera_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
+
+</ul>
+
+<br>
+<br>
+<br>
+<br>
+
+<div id="todo">
 <div class="mascara">
   <input type="file" accept=".txt" on-read-file="nuevoCargarNeuronas($fileContent)"/>
 </div>
 <br><br>
-<div id="especificaciones" ng-show = "checked">
+<div id="especificaciones-esp" ng-show = "checked">
 </div>
 
 <hr class="separador" style="color:#000;" width="50%">
@@ -12,13 +25,60 @@
 <!-- Slider de opciones de visualización -->
 <table>
 <span class ="screens">
-<tr id="color" style="display: none">
+<tr id="color-esp" style="display: none">
   <td><a href="#/circular"><img src = "../app/images/visualizacion_circular.jpg" /></a></td>
   <td><a href="#/horizontal"><img src = "../app/images/visualizacion_horizontal.jpg"/></a></td>
 </tr>
-<tr id="bn">
+<tr id="bn-esp">
   <td><img src = "../app/images/visualizacion_circular_bn.jpg" /></td>
   <td><img src = "../app/images/visualizacion_horizontal_bn.jpg"/></td>
 </tr>
 </span>
 </table>
+
+</div>
+</div>
+
+<!-- --------------------------------------- -->
+
+<div id="idioma-eng" style="display: none">
+<ul>
+  <br>
+  <p id="titulo"> Neuronal Visualization
+  <button id="bandera_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
+  <button id="bandera_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
+
+</ul>
+
+<br>
+<br>
+<br>
+<br>
+
+
+<div id="todo">
+<div class="mascara-eng">
+  <input type="file" accept=".txt" on-read-file="nuevoCargarNeuronas($fileContent)"/>
+</div>
+<br><br>
+<div id="especificaciones-eng" ng-show = "checked">
+</div>
+
+<hr class="separador" style="color:#000;" width="50%">
+
+<!-- Slider de opciones de visualización -->
+<table>
+<span class ="screens">
+<tr id="color-eng" style="display: none">
+  <td><a href="#/circular_eng"><img src = "../app/images/visualizacion_circular.jpg" /></a></td>
+  <td><a href="#/horizontal_eng"><img src = "../app/images/visualizacion_horizontal.jpg"/></a></td>
+</tr>
+<tr id="bn-eng">
+  <td><img src = "../app/images/visualizacion_circular_bn.jpg" /></td>
+  <td><img src = "../app/images/visualizacion_horizontal_bn.jpg"/></td>
+</tr>
+</span>
+</table>
+
+</div>
+</div>
