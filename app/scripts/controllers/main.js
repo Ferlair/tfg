@@ -69,36 +69,36 @@ angular
       var color;
       //Conexiones con origen Mossey
       if (origen==0) {
-        console.log('conexion con origen mossey '+origen);
+        //console.log('conexion con origen mossey '+origen);
 
         if (destino==1) {
-          console.log('y destino granulle'+destino);
+          //console.log('y destino granulle'+destino);
           color = "#01DF01";
         }
         if (destino == 4) {
-          console.log('y destino golgi'+destino);
+          //console.log('y destino golgi'+destino);
           color = "#0000FF";
         }
       }
 
       //Conexiones con origen Granulle
       if (origen == 1) {
-        console.log ('conexion con origen granulle '+origen);
+        //console.log ('conexion con origen granulle '+origen);
         if (destino == 4){
-          console.log('y destino golgi'+destino);
+          //console.log('y destino golgi'+destino);
           color = "#FF0000";
         }
       }
 
       //Conexiones con origen Golgi
       if (origen == 4) {
-        console.log('conexion con origen golgi '+origen);
+        //console.log('conexion con origen golgi '+origen);
         if (destino == 1) {
-          console.log('y destino granulle'+destino);
+          //console.log('y destino granulle'+destino);
           color = "#FFFF00";
         }
         if (destino == 4) {
-          console.log('y destino golgi'+destino);
+          //console.log('y destino golgi'+destino);
           color = "#FF8000";
         }
       }
@@ -485,6 +485,7 @@ angular
       var tipo = [];
       var peso = [];
       var arrayNeuronal = new Array();
+      var tipoDestino = [];
 
       for (var j=0; j<lineas.length; j++) {
         var aux = lineas[j].replace(/\s+/g, " ");
@@ -513,6 +514,8 @@ angular
           var p = peso[j];
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
+          //var tipoAux = $scope.encontrarTipoNeurona(destino[j],origen, tipo);
+          //arrayNeuronal[origen[j]].destino.push(tipoAux);
         }
       }
 
@@ -541,6 +544,17 @@ angular
       $scope.generarJSON(arrayNeuronal);
     }
 
+    $scope.encontrarTipoNeurona = function(neuronaDestino, origen, tipo) {
+      var tipoDevuelto;
+      for (var i=0; i<origen.length; i++) {
+        if (neuronaDestino == origen[i])
+          tipoDevuelto = tipo[i];
+      }
+      console.log('neurona destino '+neuronaDestino);
+      console.log('su tipo es '+tipoDevuelto);
+      return tipoDevuelto;
+    }
+
     //Se obtiene el número de neurona más alto, teniendo en cuenta tanto las neuronas de origen como de destino
     //de esta manera, se inicializará el array con los valores de id del 0 al número más alto obtenido en esta función
     $scope.obtenerNumeroNeuronas = function(origen,destino) {
@@ -553,14 +567,17 @@ angular
 
     //Debemos crear una celda del array para cada una de las neuronas, con valores iniciales por defecto
     $scope.inicializarArray = function(limite, arrayNeuronal) {
+      var tipoPorDefecto = '-';
       for (var i=0; i<limite; i++) {
         var neurona = new Array();
         var pesoInicial = 0;
         neurona.destino = [];
         neurona.peso = [];
+        neurona.tipoDestino = [];
         neurona.id = i.toString();
         neurona.destino.push(i.toString());
         neurona.peso.push(pesoInicial.toString());
+        neurona.tipoDestino.push(tipoPorDefecto.toString());
         neurona.tipo = '-';
         arrayNeuronal.push(neurona);
       }
