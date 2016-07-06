@@ -514,8 +514,8 @@ angular
           var p = peso[j];
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
-          //var tipoAux = $scope.encontrarTipoNeurona(destino[j],origen, tipo);
-          //arrayNeuronal[origen[j]].destino.push(tipoAux);
+          var tipoAux = $scope.encontrarTipoNeurona(destino[j],origen, tipo);
+          arrayNeuronal[origen[j]].tipoDestino.push(tipoAux);
         }
       }
 
