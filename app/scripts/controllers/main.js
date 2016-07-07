@@ -65,45 +65,99 @@ angular
       document.getElementById('idioma-eng').style.display = "inline";
     }
 
-    $scope.getColor = function(origen, destino) {
-      var color;
-      //Conexiones con origen Mossey
-      if (origen==0) {
-        //console.log('conexion con origen mossey '+origen);
+    $scope.componenteAHex = function(componente) {
+      var cambio = componente.toString(16);
+      return cambio.length == 1 ? "0" + cambio : cambio;
+    }
 
-        if (destino==1) {
-          //console.log('y destino granulle'+destino);
+    $scope.hexARGB = function(r,g,b) {
+      var color = "#" + $scope.componenteAHex(r) + $scope.componenteAHex(g) + $scope.componenteAHex(b);
+      //console.log('EL COLOR TRADUCIDO ES: '+color);
+      return color;
+    }
+
+    $scope.obtenerNivelInterpolacion = function(peso, pesoMax) {
+      var aux = Math.round((peso * 100) / pesoMax);
+      console.log('Para el peso original que es '+peso);
+      console.log('El ratio de peso es '+aux/100);
+      return aux/100;
+    }
+
+    $scope.interpolar = function(ratio) {
+      var minR = 255;
+      var maxR = 189;
+
+      var minG = 154;
+      var maxG = 113;
+
+      var minB = 0;
+      var maxB = 0;
+
+      var r;
+      var g;
+      var b;
+
+      var rangoR = (Math.abs(maxR-minR)) * ratio;
+      var rangoG = (Math.abs(maxG-minG)) * ratio;
+      var rangoB = (Math.abs(maxB-minB)) * ratio;
+
+      r = maxR + Math.round(rangoR);
+      g = maxG + Math.round(rangoG);
+      b = maxB + Math.round(rangoB);
+
+      return [r,g,b];
+    }
+
+    //Las variables o y d son sólo para depuración, ELIMINAR en la versión final
+    $scope.getColor = function(o,d,peso, origen, destino) {
+      var color;
+      var ocultar = true;
+      //console.log('estamos en getColor con origen '+ o +' y destino '+d);
+      //Conexiones con origen Mossey
+      if (origen=='0') {
+        //console.log('conexion con origen mossey '+o);
+
+        if (destino=='1') {
+          //console.log('------ y destino granulle'+d);
           color = "#01DF01";
+          ocultar = false;
         }
-        if (destino == 4) {
-          //console.log('y destino golgi'+destino);
+        if (destino == '4') {
+          //console.log('------ y destino golgi'+d);
           color = "#0000FF";
+          ocultar = false;
         }
       }
 
       //Conexiones con origen Granulle
-      if (origen == 1) {
-        //console.log ('conexion con origen granulle '+origen);
-        if (destino == 4){
-          //console.log('y destino golgi'+destino);
+      if (origen == '1') {
+        //console.log ('conexion con origen granulle '+o);
+        if (destino == '4'){
+          //console.log('------- y destino golgi'+d);
           color = "#FF0000";
+          ocultar = false;
         }
       }
 
       //Conexiones con origen Golgi
-      if (origen == 4) {
-        //console.log('conexion con origen golgi '+origen);
-        if (destino == 1) {
-          //console.log('y destino granulle'+destino);
+      if (origen == '4') {
+        //console.log('conexion con origen golgi '+o);
+        if (destino == '1') {
+          //console.log('------ y destino granulle'+d);
           color = "#FFFF00";
+          ocultar = false;
         }
-        if (destino == 4) {
-          //console.log('y destino golgi'+destino);
-          color = "#FF8000";
+        if (destino == '4') {
+          //console.log('------ y destino golgi'+d);
+          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+          var interpolado = $scope.interpolar(ratio);
+          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          console.log('EL COLOR ES '+color);
+          ocultar = false;
         }
       }
 
-      return color;
+      return [color, ocultar];
     }
 
     //Devuelve el color de la arista en función del peso introducido
@@ -222,11 +276,13 @@ angular
           esta = arrayNeuronal[origen].destino[posicion] == destino;
         }
 
-
+        //console.log('comprobando origen '+origen+' y destino '+destino);
         var peso = arrayNeuronal[origen].peso[posicion];
-        //color = $scope.getColor(peso);
-        color = $scope.getColor(origen,destino);
-        jsonCopy.edges[i].color = color;
+        var tipoOrigen = arrayNeuronal[origen].tipo;
+        var tipoDestino = arrayNeuronal[origen].tipoDestino[posicion];
+        color = $scope.getColor(origen, destino, peso, tipoOrigen, tipoDestino);
+        jsonCopy.edges[i].color = color[0];
+        jsonCopy.edges[i].hidden = color[1];
       }
     }
 
@@ -515,7 +571,7 @@ angular
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
           var tipoAux = $scope.encontrarTipoNeurona(destino[j],origen, tipo);
-          arrayNeuronal[origen[j]].tipoDestino.push(tipoAux);
+          arrayNeuronal[origen[j]].tipoDestino.push(tipoAux); //Se agrega el tipo de neurona de destino
         }
       }
 
@@ -539,7 +595,7 @@ angular
         if (arrayNeuronal[i].tipo == '-')
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
-      console.log(arrayNeuronal);
+      //console.log(arrayNeuronal);
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
     }
@@ -550,8 +606,8 @@ angular
         if (neuronaDestino == origen[i])
           tipoDevuelto = tipo[i];
       }
-      console.log('neurona destino '+neuronaDestino);
-      console.log('su tipo es '+tipoDevuelto);
+      //console.log('neurona destino '+neuronaDestino);
+      //console.log('su tipo es '+tipoDevuelto);
       return tipoDevuelto;
     }
 

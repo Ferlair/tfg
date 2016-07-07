@@ -997,8 +997,6 @@ angular
       }
 
       if (!admitido) {
-        console.log('spanish aqui'+grafoFactory.spanish);
-        console.log('english aqui'+grafoFactory.english);
         if (grafoFactory.spanish) {
           alert ('Error: \n- Sólo se admiten números enteros separados por comas sin espacios \n- Alguna de las neuronas seleccionadas pueden estar fuera de rango \n- No se permite hacer una búsqueda en blanco');
         }
@@ -1212,7 +1210,6 @@ angular
             defaultLabelHoverColor: 'false',
             defaultLabelColor: 'false',
             defaultLabelSize: '0'
-
           }
         })
 
@@ -1258,8 +1255,6 @@ angular
 
             }
 
-            console.log('frase'+frase);
-
             var elementoABorrar = document.getElementById('barra');
               while (elementoABorrar.firstChild) {
                   elementoABorrar.removeChild(elementoABorrar.firstChild);
@@ -1267,8 +1262,6 @@ angular
 
             var div =  document.getElementById('barra');
             div.innerHTML = div.innerHTML + '<input id="inputNeuronas" type="text" value="'+frase+'"><br><br>';
-
-            console.log(arrayPrueba);
         });
       }
     }
