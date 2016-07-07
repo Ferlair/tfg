@@ -83,15 +83,7 @@ angular
       return aux/100;
     }
 
-    $scope.interpolar = function(ratio) {
-      var minR = 255;
-      var maxR = 189;
-
-      var minG = 154;
-      var maxG = 113;
-
-      var minB = 0;
-      var maxB = 0;
+    $scope.interpolar = function(ratio, minR, minG, minB, maxR, maxG, maxB) {
 
       var r;
       var g;
@@ -119,12 +111,16 @@ angular
 
         if (destino=='1') {
           //console.log('------ y destino granulle'+d);
-          color = "#01DF01";
+          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+          var interpolado = $scope.interpolar(ratio, 247, 0, 255, 72, 0, 66);
+          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
         if (destino == '4') {
           //console.log('------ y destino golgi'+d);
-          color = "#0000FF";
+          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+          var interpolado = $scope.interpolar(ratio, 64, 255, 0, 7, 72, 0);
+          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
       }
@@ -134,7 +130,9 @@ angular
         //console.log ('conexion con origen granulle '+o);
         if (destino == '4'){
           //console.log('------- y destino golgi'+d);
-          color = "#FF0000";
+          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+          var interpolado = $scope.interpolar(ratio, 26, 0, 255, 0, 0, 72);
+          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
       }
@@ -144,75 +142,22 @@ angular
         //console.log('conexion con origen golgi '+o);
         if (destino == '1') {
           //console.log('------ y destino granulle'+d);
-          color = "#FFFF00";
+          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+          var interpolado = $scope.interpolar(ratio,255, 0, 0, 72, 0, 0);
+          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
         if (destino == '4') {
           //console.log('------ y destino golgi'+d);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
-          var interpolado = $scope.interpolar(ratio);
+          var ratio = $scope.obtenerNivelInterpolacion(peso,1.19e-8);
+          var interpolado = $scope.interpolar(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
-          console.log('EL COLOR ES '+color);
           ocultar = false;
         }
       }
 
       return [color, ocultar];
     }
-
-    //Devuelve el color de la arista en función del peso introducido
-    /*$scope.getColor = function(numeroRedondeado) {
-      var color;
-      switch (numeroRedondeado) {
-        case '10': {
-          color = "#FF0000";
-          break;
-        }
-        case '9': {
-          color = "#F70029";
-          break;
-        }
-        case '8': {
-          color = "#E30026";
-          break;
-        }
-        case '7': {
-          color = "#E60049";
-          break;
-        }
-        case '6': {
-          color = "#DC0046";
-          break;
-        }
-        case '5': {
-          color = "#D80061";
-          break;
-        }
-        case '4': {
-          color = "#D800C6";
-          break;
-        }
-        case '3': {
-          color = "#C00008";
-          break;
-        }
-        case '2': {
-          color = "#770008";
-          break;
-        }
-        case '1': {
-          color = "#5600D8";
-          break;
-        }
-        case '0': {
-          color = "#1200D8";
-          break;
-        }
-      }
-      return color;
-    }*/
-
-
 
     $scope.escribirDatos = function(){
 
