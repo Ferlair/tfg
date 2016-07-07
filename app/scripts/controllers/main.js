@@ -149,7 +149,13 @@ angular
         }
         if (destino == '4') {
           //console.log('------ y destino golgi'+d);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,1.19e-8);
+          var n=1.19E-8;
+          var n2 = 0.1;
+          n2 = n2*1e10;
+          n = n*1e10;
+          peso = peso*1e10;
+          console.log('El número convertido es '+n+' y su n2 es '+n2);
+          var ratio = $scope.obtenerNivelInterpolacion(peso,n2);
           var interpolado = $scope.interpolar(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
@@ -158,6 +164,24 @@ angular
 
       return [color, ocultar];
     }
+
+    Number.prototype.noExponents= function(){
+    var data= String(this).split(/[eE]/);
+    if(data.length== 1) return data[0];
+
+    var  z= '', sign= this<0? '-':'',
+    str= data[0].replace('.', ''),
+    mag= Number(data[1])+ 1;
+
+    if(mag<0){
+        z= sign + '0.';
+        while(mag++) z += '0';
+        return z + str.replace(/^\-/,'');
+    }
+    mag -= str.length;
+    while(mag--) z += '0';
+    return str + z;
+}
 
     $scope.escribirDatos = function(){
 
