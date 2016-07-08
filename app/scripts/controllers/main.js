@@ -72,12 +72,20 @@ angular
 
     $scope.hexARGB = function(r,g,b) {
       var color = "#" + $scope.componenteAHex(r) + $scope.componenteAHex(g) + $scope.componenteAHex(b);
-      //console.log('EL COLOR TRADUCIDO ES: '+color);
       return color;
     }
 
     $scope.obtenerNivelInterpolacion = function(peso, pesoMax) {
       var aux = Math.round((peso * 100) / pesoMax);
+
+      //depuración
+      var pesoporcien = peso*100;
+      console.log('peso '+peso);
+      console.log('peso * 100 '+pesoporcien);
+      console.log('pesoMax: '+pesoMax);
+      console.log('peso: '+peso);
+      console.log('aux '+aux);
+      console.log('aux/100 '+aux/100);
       console.log('Para el peso original que es '+peso);
       console.log('El ratio de peso es '+aux/100);
       return aux/100;
@@ -149,13 +157,18 @@ angular
         }
         if (destino == '4') {
           //console.log('------ y destino golgi'+d);
-          var n=1.19E-8;
-          var n2 = 0.1;
-          n2 = n2*1e10;
-          n = n*1e10;
-          peso = peso*1e10;
-          console.log('El número convertido es '+n+' y su n2 es '+n2);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,n2);
+          var pesoMaximo = 1.19e-8;
+          var pesoMinimo = 0;
+          if (peso > pesoMaximo) { //Comprobamos que el peso de la conexión no es superior al permitido y, si lo es, lo ajustamos al máximo
+            console.log ('------EL PESO INTRODUCIDO ('+peso+') ES SUPERIOR AL MÁXIMO PERMITIDO ('+pesoMaximo+')');
+            peso = pesoMaximo;
+          }
+
+          if (peso < pesoMinimo) { //Comprobamos que el peso de la conexión no es inferior al permitido y, si lo es, lo ajustamos al mínimo
+            console.log ('------EL PESO INTRODUCIDO ('+peso+') ES INFERIOR AL MÍNIMO PERMITIDO ('+pesoMinimo+')');
+            peso = pesoMinimo;
+          }
+          var ratio = $scope.obtenerNivelInterpolacion(peso,pesoMaximo);
           var interpolado = $scope.interpolar(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
@@ -164,24 +177,6 @@ angular
 
       return [color, ocultar];
     }
-
-    Number.prototype.noExponents= function(){
-    var data= String(this).split(/[eE]/);
-    if(data.length== 1) return data[0];
-
-    var  z= '', sign= this<0? '-':'',
-    str= data[0].replace('.', ''),
-    mag= Number(data[1])+ 1;
-
-    if(mag<0){
-        z= sign + '0.';
-        while(mag++) z += '0';
-        return z + str.replace(/^\-/,'');
-    }
-    mag -= str.length;
-    while(mag--) z += '0';
-    return str + z;
-}
 
     $scope.escribirDatos = function(){
 
