@@ -32,6 +32,18 @@ angular
     var arrayGolgi = [];
     var arrayIO = [];
 
+    var arrayNeuronasA = [];
+    var arrayNeuronasB = [];
+    var arrayNeuronasC = [];
+    var arrayNeuronasD = [];
+    var arrayNeuronasE = [];
+
+    var arrayConexionesA = [];
+    var arrayConexionesB = [];
+    var arrayConexionesC = [];
+    var arrayConexionesD = [];
+    var arrayConexionesE = [];
+
     grafoFactory.spanish=true;
     grafoFactory.english=false;
 
@@ -75,19 +87,14 @@ angular
       return color;
     }
 
-    $scope.obtenerNivelInterpolacion = function(peso, pesoMax) {
-      var aux = Math.round((peso * 100) / pesoMax);
+    $scope.obtenerNivelInterpolacion = function(peso, pesoMax, pesoMin) {
 
-      //depuración
-      var pesoporcien = peso*100;
-      console.log('peso '+peso);
-      console.log('peso * 100 '+pesoporcien);
-      console.log('pesoMax: '+pesoMax);
-      console.log('peso: '+peso);
-      console.log('aux '+aux);
-      console.log('aux/100 '+aux/100);
-      console.log('Para el peso original que es '+peso);
-      console.log('El ratio de peso es '+aux/100);
+      //Primer paso: al peso máximo y al peso a comparar les restamos el peso mínimo
+      //De esta forma podemos hallar el porcentaje proporcional correcto si el peso mínimo es distinto de cero
+      pesoMax = pesoMax - pesoMin;
+      peso = peso - pesoMin;
+
+      var aux = Math.round((peso * 100) / pesoMax);
       return aux/100;
     }
 
@@ -108,25 +115,80 @@ angular
       return [r,g,b];
     }
 
-    //Las variables o y d son sólo para depuración, ELIMINAR en la versión final
-    $scope.getColor = function(o,d,peso, origen, destino) {
+
+    $scope.getColor = function(peso, tipoOrigen, tipoDestino, origen, destino, arrayNeuronal) {
       var color;
       var ocultar = true;
-      //console.log('estamos en getColor con origen '+ o +' y destino '+d);
-      //Conexiones con origen Mossey
-      if (origen=='0') {
-        //console.log('conexion con origen mossey '+o);
 
-        if (destino=='1') {
-          //console.log('------ y destino granulle'+d);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+      //Conexiones con origen Mossey
+      if (tipoOrigen=='0') {
+        if (tipoDestino=='1') {
+          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra A');
+          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('A');
+          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('A');
+
+          if (repetidoOrigen == -1)
+          arrayNeuronal[origen].tipoConexion.push('A');
+
+          if (repetidoDestino == -1)
+          arrayNeuronal[destino].tipoConexion.push('A');
+
+          var source = "n"+origen;
+          var target = "n"+destino;
+          var id = "e"+source+"+"+target;
+
+          var obj = new Array();
+          obj.origen= origen;
+          obj.destino = destino;
+          obj.enlace = id;
+
+          arrayConexionesA.push(obj);
+          repetidoOrigen = arrayNeuronasA.indexOf(origen);
+
+          //if (repetidoOrigen == -1)
+          arrayNeuronasA.push(origen);
+
+          repetidoDestino = arrayNeuronasA.indexOf(destino);
+          //if (repetidoDestino == -1)
+          arrayNeuronasA.push(destino);
+
+          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
           var interpolado = $scope.interpolar(ratio, 247, 0, 255, 72, 0, 66);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          //console.log('origen'+origen+' y deestino '+destino+' COLOR ADQUIRIDO: '+color);
           ocultar = false;
         }
-        if (destino == '4') {
-          //console.log('------ y destino golgi'+d);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+        if (tipoDestino == '4') {
+          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra B');
+          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('B');
+          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('B');
+
+          if (repetidoOrigen == -1)
+          arrayNeuronal[origen].tipoConexion.push('B');
+
+          if (repetidoDestino == -1)
+          arrayNeuronal[destino].tipoConexion.push('B');
+
+          var source = "n"+origen;
+          var target = "n"+destino;
+          var id = "e"+source+"+"+target;
+
+          var obj = new Array();
+          obj.origen= origen;
+          obj.destino = destino;
+          obj.enlace = id;
+
+          arrayConexionesB.push(obj);
+          repetidoOrigen = arrayNeuronasB.indexOf(origen);
+
+          //if (repetidoOrigen == -1)
+          arrayNeuronasB.push(origen);
+
+          repetidoDestino = arrayNeuronasB.indexOf(destino);
+          //if (repetidoDestino == -1)
+          arrayNeuronasB.push(destino);
+
+          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
           var interpolado = $scope.interpolar(ratio, 64, 255, 0, 7, 72, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
@@ -134,11 +196,37 @@ angular
       }
 
       //Conexiones con origen Granulle
-      if (origen == '1') {
-        //console.log ('conexion con origen granulle '+o);
-        if (destino == '4'){
-          //console.log('------- y destino golgi'+d);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+      if (tipoOrigen == '1') {
+        if (tipoDestino == '4'){
+          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra C');
+          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('C');
+          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('C');
+
+          if (repetidoOrigen == -1)
+          arrayNeuronal[origen].tipoConexion.push('C');
+
+          if (repetidoDestino == -1)
+          arrayNeuronal[destino].tipoConexion.push('C');
+
+          var source = "n"+origen;
+          var target = "n"+destino;
+          var id = "e"+source+"+"+target;
+
+          var obj = new Array();
+          obj.origen= origen;
+          obj.destino = destino;
+          obj.enlace = id;
+
+          arrayConexionesC.push(obj);
+          repetidoOrigen = arrayNeuronasC.indexOf(origen);
+
+          //if (repetidoOrigen == -1)
+          arrayNeuronasC.push(origen);
+
+          repetidoDestino = arrayNeuronasC.indexOf(destino);
+          //if (repetidoDestino == -1)
+          arrayNeuronasC.push(destino);
+          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
           var interpolado = $scope.interpolar(ratio, 26, 0, 255, 0, 0, 72);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
@@ -146,29 +234,71 @@ angular
       }
 
       //Conexiones con origen Golgi
-      if (origen == '4') {
-        //console.log('conexion con origen golgi '+o);
-        if (destino == '1') {
-          //console.log('------ y destino granulle'+d);
-          var ratio = $scope.obtenerNivelInterpolacion(peso,10);
+      if (tipoOrigen == '4') {
+        if (tipoDestino == '1') {
+          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra D');
+          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('D');
+          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('D');
+
+          if (repetidoOrigen == -1)
+          arrayNeuronal[origen].tipoConexion.push('D');
+
+          if (repetidoDestino == -1)
+          arrayNeuronal[destino].tipoConexion.push('D');
+
+          var source = "n"+origen;
+          var target = "n"+destino;
+          var id = "e"+source+"+"+target;
+
+          var obj = new Array();
+          obj.origen= origen;
+          obj.destino = destino;
+          obj.enlace = id;
+
+          arrayConexionesD.push(obj);
+          repetidoOrigen = arrayNeuronasD.indexOf(origen);
+
+          //if (repetidoOrigen == -1)
+          arrayNeuronasD.push(origen);
+
+          repetidoDestino = arrayNeuronasD.indexOf(destino);
+          //if (repetidoDestino == -1)
+          arrayNeuronasD.push(destino);
+          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
           var interpolado = $scope.interpolar(ratio,255, 0, 0, 72, 0, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
-        if (destino == '4') {
-          //console.log('------ y destino golgi'+d);
-          var pesoMaximo = 1.19e-8;
-          var pesoMinimo = 0;
-          if (peso > pesoMaximo) { //Comprobamos que el peso de la conexión no es superior al permitido y, si lo es, lo ajustamos al máximo
-            console.log ('------EL PESO INTRODUCIDO ('+peso+') ES SUPERIOR AL MÁXIMO PERMITIDO ('+pesoMaximo+')');
-            peso = pesoMaximo;
-          }
+        if (tipoDestino == '4') {
+          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra E');
+          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('E');
+          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('E');
 
-          if (peso < pesoMinimo) { //Comprobamos que el peso de la conexión no es inferior al permitido y, si lo es, lo ajustamos al mínimo
-            console.log ('------EL PESO INTRODUCIDO ('+peso+') ES INFERIOR AL MÍNIMO PERMITIDO ('+pesoMinimo+')');
-            peso = pesoMinimo;
-          }
-          var ratio = $scope.obtenerNivelInterpolacion(peso,pesoMaximo);
+          if (repetidoOrigen == -1)
+          arrayNeuronal[origen].tipoConexion.push('E');
+
+          if (repetidoDestino == -1)
+          arrayNeuronal[destino].tipoConexion.push('E');
+
+          var source = "n"+origen;
+          var target = "n"+destino;
+          var id = "e"+source+"+"+target;
+
+          var obj = new Array();
+          obj.origen= origen;
+          obj.destino = destino;
+          obj.enlace = id;
+
+          arrayConexionesE.push(obj);
+          repetidoOrigen = arrayNeuronasE.indexOf(origen);
+
+          //if (repetidoOrigen == -1)
+          arrayNeuronasE.push(origen);
+
+          repetidoDestino = arrayNeuronasE.indexOf(destino);
+          //if (repetidoDestino == -1)
+          arrayNeuronasE.push(destino);
+          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
           var interpolado = $scope.interpolar(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
@@ -232,6 +362,8 @@ angular
       for (var i=1; i<jsonCopy.edges.length; i++) {
         origen = jsonCopy.edges[i].source.substr(1);
         destino = jsonCopy.edges[i].target.substr(1);
+
+        if (origen != destino){
         var posicion=-1;
         var esta = false;
 
@@ -240,13 +372,23 @@ angular
           esta = arrayNeuronal[origen].destino[posicion] == destino;
         }
 
-        //console.log('comprobando origen '+origen+' y destino '+destino);
         var peso = arrayNeuronal[origen].peso[posicion];
         var tipoOrigen = arrayNeuronal[origen].tipo;
         var tipoDestino = arrayNeuronal[origen].tipoDestino[posicion];
-        color = $scope.getColor(origen, destino, peso, tipoOrigen, tipoDestino);
+        color = $scope.getColor(peso, tipoOrigen, tipoDestino, origen, destino, arrayNeuronal);
         jsonCopy.edges[i].color = color[0];
         jsonCopy.edges[i].hidden = color[1];
+        grafoFactory.arrayNeuronasA = arrayNeuronasA;
+        grafoFactory.arrayNeuronasB = arrayNeuronasB;
+        grafoFactory.arrayNeuronasC = arrayNeuronasC;
+        grafoFactory.arrayNeuronasD = arrayNeuronasD;
+        grafoFactory.arrayNeuronasE = arrayNeuronasE;
+        grafoFactory.arrayConexionesA = arrayConexionesA;
+        grafoFactory.arrayConexionesB = arrayConexionesB;
+        grafoFactory.arrayConexionesC = arrayConexionesC;
+        grafoFactory.arrayConexionesD = arrayConexionesD;
+        grafoFactory.arrayConexionesE = arrayConexionesE;
+      }
       }
     }
 
@@ -479,8 +621,6 @@ angular
 
         }
 
-        //console.log(arrayNeuronal);
-        //console.log('numero de mosey '+grafoFactory.numeroMosey);
         jsonCopy = jsonObj;
         $scope.escribirDatos();
         grafoFactory.almacenarArrayMosey(arrayMosey);
@@ -493,6 +633,7 @@ angular
         $scope.colorearAristas(arrayNeuronal);
         //$scope.activarVisualizaciones();
 
+        //console.log(arrayNeuronal);
     }
 
     //Entrada: fichero de texto con datos neuronales
@@ -506,6 +647,7 @@ angular
       var peso = [];
       var arrayNeuronal = new Array();
       var tipoDestino = [];
+      var tipoConexion = [];
 
       for (var j=0; j<lineas.length; j++) {
         var aux = lineas[j].replace(/\s+/g, " ");
@@ -560,8 +702,53 @@ angular
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
       //console.log(arrayNeuronal);
+      grafoFactory.maxPesoMossey = $scope.getMaxPeso(arrayNeuronal, 0);
+      grafoFactory.maxPesoGranulle = $scope.getMaxPeso(arrayNeuronal, 1);
+      grafoFactory.maxPesoPurkinje = $scope.getMaxPeso(arrayNeuronal, 2);
+      grafoFactory.maxPesoDCN = $scope.getMaxPeso(arrayNeuronal, 3);
+      grafoFactory.maxPesoGolgi = $scope.getMaxPeso(arrayNeuronal, 4);
+      grafoFactory.maxPesoIO = $scope.getMaxPeso(arrayNeuronal, 5);
+      grafoFactory.minPesoMossey = $scope.getMinPeso(arrayNeuronal, 0);
+      grafoFactory.minPesoGranulle = $scope.getMinPeso(arrayNeuronal, 1);
+      grafoFactory.minPesoPurkinje = $scope.getMinPeso(arrayNeuronal, 2);
+      grafoFactory.minPesoDCN = $scope.getMinPeso(arrayNeuronal, 3);
+      grafoFactory.minPesoGolgi = $scope.getMinPeso(arrayNeuronal, 4);
+      grafoFactory.minPesoIO = $scope.getMinPeso(arrayNeuronal, 5);
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
+    }
+
+    $scope.getMinPeso = function(arrayNeuronal, tipo) {
+      var min = 0;
+
+      for (var i=0; i<arrayNeuronal.length; i++) {
+        if (arrayNeuronal[i].tipo == tipo) {
+          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
+            var minTipo = Math.min.apply(null,arrayNeuronal[i].peso);
+            min = Math.min(min, minTipo);
+          }
+        }
+      }
+
+      return min;
+    }
+
+    $scope.getMaxPeso = function(arrayNeuronal, tipo) {
+      var max = 0;
+
+      for (var i=0; i<arrayNeuronal.length; i++) {
+
+        if (arrayNeuronal[i].tipo == tipo) {
+
+          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
+            var maxTipo = Math.max.apply(null,arrayNeuronal[i].peso);
+            max = Math.max(max,maxTipo);
+          }
+
+        }
+
+      }
+      return max;
     }
 
     $scope.encontrarTipoNeurona = function(neuronaDestino, origen, tipo) {
@@ -570,8 +757,6 @@ angular
         if (neuronaDestino == origen[i])
           tipoDevuelto = tipo[i];
       }
-      //console.log('neurona destino '+neuronaDestino);
-      //console.log('su tipo es '+tipoDevuelto);
       return tipoDevuelto;
     }
 
@@ -594,6 +779,7 @@ angular
         neurona.destino = [];
         neurona.peso = [];
         neurona.tipoDestino = [];
+        neurona.tipoConexion = [];
         neurona.id = i.toString();
         neurona.destino.push(i.toString());
         neurona.peso.push(pesoInicial.toString());

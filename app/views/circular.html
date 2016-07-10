@@ -9,6 +9,15 @@
     <label><input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="chequearIO()" checked> IO Cells</label><br><br>
 </div>
 
+<div id="seleccion_grupos">
+    Selecciona el/los grupo/s neuronal/es a visualizar: <br><br>
+    <label><input id="MFGR" type="checkbox" value="Mossey-Granulle" ng-click="ajustarContadorNeuronasA()" checked> Mossey - Granulle</label><br><br>
+    <label><input id="MFGO" type="checkbox" value="Mossey-Golgi" ng-click="ajustarContadorNeuronasB()" checked> Mossey - Golgi</label><br><br>
+    <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="ajustarContadorNeuronasC()" checked> Granulle - Golgi</label><br><br>
+    <label><input id="GOGR" type="checkbox" value="Golgi-Granulle" ng-click="ajustarContadorNeuronasD()" checked> Golgi - Granulle</label><br><br>
+    <label><input id="GOGO" type="checkbox" value="Golgi-Golgi" ng-click="ajustarContadorNeuronasE()" checked> Golgi - Golgi</label><br><br>
+</div>
+
 
 
 <a href="#/"><img id="boton_pagina_principal_esp"></a>
@@ -56,7 +65,7 @@
     rz-slider-model="sliderPurkinje.min"
     rz-slider-high="sliderPurkinje.max"
     rz-slider-options="sliderPurkinje.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearPurkinje()">
 </rzslider>
 <br>
 <br>
@@ -66,7 +75,7 @@
     rz-slider-model="sliderDCN.min"
     rz-slider-high="sliderDCN.max"
     rz-slider-options="sliderDCN.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearDCN()">
 </rzslider>
 <br>
 <br>
@@ -76,7 +85,7 @@
     rz-slider-model="sliderGolgi.min"
     rz-slider-high="sliderGolgi.max"
     rz-slider-options="sliderGolgi.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearGolgi()">
 </rzslider>
 <br>
 <br>
@@ -86,14 +95,14 @@
     rz-slider-model="sliderIO.min"
     rz-slider-high="sliderIO.max"
     rz-slider-options="sliderIO.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearIO()">
 </rzslider>
 
 </div>
 
 <div id="sliderPeso" style="visibility: hidden">
 <div id="sliderPesoMosey">
-  <div><b>Filtrado por peso de neuronas Mosey: </b></div><br>
+  <div><b>Filtrado por porcentaje de peso de neuronas Mosey: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoMosey.min"
       rz-slider-high="sliderPesoMosey.max"
@@ -105,7 +114,7 @@
 <br>
 <br>
 <div id="sliderPesoGranulle">
-  <div><b>Filtrado por peso de neuronas Granulle: </b></div><br>
+  <div><b>Filtrado por porcentaje de peso de neuronas Granulle: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGranulle.min"
       rz-slider-high="sliderPesoGranulle.max"
@@ -117,7 +126,7 @@
 <br>
 <br>
 <div id="sliderPesoPurkinje">
-  <div><b>Filtrado por peso de neuronas Purkinje: </b></div><br>
+  <div><b>Filtrado por porcentaje de peso de neuronas Purkinje: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoPurkinje.min"
       rz-slider-high="sliderPesoPurkinje.max"
@@ -129,7 +138,7 @@
 <br>
 <br>
 <div id="sliderPesoDCN">
-  <div><b>Filtrado por peso de neuronas DCN: </b></div><br>
+  <div><b>Filtrado por porcentaje de peso de neuronas DCN: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoDCN.min"
       rz-slider-high="sliderPesoDCN.max"
@@ -141,7 +150,7 @@
 <br>
 <br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtrado por peso de neuronas Golgi: </b></div><br>
+  <div><b>Filtrado por porcentaje de peso de neuronas Golgi: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
@@ -153,7 +162,7 @@
 <br>
 <br>
 <div id="sliderPesoIO">
-  <div><b>Filtrado por peso de neuronas IO: </b></div><br>
+  <div><b>Filtrado por porcentaje de peso de neuronas IO: </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoIO.min"
       rz-slider-high="sliderPesoIO.max"
