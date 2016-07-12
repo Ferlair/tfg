@@ -122,6 +122,26 @@ div.mascara-eng:hover {
   background-color: black;
 }
 
+#seleccion_filtros {
+  margin-left: 200px;
+  width: 300px;
+  float:right;
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
+}
+
+#seleccion_grupos {
+  margin-left: 200px;
+  width: 300px;
+  float:right;
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
+}
+
 #seleccion_neuronas {
   margin-left: 200px;
   width: 300px;
@@ -145,24 +165,33 @@ div.mascara-eng:hover {
 }
 
 #slider {
-  margin-left: 350px;
-  margin-right: 100px;
-  margin-top: 50px;
-  float: right;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  margin-right: 5px;
+  margin-left: 280px;
+  width: 150px;
+  float:right;
 }
 
 #sliderPeso {
-  margin-left: 350px;
-  margin-right: 20px;
-   margin-top: 50px;
-   float: right;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  margin-right: 5px;
+  margin-left: 280px;
+  width: 150px;
+  float:right;
 }
 
 #seleccionManual {
-  margin-left: 350px;
-  margin-right: 0px;
-   margin-top: 0px;
-   float: right;
+  margin-left: 200px;
+  width: 300px;
+  float:right;
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
 }
 
 #radioFiltrado {

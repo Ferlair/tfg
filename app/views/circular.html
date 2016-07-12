@@ -1,5 +1,13 @@
+<div id="seleccion_filtros">
+  <center><input type="button" value="Selección por grupo neuronal" ng-click="display(1)"></center><br>
+  <center><input type="button" value="Selección por tipo de conexión" ng-click="display(2)"></center><br>
+  <center><input type="button" value="Filtrado por ID" ng-click="display(3)"></center><br>
+  <center><input type="button" value="Filtrado por Peso" ng-click="display(4)"></center><br>
+  <center><input type="button" value="Selección manual" ng-click="display(5)"></center><br>
+</div>
 
-<div id="seleccion_neuronas">
+
+<div id="seleccion_neuronas" style="display:none">
     Selecciona las neuronas que quieres visualizar: <br><br>
     <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="chequearMosey()" checked> Mosey Fibers</label><br><br>
     <label><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="chequearGranulle()" checked> Granulle Cells</label><br><br>
@@ -7,18 +15,20 @@
     <label><input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="chequearDCN()" checked> DCN Cells</label><br><br>
     <label><input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="chequearGolgi()" checked> Golgi Cells</label><br><br>
     <label><input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="chequearIO()" checked> IO Cells</label><br><br>
+
+    <center><input type="button" value="volver" ng-click="volver(1)"></center>
 </div>
 
-<div id="seleccion_grupos">
+<div id="seleccion_grupos" style="display:none">
     Selecciona el/los grupo/s neuronal/es a visualizar: <br><br>
     <label><input id="MFGR" type="checkbox" value="Mossey-Granulle" ng-click="ajustarContadorNeuronasA()" checked> Mossey - Granulle</label><br><br>
     <label><input id="MFGO" type="checkbox" value="Mossey-Golgi" ng-click="ajustarContadorNeuronasB()" checked> Mossey - Golgi</label><br><br>
     <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="ajustarContadorNeuronasC()" checked> Granulle - Golgi</label><br><br>
     <label><input id="GOGR" type="checkbox" value="Golgi-Granulle" ng-click="ajustarContadorNeuronasD()" checked> Golgi - Granulle</label><br><br>
     <label><input id="GOGO" type="checkbox" value="Golgi-Golgi" ng-click="ajustarContadorNeuronasE()" checked> Golgi - Golgi</label><br><br>
+
+    <center><input type="button" value="volver" ng-click="volver(2)"></center>
 </div>
-
-
 
 <a href="#/"><img id="boton_pagina_principal_esp"></a>
 
@@ -29,7 +39,7 @@
 
 
 
-<div id="radioFiltrado" >
+<div id="radioFiltrado" style="visibility:hidden">
   <b>Filtrado por:</b><br>
   <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
   <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Peso <br>
@@ -96,13 +106,13 @@
     rz-slider-high="sliderIO.max"
     rz-slider-options="sliderIO.options"
     ng-mouseup = "chequearIO()">
-</rzslider>
-
+</rzslider><br><br>
+<center><input type="button" value="volver" ng-click="volver(3)"></center>
 </div>
 
 <div id="sliderPeso" style="visibility: hidden">
 <div id="sliderPesoMosey">
-  <div><b>Filtrado por porcentaje de peso de neuronas Mosey: </b></div><br>
+  <div><b>Peso Mossey(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoMosey.min"
       rz-slider-high="sliderPesoMosey.max"
@@ -112,9 +122,8 @@
 </div>
 <br>
 <br>
-<br>
 <div id="sliderPesoGranulle">
-  <div><b>Filtrado por porcentaje de peso de neuronas Granulle: </b></div><br>
+  <div><b>Peso Granulle(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGranulle.min"
       rz-slider-high="sliderPesoGranulle.max"
@@ -124,9 +133,8 @@
 </div>
 <br>
 <br>
-<br>
 <div id="sliderPesoPurkinje">
-  <div><b>Filtrado por porcentaje de peso de neuronas Purkinje: </b></div><br>
+  <div><b>Peso Purkinje(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoPurkinje.min"
       rz-slider-high="sliderPesoPurkinje.max"
@@ -136,9 +144,8 @@
 </div>
 <br>
 <br>
-<br>
 <div id="sliderPesoDCN">
-  <div><b>Filtrado por porcentaje de peso de neuronas DCN: </b></div><br>
+  <div><b>Peso DCN(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoDCN.min"
       rz-slider-high="sliderPesoDCN.max"
@@ -148,9 +155,8 @@
 </div>
 <br>
 <br>
-<br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtrado por porcentaje de peso de neuronas Golgi: </b></div><br>
+  <div><b>Peso Golgi(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
@@ -160,16 +166,16 @@
 </div>
 <br>
 <br>
-<br>
 <div id="sliderPesoIO">
-  <div><b>Filtrado por porcentaje de peso de neuronas IO: </b></div><br>
+  <div><b>Peso IO(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoIO.min"
       rz-slider-high="sliderPesoIO.max"
       rz-slider-options="sliderPesoIO.options"
       ng-mouseup = "modificarPesoIO()">
   </rzslider>
-</div>
+</div><br>
+<center><input type="button" value="volver" ng-click="volver(4)"></center>
 </div>
 
 
@@ -177,7 +183,9 @@
 <div id="seleccionManual" style="visibility: hidden">
   <b>Haz click sobre la/s neurona/s a visualizar</b> <br><br>
   <b>Neuronas: </b>
-  <div id="barra"><input id="inputNeuronas" type="text"><br><br></div>
+  <div id="barra"><input id="inputNeuronas" type="text" ><br><br></div>
   <center><input type="button" value="Visualizar" ng-click="visualizar()"></center>
   <center><input type="button" value="Restaurar" ng-click="restaurar()"></center>
+  <br>
+  <center><input type="button" value="volver" ng-click="volver(5)"></center>
 </div>
