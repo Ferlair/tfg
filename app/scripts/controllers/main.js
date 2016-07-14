@@ -316,37 +316,37 @@ angular
 
       div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número total de neuronas: </b>'+ grafoFactory.numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<b>Número total de conexiones: </b>'+ grafoFactory.numeroTotalNeuronas;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Mosey: </b>' + grafoFactory.numeroMosey;
+      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Mosey: </b>' + grafoFactory.numeroMosey;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Granulle: </b>' + grafoFactory.numeroGranulle;
+      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Granulle: </b>' + grafoFactory.numeroGranulle;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Purkinje: </b>' + grafoFactory.numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Purkinje: </b>' + grafoFactory.numeroPurkinje;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo DCN: </b>' + grafoFactory.numeroDcn;
+      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo DCN: </b>' + grafoFactory.numeroDcn;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo Golgi: </b>' + grafoFactory.numeroGolgi;
+      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Golgi: </b>' + grafoFactory.numeroGolgi;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número de neuronas tipo IO: </b>' + grafoFactory.numeroIo;
+      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo IO: </b>' + grafoFactory.numeroIo;
 
       var div =  document.getElementById('especificaciones-eng');
 
       div.innerHTML = div.innerHTML + 'Loaded data info:';
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Total number of neurons: </b>'+ grafoFactory.numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<b>Total number of neuronal conexions: </b>'+ grafoFactory.numeroTotalNeuronas;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Number of Mossey neurons: </b>' + grafoFactory.numeroMosey;
+      div.innerHTML = div.innerHTML + '<b>Conexions from Mossey neurons: </b>' + grafoFactory.numeroMosey;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Number of Granulle neurons: </b>' + grafoFactory.numeroGranulle;
+      div.innerHTML = div.innerHTML + '<b>Conexions from Granulle neurons: </b>' + grafoFactory.numeroGranulle;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Number of Purkinje neurons: </b>' + grafoFactory.numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<b>Conexions from Purkinje neurons: </b>' + grafoFactory.numeroPurkinje;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Number of DCN neurons: </b>' + grafoFactory.numeroDcn;
+      div.innerHTML = div.innerHTML + '<b>Conexions from DCN neurons: </b>' + grafoFactory.numeroDcn;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Number of Golgi neurons: </b>' + grafoFactory.numeroGolgi;
+      div.innerHTML = div.innerHTML + '<b>Conexions from Golgi neurons: </b>' + grafoFactory.numeroGolgi;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>number of IO neurons: </b>' + grafoFactory.numeroIo;
+      div.innerHTML = div.innerHTML + '<b>Conexions from IO neurons: </b>' + grafoFactory.numeroIo;
 
 
       $scope.checked = true;

@@ -132,6 +132,253 @@ div.mascara-eng:hover {
   border: 2px solid #000000;
 }
 
+#boton_grupo_neuronal {
+  background: url('../images/botones_opciones/grupo_neuronal.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_grupo_neuronal:hover {
+  background: url('../images/botones_opciones/grupo_neuronal_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_tipo_conexion {
+  background: url('../images/botones_opciones/tipo_conexion.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_tipo_conexion:hover {
+  background: url('../images/botones_opciones/tipo_conexion_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_id {
+  background: url('../images/botones_opciones/filtro_id.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_id:hover {
+  background: url('../images/botones_opciones/filtro_id_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_peso {
+  background: url('../images/botones_opciones/filtro_peso.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_peso:hover {
+  background: url('../images/botones_opciones/filtro_peso_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_seleccion_manual {
+  background: url('../images/botones_opciones/seleccion_manual.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_seleccion_manual:hover {
+  background: url('../images/botones_opciones/seleccion_manual_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+
+
+#boton_grupo_neuronal_eng {
+  background: url('../images/botones_opciones/grupo_neuronal_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_grupo_neuronal_eng:hover {
+  background: url('../images/botones_opciones/grupo_neuronal_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_tipo_conexion_eng {
+  background: url('../images/botones_opciones/tipo_conexion_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_tipo_conexion_eng:hover {
+  background: url('../images/botones_opciones/tipo_conexion_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_id_eng {
+  background: url('../images/botones_opciones/filtro_id_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_id_eng:hover {
+  background: url('../images/botones_opciones/filtro_id_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_peso_eng {
+  background: url('../images/botones_opciones/filtro_peso_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_filtro_peso_eng:hover {
+  background: url('../images/botones_opciones/filtro_peso_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_seleccion_manual_eng {
+  background: url('../images/botones_opciones/seleccion_manual_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_seleccion_manual_eng:hover {
+  background: url('../images/botones_opciones/seleccion_manual_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#volver_1 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_1:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_2 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_2:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_3 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_3:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_4 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_4:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_5 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_5:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+
+
+
+#volver_1_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_1_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_2_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_2_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_3_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_3_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_4_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_4_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_5_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_5_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+
+
 #seleccion_grupos {
   margin-left: 200px;
   width: 300px;
