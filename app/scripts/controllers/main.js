@@ -430,7 +430,7 @@ angular
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 1;
-            var angle = Math.random()*Math.PI*2;
+            var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
             nodo.x=x;
@@ -460,7 +460,7 @@ angular
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 4;
-            var angle = Math.random()*Math.PI*2;
+            var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
             nodo.x=x;
@@ -492,7 +492,7 @@ angular
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 6;
-            var angle = Math.random()*Math.PI*2;
+            var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
             nodo.x=x;
@@ -524,7 +524,7 @@ angular
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 8;
-            var angle = Math.random()*Math.PI*2;
+            var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
             nodo.x=x;
@@ -556,7 +556,7 @@ angular
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 10;
-            var angle = Math.random()*Math.PI*2;
+            var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
             nodo.x=x;
@@ -588,7 +588,7 @@ angular
             nodo.id = "n"+arrayNeuronal[i].id;
             nodo.label = "neurona "+arrayNeuronal[i].id;
             var radius = 12;
-            var angle = Math.random()*Math.PI*2;
+            var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
             nodo.x=x;
@@ -633,7 +633,7 @@ angular
         $scope.colorearAristas(arrayNeuronal);
         //$scope.activarVisualizaciones();
 
-        //console.log(arrayNeuronal);
+        console.log(arrayNeuronal);
     }
 
     //Entrada: fichero de texto con datos neuronales
@@ -643,6 +643,8 @@ angular
       var palabrasPorLineas;
       var origen = [];
       var destino = [];
+      var x = [];
+      var y = [];
       var tipo = [];
       var peso = [];
       var arrayNeuronal = new Array();
@@ -658,8 +660,10 @@ angular
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0];
         destino[i] = palabrasPorLineas[1];
-        tipo[i] = palabrasPorLineas[4];
-        peso[i] = palabrasPorLineas[5];
+        x[i] = palabrasPorLineas[2];
+        y[i] = palabrasPorLineas[3];
+        tipo[i] = palabrasPorLineas[5];
+        peso[i] = palabrasPorLineas[6];
       }
 
       //Obtenemos el número total de neuronas que contiene el archivo
@@ -667,7 +671,7 @@ angular
 
       //Inicializamos el array con un valor para cada una de las neuronas que hay en el fichero
       //El valor inicial es de id igual al número de neurona, destino la propia neurona y peso 0
-      arrayNeuronal = $scope.inicializarArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal);
+      arrayNeuronal = $scope.inicializarArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
 
       //A continuación se lee una a una cada neurona y se agrega su neurona de destino y un peso
       for (var j=0; j<destino.length; j++) {
@@ -771,7 +775,7 @@ angular
     }
 
     //Debemos crear una celda del array para cada una de las neuronas, con valores iniciales por defecto
-    $scope.inicializarArray = function(limite, arrayNeuronal) {
+    $scope.inicializarArray = function(limite, arrayNeuronal, x, y) {
       var tipoPorDefecto = '-';
       for (var i=0; i<limite; i++) {
         var neurona = new Array();
@@ -785,6 +789,9 @@ angular
         neurona.peso.push(pesoInicial.toString());
         neurona.tipoDestino.push(tipoPorDefecto.toString());
         neurona.tipo = '-';
+        neurona.x = x[i];
+        if (neurona.x == null)
+          neurona.x = 0;
         arrayNeuronal.push(neurona);
       }
       return arrayNeuronal;
