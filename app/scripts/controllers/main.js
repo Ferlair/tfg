@@ -44,6 +44,14 @@ angular
     var arrayConexionesD = [];
     var arrayConexionesE = [];
 
+    var infoTotal = 0;
+    var infoMossy = 0;
+    var infoGranulle = 0;
+    var infoPurkinje = 0;
+    var infoDCN = 0;
+    var infoGolgi = 0;
+    var infoIO = 0;
+
     grafoFactory.spanish=true;
     grafoFactory.english=false;
 
@@ -316,37 +324,37 @@ angular
 
       div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Número total de conexiones: </b>'+ grafoFactory.numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<b>Número total de neuronas: </b>'+ infoTotal;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Mosey: </b>' + grafoFactory.numeroMosey;
+      div.innerHTML = div.innerHTML + '<b>Neuronas tipo Mossy: </b>' + infoMossy;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Granulle: </b>' + grafoFactory.numeroGranulle;
+      div.innerHTML = div.innerHTML + '<b>Neuronas tipo Granulle: </b>' + infoGranulle;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Purkinje: </b>' + grafoFactory.numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<b>Neuronas tipo Purkinje: </b>' + infoPurkinje;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo DCN: </b>' + grafoFactory.numeroDcn;
+      div.innerHTML = div.innerHTML + '<b>Neuronas tipo DCN: </b>' + infoDCN;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo Golgi: </b>' + grafoFactory.numeroGolgi;
+      div.innerHTML = div.innerHTML + '<b>Neuronas tipo Golgi: </b>' + infoGolgi;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexiones desde neuronas tipo IO: </b>' + grafoFactory.numeroIo;
+      div.innerHTML = div.innerHTML + '<b>Neuronas tipo IO: </b>' + infoIO;
 
       var div =  document.getElementById('especificaciones-eng');
 
       div.innerHTML = div.innerHTML + 'Loaded data info:';
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Total number of neuronal conexions: </b>'+ grafoFactory.numeroTotalNeuronas;
+      div.innerHTML = div.innerHTML + '<b>Total number of neurons: </b>'+ infoTotal;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexions from Mossey neurons: </b>' + grafoFactory.numeroMosey;
+      div.innerHTML = div.innerHTML + '<b>Mossy neurons: </b>' + infoMossy;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexions from Granulle neurons: </b>' + grafoFactory.numeroGranulle;
+      div.innerHTML = div.innerHTML + '<b>Granulle neurons: </b>' + infoGranulle;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexions from Purkinje neurons: </b>' + grafoFactory.numeroPurkinje;
+      div.innerHTML = div.innerHTML + '<b>Purkinje neurons: </b>' + infoPurkinje;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexions from DCN neurons: </b>' + grafoFactory.numeroDcn;
+      div.innerHTML = div.innerHTML + '<b>DCN neurons: </b>' + infoDCN;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexions from Golgi neurons: </b>' + grafoFactory.numeroGolgi;
+      div.innerHTML = div.innerHTML + '<b>Golgi neurons: </b>' + infoGolgi;
       div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '<b>Conexions from IO neurons: </b>' + grafoFactory.numeroIo;
+      div.innerHTML = div.innerHTML + '<b>IO neurons: </b>' + infoIO;
 
 
       $scope.checked = true;
@@ -633,7 +641,44 @@ angular
         $scope.colorearAristas(arrayNeuronal);
         //$scope.activarVisualizaciones();
 
-        console.log(arrayNeuronal);
+        //console.log(arrayNeuronal);
+    }
+
+    $scope.getInfo = function(arrayNeuronal){
+      for (var i=0;i<arrayNeuronal.length; i++) {
+        switch(arrayNeuronal[i].tipo) {
+          case "0": {
+                      infoMossy++;
+                      infoTotal++;
+                      break;
+                    }
+          case ("1"): {
+                        infoGranulle++;
+                        infoTotal++;
+                        break;
+                      }
+          case ("2"): {
+                        infoPurkinje++;
+                        infoTotal++;
+                        break;
+                      }
+          case ("3"): {
+                        infoDCN++;
+                        infoTotal++;
+                        break;
+                      }
+          case ("4"): {
+                        infoGolgi++;
+                        infoTotal++;
+                        break;
+                      }
+          case ("5"): {
+                        infoIO++;
+                        infoTotal++;
+                        break;
+                      }
+        }
+      }
     }
 
     //Entrada: fichero de texto con datos neuronales
@@ -656,6 +701,9 @@ angular
         lineas[j] = aux;
       }
 
+      //infoTotal = lineas.length;
+      //console.log('infoTotal '+infoTotal);
+
       for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
         origen[i] = palabrasPorLineas[0];
@@ -672,6 +720,8 @@ angular
       //Inicializamos el array con un valor para cada una de las neuronas que hay en el fichero
       //El valor inicial es de id igual al número de neurona, destino la propia neurona y peso 0
       arrayNeuronal = $scope.inicializarArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
+
+
 
       //A continuación se lee una a una cada neurona y se agrega su neurona de destino y un peso
       for (var j=0; j<destino.length; j++) {
@@ -699,13 +749,15 @@ angular
         }
       }
 
+      $scope.getInfo(arrayNeuronal);
+
       //Las neuronas que no tenían un tipo asignado en el fichero reciben el valor 0 por defecto
       for (var i=0; i<(arrayNeuronal.length); i++) {
         var pesoPorDefecto = 0;
         if (arrayNeuronal[i].tipo == '-')
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
-      //console.log(arrayNeuronal);
+
       grafoFactory.maxPesoMossey = $scope.getMaxPeso(arrayNeuronal, 0);
       grafoFactory.maxPesoGranulle = $scope.getMaxPeso(arrayNeuronal, 1);
       grafoFactory.maxPesoPurkinje = $scope.getMaxPeso(arrayNeuronal, 2);
