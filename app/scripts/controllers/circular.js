@@ -74,102 +74,6 @@ angular
       grafoFactory.maxPeso = 10;
     }
 
-    $scope.sombrearMosey = function() {
-      for (var i=0;i<arrayMosey.length;i++) {
-        jsonCopy.nodes[arrayMosey[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearMosey = function() {
-      for (var i=0;i<arrayMosey.length;i++) {
-        jsonCopy.nodes[arrayMosey[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearGranulle = function() {
-      for (var i=0;i<arrayGranulle.length;i++) {
-        jsonCopy.nodes[arrayGranulle[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearGranulle = function() {
-      for (var i=0;i<arrayGranulle.length;i++) {
-        jsonCopy.nodes[arrayGranulle[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearPurkinje = function() {
-      for (var i=0;i<arrayPurkinje.length;i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearPurkinje = function() {
-      for (var i=0;i<arrayPurkinje.length;i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearDCN = function() {
-      for (var i=0;i<arrayDCN.length;i++) {
-        jsonCopy.nodes[arrayDCN[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearDCN = function() {
-      for (var i=0;i<arrayPurkinje.length;i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearGolgi = function() {
-      for (var i=0;i<arrayGolgi.length;i++) {
-        jsonCopy.nodes[arrayGolgi[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearGolgi = function() {
-      for (var i=0;i<arrayGolgi.length;i++) {
-        jsonCopy.nodes[arrayGolgi[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearIO = function() {
-      for (var i=0;i<arrayIO.length;i++) {
-        jsonCopy.nodes[arrayIO[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearIO = function() {
-      for (var i=0;i<arrayIO.length;i++) {
-        jsonCopy.nodes[arrayIO[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
     //Función que devuelve la posición de una determinada arista dentro
     //del json del grafo
     $scope.buscarArista = function (origen, destino){
@@ -211,6 +115,7 @@ angular
     }
 
     $scope.inicio = function() {
+
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
       arrayNeuronal = grafoFactory.recuperarArrayNeuronal();
@@ -230,6 +135,7 @@ angular
     //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
     function refresh() {
+      //console.log('hemos llamado a refresh');
       var g = document.querySelector('#container2');
       var p = g.parentNode;
       p.removeChild(g);
@@ -742,29 +648,60 @@ angular
     }
 
     $scope.mostrarPeso = function() {
-      document.getElementById('slider').style.display = "none";
-      document.getElementById('seleccionManual').style.display = "none";
-      document.getElementById('sliderPeso').style.visibility = "visible";
-      document.getElementById('sliderPeso').style.display = "inline";
-      document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      if (spanish) {
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('seleccionManual').style.display = "none";
+        document.getElementById('sliderPeso').style.visibility = "visible";
+        document.getElementById('sliderPeso').style.display = "inline";
+        document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      }
+      if (english) {
+        console.log(english);
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('seleccionManual').style.display = "none";
+        document.getElementById('sliderPeso').style.visibility = "visible";
+        document.getElementById('sliderPeso').style.display = "inline";
+        document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      }
       $scope.restaurar();
     }
 
     $scope.mostrarId = function() {
-      document.getElementById('sliderPeso').style.display = "none";
-      document.getElementById('seleccionManual').style.display = "none";
-      document.getElementById('slider').style.visibility = "visible";
-      document.getElementById('slider').style.display = "inline";
-      document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      if (spanish) {
+        document.getElementById('sliderPeso').style.display = "none";
+        document.getElementById('seleccionManual').style.display = "none";
+        document.getElementById('slider').style.visibility = "visible";
+        document.getElementById('slider').style.display = "inline";
+        document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      }
+
+      //CORREGIR IDIOMA
+      if (english) {
+        console.log(english);
+        document.getElementById('sliderPeso').style.display = "none";
+        document.getElementById('seleccionManual').style.display = "none";
+        document.getElementById('slider').style.visibility = "visible";
+        document.getElementById('slider').style.display = "inline";
+        document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+      }
       $scope.restaurar();
     }
 
     $scope.mostrarSeleccionManual = function() {
-      document.getElementById('sliderPeso').style.display = "none";
-      document.getElementById('slider').style.display = "none";
-      document.getElementById('seleccionManual').style.visibility = "visible";
-      document.getElementById('seleccionManual').style.display = "inline";
-      document.getElementById('inputNeuronas').value="";
+      if (spanish) {
+        document.getElementById('sliderPeso').style.display = "none";
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('seleccionManual').style.visibility = "visible";
+        document.getElementById('seleccionManual').style.display = "inline";
+        document.getElementById('inputNeuronas').value="";
+      }
+      if (english) {
+        document.getElementById('sliderPeso').style.display = "none";
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('seleccionManual').style.visibility = "visible";
+        document.getElementById('seleccionManual').style.display = "inline";
+        document.getElementById('inputNeuronas').value="";
+      }
     }
 
     $scope.volver = function(valor){
@@ -897,16 +834,27 @@ angular
             grafoFactory.cargar(jsonCopy);
           }
           else {
-            alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
+            if (grafoFactory.spanish) {
+              alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
+            }
+            if (grafoFactory.english) {
+              alert('ERROR: The upper value of the entered range is greater than the maximun id value available');
+            }
           }
 
         }
         else {
+          if (grafoFactory.spanish)
           alert('ERROR: el valor inferior del rango introducido es menor que el valor mínimo de id disponible');
+          if (grafoFactory.english)
+          alert ('ERROR: The lower value of the entered range is smaller than the minimun id value available');
         }
       }
       else {
+        if (grafoFactory.spanish)
         alert('ERROR: el valor inferior del rango introducido es mayor que el valor superior');
+        if (grafoFactory.english)
+        alert('ERROR: the lower value of the entered range is greater thar the upper value');
       }
     }
 
@@ -1315,6 +1263,22 @@ angular
 
     var arrayPrueba = new Array();
 
+    function encontrarDestinos  (neurona) {
+      var lineas = neurona.split(" ");
+      var numero = lineas[1];
+      var str = "";
+      for (var i=1; i<arrayNeuronal[numero].destino.length;i++) {
+        if (str != "")
+        str = str + ' ' + arrayNeuronal[numero].destino[i];
+        else
+        str = str + arrayNeuronal[numero].destino[i];
+      }
+
+      if (str == "")
+       str = "-";
+      return str;
+    }
+
     function encontrarTipo(neurona) {
       var lineas = neurona.split(" ");
       var numero = lineas[1];
@@ -1429,6 +1393,10 @@ angular
         return arrayPrueba;
       },
 
+      saludo: function() {
+        alert('hola');
+      },
+
       //Muestra un grafo por defecto
       crearGrafo: function(){
         sigma.parsers.json('data.json', {
@@ -1451,15 +1419,16 @@ angular
             container: document.getElementById('container2')
           },
           settings: {
-            drawLabels: 'false',
-            enableHovering: 'false',
+            drawLabels: "true",
+            enableHovering: "true",
+            enableEdgeHovering: "true",
             defaultNodeColor: "#ffffff",
             defaultEdgeColor: "#000000",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
-            defaultLabelHoverColor: 'false',
-            defaultLabelColor: 'false',
-            defaultLabelSize: '0'
+            defaultLabelHoverColor: "false",
+            defaultLabelColor: "#000",
+            defaultLabelSize: "2"
           }
         })
 
@@ -1470,6 +1439,13 @@ angular
             var sig = prev[1];
             arrayPrueba.push(sig);
             var tipo = encontrarTipo(d);
+            var destinos = encontrarDestinos(d);
+            var auxDestinos = destinos.split(" ");
+            if (auxDestinos.length > 3) {
+              var destinos0 = auxDestinos[0];
+              var destinos1 = auxDestinos[1];
+              var destinos2 = auxDestinos[2];
+            }
 
             var nodoABorrar = document.getElementById('infoNeurona');
               while (nodoABorrar.firstChild) {
@@ -1477,15 +1453,39 @@ angular
               }
 
             var div =  document.getElementById('infoNeurona');
-            div.innerHTML = div.innerHTML + '<b>Nombre: </b>' + d;
+            div.innerHTML = div.innerHTML + '<b>ID: </b>' + d;
             div.innerHTML = div.innerHTML + '<br><br>';
-            div.innerHTML = div.innerHTML + '<b>Tipo: </b>' + tipo;
+            div.innerHTML = div.innerHTML + '<b>T: </b>' + tipo;
+            div.innerHTML = div.innerHTML + '<br><br>';
+            if (destinos.length > 3) {
+              //console.log('opcion 1');
+              div.innerHTML = div.innerHTML + '<b>ID dest.: </b>' + destinos0 + ', ' + destinos1 + ', ' + destinos2 + ' ';
+              var element =  document.createElement("input");
+              element.type = "button";
+              element.value = "...";
+              element.name = "...";
+              element.onclick = function() {
+                alert ('Total dest.: '+destinos);
+              }
+              div.appendChild(element);
+            }
+            else if (destinos == "-"){
+              //console.log('opcion 2');
+              div.innerHTML = div.innerHTML + '<b>ID dest.: </b>' + 'no dest.';
+            }
+
+            else {
+              //console.log('opcion 3');
+              div.innerHTML = div.innerHTML + '<b>ID dest.: </b>' + destinos;
+            }
+
+
 
             document.getElementById('infoNeurona').style.display="inline";
             document.getElementById('infoNeurona').style.visibility="visible";
 
             //------------------------------------------------------------------------------------------------
-
+            //Para la parte de selección individual de neuronas
             var frase;
 
             for (var i=0;i<arrayPrueba.length;i++) {
@@ -1513,6 +1513,8 @@ angular
             var div =  document.getElementById('barra');
             div.innerHTML = div.innerHTML + '<input id="inputNeuronas" type="text" value="'+frase+'"><br><br>';
         });
+
+
       }
     }
   });

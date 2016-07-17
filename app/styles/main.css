@@ -401,9 +401,9 @@ div.mascara-eng:hover {
 
 #infoNeurona {
   margin-top: 650px;
-  margin-left: 150px;
-  max-width: 200px;
-  width: 200px;
+  margin-left: 100px;
+  max-width: 250px;
+  width: 250px;
   float: left;
   background: rgb(243,194,48);
   border-radius: 25px;
@@ -415,7 +415,7 @@ div.mascara-eng:hover {
   position: fixed;
   top: 0;
   z-index: 999;
-  margin-right: 5px;
+  margin-right: 0px;
   margin-left: 280px;
   width: 150px;
   float:right;
@@ -431,10 +431,28 @@ div.mascara-eng:hover {
   float:right;
 }
 
+#sliderPeso_eng {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  margin-right: 5px;
+  margin-left: 280px;
+  width: 150px;
+  float:right;
+}
+
 #seleccionManual {
-  margin-left: 200px;
+  /*margin-left: 250px;
+  width: 300px;
+  float:right;*/
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  margin-right: 0px;
+  margin-left: 280px;
   width: 300px;
   float:right;
+
   background: rgb(243,194,48);
   border-radius: 25px;
   padding: 8px;

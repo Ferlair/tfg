@@ -8,7 +8,7 @@
 
 
 <div id="seleccion_neuronas" style="display:none">
-    Selecciona las neuronas que quieres visualizar: <br><br>
+    Select neuron type: <br><br>
     <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="chequearMosey()" checked> Mossy Fibers</label><br><br>
     <label><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="chequearGranulle()" checked> Granulle Cells</label><br><br>
     <label><input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="chequearPurkinje()" checked> Purkinje Cells</label><br><br>
@@ -20,7 +20,7 @@
 </div>
 
 <div id="seleccion_grupos" style="display:none">
-    Selecciona el/los grupo/s neuronal/es a visualizar: <br><br>
+    Select synapse type: <br><br>
     <label><input id="MFGR" type="checkbox" value="Mossey-Granulle" ng-click="ajustarContadorNeuronasA()" checked> Mossy - Granulle (Purple)</label><br><br>
     <label><input id="MFGO" type="checkbox" value="Mossey-Golgi" ng-click="ajustarContadorNeuronasB()" checked> Mossy - Golgi (Green)</label><br><br>
     <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="ajustarContadorNeuronasC()" checked> Granulle - Golgi (Blue)</label><br><br>
@@ -61,7 +61,6 @@
 </rzslider>
 <br>
 <br>
-<br>
 <div><b>Granulle: </b></div><br>
 <rzslider id="idgranulle"
     rz-slider-model="sliderGranulle.min"
@@ -69,7 +68,6 @@
     rz-slider-options="sliderGranulle.options"
     ng-mouseup = "chequearGranulle()">
 </rzslider>
-<br>
 <br>
 <br>
 <div><b>Purkinje: </b></div><br>
@@ -81,7 +79,6 @@
 </rzslider>
 <br>
 <br>
-<br>
 <div><b>DCN: </b></div><br>
 <rzslider id="iddcn"
     rz-slider-model="sliderDCN.min"
@@ -89,7 +86,6 @@
     rz-slider-options="sliderDCN.options"
     ng-mouseup = "ver()">
 </rzslider>
-<br>
 <br>
 <br>
 <div><b>Golgi: </b></div><br>
@@ -101,20 +97,19 @@
 </rzslider>
 <br>
 <br>
-<br>
 <div><b>IO: </b></div><br>
 <rzslider id="idio"
     rz-slider-model="sliderIO.min"
     rz-slider-high="sliderIO.max"
     rz-slider-options="sliderIO.options"
     ng-mouseup = "ver()">
-</rzslider>
+</rzslider><br><br>
 <center><input id="volver_3_eng" type="button" ng-click="volver(3)"></center>
 </div>
 
 <div id="sliderPeso" style="visibility: hidden">
 <div id="sliderPesoMosey">
-  <div><b>Filtering by weight in Mosey: </b></div><br>
+  <div><b>Mossy weigth(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoMosey.min"
       rz-slider-high="sliderPesoMosey.max"
@@ -123,10 +118,8 @@
   </rzslider>
 </div>
 <br>
-<br>
-<br>
 <div id="sliderPesoGranulle">
-  <div><b>Filtering by weight in Granulle: </b></div><br>
+  <div><b>Granulle weigth(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGranulle.min"
       rz-slider-high="sliderPesoGranulle.max"
@@ -135,10 +128,8 @@
   </rzslider>
 </div>
 <br>
-<br>
-<br>
 <div id="sliderPesoPurkinje">
-  <div><b>Filtering by weight in Purkinje: </b></div><br>
+  <div><b>Purkinje weigth(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoPurkinje.min"
       rz-slider-high="sliderPesoPurkinje.max"
@@ -147,10 +138,8 @@
   </rzslider>
 </div>
 <br>
-<br>
-<br>
 <div id="sliderPesoDCN">
-  <div><b>Filtering by weight in DCN: </b></div><br>
+  <div><b>DCN weigth(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoDCN.min"
       rz-slider-high="sliderPesoDCN.max"
@@ -159,10 +148,8 @@
   </rzslider>
 </div>
 <br>
-<br>
-<br>
 <div id="sliderPesoGolgi">
-  <div><b>Filtering by weight in Golgi: </b></div><br>
+  <div><b>Golgi weigth(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
@@ -171,10 +158,8 @@
   </rzslider>
 </div>
 <br>
-<br>
-<br>
 <div id="sliderPesoIO">
-  <div><b>Filtering by weight in IO: </b></div><br>
+  <div><b>IO weigth(%): </b></div><br>
   <rzslider
       rz-slider-model="sliderPesoIO.min"
       rz-slider-high="sliderPesoIO.max"

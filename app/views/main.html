@@ -4,7 +4,6 @@
   <p id="titulo"> Visualización neuronal
   <button id="bandera_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
   <button id="bandera_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
-
 </ul>
 
 <br>
@@ -14,7 +13,7 @@
 
 <div id="todo">
 <div class="mascara">
-  <input type="file" accept=".txt" on-read-file="nuevoCargarNeuronas($fileContent)"/>
+  <input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)"/>
 </div>
 <br><br>
 <div id="especificaciones-esp" ng-show = "checked">
@@ -58,7 +57,7 @@
 
 <div id="todo">
 <div class="mascara-eng">
-  <input type="file" accept=".txt" on-read-file="nuevoCargarNeuronas($fileContent)"/>
+  <input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)"/>
 </div>
 <br><br>
 <div id="especificaciones-eng" ng-show = "checked">

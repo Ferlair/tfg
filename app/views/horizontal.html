@@ -16,7 +16,7 @@
     <label><input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="chequearGolgi()" checked> Golgi Cells</label><br><br>
     <label><input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="chequearIO()" checked> IO Cells</label><br><br>
 
-    <center><input type="button" value="volver" ng-click="volver(1)"></center>
+    <center><input id="volver_1" type="button" ng-click="volver(1)"></center>
 </div>
 
 <div id="seleccion_grupos" style="display:none">
@@ -27,7 +27,7 @@
     <label><input id="GOGR" type="checkbox" value="Golgi-Granulle" ng-click="ajustarContadorNeuronasD()" checked> Golgi - Granulle (Rojo)</label><br><br>
     <label><input id="GOGO" type="checkbox" value="Golgi-Golgi" ng-click="ajustarContadorNeuronasE()" checked> Golgi - Golgi (Naranja)</label><br><br>
 
-    <center><input type="button" value="volver" ng-click="volver(2)"></center>
+    <center><input id="volver_2" type="button" ng-click="volver(2)"></center>
 </div>
 
 <a href="#/"><img id="boton_pagina_principal_esp"></a>
@@ -107,7 +107,7 @@
     rz-slider-options="sliderIO.options"
     ng-mouseup = "chequearIO()">
 </rzslider><br><br>
-<center><input type="button" value="volver" ng-click="volver(3)"></center>
+<center><input id="volver_3" type="button" ng-click="volver(3)"></center>
 </div>
 
 <div id="sliderPeso" style="visibility: hidden">
@@ -175,7 +175,7 @@
       ng-mouseup = "modificarPesoIO()">
   </rzslider>
 </div><br>
-<center><input type="button" value="volver" ng-click="volver(4)"></center>
+<center><input id="volver_4" type="button" ng-click="volver(4)"></center>
 </div>
 
 
@@ -187,5 +187,5 @@
   <center><input type="button" value="Visualizar" ng-click="visualizar()"></center>
   <center><input type="button" value="Restaurar" ng-click="restaurar()"></center>
   <br>
-  <center><input type="button" value="volver" ng-click="volver(5)"></center>
+  <center><input id="volver_5" type="button" ng-click="volver(5)"></center>
 </div>

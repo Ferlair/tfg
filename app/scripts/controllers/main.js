@@ -638,7 +638,7 @@ angular
 
     //Entrada: fichero de texto con datos neuronales
     //Salida:
-    $scope.nuevoCargarNeuronas = function($fileContent) {
+    $scope.cargarNeuronas = function($fileContent) {
       var lineas = $fileContent.split("\n");
       var palabrasPorLineas;
       var origen = [];
