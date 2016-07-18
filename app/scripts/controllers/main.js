@@ -338,6 +338,7 @@ angular
       div.innerHTML = div.innerHTML + '<br><br>';
       div.innerHTML = div.innerHTML + '<b>Neuronas tipo IO: </b>' + infoIO;
 
+
       var div =  document.getElementById('especificaciones-eng');
 
       div.innerHTML = div.innerHTML + 'Loaded data info:';
@@ -359,6 +360,26 @@ angular
 
       $scope.checked = true;
       $scope.activarVisualizaciones();
+    }
+
+    $scope.reiniciarInfo = function() {
+      var nodoABorrar = document.getElementById('especificaciones-esp');
+        while (nodoABorrar.firstChild) {
+            nodoABorrar.removeChild(nodoABorrar.firstChild);
+        }
+
+        var nodoABorrar = document.getElementById('especificaciones-eng');
+          while (nodoABorrar.firstChild) {
+              nodoABorrar.removeChild(nodoABorrar.firstChild);
+        }
+
+        infoTotal = 0;
+        infoMossy = 0;
+        infoGranulle = 0;
+        infoPurkinje = 0;
+        infoDCN = 0;
+        infoGolgi = 0;
+        infoIO = 0;
     }
 
     //Función que se encarga de asignar un color a cada una de las aristas del json
@@ -695,6 +716,8 @@ angular
       var arrayNeuronal = new Array();
       var tipoDestino = [];
       var tipoConexion = [];
+
+      $scope.reiniciarInfo();
 
       for (var j=0; j<lineas.length; j++) {
         var aux = lineas[j].replace(/\s+/g, " ");
