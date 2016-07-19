@@ -359,6 +359,8 @@ angular
       while(arrayAux.length > 0) {
         arrayAux.pop();
       }
+      var arrayPrueba = new Array();
+      grafoFactory.setArrayPrueba(arrayPrueba);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -1455,8 +1457,8 @@ angular
         return arrayPrueba;
       },
 
-      saludo: function() {
-        alert('hola');
+      setArrayPrueba: function(a) {
+        arrayPrueba = a;
       },
 
       //Muestra un grafo por defecto
@@ -1485,7 +1487,7 @@ angular
             enableHovering: "true",
             enableEdgeHovering: "true",
             defaultNodeColor: "#ffffff",
-            defaultEdgeColor: "#000000",
+            edgeColor: "#000000",
             nodeHoverColor: "#0000ff",
             defaultNodeHoverColor: "#0000ff",
             defaultLabelHoverColor: "false",
