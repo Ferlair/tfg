@@ -21,12 +21,13 @@
 
 <div id="seleccion_grupos" style="display:none">
     Selecciona el/los grupo/s neuronal/es a visualizar: <br><br>
+    <label><input id="setAll" type="checkbox" ng-click="setAll()" > Seleccionar/Ocultar todos</label><br><br><br><br>
     <label><input id="MFGR" type="checkbox" value="Mossy-Granulle" ng-click="ajustarContadorNeuronasA()" checked> Mossy - Granulle (Morado)</label><br><br>
     <label><input id="MFGO" type="checkbox" value="Mossy-Golgi" ng-click="ajustarContadorNeuronasB()" checked> Mossy - Golgi (Verde)</label><br><br>
     <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="ajustarContadorNeuronasC()" checked> Granulle - Golgi (Azul)</label><br><br>
     <label><input id="GOGR" type="checkbox" value="Golgi-Granulle" ng-click="ajustarContadorNeuronasD()" checked> Golgi - Granulle (Rojo)</label><br><br>
     <label><input id="GOGO" type="checkbox" value="Golgi-Golgi" ng-click="ajustarContadorNeuronasE()" checked> Golgi - Golgi (Naranja)</label><br><br>
-
+    <br><br>
     <center><input id="volver_2" type="button" ng-click="volver(2)"></center>
 </div>
 

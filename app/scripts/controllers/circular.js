@@ -781,6 +781,35 @@ angular
       return resultado;
     }
 
+    $scope.setAll = function() {
+      var box = document.getElementById('setAll');
+      var group1 = document.getElementById('MFGR');
+      var group2 = document.getElementById('MFGO');
+      var group3 = document.getElementById('GRGO');
+      var group4 = document.getElementById('GOGR');
+      var group5 = document.getElementById('GOGO');
+
+      if (box.checked) {
+        group1.checked = true;
+        group2.checked = true;
+        group3.checked = true;
+        group4.checked = true;
+        group5.checked = true;
+      }
+      else {
+        group1.checked = false;
+        group2.checked = false;
+        group3.checked = false;
+        group4.checked = false;
+        group5.checked = false;
+      }
+      $scope.ajustarContadorNeuronasA();
+      $scope.ajustarContadorNeuronasB();
+      $scope.ajustarContadorNeuronasC();
+      $scope.ajustarContadorNeuronasD();
+      $scope.ajustarContadorNeuronasE();
+    }
+
     $scope.filtradoPorRango = function() {
       var stringSeleccion = document.getElementById("inputNeuronas").value;
       var filtradoOrigen = stringSeleccion.split('-');
@@ -860,8 +889,40 @@ angular
 
     $scope.filtradoManual = function(stringSeleccion) {
       var filtradoOrigen = stringSeleccion.split(',');
-
+      var min = parseInt(arrayNeuronal[0].id);
+      var max = parseInt(arrayNeuronal[arrayNeuronal.length-1].id);
+      var detener = false;
       var arrayDatos = new Array();
+      var j=0;
+
+      while (j<filtradoOrigen.length && !detener) {
+
+        if (filtradoOrigen[j] < min) {
+          if (grafoFactory.spanish) {
+            alert('ERROR: el valor inferior del rango introducido es menor que el valor mínimo de id disponible');
+          }
+
+          else if (grafoFactory.english) {
+            alert('ERROR: The lower value of the entered range is smaller than the minimun id value available');
+          }
+          detener = true;
+        }
+
+        else if (filtradoOrigen[j] > max) {
+          if (grafoFactory.spanish) {
+            alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
+          }
+          else if (grafoFactory.english) {
+            alert('ERROR: The upper value of the entered range is greater than the maximun id value available');
+          }
+          detener = true;
+        }
+        j++;
+      }
+
+      console.log('detener: '+detener);
+
+      if (!detener) {
 
       for (var i=0; i<filtradoOrigen.length;i++) {
         var neuronaOrigen = filtradoOrigen[i];
@@ -888,6 +949,7 @@ angular
       }
       refresh();
       grafoFactory.cargar(jsonCopy);
+    }
     }
 
     $scope.ajustarContadorNeuronasA = function() {

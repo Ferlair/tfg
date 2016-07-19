@@ -661,7 +661,7 @@ angular
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
         //$scope.activarVisualizaciones();
-
+        console.log(jsonCopy);
         //console.log(arrayNeuronal);
     }
 
@@ -702,6 +702,26 @@ angular
       }
     }
 
+    /*$scope.checkExtension = function() {
+      var x = document.getElementById("myFile");
+      var txt = "";
+      var extension;
+      if ('files' in x) {
+        for (var i = 0; i < x.files.length; i++) {
+            var file = x.files[i];
+            if ('name' in file) {
+                txt = file.name;
+            }
+        }
+      }
+
+      txt = txt.split(".");
+      extension = txt[1];
+
+      console.log('La extensión es: '+extension);
+      return extension;
+    }*/
+
     //Entrada: fichero de texto con datos neuronales
     //Salida:
     $scope.cargarNeuronas = function($fileContent) {
@@ -718,14 +738,12 @@ angular
       var tipoConexion = [];
 
       $scope.reiniciarInfo();
+      //$scope.checkExtension();
 
       for (var j=0; j<lineas.length; j++) {
         var aux = lineas[j].replace(/\s+/g, " ");
         lineas[j] = aux;
       }
-
-      //infoTotal = lineas.length;
-      //console.log('infoTotal '+infoTotal);
 
       for (var i=0; i<lineas.length; i++) {
         palabrasPorLineas = lineas[i].split(" ");
