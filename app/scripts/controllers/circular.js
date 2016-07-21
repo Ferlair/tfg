@@ -727,6 +727,10 @@ angular
         document.getElementById('seleccionManual').style.display = "none";
       }
 
+      if (valor == 6) {
+        document.getElementById('registro').style.display = "none";
+      }
+
       document.getElementById('seleccion_filtros').style.display = "inline";
     }
 
@@ -762,6 +766,10 @@ angular
         document.getElementById('seleccionManual').style.visibility = "visible";
         document.getElementById('seleccionManual').style.display = "inline";
         document.getElementById('inputNeuronas').value="";
+      }
+
+      if (valor == 6) {
+        document.getElementById('registro').style.display = "inline";
       }
     }
 
@@ -963,6 +971,7 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]--;
         }
       }
+      console.log(arrayContadorNeuronas);
       $scope.visualizarConexiones();
     }
 
@@ -1025,7 +1034,9 @@ angular
     }
 
     $scope.visualizarConexiones = function() {
-
+      console.log('--------------ARRAY CONEXIONES-----------------');
+      console.log(grafoFactory.arrayConexionesA);
+      console.log('-----------------------------------------------');
       if (!mfgr.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
           var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasA[i]);
@@ -1034,7 +1045,7 @@ angular
           }
         }
         for (var j=0; j<grafoFactory.arrayConexionesA.length;j++) {
-          var id = grafoFactory.arrayConexionesA[j].enlace;
+          var id = grafoFactory.arrayConexionesA[j].enlace; //NO SE USA!
           var origen = grafoFactory.arrayConexionesA[j].origen;
           var destino = grafoFactory.arrayConexionesA[j].destino;
 
@@ -1244,6 +1255,65 @@ angular
         $scope.filtradoPorRango();
       }
 
+    }
+
+    $scope.logNeurons = function(){
+      var contadorMossy = 0;
+      var contadorGranulle = 0;
+      var contadorPurkinje = 0;
+      var contadorDCN = 0;
+      var contadorGolgi = 0;
+      var contadorIO = 0;
+      console.log(arrayNeuronal);
+      console.log('-----------ARRAY CONTADOR NEURONAS --------------------');
+      console.log(arrayContadorNeuronas);
+      console.log('-----------------------------------------------------');
+      for (var i=0; i<arrayContadorNeuronas.length;i++) {
+        if (arrayContadorNeuronas[i] > 0) {
+          console.log('en la iteracion '+i+' la neurona es mayor que cero, con valor '+arrayContadorNeuronas[i]);
+          var tipo = arrayNeuronal[[i]].tipo;
+          console.log('y su tipo es '+tipo);
+          switch (tipo) {
+
+            case '0': {
+                        contadorMossy++;
+                        break;
+            }
+
+            case '1': {
+                        contadorGranulle++;
+                        break;
+            }
+
+            case '2': {
+                        contadorPurkinje++;
+                        break;
+            }
+
+            case '3': {
+                        contadorDCN++;
+                        break;
+            }
+
+            case '4': {
+                        contadorGolgi++;
+                        break;
+            }
+
+            case '5': {
+                        contadorIO++;
+                        break;
+            }
+          }
+        }
+      }
+
+      console.log('contador mossy '+contadorMossy);
+      console.log('contador granulle '+contadorGranulle);
+      console.log('contador purkinje '+contadorPurkinje);
+      console.log('contador dcn '+contadorDCN);
+      console.log('contador golgi '+contadorGolgi);
+      console.log('contador io '+contadorIO);
     }
 
   }])

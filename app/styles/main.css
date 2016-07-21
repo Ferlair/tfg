@@ -193,6 +193,43 @@ div.mascara-eng:hover {
 }
 
 
+#boton_log {
+  background: url('../images/botones_opciones/registro_datos.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_log:hover {
+  background: url('../images/botones_opciones/registro_datos_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_neuronas {
+  background: url('../images/botones_opciones/tipo_neurona.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_neuronas:hover {
+  background: url('../images/botones_opciones/tipo_neurona_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_sinapsis {
+  background: url('../images/botones_opciones/sinapsis.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_sinapsis:hover {
+  background: url('../images/botones_opciones/sinapsis_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+
 
 #boton_grupo_neuronal_eng {
   background: url('../images/botones_opciones/grupo_neuronal_eng.png');
@@ -314,7 +351,17 @@ div.mascara-eng:hover {
   width: 138px;
 }
 
+#volver_6 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
 
+#volver_6:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
 
 
 #volver_1_eng {
@@ -453,6 +500,16 @@ div.mascara-eng:hover {
   width: 300px;
   float:right;
 
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
+}
+
+#registro {
+  margin-left: 200px;
+  width: 300px;
+  float:right;
   background: rgb(243,194,48);
   border-radius: 25px;
   padding: 8px;
