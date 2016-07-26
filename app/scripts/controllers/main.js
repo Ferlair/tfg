@@ -465,6 +465,7 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 0.000001;
+            nodo.hidden = false;
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
@@ -495,6 +496,7 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 0.001;
+            nodo.hidden = false;
 
             jsonObj.nodes[i] = nodo;
 
@@ -527,6 +529,7 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 0.0003;
+            nodo.hidden = false;
 
             jsonObj.nodes[i] = nodo;
 
@@ -559,6 +562,7 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 0.0004;
+            nodo.hidden = false;
 
             jsonObj.nodes[i] = nodo;
 
@@ -591,6 +595,7 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 0.0005;
+            nodo.hidden = false;
 
             jsonObj.nodes[i] = nodo;
 
@@ -623,6 +628,7 @@ angular
             nodo.x=x;
             nodo.y=y;
             nodo.size = 0.006;
+            nodo.hidden = false;
 
             jsonObj.nodes[i] = nodo;
 
@@ -651,6 +657,11 @@ angular
         }
 
         jsonCopy = jsonObj;
+
+        for (var i=0; i<jsonCopy.edges.length;i++) {
+          jsonCopy.edges[i].hidden = false;
+        }
+
         $scope.escribirDatos();
         grafoFactory.almacenarArrayMosey(arrayMosey);
         grafoFactory.almacenarArrayGranulle(arrayGranulle);
@@ -660,9 +671,43 @@ angular
         grafoFactory.almacenarArrayIO(arrayIO);
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
+        $scope.limpiarAristas(arrayNeuronal);
+        //$scope.revisarLienzo(arrayNeuronal);
         //$scope.activarVisualizaciones();
         console.log(jsonCopy);
         //console.log(arrayNeuronal);
+    }
+
+    /*$scope.revisarLienzo = function(arrayNeuronal){
+      console.log('REVISAR LIENZO');
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        var oculto = true;
+        for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
+          var enlace = 'en'+arrayNeuronal[i].id+'+n'+arrayNeuronal[i].destino[j];
+          console.log(enlace);
+
+          for (var z=0;z<jsonCopy.edges.length;z++) {
+            if (enlace == jsonCopy.edges[i].id) {
+              console.log('coincide '+enlace);
+            }
+          }
+        }
+      }
+      console.log('------------------------------------------');
+    }*/
+
+    //Elimina neuronas que sólo tiene enlace consigo mismas
+    $scope.limpiarAristas = function(arrayNeuronal){
+      console.log(arrayNeuronal);
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        if (arrayNeuronal[i].destino.length == 1) {
+          console.log('la neurona '+i+' tiene un solo destino');
+          jsonCopy.nodes[i].hidden = true;
+        }
+        if (arrayNeuronal[i].tipoConexion.length == 0) {
+          jsonCopy.nodes[i].hidden = true;
+        }
+      }
     }
 
     $scope.getInfo = function(arrayNeuronal){
@@ -799,6 +844,10 @@ angular
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
 
+      //PRUEBA PARA ESDESTINO
+      for (var i=0;i<arrayNeuronal.length;i++) {
+        $scope.buscarEsDestino(arrayNeuronal, i);
+      }
       grafoFactory.maxPesoMossey = $scope.getMaxPeso(arrayNeuronal, 0);
       grafoFactory.maxPesoGranulle = $scope.getMaxPeso(arrayNeuronal, 1);
       grafoFactory.maxPesoPurkinje = $scope.getMaxPeso(arrayNeuronal, 2);
@@ -813,6 +862,19 @@ angular
       grafoFactory.minPesoIO = $scope.getMinPeso(arrayNeuronal, 5);
       grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
+    }
+
+    //Busca las neuronas de las cuales la neurona id es destino
+    $scope.buscarEsDestino = function(arrayNeuronal, id) {
+      for (var i=0;i<arrayNeuronal.length;i++){
+        for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
+          var destino = arrayNeuronal[i].destino[j];
+          if ((destino == id) && (id != arrayNeuronal[i].id)) {
+            //console.log('añadimos id '+id+' y valor en arrayneuronal '+ arrayNeuronal[i].id);
+            arrayNeuronal[id].esDestino.push(arrayNeuronal[i].id);
+          }
+        }
+      }
     }
 
     $scope.getMinPeso = function(arrayNeuronal, tipo) {
@@ -877,6 +939,7 @@ angular
         neurona.peso = [];
         neurona.tipoDestino = [];
         neurona.tipoConexion = [];
+        neurona.esDestino = [];
         neurona.id = i.toString();
         neurona.destino.push(i.toString());
         neurona.peso.push(pesoInicial.toString());
