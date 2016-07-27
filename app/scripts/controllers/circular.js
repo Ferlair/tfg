@@ -95,8 +95,6 @@ angular
       for (var i=0;i<grafoFactory.numeroTotalNeuronas;i++) {
         a.push(0);
       }
-
-      console.log(a);
       return a;
     }
 
@@ -149,7 +147,6 @@ angular
     //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
     function refresh() {
-      //console.log('hemos llamado a refresh');
       var g = document.querySelector('#container2');
       var p = g.parentNode;
       p.removeChild(g);
@@ -189,65 +186,28 @@ angular
     $scope.comprobarSinAristas = function(id){
       var ocultar = true;
 
-      //console.log('-----------------------------');
-      //console.log('-----ÁREA ES ORIGEN --------');
       for (var i=0; i<arrayNeuronal[id].destino.length; i++) {
         var auxOcultar;
-        //var enlace = "en"+id+'+n'+arrayNeuronal[id].destino[i];
-        //console.log('ENLACES PARA '+id+' '+enlace);
-        /*for (var j=0;j<jsonCopy.edges.length;j++) {
-          if (enlace == jsonCopy.edges[j].id) {
-            auxOcultar = jsonCopy.edges[j].hidden;
-            //console.log('el valor para el enlace '+enlace+' y su correspondiente en jsoncopy '+jsonCopy.edges[j].id+' es '+ jsonCopy.edges[j].hidden);
-          }
-        }*/
-
         var destino = arrayNeuronal[id].destino[i];
         var pos = $scope.buscarArista(id, destino);
         auxOcultar = jsonCopy.edges[pos].hidden;
-        //console.log('La arista '+id+' '+destino+' es '+jsonCopy.edges[pos].hidden);
-
-        /*if (!auxOcultar) {
-          //console.log('no es necesario ocultar la neurona '+id);
-          jsonCopy.nodes[id].hidden = false;
-        }
-
-        if (auxOcultar) {
-          //console.log('SI es necesario ocultar la neurona '+id);
-          jsonCopy.nodes[id].hidden = true;
-          //console.log('ocultada la neurona '+id);
-        }*/
 
         ocultar = auxOcultar;
       }
-      //console.log();
-      //console.log();
-      //console.log();
-      //console.log('-----------------------------');
-      //console.log('-----ÁREA ES DESTINO --------');
       if (ocultar && (arrayNeuronal[id].esDestino.length>0)) {
         for (var i=0; i<arrayNeuronal[id].esDestino.length;i++){
           var destino = arrayNeuronal[id].esDestino[i];
           var pos = $scope.buscarArista(destino, id);
           ocultar = jsonCopy.edges[pos].hidden;
-          //console.log('La arista '+destino+' '+id+' es '+jsonCopy.edges[pos].hidden);
         }
       }
-      //console.log('-----------------------------');
-      //console.log('OCULTAR FINAL PARA NEURONA '+id+' es '+ocultar);
-      //console.log();
-      //console.log();
-
 
       if (!ocultar) {
-        //console.log('no es necesario ocultar la neurona '+id);
         jsonCopy.nodes[id].hidden = false;
       }
 
       if (ocultar) {
-        //console.log('SI es necesario ocultar la neurona '+id);
         jsonCopy.nodes[id].hidden = true;
-        console.log('ocultada la neurona '+id);
       }
 
     }
@@ -1088,7 +1048,6 @@ angular
         document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
       }
       if (english) {
-        console.log(english);
         document.getElementById('slider').style.display = "none";
         document.getElementById('seleccionManual').style.display = "none";
         document.getElementById('sliderPeso').style.visibility = "visible";
@@ -1109,7 +1068,6 @@ angular
 
       //CORREGIR IDIOMA
       if (english) {
-        console.log(english);
         document.getElementById('sliderPeso').style.display = "none";
         document.getElementById('seleccionManual').style.display = "none";
         document.getElementById('slider').style.visibility = "visible";
@@ -1360,8 +1318,6 @@ angular
         j++;
       }
 
-      console.log('detener: '+detener);
-
       if (!detener) {
 
       for (var i=0; i<filtradoOrigen.length;i++) {
@@ -1401,10 +1357,7 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]--;
         }
       }
-      //console.log('ARRAYNEURONASA');
-      //console.log(grafoFactory.arrayNeuronasA);
-      //console.log('ARRAYCONTADORNEURONAS');
-      //console.log(arrayContadorNeuronas);
+
       $scope.visualizarConexiones();
     }
 
@@ -1471,7 +1424,6 @@ angular
         for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
           var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasA[i]);
           if (permisoEliminar) {
-            console.log('elimar neurona '+jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].id);
             jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].hidden = true;
           }
         }
@@ -1482,11 +1434,6 @@ angular
           var pos = $scope.buscarArista(origen, destino);
           jsonCopy.edges[pos].hidden = true;
         }
-
-        //BUCLE DE DEPURACIÓN
-        /*for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
-          $scope.comprobarSinAristas(grafoFactory.arrayNeuronasA[i]);
-        }*/
 
       }
       else {
@@ -1696,65 +1643,6 @@ angular
 
     }
 
-    /*$scope.logNeurons = function(){
-      var contadorMossy = 0;
-      var contadorGranulle = 0;
-      var contadorPurkinje = 0;
-      var contadorDCN = 0;
-      var contadorGolgi = 0;
-      var contadorIO = 0;
-      //console.log(arrayNeuronal);
-      console.log('-----------ARRAY CONTADOR NEURONAS --------------------');
-      console.log(arrayPruebaInfo);
-      console.log('-----------------------------------------------------');
-      for (var i=0; i<arrayPruebaInfo.length;i++) {
-        if (arrayPruebaInfo[i] > 0) {
-          //console.log('en la iteracion '+i+' la neurona es mayor que cero, con valor '+arrayPruebaInfo[i]);
-          var tipo = arrayNeuronal[[i]].tipo;
-          //console.log('y su tipo es '+tipo);
-          switch (tipo) {
-
-            case '0': {
-                        contadorMossy++;
-                        break;
-            }
-
-            case '1': {
-                        contadorGranulle++;
-                        break;
-            }
-
-            case '2': {
-                        contadorPurkinje++;
-                        break;
-            }
-
-            case '3': {
-                        contadorDCN++;
-                        break;
-            }
-
-            case '4': {
-                        contadorGolgi++;
-                        break;
-            }
-
-            case '5': {
-                        contadorIO++;
-                        break;
-            }
-          }
-        }
-      }
-
-      console.log('contador mossy '+contadorMossy);
-      console.log('contador granulle '+contadorGranulle);
-      console.log('contador purkinje '+contadorPurkinje);
-      console.log('contador dcn '+contadorDCN);
-      console.log('contador golgi '+contadorGolgi);
-      console.log('contador io '+contadorIO);
-    }*/
-
     $scope.esconderAristas = function(id) {
       for (var i=0; i<jsonCopy.edges.length;i++) {
         var auxOrigen = jsonCopy.edges[i].source.split("n");
@@ -1763,7 +1651,6 @@ angular
         auxID = auxID[1];
         if (auxID == auxOrigen) {
           jsonCopy.edges[i].hidden = true;
-          console.log('neurona eliminada '+jsonCopy.edges[i].id);
         }
       }
     }
@@ -1776,14 +1663,12 @@ angular
         auxID = auxID[1];
         if (auxID == auxOrigen) {
           jsonCopy.edges[i].hidden = false;
-          console.log('neurona restaurada '+jsonCopy.edges[i].id);
         }
       }
     }
 
     //Elimina neuronas que sólo tiene enlace consigo mismas
     $scope.limpiarAristas = function(arrayNeuronal){
-      console.log(arrayNeuronal);
       for (var i=0; i<arrayNeuronal.length;i++) {
         //Ocultamos las neuronas que sólo tienen como destino a ellas mismas
         if (arrayNeuronal[i].destino.length == 1) {
@@ -1803,40 +1688,6 @@ angular
       var contadorDCN = 0;
       var contadorGolgi = 0;
       var contadorIO = 0;
-      //console.log(arrayNeuronal);
-      //console.log('ARRAY PRUEBA INFO');
-      //console.log(arrayPruebaInfo);
-      //console.log('------------------');
-      /*for (var i=0; i<jsonCopy.edges.length;i++) {
-        var aristaOculta = jsonCopy.edges[i].hidden;
-        if (!aristaOculta) {
-          console.log('arista visible: '+jsonCopy.edges[i].id);
-
-          var origen = jsonCopy.edges[i].source.split("n");
-          var destino = jsonCopy.edges[i].target.split("n");
-          origen = origen[1];
-          destino = destino[1];
-
-          if (origen != destino) {
-            console.log('neuronas activas '+origen+' y '+destino);
-            arrayPruebaInfo[origen] = 1;
-            arrayPruebaInfo[destino] = 1;
-          }
-        }
-
-        else if (aristaOculta) {
-          var origen = jsonCopy.edges[i].source.split("n");
-          var destino = jsonCopy.edges[i].target.split("n");
-          origen = origen[1];
-          destino = destino[1];
-
-          if (origen != destino) {
-            console.log('neuronas activas '+origen+' y '+destino);
-            arrayPruebaInfo[origen] = 0;
-            arrayPruebaInfo[destino] = 0;
-          }
-        }
-      }*/
 
       for (var i=0; i<jsonCopy.nodes.length;i++) {
         var auxID = jsonCopy.nodes[i].id.split("n");
@@ -1853,9 +1704,7 @@ angular
 
       for (var i=0; i<arrayPruebaInfo.length;i++) {
         if (arrayPruebaInfo[i] == 1) {
-          //console.log('en la iteracion '+i+' la neurona es mayor que cero, con valor '+arrayPruebaInfo[i]);
           var tipo = arrayNeuronal[[i]].tipo;
-          //console.log('y su tipo es '+tipo);
           switch (tipo) {
 
             case '0': {
@@ -1890,12 +1739,6 @@ angular
           }
         }
       }
-      console.log('contador mossy '+contadorMossy);
-      console.log('contador granulle '+contadorGranulle);
-      console.log('contador purkinje '+contadorPurkinje);
-      console.log('contador dcn '+contadorDCN);
-      console.log('contador golgi '+contadorGolgi);
-      console.log('contador io '+contadorIO);
     }
 
   }])
@@ -2174,7 +2017,6 @@ angular
             div.innerHTML = div.innerHTML + '<b>T: </b>' + tipo;
             div.innerHTML = div.innerHTML + '<br><br>';
             if (destinos.length > 3) {
-              //console.log('opcion 1');
               div.innerHTML = div.innerHTML + '<b>ID dest.: </b>' + destinos0 + ', ' + destinos1 + ', ' + destinos2 + ' ';
               var element =  document.createElement("input");
               element.type = "button";
@@ -2186,12 +2028,10 @@ angular
               div.appendChild(element);
             }
             else if (destinos == "-"){
-              //console.log('opcion 2');
               div.innerHTML = div.innerHTML + '<b>ID dest.: </b>' + 'no dest.';
             }
 
             else {
-              //console.log('opcion 3');
               div.innerHTML = div.innerHTML + '<b>ID dest.: </b>' + destinos;
             }
 

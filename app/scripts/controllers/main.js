@@ -131,7 +131,6 @@ angular
       //Conexiones con origen Mossey
       if (tipoOrigen=='0') {
         if (tipoDestino=='1') {
-          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra A');
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('A');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('A');
 
@@ -163,11 +162,9 @@ angular
           var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
           var interpolado = $scope.interpolar(ratio, 247, 0, 255, 72, 0, 66);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
-          //console.log('origen'+origen+' y deestino '+destino+' COLOR ADQUIRIDO: '+color);
           ocultar = false;
         }
         if (tipoDestino == '4') {
-          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra B');
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('B');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('B');
 
@@ -206,7 +203,6 @@ angular
       //Conexiones con origen Granulle
       if (tipoOrigen == '1') {
         if (tipoDestino == '4'){
-          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra C');
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('C');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('C');
 
@@ -244,7 +240,6 @@ angular
       //Conexiones con origen Golgi
       if (tipoOrigen == '4') {
         if (tipoDestino == '1') {
-          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra D');
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('D');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('D');
 
@@ -278,7 +273,6 @@ angular
           ocultar = false;
         }
         if (tipoDestino == '4') {
-          //console.log('añadimos en origen '+origen+' y destino '+destino+' la letra E');
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('E');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('E');
 
@@ -672,36 +666,12 @@ angular
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
         $scope.limpiarAristas(arrayNeuronal);
-        //$scope.revisarLienzo(arrayNeuronal);
-        //$scope.activarVisualizaciones();
-        console.log(jsonCopy);
-        //console.log(arrayNeuronal);
     }
-
-    /*$scope.revisarLienzo = function(arrayNeuronal){
-      console.log('REVISAR LIENZO');
-      for (var i=0; i<arrayNeuronal.length;i++) {
-        var oculto = true;
-        for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
-          var enlace = 'en'+arrayNeuronal[i].id+'+n'+arrayNeuronal[i].destino[j];
-          console.log(enlace);
-
-          for (var z=0;z<jsonCopy.edges.length;z++) {
-            if (enlace == jsonCopy.edges[i].id) {
-              console.log('coincide '+enlace);
-            }
-          }
-        }
-      }
-      console.log('------------------------------------------');
-    }*/
 
     //Elimina neuronas que sólo tiene enlace consigo mismas
     $scope.limpiarAristas = function(arrayNeuronal){
-      console.log(arrayNeuronal);
       for (var i=0; i<arrayNeuronal.length;i++) {
         if (arrayNeuronal[i].destino.length == 1) {
-          console.log('la neurona '+i+' tiene un solo destino');
           jsonCopy.nodes[i].hidden = true;
         }
         if (arrayNeuronal[i].tipoConexion.length == 0) {
@@ -870,7 +840,6 @@ angular
         for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
           var destino = arrayNeuronal[i].destino[j];
           if ((destino == id) && (id != arrayNeuronal[i].id)) {
-            //console.log('añadimos id '+id+' y valor en arrayneuronal '+ arrayNeuronal[i].id);
             arrayNeuronal[id].esDestino.push(arrayNeuronal[i].id);
           }
         }
