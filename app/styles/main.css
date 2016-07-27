@@ -363,6 +363,30 @@ div.mascara-eng:hover {
   width: 138px;
 }
 
+#volver_7 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_7:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_8 {
+  background: url('../images/botones_opciones/volver.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_8:hover {
+  background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
 
 #volver_1_eng {
   background: url('../images/botones_opciones/volver_eng.png');
@@ -507,6 +531,26 @@ div.mascara-eng:hover {
 }
 
 #registro {
+  margin-left: 200px;
+  width: 300px;
+  float:right;
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
+}
+
+#log_n {
+  margin-left: 200px;
+  width: 300px;
+  float:right;
+  background: rgb(243,194,48);
+  border-radius: 25px;
+  padding: 8px;
+  border: 2px solid #000000;
+}
+
+#log_a {
   margin-left: 200px;
   width: 300px;
   float:right;

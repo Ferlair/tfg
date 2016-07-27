@@ -1097,29 +1097,43 @@ angular
     $scope.volver = function(valor){
       if (valor == 1) {
         document.getElementById('seleccion_neuronas').style.display = "none";
+        document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
       if (valor == 2) {
         document.getElementById('seleccion_grupos').style.display = "none";
+        document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
       if (valor == 3) {
         document.getElementById('slider').style.display = "none";
+        document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
       if (valor == 4) {
         document.getElementById('sliderPeso').style.display = "none";
+        document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
       if (valor ==5) {
         document.getElementById('seleccionManual').style.display = "none";
+        document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
       if (valor == 6) {
         document.getElementById('registro').style.display = "none";
+        document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      document.getElementById('seleccion_filtros').style.display = "inline";
+      if (valor == 7) {
+        document.getElementById('log_n').style.display = "none";
+        document.getElementById('registro').style.display = "inline";
+      }
+
+      if (valor == 8) {
+        document.getElementById('log_a').style.display = "none";
+        document.getElementById('registro').style.display = "inline";
+      }
     }
 
     $scope.display = function(valor) {
@@ -1158,6 +1172,16 @@ angular
 
       if (valor == 6) {
         document.getElementById('registro').style.display = "inline";
+      }
+
+      if (valor == 7) {
+        document.getElementById('registro').style.display = "none";
+        document.getElementById('log_n').style.display = "inline";
+      }
+
+      if (valor == 8) {
+        document.getElementById('registro').style.display = "none";
+        document.getElementById('log_a').style.display = "inline";
       }
     }
 
@@ -1449,10 +1473,6 @@ angular
 
           jsonCopy.edges[pos].hidden = false;
         }
-        //BUCLE DE DEPURACIÓN
-        /*for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
-          $scope.comprobarSinAristas(grafoFactory.arrayNeuronasA[i]);
-        }*/
       }
 
       if (!mfgo.checked) {
@@ -1679,6 +1699,17 @@ angular
           jsonCopy.nodes[i].hidden = true;
         }
       }
+    }
+
+    $scope.showEstatisticsNeurons = function(){
+      var div =  document.getElementById('infoNeurona');
+      div.innerHTML = div.innerHTML + '<b>ID: </b>' + d;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>T: </b>' + tipo;
+      div.innerHTML = div.innerHTML + '<br><br>';
+
+      document.getElementById('infoNeurona').style.display="inline";
+      document.getElementById('infoNeurona').style.visibility="visible";
     }
 
     $scope.logNeurons = function(){
