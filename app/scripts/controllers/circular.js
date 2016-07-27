@@ -187,28 +187,69 @@ angular
     }
 
     $scope.comprobarSinAristas = function(id){
+      var ocultar = true;
+
+      //console.log('-----------------------------');
+      //console.log('-----ÁREA ES ORIGEN --------');
       for (var i=0; i<arrayNeuronal[id].destino.length; i++) {
-        var ocultar =true;
-        var enlace = "en"+id+'+n'+arrayNeuronal[id].destino[i];
+        var auxOcultar;
+        //var enlace = "en"+id+'+n'+arrayNeuronal[id].destino[i];
         //console.log('ENLACES PARA '+id+' '+enlace);
-        for (var j=0;j<jsonCopy.edges.length;j++) {
+        /*for (var j=0;j<jsonCopy.edges.length;j++) {
           if (enlace == jsonCopy.edges[j].id) {
-            ocultar = jsonCopy.edges[j].hidden;
+            auxOcultar = jsonCopy.edges[j].hidden;
             //console.log('el valor para el enlace '+enlace+' y su correspondiente en jsoncopy '+jsonCopy.edges[j].id+' es '+ jsonCopy.edges[j].hidden);
           }
-        }
+        }*/
 
-        if (!ocultar) {
+        var destino = arrayNeuronal[id].destino[i];
+        var pos = $scope.buscarArista(id, destino);
+        auxOcultar = jsonCopy.edges[pos].hidden;
+        //console.log('La arista '+id+' '+destino+' es '+jsonCopy.edges[pos].hidden);
+
+        /*if (!auxOcultar) {
           //console.log('no es necesario ocultar la neurona '+id);
           jsonCopy.nodes[id].hidden = false;
         }
 
-        if (ocultar) {
+        if (auxOcultar) {
           //console.log('SI es necesario ocultar la neurona '+id);
           jsonCopy.nodes[id].hidden = true;
           //console.log('ocultada la neurona '+id);
+        }*/
+
+        ocultar = auxOcultar;
+      }
+      //console.log();
+      //console.log();
+      //console.log();
+      //console.log('-----------------------------');
+      //console.log('-----ÁREA ES DESTINO --------');
+      if (ocultar) {
+        for (var i=0; i<arrayNeuronal[id].esDestino.length;i++){
+          var destino = arrayNeuronal[id].esDestino[i];
+          var pos = $scope.buscarArista(destino, id);
+          ocultar = jsonCopy.edges[pos].hidden;
+          //console.log('La arista '+destino+' '+id+' es '+jsonCopy.edges[pos].hidden);
         }
       }
+      //console.log('-----------------------------');
+      //console.log('OCULTAR FINAL PARA NEURONA '+id+' es '+ocultar);
+      //console.log();
+      //console.log();
+
+
+      if (!ocultar) {
+        //console.log('no es necesario ocultar la neurona '+id);
+        jsonCopy.nodes[id].hidden = false;
+      }
+
+      if (ocultar) {
+        //console.log('SI es necesario ocultar la neurona '+id);
+        jsonCopy.nodes[id].hidden = true;
+        console.log('ocultada la neurona '+id);
+      }
+
     }
 
     //Mostrar/ocultar neuronas de tipo mosey
@@ -565,17 +606,25 @@ angular
 
           //POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN SU ARISTA O ARISTAS
           var origen = arrayGolgi[i];
+          console.log('--- es origen ---');
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
             var pos = $scope.buscarArista(origen, destino);
             jsonCopy.edges[pos].hidden = true;
+            //console.log('BUSCAMOS PARA LA ARITSA '+jsonCopy.edges[pos].id);
+            if (destino == 10)
+            $scope.comprobarSinAristas(destino);
+            //console.log('hemos eliminado la arista '+origen+' '+destino);
           }
-
+          console.log('--- es destino -----');
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
+            //console.log('BUSCAMOS PARA LA ARITSA '+jsonCopy.edges[pos].id);
+            //$scope.comprobarSinAristas(destino);
+
           }
         }
         //Deshabilitamos los slider de filtrado por id y peso para golgi
@@ -593,6 +642,7 @@ angular
                   var destino = arrayNeuronal[origen].destino[z];
                   var pos = $scope.buscarArista(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
+                  //$scope.comprobarSinAristas(destino);
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
@@ -600,6 +650,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
+                  //$scope.comprobarSinAristas(destino);
                 }
               }
               else {
@@ -611,6 +662,7 @@ angular
                   var destino = arrayNeuronal[origen].destino[z];
                   var pos = $scope.buscarArista(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
+                  //$scope.comprobarSinAristas(destino);
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
@@ -618,6 +670,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  //$scope.comprobarSinAristas(destino);
                 }
               }
 
@@ -630,7 +683,7 @@ angular
       }
 
       //Comprobamos que se visualizan correctamente las neuronas que interactúan con las de tipo Golgi
-      for (var i=0;i<arrayMosey.length;i++) {
+      /*for (var i=0;i<arrayMosey.length;i++) {
         $scope.comprobarSinAristas(arrayMosey[i]);
       }
 
@@ -640,7 +693,7 @@ angular
 
       for (var i=0;i<arrayGolgi.length;i++) {
         $scope.comprobarSinAristas(arrayGolgi[i]);
-      }
+      }*/
 
       $scope.limpiarAristas(arrayNeuronal);
       refresh();
