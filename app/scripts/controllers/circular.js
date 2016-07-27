@@ -225,7 +225,7 @@ angular
       //console.log();
       //console.log('-----------------------------');
       //console.log('-----ÁREA ES DESTINO --------');
-      if (ocultar) {
+      if (ocultar && (arrayNeuronal[id].esDestino.length>0)) {
         for (var i=0; i<arrayNeuronal[id].esDestino.length;i++){
           var destino = arrayNeuronal[id].esDestino[i];
           var pos = $scope.buscarArista(destino, id);
@@ -274,6 +274,7 @@ angular
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
+            $scope.comprobarSinAristas(destino);
           }
 
         }
@@ -302,6 +303,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[destino].hidden = false;
                 }
               }
               else {
@@ -330,13 +332,13 @@ angular
       }
 
       //Comprobamos que se visualizan correctamente las neuronas que interactúan con las de tipo Mossy
-      for (var i=0;i<arrayGranulle.length;i++) {
+      /*for (var i=0;i<arrayGranulle.length;i++) {
         $scope.comprobarSinAristas(arrayGranulle[i]);
       }
 
       for (var i=0;i<arrayGolgi.length;i++) {
         $scope.comprobarSinAristas(arrayGolgi[i]);
-      }
+      }*/
       $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
@@ -365,6 +367,7 @@ angular
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
+            $scope.comprobarSinAristas(destino);
           }
         }
 
@@ -390,6 +393,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[destino].hidden = false;
                 }
               }
               else {
@@ -420,13 +424,13 @@ angular
       }
 
       //Comprobamos que se visualizan correctamente las neuronas que interactúan con las de tipo Mossy
-      for (var i=0;i<arrayMosey.length;i++) {
+      /*for (var i=0;i<arrayMosey.length;i++) {
         $scope.comprobarSinAristas(arrayMosey[i]);
       }
 
       for (var i=0;i<arrayGolgi.length;i++) {
         $scope.comprobarSinAristas(arrayGolgi[i]);
-      }
+      }*/
 
       $scope.limpiarAristas(arrayNeuronal);
       refresh();
@@ -456,6 +460,7 @@ angular
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
+            $scope.comprobarSinAristas(destino);
           }
         }
         //Deshabilitamos los slider de filtrado por id y peso para purkinje
@@ -480,6 +485,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[destino].hidden = false;
                 }
               }
               else {
@@ -536,6 +542,7 @@ angular
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
+            $scope.comprobarSinAristas(destino);
           }
         }
         //Deshabilitamos los slider de filtrado por id y peso para dcn
@@ -561,6 +568,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[destino].hidden = false;
                 }
               }
               else {
@@ -604,29 +612,23 @@ angular
         for (var i=0; i<arrayGolgi.length; i++) {
           jsonCopy.nodes[arrayGolgi[i]].hidden = true;
 
-          //POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN SU ARISTA O ARISTAS
+          //1 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN SU ARISTA O ARISTAS
           var origen = arrayGolgi[i];
-          console.log('--- es origen ---');
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
             var pos = $scope.buscarArista(origen, destino);
             jsonCopy.edges[pos].hidden = true;
-            //console.log('BUSCAMOS PARA LA ARITSA '+jsonCopy.edges[pos].id);
-            if (destino == 10)
-            $scope.comprobarSinAristas(destino);
-            //console.log('hemos eliminado la arista '+origen+' '+destino);
           }
-          console.log('--- es destino -----');
+
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            //console.log('BUSCAMOS PARA LA ARITSA '+jsonCopy.edges[pos].id);
-            //$scope.comprobarSinAristas(destino);
-
+            $scope.comprobarSinAristas(destino);
           }
         }
+
         //Deshabilitamos los slider de filtrado por id y peso para golgi
         document.getElementById("idgolgi").style.pointerEvents = "none";
         document.getElementById("sliderPesoGolgi").style.pointerEvents = "none";
@@ -642,7 +644,6 @@ angular
                   var destino = arrayNeuronal[origen].destino[z];
                   var pos = $scope.buscarArista(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
-                  //$scope.comprobarSinAristas(destino);
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
@@ -650,7 +651,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
-                  //$scope.comprobarSinAristas(destino);
+                  jsonCopy.nodes[destino].hidden = false;
                 }
               }
               else {
@@ -662,7 +663,6 @@ angular
                   var destino = arrayNeuronal[origen].destino[z];
                   var pos = $scope.buscarArista(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
-                  //$scope.comprobarSinAristas(destino);
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
@@ -670,7 +670,6 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  //$scope.comprobarSinAristas(destino);
                 }
               }
 
@@ -689,9 +688,9 @@ angular
 
       for (var i=0;i<arrayGranulle.length;i++) {
         $scope.comprobarSinAristas(arrayGranulle[i]);
-      }
+      }*/
 
-      for (var i=0;i<arrayGolgi.length;i++) {
+      /*for (var i=0;i<arrayGolgi.length;i++) {
         $scope.comprobarSinAristas(arrayGolgi[i]);
       }*/
 
@@ -723,6 +722,7 @@ angular
             var destino = arrayNeuronal[origen].esDestino[j];
             var pos = $scope.buscarArista(destino, origen);
             jsonCopy.edges[pos].hidden = true;
+            $scope.comprobarSinAristas(destino);
           }
         }
 
@@ -748,6 +748,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[destino].hidden = false;
                 }
               }
               else {
