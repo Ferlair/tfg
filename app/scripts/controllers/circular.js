@@ -1126,12 +1126,12 @@ angular
       }
 
       if (valor == 7) {
-        document.getElementById('log_n').style.display = "none";
+        document.getElementById('estadisticas_n').style.display = "none";
         document.getElementById('registro').style.display = "inline";
       }
 
       if (valor == 8) {
-        document.getElementById('log_a').style.display = "none";
+        document.getElementById('estadisticas_a').style.display = "none";
         document.getElementById('registro').style.display = "inline";
       }
     }
@@ -1172,11 +1172,6 @@ angular
 
       if (valor == 6) {
         document.getElementById('registro').style.display = "inline";
-      }
-
-      if (valor == 7) {
-        document.getElementById('registro').style.display = "none";
-        document.getElementById('log_n').style.display = "inline";
       }
 
       if (valor == 8) {
@@ -1603,11 +1598,11 @@ angular
         }
       }
       $scope.chequearMosey();
-      //$scope.chequearGranulle();
-      //$scope.chequearPurkinje();
-      //$scope.chequearDCN();
-      //$scope.chequearGolgi();
-      //$scope.chequearIO();
+      $scope.chequearGranulle();
+      $scope.chequearPurkinje();
+      $scope.chequearDCN();
+      $scope.chequearGolgi();
+      $scope.chequearIO();
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -1720,6 +1715,11 @@ angular
       var contadorGolgi = 0;
       var contadorIO = 0;
 
+      var nodoABorrar = document.getElementById('log_n');
+        while (nodoABorrar.firstChild) {
+            nodoABorrar.removeChild(nodoABorrar.firstChild);
+        }
+
       for (var i=0; i<jsonCopy.nodes.length;i++) {
         var auxID = jsonCopy.nodes[i].id.split("n");
         auxID = auxID[1];
@@ -1770,6 +1770,102 @@ angular
           }
         }
       }
+
+
+      var div = document.getElementById('log_n');
+
+      div.innerHTML = div.innerHTML + '<center><b>Neuronas visualizadas</b></center>';
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + contadorMossy + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + contadorGranulle + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + contadorPurkinje + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + contadorDCN + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + contadorGolgi + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + contadorIO + '</center>';
+
+      document.getElementById('registro').style.display = "none";
+      document.getElementById('estadisticas_n').style.display = "inline";
+    }
+
+    $scope.logEdges = function(){
+      var contadorA = 0;
+      var contadorB = 0;
+      var contadorC = 0;
+      var contadorD = 0;
+      var contadorE = 0;
+
+      var nodoABorrar = document.getElementById('log_a');
+        while (nodoABorrar.firstChild) {
+            nodoABorrar.removeChild(nodoABorrar.firstChild);
+        }
+
+      for (var i=0; i<grafoFactory.arrayConexionesA.length;i++){
+        var pos = $scope.buscarArista(grafoFactory.arrayConexionesA[i].origen, grafoFactory.arrayConexionesA[i].destino);
+        var oculto = jsonCopy.edges[pos].hidden;
+
+        if (!oculto) {
+          contadorA++;
+        }
+      }
+
+      for (var i=0; i<grafoFactory.arrayConexionesB.length;i++){
+        var pos = $scope.buscarArista(grafoFactory.arrayConexionesB[i].origen, grafoFactory.arrayConexionesB[i].destino);
+        var oculto = jsonCopy.edges[pos].hidden;
+
+        if (!oculto) {
+          contadorB++;
+        }
+      }
+
+      for (var i=0; i<grafoFactory.arrayConexionesC.length;i++){
+        var pos = $scope.buscarArista(grafoFactory.arrayConexionesC[i].origen, grafoFactory.arrayConexionesC[i].destino);
+        var oculto = jsonCopy.edges[pos].hidden;
+
+        if (!oculto) {
+          contadorC++;
+        }
+      }
+
+      for (var i=0; i<grafoFactory.arrayConexionesD.length;i++){
+        var pos = $scope.buscarArista(grafoFactory.arrayConexionesD[i].origen, grafoFactory.arrayConexionesD[i].destino);
+        var oculto = jsonCopy.edges[pos].hidden;
+
+        if (!oculto) {
+          contadorD++;
+        }
+      }
+
+      for (var i=0; i<grafoFactory.arrayConexionesE.length;i++){
+        var pos = $scope.buscarArista(grafoFactory.arrayConexionesE[i].origen, grafoFactory.arrayConexionesE[i].destino);
+        var oculto = jsonCopy.edges[pos].hidden;
+
+        if (!oculto) {
+          contadorE++;
+        }
+      }
+
+
+      var div = document.getElementById('log_a');
+
+      div.innerHTML = div.innerHTML + '<center><b>Sinapsis visualizadas</b></center>';
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Morado):</b> '  + contadorA + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Verde):</b> ' + contadorB + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Azul):</b> ' + contadorC +  '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Rojo):</b> ' + contadorD + '</center>';
+      div.innerHTML = div.innerHTML + '<br>';
+      div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Naranja):</b> ' + contadorE + '</center>';
+
+      document.getElementById('registro').style.display = "none";
+      document.getElementById('estadisticas_a').style.display = "inline";
     }
 
   }])
