@@ -665,11 +665,11 @@ angular
         grafoFactory.almacenarArrayIO(arrayIO);
         grafoFactory.almacenarJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
-        $scope.limpiarAristas(arrayNeuronal);
+        $scope.cleanEdges(arrayNeuronal);
     }
 
     //Elimina neuronas que sólo tiene enlace consigo mismas
-    $scope.limpiarAristas = function(arrayNeuronal){
+    $scope.cleanEdges = function(arrayNeuronal){
       for (var i=0; i<arrayNeuronal.length;i++) {
         if (arrayNeuronal[i].destino.length == 1) {
           jsonCopy.nodes[i].hidden = true;

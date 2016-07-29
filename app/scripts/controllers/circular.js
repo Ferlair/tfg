@@ -40,16 +40,16 @@ angular
 
     var arrayContadorNeuronas = new Array();
 
-    //PRUEBA PARA INFO DE ESTADÍSTICAS
-    var arrayPruebaInfo = new Array();
+    //Stats info
+    var arrayInfo = new Array();
 
 
-    $scope.dn = grafoFactory.d;
+    /*$scope.dn = grafoFactory.d;*/
 
 
 
 
-    $scope.obtenerReferencias = function() {
+    $scope.getReferences = function() {
 
       grafoFactory.iteracionesMosey = grafoFactory.numeroMosey;
       grafoFactory.iteracionesGranulle = grafoFactory.numeroGranulle + grafoFactory.iteracionesMosey;
@@ -77,9 +77,8 @@ angular
       grafoFactory.maxPeso = 10;
     }
 
-    //Función que devuelve la posición de una determinada arista dentro
-    //del json del grafo
-    $scope.buscarArista = function (origen, destino){
+    //Returns the position of an edge inside graph's json
+    $scope.searchEdge = function (origen, destino){
       var nombreABuscar = 'en'+origen+'+'+'n'+destino;
       var pos;
       for (var i=0; i<jsonCopy.edges.length; i++) {
@@ -90,7 +89,8 @@ angular
       return pos;
     }
 
-    $scope.inicializarArrayEstadisticas = function() {
+    //Initializes the stats array
+    $scope.initStatsArray = function() {
       var a = new Array();
       for (var i=0;i<grafoFactory.numeroTotalNeuronas;i++) {
         a.push(0);
@@ -98,7 +98,8 @@ angular
       return a;
     }
 
-    $scope.inicializarArrayConexiones = function(arrayConexion) {
+    //Initializes the connections array, where each array represents the synapse type
+    $scope.initConnectionsArray = function(arrayConexion) {
       for (var i=0;i<grafoFactory.numeroTotalNeuronas;i++) {
         arrayConexion[i]=0;
       }
@@ -125,7 +126,8 @@ angular
       return arrayConexion;
     }
 
-    $scope.inicio = function() {
+    //Establishes the initial state of the app
+    $scope.init = function() {
 
       refresh();
       jsonCopy = grafoFactory.recuperarJSON();
@@ -136,16 +138,16 @@ angular
       arrayDCN = grafoFactory.recuperarArrayDCN();
       arrayGolgi = grafoFactory.recuperarArrayGolgi();
       arrayIO = grafoFactory.recuperarArrayIO();
-      $scope.obtenerReferencias();
-      arrayContadorNeuronas = $scope.inicializarArrayConexiones(arrayContadorNeuronas);
-      arrayPruebaInfo = $scope.inicializarArrayEstadisticas();
+      $scope.getReferences();
+      arrayContadorNeuronas = $scope.initConnectionsArray(arrayContadorNeuronas);
+      arrayInfo = $scope.initStatsArray();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.inicio();
+    $scope.init();
 
-    //Función que reinicia el elemento 'container'
-    //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
+    //Restart 'container' element
+    //Clean the canvas before showing a new graph
     function refresh() {
       console.log('usamos refresh');
       var g = document.querySelector('#container2');
@@ -158,6 +160,7 @@ angular
       p.appendChild(c);
     }
 
+    //Show all the edges and their states (hidden or showed) on console
     $scope.showEdges = function(){
       console.log;
       console.log;
@@ -171,12 +174,13 @@ angular
       console.log('-----------------------');
     }
 
+    //Show all the nodes and their states (hidden or showed) on console
     $scope.showNodes = function(){
       console.log;
       console.log;
       console.log('-----------------------');
       for (var i=0;i<jsonCopy.nodes.length;i++) {
-        var id = jsonCopy.nodes[i].id;
+        var id = jsonCopy.nodes[i].id;visualize
         var valor = jsonCopy.nodes[i].hidden;
         console.log('| '+id+' | '+valor+' |');
         console.log('-----------------------');
@@ -184,40 +188,42 @@ angular
       console.log('-----------------------');
     }
 
-    $scope.comprobarSinAristas = function(id){
+    //Check wether the id neuron has any visible edge
+    //The neuron is removed if it has no one visible edge
+    $scope.checkNoEdges = function(id){
       var ocultar = true;
 
       for (var i=0; i<arrayNeuronal[id].destino.length; i++) {
         var auxOcultar;
         var destino = arrayNeuronal[id].destino[i];
-        var pos = $scope.buscarArista(id, destino);
+        var pos = $scope.searchEdge(id, destino);
         auxOcultar = jsonCopy.edges[pos].hidden;
-        console.log(jsonCopy.edges[pos].id + ' ' + jsonCopy.edges[pos].hidden);
+        //console.log(jsonCopy.edges[pos].id + ' ' + jsonCopy.edges[pos].hidden);
         ocultar = auxOcultar;
       }
       if (ocultar && (arrayNeuronal[id].esDestino.length>0)) {
         for (var i=0; i<arrayNeuronal[id].esDestino.length;i++){
           var destino = arrayNeuronal[id].esDestino[i];
-          var pos = $scope.buscarArista(destino, id);
+          var pos = $scope.searchEdge(destino, id);
           ocultar = jsonCopy.edges[pos].hidden;
-          console.log(jsonCopy.edges[pos].id + ' ' + jsonCopy.edges[pos].hidden);
+          //console.log(jsonCopy.edges[pos].id + ' ' + jsonCopy.edges[pos].hidden);
         }
       }
 
       if (!ocultar) {
         jsonCopy.nodes[id].hidden = false;
-        console.log('visible el nodo '+ jsonCopy.nodes[id].id);
+        //console.log('visible el nodo '+ jsonCopy.nodes[id].id);
       }
 
       if (ocultar) {
         jsonCopy.nodes[id].hidden = true;
-        console.log('oculto el nodo '+ jsonCopy.nodes[id].id);
+        //console.log('oculto el nodo '+ jsonCopy.nodes[id].id);
       }
 
     }
 
     //Mostrar/ocultar neuronas de tipo mosey
-    $scope.chequearMosey = function() {
+    $scope.checkMossy = function() {
       var inicioMosey = $scope.sliderMosey.min;
       var finalMosey = $scope.sliderMosey.max;
 
@@ -229,16 +235,16 @@ angular
           var origen = arrayMosey[i];
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.buscarArista(origen, destino);
+            var pos = $scope.searchEdge(origen, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.buscarArista(destino, origen);
+            var pos = $scope.searchEdge(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            $scope.comprobarSinAristas(destino);
+            $scope.checkNoEdges(destino);
           }
 
         }
@@ -258,14 +264,14 @@ angular
                 var origen = arrayMosey[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -277,16 +283,16 @@ angular
                 var origen = arrayMosey[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.comprobarSinAristas(destino);
+                  $scope.checkNoEdges(destino);
                 }
               }
           }
@@ -296,13 +302,13 @@ angular
           document.getElementById('sliderPesoMosey').style.pointerEvents = "auto";
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
     //Mostrar/ocultar neuronas de tipo granulle
-    $scope.chequearGranulle = function() {
+    $scope.checkGranulle = function() {
       var inicioGranulle = $scope.sliderGranulle.min;
       var finalGranulle = $scope.sliderGranulle.max;
 
@@ -316,16 +322,16 @@ angular
           var origen = arrayGranulle[i];
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.buscarArista(origen, destino);
+            var pos = $scope.searchEdge(origen, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.buscarArista(destino, origen);
+            var pos = $scope.searchEdge(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            $scope.comprobarSinAristas(destino);
+            $scope.checkNoEdges(destino);
           }
         }
 
@@ -344,14 +350,14 @@ angular
                 var origen = arrayGranulle[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -364,16 +370,16 @@ angular
                 var origen = arrayGranulle[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.comprobarSinAristas(destino);
+                  $scope.checkNoEdges(destino);
                 }
               }
           }
@@ -385,13 +391,13 @@ angular
           document.getElementById('sliderPesoGranulle').style.pointerEvents = "auto";
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
     //Mostrar/ocultar neuronas de tipo purkinje
-    $scope.chequearPurkinje = function() {
+    $scope.checkPurkinje = function() {
       var inicioPurkinje = $scope.sliderPurkinje.min;
       var finalPurkinje = $scope.sliderPurkinje.max;
 
@@ -404,16 +410,16 @@ angular
           var origen = arrayPurkinje[i];
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.buscarArista(origen, destino);
+            var pos = $scope.searchEdge(origen, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.buscarArista(destino, origen);
+            var pos = $scope.searchEdge(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            $scope.comprobarSinAristas(destino);
+            $scope.checkNoEdges(destino);
           }
         }
         //Deshabilitamos los slider de filtrado por id y peso para purkinje
@@ -429,14 +435,14 @@ angular
                 var origen = arrayPurkinje[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -448,16 +454,16 @@ angular
                 var origen = arrayPurkinje[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.comprobarSinAristas(destino);
+                  $scope.checkNoEdges(destino);
                 }
               }
 
@@ -468,13 +474,13 @@ angular
           document.getElementById('idpurkinje').style.pointerEvents = "auto";
           document.getElementById('sliderPesoPurkinje').style.pointerEvents = "auto";
       }
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
     //Mostrar/ocultar neuronas de tipo dcn
-    $scope.chequearDCN = function() {
+    $scope.checkDCN = function() {
       var inicioDCN = $scope.sliderDCN.min;
       var finalDCN = $scope.sliderDCN.max;
 
@@ -487,16 +493,16 @@ angular
           var origen = arrayDCN[i];
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.buscarArista(origen, destino);
+            var pos = $scope.searchEdge(origen, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.buscarArista(destino, origen);
+            var pos = $scope.searchEdge(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            $scope.comprobarSinAristas(destino);
+            $scope.checkNoEdges(destino);
           }
         }
         //Deshabilitamos los slider de filtrado por id y peso para dcn
@@ -513,14 +519,14 @@ angular
                 var origen = arrayDCN[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -532,16 +538,16 @@ angular
                 var origen = arrayDCN[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.comprobarSinAristas(destino);
+                  $scope.checkNoEdges(destino);
                 }
               }
 
@@ -552,13 +558,13 @@ angular
           document.getElementById('iddcn').style.pointerEvents = "auto";
           document.getElementById('sliderPesoDCN').style.pointerEvents = "auto";
       }
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
     //Mostrar/ocultar neuronas de tipo golgi
-    $scope.chequearGolgi = function() {
+    $scope.checkGolgi = function() {
       var inicioGolgi = $scope.sliderGolgi.min;
       var finalGolgi = $scope.sliderGolgi.max;
 
@@ -571,16 +577,16 @@ angular
           var origen = arrayGolgi[i];
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.buscarArista(origen, destino);
+            var pos = $scope.searchEdge(origen, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.buscarArista(destino, origen);
+            var pos = $scope.searchEdge(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            $scope.comprobarSinAristas(destino);
+            $scope.checkNoEdges(destino);
           }
         }
 
@@ -597,14 +603,14 @@ angular
                 var origen = arrayGolgi[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -616,16 +622,16 @@ angular
                 var origen = arrayGolgi[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.comprobarSinAristas(destino);
+                  $scope.checkNoEdges(destino);
                 }
               }
 
@@ -637,13 +643,13 @@ angular
           document.getElementById('sliderPesoGolgi').style.pointerEvents = "auto";
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
     //Mostrar/ocultar neuronas de tipo io
-    $scope.chequearIO = function() {
+    $scope.checkIO = function() {
       var inicioIO = $scope.sliderIO.min;
       var finalIO = $scope.sliderIO.max;
 
@@ -656,16 +662,16 @@ angular
           var origen = arrayIO[i];
           for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
             var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.buscarArista(origen, destino);
+            var pos = $scope.searchEdge(origen, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //2 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
           for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
             var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.buscarArista(destino, origen);
+            var pos = $scope.searchEdge(destino, origen);
             jsonCopy.edges[pos].hidden = true;
-            $scope.comprobarSinAristas(destino);
+            $scope.checkNoEdges(destino);
           }
         }
 
@@ -682,14 +688,14 @@ angular
                 var origen = arrayIO[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //4 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -701,16 +707,16 @@ angular
                 var origen = arrayIO[j];
                 for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
                   var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.buscarArista(origen, destino);
+                  var pos = $scope.searchEdge(origen, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
                 //6 POR CADA NEURONA QUE SE ELIMINA, DEBEMOS ELIMINAR TAMBIÉN LAS ARISTAS DE LAS QUE ES DESTINO
                 for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
                   var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.buscarArista(destino, origen);
+                  var pos = $scope.searchEdge(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.comprobarSinAristas(destino);
+                  $scope.checkNoEdges(destino);
                 }
               }
           }
@@ -720,12 +726,12 @@ angular
           document.getElementById('sliderPesoIO').style.pointerEvents = "auto";
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.restaurar = function() {
+    $scope.restore = function() {
       document.getElementById('inputNeuronas').value="";
       for (var i=0; i<arrayNeuronal.length;i++) {
         jsonCopy.nodes[arrayNeuronal[i].id].hidden = false;
@@ -735,7 +741,7 @@ angular
       }
       var arrayPrueba = new Array();
       grafoFactory.setArrayPrueba(arrayPrueba);
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -861,7 +867,7 @@ angular
       }
     };
 
-    $scope.modificarPesoMosey = function() {
+    $scope.changeMoseyWeigth = function() {
       var inicioPeso = $scope.sliderPesoMosey.min;
       var finalPeso = $scope.sliderPesoMosey.max;
 
@@ -875,7 +881,7 @@ angular
           var peso = arrayNeuronal[arrayMosey[i]].peso[j];
           var origen = arrayNeuronal[arrayMosey[i]].id;
           var destino = arrayNeuronal[arrayMosey[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -888,16 +894,16 @@ angular
       for (var i=0; i<arrayMosey.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
           var destino = arrayNeuronal[arrayMosey[i]].destino[j];
-          $scope.comprobarSinAristas(destino);
+          $scope.checkNoEdges(destino);
         }
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.modificarPesoGranulle = function () {
+    $scope.changeGranulleWeigth = function () {
       var inicioPeso = $scope.sliderPesoGranulle.min;
       var finalPeso = $scope.sliderPesoGranulle.max;
 
@@ -911,7 +917,7 @@ angular
           var peso = arrayNeuronal[arrayGranulle[i]].peso[j];
           var origen = arrayNeuronal[arrayGranulle[i]].id;
           var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -924,16 +930,16 @@ angular
       for (var i=0; i<arrayGranulle.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayGranulle[i]].peso.length;j++) {
           var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
-          $scope.comprobarSinAristas(destino);
+          $scope.checkNoEdges(destino);
         }
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.modificarPesoPurkinje = function () {
+    $scope.changePurkinjeWeigth = function () {
       var inicioPeso = $scope.sliderPesoPurkinje.min;
       var finalPeso = $scope.sliderPesoPurkinje.max;
 
@@ -947,7 +953,7 @@ angular
           var peso = arrayNeuronal[arrayPurkinje[i]].peso[j];
           var origen = arrayNeuronal[arrayPurkinje[i]].id;
           var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -960,16 +966,16 @@ angular
       for (var i=0; i<arrayPurkinje.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].peso.length;j++) {
           var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
-          $scope.comprobarSinAristas(destino);
+          $scope.checkNoEdges(destino);
         }
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.modificarPesoDCN = function () {
+    $scope.changeDCNWeigth = function () {
       var inicioPeso = $scope.sliderPesoDCN.min;
       var finalPeso = $scope.sliderPesoDCN.max;
 
@@ -983,7 +989,7 @@ angular
           var peso = arrayNeuronal[arrayDCN[i]].peso[j];
           var origen = arrayNeuronal[arrayDCN[i]].id;
           var destino = arrayNeuronal[arrayDCN[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -996,16 +1002,16 @@ angular
       for (var i=0; i<arrayDCN.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayDCN[i]].peso.length;j++) {
           var destino = arrayNeuronal[arrayDCN[i]].destino[j];
-          $scope.comprobarSinAristas(destino);
+          $scope.checkNoEdges(destino);
         }
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.modificarPesoGolgi = function () {
+    $scope.changeGolgiWeigth = function () {
       var inicioPeso = $scope.sliderPesoGolgi.min;
       var finalPeso = $scope.sliderPesoGolgi.max;
 
@@ -1019,7 +1025,7 @@ angular
           var peso = arrayNeuronal[arrayGolgi[i]].peso[j];
           var origen = arrayNeuronal[arrayGolgi[i]].id;
           var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -1032,16 +1038,16 @@ angular
       for (var i=0; i<arrayGolgi.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayGolgi[i]].peso.length;j++) {
           var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
-          $scope.comprobarSinAristas(destino);
+          $scope.checkNoEdges(destino);
         }
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.modificarPesoIO = function () {
+    $scope.changeIOWeigth = function () {
       var inicioPeso = $scope.sliderPesoIO.min;
       var finalPeso = $scope.sliderPesoIO.max;
 
@@ -1055,7 +1061,7 @@ angular
           var peso = arrayNeuronal[arrayIO[i]].peso[j];
           var origen = arrayNeuronal[arrayIO[i]].id;
           var destino = arrayNeuronal[arrayIO[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           if (peso >=inicioPeso && peso<=finalPeso) {
             jsonCopy.edges[pos].hidden = false;
           }
@@ -1068,16 +1074,16 @@ angular
       for (var i=0; i<arrayIO.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayIO[i]].peso.length;j++) {
           var destino = arrayNeuronal[arrayIO[i]].destino[j];
-          $scope.comprobarSinAristas(destino);
+          $scope.checkNoEdges(destino);
         }
       }
 
-      $scope.limpiarAristas(arrayNeuronal);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.mostrarPeso = function() {
+    /*$scope.mostrarPeso = function() {
       if (spanish) {
         document.getElementById('slider').style.display = "none";
         document.getElementById('seleccionManual').style.display = "none";
@@ -1092,7 +1098,7 @@ angular
         document.getElementById('sliderPeso').style.display = "inline";
         document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
       }
-      $scope.restaurar();
+      $scope.restore();
     }
 
     $scope.mostrarId = function() {
@@ -1112,10 +1118,10 @@ angular
         document.getElementById('slider').style.display = "inline";
         document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
       }
-      $scope.restaurar();
-    }
+      $scope.restore();
+    }*/
 
-    $scope.mostrarSeleccionManual = function() {
+    /*$scope.mostrarSeleccionManual = function() {
       if (spanish) {
         document.getElementById('sliderPeso').style.display = "none";
         document.getElementById('slider').style.display = "none";
@@ -1130,9 +1136,9 @@ angular
         document.getElementById('seleccionManual').style.display = "inline";
         document.getElementById('inputNeuronas').value="";
       }
-    }
+    }*/
 
-    $scope.volver = function(valor){
+    $scope.back = function(valor){
       if (valor == 1) {
         document.getElementById('seleccion_neuronas').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
@@ -1218,7 +1224,7 @@ angular
       }
     }
 
-    $scope.getDestinos = function(neurona) {
+    $scope.getTargets = function(neurona) {
       var resultado;
       var iteraciones = arrayNeuronal[neurona].destino.length;
 
@@ -1258,14 +1264,14 @@ angular
         group4.checked = false;
         group5.checked = false;
       }
-      $scope.ajustarContadorNeuronasA();
-      $scope.ajustarContadorNeuronasB();
-      $scope.ajustarContadorNeuronasC();
-      $scope.ajustarContadorNeuronasD();
-      $scope.ajustarContadorNeuronasE();
+      $scope.checkCounterA();
+      $scope.checkCounterB();
+      $scope.checkCounterC();
+      $scope.checkCounterD();
+      $scope.checkCounterE();
     }
 
-    $scope.filtradoPorRango = function() {
+    $scope.filteringByRange = function() {
       var stringSeleccion = document.getElementById("inputNeuronas").value;
       var filtradoOrigen = stringSeleccion.split('-');
       var minRango = parseInt(filtradoOrigen[0]);
@@ -1293,7 +1299,7 @@ angular
             //Buscamos todos los destinos de las neuronas seleccionadas
             for (var i=0; i<arrayOrigenes.length;i++) {
               var neuronaOrigen = arrayOrigenes[i];
-              arrayDatos.push($scope.getDestinos(neuronaOrigen));
+              arrayDatos.push($scope.getTargets(neuronaOrigen));
             }
 
             for (var i=0; i<arrayDatos.length;i++) {
@@ -1342,7 +1348,7 @@ angular
       }
     }
 
-    $scope.filtradoManual = function(stringSeleccion) {
+    $scope.manualFiltering = function(stringSeleccion) {
       var filtradoOrigen = stringSeleccion.split(',');
       var min = parseInt(arrayNeuronal[0].id);
       var max = parseInt(arrayNeuronal[arrayNeuronal.length-1].id);
@@ -1379,7 +1385,7 @@ angular
 
       for (var i=0; i<filtradoOrigen.length;i++) {
         var neuronaOrigen = filtradoOrigen[i];
-        arrayDatos.push($scope.getDestinos(neuronaOrigen));
+        arrayDatos.push($scope.getTargets(neuronaOrigen));
       }
 
       for (var i=0; i<arrayDatos.length;i++) {
@@ -1405,7 +1411,7 @@ angular
     }
     }
 
-    $scope.ajustarContadorNeuronasA = function() {
+    $scope.checkCounterA = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasA.length; i++) {
         if (mfgr.checked) {
           arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]++;
@@ -1414,11 +1420,10 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]--;
         }
       }
-      console.log('hemos pasado el bucle de ajustar contador a');
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasB = function() {
+    $scope.checkCounterB = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasB.length; i++) {
         if (mfgo.checked) {
           arrayContadorNeuronas[grafoFactory.arrayNeuronasB[i]]++;
@@ -1427,10 +1432,10 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasB[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasC = function() {
+    $scope.checkCounterC = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasC.length; i++) {
         if (grgo.checked) {
           arrayContadorNeuronas[grafoFactory.arrayNeuronasC[i]]++;
@@ -1439,10 +1444,10 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasC[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasD = function() {
+    $scope.checkCounterD = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasD.length; i++) {
         if (gogr.checked) {
           arrayContadorNeuronas[grafoFactory.arrayNeuronasD[i]]++;
@@ -1451,10 +1456,10 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasD[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasE = function() {
+    $scope.checkCounterE = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasE.length; i++) {
         if (gogo.checked) {
           arrayContadorNeuronas[grafoFactory.arrayNeuronasE[i]]++;
@@ -1463,10 +1468,10 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasE[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.comprobarEliminacion = function (neuronaAEliminar) {
+    $scope.checkRemoval = function (neuronaAEliminar) {
       var permiso = false;
       var aux = arrayContadorNeuronas[neuronaAEliminar];
 
@@ -1476,10 +1481,10 @@ angular
       return permiso;
     }
 
-    $scope.visualizarConexiones = function() {
+    $scope.showConnections = function() {
       if (!mfgr.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasA[i]);
+          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasA[i]);
           if (permisoEliminar) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].hidden = true;
           }
@@ -1488,7 +1493,7 @@ angular
           var id = grafoFactory.arrayConexionesA[j].enlace; //NO SE USA!
           var origen = grafoFactory.arrayConexionesA[j].origen;
           var destino = grafoFactory.arrayConexionesA[j].destino;
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
           jsonCopy.edges[pos].hidden = true;
         }
 
@@ -1502,7 +1507,7 @@ angular
           var origen = grafoFactory.arrayConexionesA[j].origen;
           var destino = grafoFactory.arrayConexionesA[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1510,7 +1515,7 @@ angular
 
       if (!mfgo.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasB.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasB[i]);
+          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasB[i]);
           if (permisoEliminar) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasB[i]].hidden = true;
           }
@@ -1520,7 +1525,7 @@ angular
           var origen = grafoFactory.arrayConexionesB[j].origen;
           var destino = grafoFactory.arrayConexionesB[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1534,7 +1539,7 @@ angular
           var origen = grafoFactory.arrayConexionesB[j].origen;
           var destino = grafoFactory.arrayConexionesB[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1542,7 +1547,7 @@ angular
 
       if (!grgo.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasC.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasC[i]);
+          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasC[i]);
           if (permisoEliminar) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasC[i]].hidden = true;
           }
@@ -1552,7 +1557,7 @@ angular
           var origen = grafoFactory.arrayConexionesC[j].origen;
           var destino = grafoFactory.arrayConexionesC[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1566,7 +1571,7 @@ angular
           var origen = grafoFactory.arrayConexionesC[j].origen;
           var destino = grafoFactory.arrayConexionesC[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1574,7 +1579,7 @@ angular
 
       if (!gogr.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasD.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasD[i]);
+          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasD[i]);
           if (permisoEliminar) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasD[i]].hidden = true;
           }
@@ -1584,7 +1589,7 @@ angular
           var origen = grafoFactory.arrayConexionesD[j].origen;
           var destino = grafoFactory.arrayConexionesD[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1598,7 +1603,7 @@ angular
           var origen = grafoFactory.arrayConexionesD[j].origen;
           var destino = grafoFactory.arrayConexionesD[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1606,7 +1611,7 @@ angular
 
       if (!gogo.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasE.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasE[i]);
+          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasE[i]);
           if (permisoEliminar) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasE[i]].hidden = true;
           }
@@ -1616,7 +1621,7 @@ angular
           var origen = grafoFactory.arrayConexionesE[j].origen;
           var destino = grafoFactory.arrayConexionesE[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1630,17 +1635,22 @@ angular
           var origen = grafoFactory.arrayConexionesE[j].origen;
           var destino = grafoFactory.arrayConexionesE[j].destino;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(origen, destino);
 
           jsonCopy.edges[pos].hidden = false;
         }
       }
 
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        $scope.checkNoEdges(arrayNeuronal[i].id);
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
 
-    $scope.visualizar = function(){
+    $scope.visualize = function(){
 
       var valor = document.getElementById("inputNeuronas").value;
 
@@ -1682,16 +1692,16 @@ angular
         }
       }
       else if (admitido && !esRango){ //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
-        $scope.filtradoManual(valor);
+        $scope.manualFiltering(valor);
       }
 
       else if (admitido && esRango) {
-        $scope.filtradoPorRango();
+        $scope.filteringByRange();
       }
 
     }
 
-    $scope.esconderAristas = function(id) {
+    /*$scope.esconderAristas = function(id) {
       for (var i=0; i<jsonCopy.edges.length;i++) {
         var auxOrigen = jsonCopy.edges[i].source.split("n");
         auxOrigen = auxOrigen[1];
@@ -1701,9 +1711,9 @@ angular
           jsonCopy.edges[i].hidden = true;
         }
       }
-    }
+    }*/
 
-    $scope.mostrarAristas = function(id) {
+    /*$scope.mostrarAristas = function(id) {
       for (var i=0; i<jsonCopy.edges.length;i++) {
         var auxOrigen = jsonCopy.edges[i].source.split("n");
         auxOrigen = auxOrigen[1];
@@ -1713,10 +1723,10 @@ angular
           jsonCopy.edges[i].hidden = false;
         }
       }
-    }
+    }*/
 
     //Elimina neuronas que sólo tiene enlace consigo mismas
-    $scope.limpiarAristas = function(arrayNeuronal){
+    $scope.cleanEdges = function(arrayNeuronal){
       for (var i=0; i<arrayNeuronal.length;i++) {
         //Ocultamos las neuronas que sólo tienen como destino a ellas mismas
         if (arrayNeuronal[i].destino.length == 1) {
@@ -1758,16 +1768,16 @@ angular
         auxID = auxID[1];
 
         if (jsonCopy.nodes[i].hidden == false) {
-          arrayPruebaInfo[auxID] = 1;
+          arrayInfo[auxID] = 1;
         }
 
         else if (jsonCopy.nodes[i].hidden == true) {
-          arrayPruebaInfo[auxID] = 0;
+          arrayInfo[auxID] = 0;
         }
       }
 
-      for (var i=0; i<arrayPruebaInfo.length;i++) {
-        if (arrayPruebaInfo[i] == 1) {
+      for (var i=0; i<arrayInfo.length;i++) {
+        if (arrayInfo[i] == 1) {
           var tipo = arrayNeuronal[[i]].tipo;
           switch (tipo) {
 
@@ -1857,7 +1867,7 @@ angular
         }
 
       for (var i=0; i<grafoFactory.arrayConexionesA.length;i++){
-        var pos = $scope.buscarArista(grafoFactory.arrayConexionesA[i].origen, grafoFactory.arrayConexionesA[i].destino);
+        var pos = $scope.searchEdge(grafoFactory.arrayConexionesA[i].origen, grafoFactory.arrayConexionesA[i].destino);
         var oculto = jsonCopy.edges[pos].hidden;
 
         if (!oculto) {
@@ -1866,7 +1876,7 @@ angular
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesB.length;i++){
-        var pos = $scope.buscarArista(grafoFactory.arrayConexionesB[i].origen, grafoFactory.arrayConexionesB[i].destino);
+        var pos = $scope.searchEdge(grafoFactory.arrayConexionesB[i].origen, grafoFactory.arrayConexionesB[i].destino);
         var oculto = jsonCopy.edges[pos].hidden;
 
         if (!oculto) {
@@ -1875,7 +1885,7 @@ angular
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesC.length;i++){
-        var pos = $scope.buscarArista(grafoFactory.arrayConexionesC[i].origen, grafoFactory.arrayConexionesC[i].destino);
+        var pos = $scope.searchEdge(grafoFactory.arrayConexionesC[i].origen, grafoFactory.arrayConexionesC[i].destino);
         var oculto = jsonCopy.edges[pos].hidden;
 
         if (!oculto) {
@@ -1884,7 +1894,7 @@ angular
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesD.length;i++){
-        var pos = $scope.buscarArista(grafoFactory.arrayConexionesD[i].origen, grafoFactory.arrayConexionesD[i].destino);
+        var pos = $scope.searchEdge(grafoFactory.arrayConexionesD[i].origen, grafoFactory.arrayConexionesD[i].destino);
         var oculto = jsonCopy.edges[pos].hidden;
 
         if (!oculto) {
@@ -1893,7 +1903,7 @@ angular
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesE.length;i++){
-        var pos = $scope.buscarArista(grafoFactory.arrayConexionesE[i].origen, grafoFactory.arrayConexionesE[i].destino);
+        var pos = $scope.searchEdge(grafoFactory.arrayConexionesE[i].origen, grafoFactory.arrayConexionesE[i].destino);
         var oculto = jsonCopy.edges[pos].hidden;
 
         if (!oculto) {

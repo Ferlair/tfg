@@ -10,42 +10,42 @@
 
 <div id="seleccion_neuronas" style="display:none">
     Select neuron type: <br><br>
-    <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="chequearMosey()" checked> Mossy Fibers</label><br><br>
-    <label><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="chequearGranulle()" checked> Granulle Cells</label><br><br>
-    <label><input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="chequearPurkinje()" checked> Purkinje Cells</label><br><br>
-    <label><input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="chequearDCN()" checked> DCN Cells</label><br><br>
-    <label><input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="chequearGolgi()" checked> Golgi Cells</label><br><br>
-    <label><input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="chequearIO()" checked> IO Cells</label><br><br>
+    <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="checkMossy()" checked> Mossy Fibers</label><br><br>
+    <label><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="checkGranulle()" checked> Granulle Cells</label><br><br>
+    <label><input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="checkPurkinje()" checked> Purkinje Cells</label><br><br>
+    <label><input id="4" type ="checkbox" name ="neurona" value = "DCN Cells" ng-click="checkDCN()" checked> DCN Cells</label><br><br>
+    <label><input id="5" type="checkbox" name= "neurona" value = "Golgi Cells" ng-click="checkGolgi()" checked> Golgi Cells</label><br><br>
+    <label><input id="6" type ="checkbox" name ="neurona" value = "IO Cells" ng-click="checkIO()" checked> IO Cells</label><br><br>
 
-    <center><input id="volver_1_eng" type="button" ng-click="volver(1)"></center>
+    <center><input id="volver_1_eng" type="button" ng-click="back(1)"></center>
 </div>
 
 <div id="seleccion_grupos" style="display:none">
     Select synapse type: <br><br>
     <label><input id="setAll" type="checkbox" ng-click="setAll()" > Show/Hide All</label><br><br><br><br>
-    <label><input id="MFGR" type="checkbox" value="Mossey-Granulle" ng-click="ajustarContadorNeuronasA()" checked> Mossy - Granulle (Purple)</label><br><br>
-    <label><input id="MFGO" type="checkbox" value="Mossey-Golgi" ng-click="ajustarContadorNeuronasB()" checked> Mossy - Golgi (Green)</label><br><br>
-    <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="ajustarContadorNeuronasC()" checked> Granulle - Golgi (Blue)</label><br><br>
-    <label><input id="GOGR" type="checkbox" value="Golgi-Granulle" ng-click="ajustarContadorNeuronasD()" checked> Golgi - Granulle (Red)</label><br><br>
-    <label><input id="GOGO" type="checkbox" value="Golgi-Golgi" ng-click="ajustarContadorNeuronasE()" checked> Golgi - Golgi (Orange)</label><br><br>
+    <label><input id="MFGR" type="checkbox" value="Mossey-Granulle" ng-click="checkCounterA()" checked> Mossy - Granulle (Purple)</label><br><br>
+    <label><input id="MFGO" type="checkbox" value="Mossey-Golgi" ng-click="checkCounterB()" checked> Mossy - Golgi (Green)</label><br><br>
+    <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="checkCounterC()" checked> Granulle - Golgi (Blue)</label><br><br>
+    <label><input id="GOGR" type="checkbox" value="Golgi-Granulle" ng-click="checkCounterD()" checked> Golgi - Granulle (Red)</label><br><br>
+    <label><input id="GOGO" type="checkbox" value="Golgi-Golgi" ng-click="checkCounterE()" checked> Golgi - Golgi (Orange)</label><br><br>
 
-    <center><input id="volver_2_eng" type="button" ng-click="volver(2)"></center>
+    <center><input id="volver_2_eng" type="button" ng-click="back(2)"></center>
 </div>
 
 <div id="registro" style="display:none">
   <center><input id="boton_estadisticas_neuronas_eng" type="button" ng-click="logNeurons()"></center><br>
   <center><input id="boton_estadisticas_sinapsis_eng" type="button" ng-click="logEdges()"></center><br>
-  <center><input id="volver_6_eng" type="button" ng-click="volver(6)"></center>
+  <center><input id="volver_6_eng" type="button" ng-click="back(6)"></center>
 </div>
 
 <div id="estadisticas_n" style="display: none">
 <div id="log_n"></div>
-    <center><input id="volver_7_eng" type="button" ng-click="volver(7)"></center>
+    <center><input id="volver_7_eng" type="button" ng-click="back(7)"></center>
 </div>
 
 <div id="estadisticas_a" style="display: none">
 <div id="log_a"></div>
-    <center><input id="volver_8_eng" type="button" ng-click="volver(8)"></center>
+    <center><input id="volver_8_eng" type="button" ng-click="back(8)"></center>
 </div>
 
 
@@ -56,17 +56,6 @@
 <!-- Contenedor que muestra la imagen generada por WebGL-->
 <div id="container2"></div>
 
-
-
-<div id="radioFiltrado" style="visibility:hidden">
-  <b>Filter by:</b><br>
-  <input type="radio" name="filtrado" id="id" ng-click="mostrarId()"> ID<br>
-  <input type="radio" name="filtrado" id="peso" ng-click="mostrarPeso()"> Weight <br>
-  <input type="radio" name="filtrado" id="individual" ng-click="mostrarSeleccionManual()"> Individual selection
-</div>
-
-
-
 <!-- Contenedor para los sliders -->
 <div id="slider" style="visibility: hidden" >
 <div><b>Mosey: </b></div><br>
@@ -74,7 +63,7 @@
     rz-slider-model="sliderMosey.min"
     rz-slider-high="sliderMosey.max"
     rz-slider-options="sliderMosey.options"
-    ng-mouseup = "chequearMosey()">
+    ng-mouseup = "checkMossy()">
 </rzslider>
 <br>
 <br>
@@ -83,7 +72,7 @@
     rz-slider-model="sliderGranulle.min"
     rz-slider-high="sliderGranulle.max"
     rz-slider-options="sliderGranulle.options"
-    ng-mouseup = "chequearGranulle()">
+    ng-mouseup = "checkGranulle()">
 </rzslider>
 <br>
 <br>
@@ -92,7 +81,7 @@
     rz-slider-model="sliderPurkinje.min"
     rz-slider-high="sliderPurkinje.max"
     rz-slider-options="sliderPurkinje.options"
-    ng-mouseup = "chequearPurkinje()">
+    ng-mouseup = "checkPurkinje()">
 </rzslider>
 <br>
 <br>
@@ -101,7 +90,7 @@
     rz-slider-model="sliderDCN.min"
     rz-slider-high="sliderDCN.max"
     rz-slider-options="sliderDCN.options"
-    ng-mouseup = "chequearDCN()">
+    ng-mouseup = "checkDCN()">
 </rzslider>
 <br>
 <br>
@@ -110,7 +99,7 @@
     rz-slider-model="sliderGolgi.min"
     rz-slider-high="sliderGolgi.max"
     rz-slider-options="sliderGolgi.options"
-    ng-mouseup = "chequearGolgi()">
+    ng-mouseup = "checkGolgi()">
 </rzslider>
 <br>
 <br>
@@ -119,9 +108,9 @@
     rz-slider-model="sliderIO.min"
     rz-slider-high="sliderIO.max"
     rz-slider-options="sliderIO.options"
-    ng-mouseup = "chequearIO()">
+    ng-mouseup = "checkIO()">
 </rzslider><br><br>
-<center><input id="volver_3_eng" type="button" ng-click="volver(3)"></center>
+<center><input id="volver_3_eng" type="button" ng-click="back(3)"></center>
 </div>
 
 <div id="sliderPeso" style="visibility: hidden">
@@ -131,7 +120,7 @@
       rz-slider-model="sliderPesoMosey.min"
       rz-slider-high="sliderPesoMosey.max"
       rz-slider-options="sliderPesoMosey.options"
-      ng-mouseup = "modificarPesoMosey()">
+      ng-mouseup = "changeMoseyWeigth()">
   </rzslider>
 </div>
 <br>
@@ -141,7 +130,7 @@
       rz-slider-model="sliderPesoGranulle.min"
       rz-slider-high="sliderPesoGranulle.max"
       rz-slider-options="sliderPesoGranulle.options"
-      ng-mouseup = "modificarPesoGranulle()">
+      ng-mouseup = "changeGranulleWeigth()">
   </rzslider>
 </div>
 <br>
@@ -151,7 +140,7 @@
       rz-slider-model="sliderPesoPurkinje.min"
       rz-slider-high="sliderPesoPurkinje.max"
       rz-slider-options="sliderPesoPurkinje.options"
-      ng-mouseup = "modificarPesoPurkinje()">
+      ng-mouseup = "changePurkinjeWeigth()">
   </rzslider>
 </div>
 <br>
@@ -161,7 +150,7 @@
       rz-slider-model="sliderPesoDCN.min"
       rz-slider-high="sliderPesoDCN.max"
       rz-slider-options="sliderPesoDCN.options"
-      ng-mouseup = "modificarPesoDCN()">
+      ng-mouseup = "changeDCNWeigth()">
   </rzslider>
 </div>
 <br>
@@ -171,7 +160,7 @@
       rz-slider-model="sliderPesoGolgi.min"
       rz-slider-high="sliderPesoGolgi.max"
       rz-slider-options="sliderPesoGolgi.options"
-      ng-mouseup = "modificarPesoGolgi()">
+      ng-mouseup = "changeGolgiWeigth()">
   </rzslider>
 </div>
 <br>
@@ -181,10 +170,10 @@
       rz-slider-model="sliderPesoIO.min"
       rz-slider-high="sliderPesoIO.max"
       rz-slider-options="sliderPesoIO.options"
-      ng-mouseup = "modificarPesoIO()">
+      ng-mouseup = "changeIOWeigth()">
   </rzslider>
 </div><br>
-<center><input id="volver_4_eng" type="button" ng-click="volver(4)"></center>
+<center><input id="volver_4_eng" type="button" ng-click="back(4)"></center>
 </div>
 
 
@@ -193,8 +182,8 @@
   <b>Push over the neuron(s) to visualize</b> <br><br>
   <b>Neurons: </b>
   <div id="barra"><input id="inputNeuronas" type="text"><br><br></div>
-  <center><input type="button" value="Visualize" ng-click="visualizar()"></center>
-  <center><input type="button" value="Restore" ng-click="restaurar()"></center>
+  <center><input type="button" value="Visualize" ng-click="visualize()"></center>
+  <center><input type="button" value="Restore" ng-click="restore()"></center>
   <br>
-  <center><input id="volver_5_eng" type="button" ng-click="volver(5)"></center>
+  <center><input id="volver_5_eng" type="button" ng-click="back(5)"></center>
 </div>
