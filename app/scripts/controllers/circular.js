@@ -147,6 +147,7 @@ angular
     //Función que reinicia el elemento 'container'
     //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
     function refresh() {
+      console.log('usamos refresh');
       var g = document.querySelector('#container2');
       var p = g.parentNode;
       p.removeChild(g);
@@ -191,7 +192,7 @@ angular
         var destino = arrayNeuronal[id].destino[i];
         var pos = $scope.buscarArista(id, destino);
         auxOcultar = jsonCopy.edges[pos].hidden;
-
+        console.log(jsonCopy.edges[pos].id + ' ' + jsonCopy.edges[pos].hidden);
         ocultar = auxOcultar;
       }
       if (ocultar && (arrayNeuronal[id].esDestino.length>0)) {
@@ -199,15 +200,18 @@ angular
           var destino = arrayNeuronal[id].esDestino[i];
           var pos = $scope.buscarArista(destino, id);
           ocultar = jsonCopy.edges[pos].hidden;
+          console.log(jsonCopy.edges[pos].id + ' ' + jsonCopy.edges[pos].hidden);
         }
       }
 
       if (!ocultar) {
         jsonCopy.nodes[id].hidden = false;
+        console.log('visible el nodo '+ jsonCopy.nodes[id].id);
       }
 
       if (ocultar) {
         jsonCopy.nodes[id].hidden = true;
+        console.log('oculto el nodo '+ jsonCopy.nodes[id].id);
       }
 
     }
@@ -282,6 +286,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  $scope.comprobarSinAristas(destino);
                 }
               }
           }
@@ -291,14 +296,6 @@ angular
           document.getElementById('sliderPesoMosey').style.pointerEvents = "auto";
       }
 
-      //Comprobamos que se visualizan correctamente las neuronas que interactúan con las de tipo Mossy
-      /*for (var i=0;i<arrayGranulle.length;i++) {
-        $scope.comprobarSinAristas(arrayGranulle[i]);
-      }
-
-      for (var i=0;i<arrayGolgi.length;i++) {
-        $scope.comprobarSinAristas(arrayGolgi[i]);
-      }*/
       $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
@@ -311,6 +308,7 @@ angular
 
 
       if (!granulle.checked) {
+
         for (var i=0; i<arrayGranulle.length; i++) {
           jsonCopy.nodes[arrayGranulle[i]].hidden = true;
 
@@ -336,8 +334,10 @@ angular
         document.getElementById("sliderPesoGranulle").style.pointerEvents = "none";
       }
       else {
+
           for (var j=0; j<arrayGranulle.length; j++) {
               if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
+
                 jsonCopy.nodes[arrayGranulle[j]].hidden = false;
 
                 //3 POR CADA NEURONA QUE SE AÑADE, DEBEMOS AÑADIR TAMBIÉN SU ARISTA
@@ -357,6 +357,7 @@ angular
                 }
               }
               else {
+                console.log('al seleccionar id pasamos por aquí');
                 jsonCopy.nodes[arrayGranulle[j]].hidden = true;
 
                 //5
@@ -372,6 +373,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  $scope.comprobarSinAristas(destino);
                 }
               }
           }
@@ -382,15 +384,6 @@ angular
           document.getElementById('idgranulle').style.pointerEvents = "auto";
           document.getElementById('sliderPesoGranulle').style.pointerEvents = "auto";
       }
-
-      //Comprobamos que se visualizan correctamente las neuronas que interactúan con las de tipo Mossy
-      /*for (var i=0;i<arrayMosey.length;i++) {
-        $scope.comprobarSinAristas(arrayMosey[i]);
-      }
-
-      for (var i=0;i<arrayGolgi.length;i++) {
-        $scope.comprobarSinAristas(arrayGolgi[i]);
-      }*/
 
       $scope.limpiarAristas(arrayNeuronal);
       refresh();
@@ -464,6 +457,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  $scope.comprobarSinAristas(destino);
                 }
               }
 
@@ -547,6 +541,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  $scope.comprobarSinAristas(destino);
                 }
               }
 
@@ -630,6 +625,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  $scope.comprobarSinAristas(destino);
                 }
               }
 
@@ -640,19 +636,6 @@ angular
           document.getElementById('idgolgi').style.pointerEvents = "auto";
           document.getElementById('sliderPesoGolgi').style.pointerEvents = "auto";
       }
-
-      //Comprobamos que se visualizan correctamente las neuronas que interactúan con las de tipo Golgi
-      /*for (var i=0;i<arrayMosey.length;i++) {
-        $scope.comprobarSinAristas(arrayMosey[i]);
-      }
-
-      for (var i=0;i<arrayGranulle.length;i++) {
-        $scope.comprobarSinAristas(arrayGranulle[i]);
-      }*/
-
-      /*for (var i=0;i<arrayGolgi.length;i++) {
-        $scope.comprobarSinAristas(arrayGolgi[i]);
-      }*/
 
       $scope.limpiarAristas(arrayNeuronal);
       refresh();
@@ -727,6 +710,7 @@ angular
                   var destino = arrayNeuronal[origen].esDestino[z];
                   var pos = $scope.buscarArista(destino, origen);
                   jsonCopy.edges[pos].hidden = true;
+                  $scope.comprobarSinAristas(destino);
                 }
               }
           }
@@ -751,6 +735,7 @@ angular
       }
       var arrayPrueba = new Array();
       grafoFactory.setArrayPrueba(arrayPrueba);
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -885,7 +870,6 @@ angular
       finalPeso = finalPeso/100;
       finalPeso = grafoFactory.maxPesoMossey*finalPeso;
 
-
       for (var i=0; i<arrayMosey.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
           var peso = arrayNeuronal[arrayMosey[i]].peso[j];
@@ -900,6 +884,15 @@ angular
           }
         }
       }
+
+      for (var i=0; i<arrayMosey.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
+          var destino = arrayNeuronal[arrayMosey[i]].destino[j];
+          $scope.comprobarSinAristas(destino);
+        }
+      }
+
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -927,6 +920,15 @@ angular
           }
         }
       }
+
+      for (var i=0; i<arrayGranulle.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayGranulle[i]].peso.length;j++) {
+          var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
+          $scope.comprobarSinAristas(destino);
+        }
+      }
+
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -954,6 +956,15 @@ angular
           }
         }
       }
+
+      for (var i=0; i<arrayPurkinje.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].peso.length;j++) {
+          var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
+          $scope.comprobarSinAristas(destino);
+        }
+      }
+
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -981,6 +992,15 @@ angular
           }
         }
       }
+
+      for (var i=0; i<arrayDCN.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayDCN[i]].peso.length;j++) {
+          var destino = arrayNeuronal[arrayDCN[i]].destino[j];
+          $scope.comprobarSinAristas(destino);
+        }
+      }
+
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -1008,6 +1028,15 @@ angular
           }
         }
       }
+
+      for (var i=0; i<arrayGolgi.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayGolgi[i]].peso.length;j++) {
+          var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
+          $scope.comprobarSinAristas(destino);
+        }
+      }
+
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -1035,6 +1064,15 @@ angular
           }
         }
       }
+
+      for (var i=0; i<arrayIO.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayIO[i]].peso.length;j++) {
+          var destino = arrayNeuronal[arrayIO[i]].destino[j];
+          $scope.comprobarSinAristas(destino);
+        }
+      }
+
+      $scope.limpiarAristas(arrayNeuronal);
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -1376,7 +1414,7 @@ angular
           arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]--;
         }
       }
-
+      console.log('hemos pasado el bucle de ajustar contador a');
       $scope.visualizarConexiones();
     }
 
@@ -1597,12 +1635,12 @@ angular
           jsonCopy.edges[pos].hidden = false;
         }
       }
-      $scope.chequearMosey();
-      $scope.chequearGranulle();
-      $scope.chequearPurkinje();
-      $scope.chequearDCN();
-      $scope.chequearGolgi();
-      $scope.chequearIO();
+      //$scope.chequearMosey();
+      //$scope.chequearGranulle();
+      //$scope.chequearPurkinje();
+      //$scope.chequearDCN();
+      //$scope.chequearGolgi();
+      //$scope.chequearIO();
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
