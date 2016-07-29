@@ -4,6 +4,7 @@
   <center><input id="boton_filtro_id_eng" type="button" ng-click="display(3)"></center><br>
   <center><input id="boton_filtro_peso_eng" type="button" ng-click="display(4)"></center><br>
   <center><input id="boton_seleccion_manual_eng" type="button" ng-click="display(5)"></center><br>
+  <center><input id="boton_log_eng" type="button" ng-click="display(6)"></center><br>
 </div>
 
 
@@ -21,6 +22,7 @@
 
 <div id="seleccion_grupos" style="display:none">
     Select synapse type: <br><br>
+    <label><input id="setAll" type="checkbox" ng-click="setAll()" > Show/Hide All</label><br><br><br><br>
     <label><input id="MFGR" type="checkbox" value="Mossey-Granulle" ng-click="ajustarContadorNeuronasA()" checked> Mossy - Granulle (Purple)</label><br><br>
     <label><input id="MFGO" type="checkbox" value="Mossey-Golgi" ng-click="ajustarContadorNeuronasB()" checked> Mossy - Golgi (Green)</label><br><br>
     <label><input id="GRGO" type="checkbox" value="Granulle-Golgi" ng-click="ajustarContadorNeuronasC()" checked> Granulle - Golgi (Blue)</label><br><br>
@@ -30,6 +32,21 @@
     <center><input id="volver_2_eng" type="button" ng-click="volver(2)"></center>
 </div>
 
+<div id="registro" style="display:none">
+  <center><input id="boton_estadisticas_neuronas_eng" type="button" ng-click="logNeurons()"></center><br>
+  <center><input id="boton_estadisticas_sinapsis_eng" type="button" ng-click="logEdges()"></center><br>
+  <center><input id="volver_6_eng" type="button" ng-click="volver(6)"></center>
+</div>
+
+<div id="estadisticas_n" style="display: none">
+<div id="log_n"></div>
+    <center><input id="volver_7_eng" type="button" ng-click="volver(7)"></center>
+</div>
+
+<div id="estadisticas_a" style="display: none">
+<div id="log_a"></div>
+    <center><input id="volver_8_eng" type="button" ng-click="volver(8)"></center>
+</div>
 
 
 <a href="#/"><img id="boton_pagina_principal_eng"></a>
@@ -75,7 +92,7 @@
     rz-slider-model="sliderPurkinje.min"
     rz-slider-high="sliderPurkinje.max"
     rz-slider-options="sliderPurkinje.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearPurkinje()">
 </rzslider>
 <br>
 <br>
@@ -84,7 +101,7 @@
     rz-slider-model="sliderDCN.min"
     rz-slider-high="sliderDCN.max"
     rz-slider-options="sliderDCN.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearDCN()">
 </rzslider>
 <br>
 <br>
@@ -93,7 +110,7 @@
     rz-slider-model="sliderGolgi.min"
     rz-slider-high="sliderGolgi.max"
     rz-slider-options="sliderGolgi.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearGolgi()">
 </rzslider>
 <br>
 <br>
@@ -102,7 +119,7 @@
     rz-slider-model="sliderIO.min"
     rz-slider-high="sliderIO.max"
     rz-slider-options="sliderIO.options"
-    ng-mouseup = "ver()">
+    ng-mouseup = "chequearIO()">
 </rzslider><br><br>
 <center><input id="volver_3_eng" type="button" ng-click="volver(3)"></center>
 </div>

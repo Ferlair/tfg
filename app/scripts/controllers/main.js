@@ -761,20 +761,13 @@ angular
 
         //Debemos detectar si en la línea que se está leyendo hay alguna coma para sustituirla por un punto y poder realizar los cálculos
         //en coma flotante
-
-
-        //var posComa = aux.indexOf(",");
-        //if (posComa != -1) {
-          aux = aux.replace(/,/g,".");
-        //}
+        aux = aux.replace(/,/g,".");
 
         //Generalmente, cuando se crea un .txt con excel, deja un salto de línea final que nos daría un error de lectura
         //Con esta comprobación, eliminamos ese problema
         if (aux != "") {
           lineasLeidas.push(aux);
         }
-
-        console.log(aux);
       }
 
       for (var i=0; i<lineasLeidas.length; i++) {

@@ -205,6 +205,18 @@ div.mascara-eng:hover {
   width: 250px;
 }
 
+#boton_log_eng {
+  background: url('../images/botones_opciones/registro_datos_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_log_eng:hover {
+  background: url('../images/botones_opciones/registro_datos_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
 #boton_estadisticas_neuronas {
   background: url('../images/botones_opciones/tipo_neurona.png');
   height: 50px;
@@ -217,6 +229,18 @@ div.mascara-eng:hover {
   width: 250px;
 }
 
+#boton_estadisticas_neuronas_eng {
+  background: url('../images/botones_opciones/tipo_neurona_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_neuronas_eng:hover {
+  background: url('../images/botones_opciones/tipo_neurona_pulsado_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
 #boton_estadisticas_sinapsis {
   background: url('../images/botones_opciones/sinapsis.png');
   height: 50px;
@@ -225,6 +249,18 @@ div.mascara-eng:hover {
 
 #boton_estadisticas_sinapsis:hover {
   background: url('../images/botones_opciones/sinapsis_pulsado.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_sinapsis_eng {
+  background: url('../images/botones_opciones/sinapsis_eng.png');
+  height: 50px;
+  width: 250px;
+}
+
+#boton_estadisticas_sinapsis_eng:hover {
+  background: url('../images/botones_opciones/sinapsis_pulsado_eng.png');
   height: 50px;
   width: 250px;
 }
@@ -363,6 +399,18 @@ div.mascara-eng:hover {
   width: 138px;
 }
 
+#volver_6_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_6_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
 #volver_7 {
   background: url('../images/botones_opciones/volver.png');
   height: 50px;
@@ -371,6 +419,18 @@ div.mascara-eng:hover {
 
 #volver_7:hover {
   background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_7_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_7_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
   height: 50px;
   width: 138px;
 }
@@ -385,6 +445,18 @@ div.mascara-eng:hover {
 
 #volver_8:hover {
   background: url('../images/botones_opciones/volver_pulsado.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_8_eng {
+  background: url('../images/botones_opciones/volver_eng.png');
+  height: 50px;
+  width: 138px;
+}
+
+#volver_8_eng:hover {
+  background: url('../images/botones_opciones/volver_pulsado_eng.png');
   height: 50px;
   width: 138px;
 }

@@ -1635,12 +1635,7 @@ angular
           jsonCopy.edges[pos].hidden = false;
         }
       }
-      //$scope.chequearMosey();
-      //$scope.chequearGranulle();
-      //$scope.chequearPurkinje();
-      //$scope.chequearDCN();
-      //$scope.chequearGolgi();
-      //$scope.chequearIO();
+
       refresh();
       grafoFactory.cargar(jsonCopy);
     }
@@ -1812,19 +1807,38 @@ angular
 
       var div = document.getElementById('log_n');
 
-      div.innerHTML = div.innerHTML + '<center><b>Neuronas visualizadas</b></center>';
-      div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + contadorMossy + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + contadorGranulle + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + contadorPurkinje + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + contadorDCN + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + contadorGolgi + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + contadorIO + '</center>';
+      if (grafoFactory.spanish) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Neuronas visualizadas</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + contadorMossy + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + contadorGranulle + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + contadorPurkinje + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + contadorDCN + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + contadorGolgi + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + contadorIO + '</center>';
+      }
+
+      if (grafoFactory.english) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Visualized neurons</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + contadorMossy + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + contadorGranulle + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + contadorPurkinje + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + contadorDCN + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + contadorGolgi + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + contadorIO + '</center>';
+      }
+
 
       document.getElementById('registro').style.display = "none";
       document.getElementById('estadisticas_n').style.display = "inline";
@@ -1890,17 +1904,34 @@ angular
 
       var div = document.getElementById('log_a');
 
-      div.innerHTML = div.innerHTML + '<center><b>Sinapsis visualizadas</b></center>';
-      div.innerHTML = div.innerHTML + '<br><br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Morado):</b> '  + contadorA + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Verde):</b> ' + contadorB + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Azul):</b> ' + contadorC +  '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Rojo):</b> ' + contadorD + '</center>';
-      div.innerHTML = div.innerHTML + '<br>';
-      div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Naranja):</b> ' + contadorE + '</center>';
+      if (grafoFactory.spanish) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Sinapsis visualizadas</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Morado):</b> '  + contadorA + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Verde):</b> ' + contadorB + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Azul):</b> ' + contadorC +  '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Rojo):</b> ' + contadorD + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Naranja):</b> ' + contadorE + '</center>';
+      }
+
+      if (grafoFactory.english) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Visualized synapses</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Purple):</b> '  + contadorA + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Green):</b> ' + contadorB + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Blue):</b> ' + contadorC +  '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Red):</b> ' + contadorD + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Orange):</b> ' + contadorE + '</center>';
+      }
+
 
       document.getElementById('registro').style.display = "none";
       document.getElementById('estadisticas_a').style.display = "inline";
