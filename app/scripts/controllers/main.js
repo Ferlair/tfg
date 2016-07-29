@@ -741,6 +741,7 @@ angular
     //Salida:
     $scope.cargarNeuronas = function($fileContent) {
       var lineas = $fileContent.split("\n");
+      var lineasLeidas = new Array();
       var palabrasPorLineas;
       var origen = [];
       var destino = [];
@@ -753,15 +754,31 @@ angular
       var tipoConexion = [];
 
       $scope.reiniciarInfo();
-      //$scope.checkExtension();
+
 
       for (var j=0; j<lineas.length; j++) {
         var aux = lineas[j].replace(/\s+/g, " ");
-        lineas[j] = aux;
+
+        //Debemos detectar si en la línea que se está leyendo hay alguna coma para sustituirla por un punto y poder realizar los cálculos
+        //en coma flotante
+
+
+        //var posComa = aux.indexOf(",");
+        //if (posComa != -1) {
+          aux = aux.replace(/,/g,".");
+        //}
+
+        //Generalmente, cuando se crea un .txt con excel, deja un salto de línea final que nos daría un error de lectura
+        //Con esta comprobación, eliminamos ese problema
+        if (aux != "") {
+          lineasLeidas.push(aux);
+        }
+
+        console.log(aux);
       }
 
-      for (var i=0; i<lineas.length; i++) {
-        palabrasPorLineas = lineas[i].split(" ");
+      for (var i=0; i<lineasLeidas.length; i++) {
+        palabrasPorLineas = lineasLeidas[i].split(" ");
         origen[i] = palabrasPorLineas[0];
         destino[i] = palabrasPorLineas[1];
         x[i] = palabrasPorLineas[2];
