@@ -657,13 +657,13 @@ angular
         }
 
         $scope.escribirDatos();
-        grafoFactory.almacenarArrayMosey(arrayMosey);
-        grafoFactory.almacenarArrayGranulle(arrayGranulle);
-        grafoFactory.almacenarArrayPurkinje(arrayPurkinje);
-        grafoFactory.almacenarArrayDCN(arrayDCN);
-        grafoFactory.almacenarArrayGolgi(arrayGolgi);
-        grafoFactory.almacenarArrayIO(arrayIO);
-        grafoFactory.almacenarJSON(jsonCopy);
+        grafoFactory.saveArrayMossy(arrayMosey);
+        grafoFactory.saveArrayGranulle(arrayGranulle);
+        grafoFactory.saveArrayPurkinje(arrayPurkinje);
+        grafoFactory.saveArrayDCN(arrayDCN);
+        grafoFactory.saveArrayGolgi(arrayGolgi);
+        grafoFactory.saveArrayIO(arrayIO);
+        grafoFactory.saveJSON(jsonCopy);
         $scope.colorearAristas(arrayNeuronal);
         $scope.cleanEdges(arrayNeuronal);
     }
@@ -840,7 +840,7 @@ angular
       grafoFactory.minPesoDCN = $scope.getMinPeso(arrayNeuronal, 3);
       grafoFactory.minPesoGolgi = $scope.getMinPeso(arrayNeuronal, 4);
       grafoFactory.minPesoIO = $scope.getMinPeso(arrayNeuronal, 5);
-      grafoFactory.almacenarArrayNeuronal(arrayNeuronal);
+      grafoFactory.saveNeuronalArray(arrayNeuronal);
       $scope.generarJSON(arrayNeuronal);
     }
 
@@ -933,3 +933,4 @@ angular
     }
 
   }])
+saveArrayGranulle
