@@ -13,7 +13,7 @@
 
 <div id="todo">
 <div class="mascara">
-  <input type="file" id="myFile" accept=".txt" on-read-file="cargarNeuronas($fileContent)" ng-model="modelo" ng-change="saludo()"/>
+  <input type="file" id="myFile" accept=".txt" on-read-file="LoadNeurons($fileContent)" ng-model="modelo" ng-change="saludo()"/>
 </div>
 <br><br>
 <div id="especificaciones-esp" ng-show = "checked">
@@ -57,7 +57,7 @@
 
 <div id="todo">
 <div class="mascara-eng">
-  <input type="file" accept=".txt" on-read-file="cargarNeuronas($fileContent)"/>
+  <input type="file" accept=".txt" on-read-file="LoadNeurons($fileContent)"/>
 </div>
 <br><br>
 <div id="especificaciones-eng" ng-show = "checked">
