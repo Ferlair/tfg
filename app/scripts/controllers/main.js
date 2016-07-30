@@ -12,10 +12,10 @@ angular
 
   .controller('MainCtrl',['$scope','grafoFactory', function($scope, grafoFactory){
 
-    //Variable destinada a almacenar el json con información de nodos y aristas
+    //Stores the json to create the graph
     var jsonCopy;
 
-    //Almacenamiento del número de neuronas de cada tipo
+    //Stores the neuron quantity of each type
     var numeroMosey = 0;
     var numeroGranulle = 0;
     var numeroPurkinje = 0;
@@ -24,7 +24,7 @@ angular
     var numeroIo = 0;
     var numeroTotalNeuronas = 0;
 
-    //Arrays para almacenar las neuronas de cada tipo
+    //Stores the neurons of each type
     var arrayMosey = [];
     var arrayGranulle = [];
     var arrayPurkinje = [];
@@ -44,6 +44,7 @@ angular
     var arrayConexionesD = [];
     var arrayConexionesE = [];
 
+    //Info about the total neurons of eacht type to display
     var infoTotal = 0;
     var infoMossy = 0;
     var infoGranulle = 0;
@@ -52,9 +53,11 @@ angular
     var infoGolgi = 0;
     var infoIO = 0;
 
+    //Language selected, spanish by default
     grafoFactory.spanish=true;
     grafoFactory.english=false;
 
+    //active the slider for choosing visualization, afther the file is correctly loaded
     $scope.activarVisualizaciones = function() {
       document.getElementById('color-esp').style.display = 'inline';
       document.getElementById('bn-esp').style.display = 'none';
@@ -62,6 +65,7 @@ angular
       document.getElementById('bn-eng').style.display = 'none';
     }
 
+    //Initially, the visualization's slider if deactivate, until a file with neuron data is loaded
     $scope.desactivarVisualizaciones = function() {
       document.getElementById('color-esp').style.display = 'none';
       document.getElementById('bn-esp').style.display = 'inline';
@@ -69,8 +73,10 @@ angular
       document.getElementById('bn-eng').style.display = 'inline';
     }
 
+    //Default deactivation for visualization slider
     $scope.desactivarVisualizaciones();
 
+    //If spanish language is selected, show all the info in spanish
     $scope.esp = function() {
       grafoFactory.spanish = true;
       grafoFactory.english = false;
@@ -78,6 +84,7 @@ angular
       document.getElementById('idioma-esp').style.display = "inline";
     }
 
+    //If english language is selected, showw all the info in english
     $scope.eng = function() {
       grafoFactory.spanish = false;
       grafoFactory.english = true;
@@ -85,27 +92,32 @@ angular
       document.getElementById('idioma-eng').style.display = "inline";
     }
 
+    //Conversion of a component to an hexadecimal value
     $scope.componenteAHex = function(componente) {
       var cambio = componente.toString(16);
       return cambio.length == 1 ? "0" + cambio : cambio;
     }
 
+    //Conversion from RGB to Hex
     $scope.hexARGB = function(r,g,b) {
       var color = "#" + $scope.componenteAHex(r) + $scope.componenteAHex(g) + $scope.componenteAHex(b);
       return color;
     }
 
+    //Return the interpolation level to get the accuracy color
     $scope.obtenerNivelInterpolacion = function(peso, pesoMax, pesoMin) {
 
-      //Primer paso: al peso máximo y al peso a comparar les restamos el peso mínimo
-      //De esta forma podemos hallar el porcentaje proporcional correcto si el peso mínimo es distinto de cero
+      //First step: max weigth and weigth to compare, are subtracted the minimun one
+      //This way its possible to find the correct proportional % if the min weigth is different from zero
       pesoMax = pesoMax - pesoMin;
       peso = peso - pesoMin;
 
+      //Finally, its divided by 100 to get a value between 0 and 1
       var aux = Math.round((peso * 100) / pesoMax);
       return aux/100;
     }
 
+    //Create the color interpolation
     $scope.interpolar = function(ratio, minR, minG, minB, maxR, maxG, maxB) {
 
       var r;
@@ -123,13 +135,14 @@ angular
       return [r,g,b];
     }
 
-
+    //Get the color for an edge
     $scope.getColor = function(peso, tipoOrigen, tipoDestino, origen, destino, arrayNeuronal) {
       var color;
       var ocultar = true;
 
-      //Conexiones con origen Mossey
+      //Synapses with Mossy origin
       if (tipoOrigen=='0') {
+        //Synapses Mossy-Granulle
         if (tipoDestino=='1') {
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('A');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('A');
@@ -151,12 +164,9 @@ angular
 
           arrayConexionesA.push(obj);
           repetidoOrigen = arrayNeuronasA.indexOf(origen);
-
-          //if (repetidoOrigen == -1)
           arrayNeuronasA.push(origen);
 
           repetidoDestino = arrayNeuronasA.indexOf(destino);
-          //if (repetidoDestino == -1)
           arrayNeuronasA.push(destino);
 
           var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
@@ -164,6 +174,7 @@ angular
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
+        //Synapses Mossy-Golgi
         if (tipoDestino == '4') {
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('B');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('B');
@@ -185,12 +196,9 @@ angular
 
           arrayConexionesB.push(obj);
           repetidoOrigen = arrayNeuronasB.indexOf(origen);
-
-          //if (repetidoOrigen == -1)
           arrayNeuronasB.push(origen);
 
           repetidoDestino = arrayNeuronasB.indexOf(destino);
-          //if (repetidoDestino == -1)
           arrayNeuronasB.push(destino);
 
           var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
@@ -200,8 +208,9 @@ angular
         }
       }
 
-      //Conexiones con origen Granulle
+      //Synapses with Granulle origin
       if (tipoOrigen == '1') {
+        //Synapses Granulle-Golgi
         if (tipoDestino == '4'){
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('C');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('C');
@@ -223,12 +232,9 @@ angular
 
           arrayConexionesC.push(obj);
           repetidoOrigen = arrayNeuronasC.indexOf(origen);
-
-          //if (repetidoOrigen == -1)
           arrayNeuronasC.push(origen);
 
           repetidoDestino = arrayNeuronasC.indexOf(destino);
-          //if (repetidoDestino == -1)
           arrayNeuronasC.push(destino);
           var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
           var interpolado = $scope.interpolar(ratio, 26, 0, 255, 0, 0, 72);
@@ -237,8 +243,9 @@ angular
         }
       }
 
-      //Conexiones con origen Golgi
+      //Synapses with Golgi origin
       if (tipoOrigen == '4') {
+        //Synapses Golgi-Granulle
         if (tipoDestino == '1') {
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('D');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('D');
@@ -260,18 +267,16 @@ angular
 
           arrayConexionesD.push(obj);
           repetidoOrigen = arrayNeuronasD.indexOf(origen);
-
-          //if (repetidoOrigen == -1)
           arrayNeuronasD.push(origen);
 
           repetidoDestino = arrayNeuronasD.indexOf(destino);
-          //if (repetidoDestino == -1)
           arrayNeuronasD.push(destino);
           var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
           var interpolado = $scope.interpolar(ratio,255, 0, 0, 72, 0, 0);
           color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
+        //Synapses Golgi-Golgi
         if (tipoDestino == '4') {
           var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('E');
           var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('E');
@@ -293,12 +298,9 @@ angular
 
           arrayConexionesE.push(obj);
           repetidoOrigen = arrayNeuronasE.indexOf(origen);
-
-          //if (repetidoOrigen == -1)
           arrayNeuronasE.push(origen);
 
           repetidoDestino = arrayNeuronasE.indexOf(destino);
-          //if (repetidoDestino == -1)
           arrayNeuronasE.push(destino);
           var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
           var interpolado = $scope.interpolar(ratio,255, 154, 0, 81, 55, 0);
@@ -310,10 +312,10 @@ angular
       return [color, ocultar];
     }
 
+    //Show the neuron info after loading the neuron file
     $scope.escribirDatos = function(){
 
-
-
+      //Show in spanish if active
       var div =  document.getElementById('especificaciones-esp');
 
       div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
@@ -332,7 +334,7 @@ angular
       div.innerHTML = div.innerHTML + '<br><br>';
       div.innerHTML = div.innerHTML + '<b>Neuronas tipo IO: </b>' + infoIO;
 
-
+      //Show in english if active
       var div =  document.getElementById('especificaciones-eng');
 
       div.innerHTML = div.innerHTML + 'Loaded data info:';
@@ -356,6 +358,7 @@ angular
       $scope.activarVisualizaciones();
     }
 
+    //Remove the old info to set the new one at display
     $scope.reiniciarInfo = function() {
       var nodoABorrar = document.getElementById('especificaciones-esp');
         while (nodoABorrar.firstChild) {
@@ -376,7 +379,7 @@ angular
         infoIO = 0;
     }
 
-    //Función que se encarga de asignar un color a cada una de las aristas del json
+    //Get the color of the edges
     $scope.colorearAristas = function(arrayNeuronal) {
       var color;
       var origen;
@@ -415,15 +418,16 @@ angular
       }
     }
 
+    //Generate the JSON which let the creation of the graph
     $scope.generarJSON = function(arrayNeuronal) {
 
         var nombreArista = 0;
         var index=0;
 
-        //Creación del objeto json que alberga la información de nodos y aristas a dibujar
+        //Creation of the json object which stores the node and edge info
         var jsonObj = { nodes: [{}], edges: [{}]};
 
-        //Proporciona valores por defecto a la variable nodo usada en el bucle
+        //Gives the default values to the node variable
         function getNodo() {
           return {
             id: "",
@@ -434,7 +438,7 @@ angular
           }
         };
 
-        //Proporciona valores por defecto a la variable arista usada en el bucle
+        //Gives the default values to the edge variable
         function getAristas() {
           return {
             id: "",
@@ -443,11 +447,11 @@ angular
           }
         };
 
-        //Creación del lienzo inicial
+        //Creates the initial visualization json
         for (var i=0; i<arrayNeuronal.length; i++) {
           var nodo = getNodo();
 
-          //Mosey Fibers
+          //Mossy Fibers
           if (arrayNeuronal[i].tipo == '0') {
             arrayMosey.push(arrayNeuronal[i].id);
             nodo.id = "n"+arrayNeuronal[i].id;
@@ -668,7 +672,7 @@ angular
         $scope.cleanEdges(arrayNeuronal);
     }
 
-    //Elimina neuronas que sólo tiene enlace consigo mismas
+    //Remove neurons which only connecton is with themselves
     $scope.cleanEdges = function(arrayNeuronal){
       for (var i=0; i<arrayNeuronal.length;i++) {
         if (arrayNeuronal[i].destino.length == 1) {
@@ -680,6 +684,7 @@ angular
       }
     }
 
+    //Counts all the neurons of each type and in total
     $scope.getInfo = function(arrayNeuronal){
       for (var i=0;i<arrayNeuronal.length; i++) {
         switch(arrayNeuronal[i].tipo) {
@@ -737,8 +742,7 @@ angular
       return extension;
     }*/
 
-    //Entrada: fichero de texto con datos neuronales
-    //Salida:
+    //Load all the info from the neuron file
     $scope.cargarNeuronas = function($fileContent) {
       var lineas = $fileContent.split("\n");
       var lineasLeidas = new Array();
@@ -759,12 +763,10 @@ angular
       for (var j=0; j<lineas.length; j++) {
         var aux = lineas[j].replace(/\s+/g, " ");
 
-        //Debemos detectar si en la línea que se está leyendo hay alguna coma para sustituirla por un punto y poder realizar los cálculos
-        //en coma flotante
+        //Check if there any comma at the string, and its replaced if is the case, for float operations
         aux = aux.replace(/,/g,".");
 
-        //Generalmente, cuando se crea un .txt con excel, deja un salto de línea final que nos daría un error de lectura
-        //Con esta comprobación, eliminamos ese problema
+        //Check if there is a final line break to avoid errors
         if (aux != "") {
           lineasLeidas.push(aux);
         }
@@ -780,35 +782,35 @@ angular
         peso[i] = palabrasPorLineas[6];
       }
 
-      //Obtenemos el número total de neuronas que contiene el archivo
+      //Get the total neuron number in the file
       grafoFactory.numeroTotalNeuronas = $scope.obtenerNumeroNeuronas(origen,destino);
 
-      //Inicializamos el array con un valor para cada una de las neuronas que hay en el fichero
-      //El valor inicial es de id igual al número de neurona, destino la propia neurona y peso 0
+      //Initializes array with a default value for all the neurons in the file
+      //Initial value is ID equal to the neuron number, target the same neuron and weigth '0'
       arrayNeuronal = $scope.inicializarArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
 
 
 
-      //A continuación se lee una a una cada neurona y se agrega su neurona de destino y un peso
+      //Reading one by one each neuron and adding their target neuron and weigth
       for (var j=0; j<destino.length; j++) {
         var elementoRepetido = arrayNeuronal[origen[j]].destino.indexOf(destino[j]);
         if (elementoRepetido==-1) {
           var p = peso[j];
           arrayNeuronal[origen[j]].peso.push(p.toString());
-          arrayNeuronal[origen[j]].destino.push(destino[j]); //Se agrega el destino
+          arrayNeuronal[origen[j]].destino.push(destino[j]); //Adding target
           var tipoAux = $scope.encontrarTipoNeurona(destino[j],origen, tipo);
-          arrayNeuronal[origen[j]].tipoDestino.push(tipoAux); //Se agrega el tipo de neurona de destino
+          arrayNeuronal[origen[j]].tipoDestino.push(tipoAux); //Adding type target
         }
       }
 
-      //Asignación del tipo de neurona
+      //Getting neuron type
       for (var i=0; i<origen.length; i++) {
         var auxTipo = tipo[i];
         var auxPos = origen[i];
 
-        //Inicialmente cada neurona no tiene un tipo asignado, se inicializa
-        //con el primer valor que encuentra como tipo, mientras que rechaza los siguientes
-        //para evitar múltiples valores para el tipo para la misma neurona
+        //Initially each neuron has no type assigned, so it is given the first value founded as type, while
+        //if there were any other type in the file (which would be an error in the file data)
+        //the next are rejected to avoid multiple values for the type of the same neuron ()
         if (arrayNeuronal[auxPos].tipo == '-') {
 
           arrayNeuronal[auxPos].tipo = auxTipo;
@@ -817,14 +819,14 @@ angular
 
       $scope.getInfo(arrayNeuronal);
 
-      //Las neuronas que no tenían un tipo asignado en el fichero reciben el valor 0 por defecto
+
       for (var i=0; i<(arrayNeuronal.length); i++) {
         var pesoPorDefecto = 0;
         if (arrayNeuronal[i].tipo == '-')
           arrayNeuronal[i].tipo = pesoPorDefecto.toString();
       }
 
-      //PRUEBA PARA ESDESTINO
+      //Getting the neurons whose the present neuron is a target
       for (var i=0;i<arrayNeuronal.length;i++) {
         $scope.buscarEsDestino(arrayNeuronal, i);
       }
@@ -844,7 +846,7 @@ angular
       $scope.generarJSON(arrayNeuronal);
     }
 
-    //Busca las neuronas de las cuales la neurona id es destino
+    //Get the neurons whose the present neuron is a target
     $scope.buscarEsDestino = function(arrayNeuronal, id) {
       for (var i=0;i<arrayNeuronal.length;i++){
         for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
@@ -856,6 +858,7 @@ angular
       }
     }
 
+    //Get the minimun weigth readed in the file
     $scope.getMinPeso = function(arrayNeuronal, tipo) {
       var min = 0;
 
@@ -871,6 +874,7 @@ angular
       return min;
     }
 
+    //Get the maximun weigth readed in the file
     $scope.getMaxPeso = function(arrayNeuronal, tipo) {
       var max = 0;
 
@@ -889,6 +893,7 @@ angular
       return max;
     }
 
+    //Find the type of a selected neuron
     $scope.encontrarTipoNeurona = function(neuronaDestino, origen, tipo) {
       var tipoDevuelto;
       for (var i=0; i<origen.length; i++) {
@@ -898,8 +903,7 @@ angular
       return tipoDevuelto;
     }
 
-    //Se obtiene el número de neurona más alto, teniendo en cuenta tanto las neuronas de origen como de destino
-    //de esta manera, se inicializará el array con los valores de id del 0 al número más alto obtenido en esta función
+    //Search for the maximum neuron value in the file (source or target)
     $scope.obtenerNumeroNeuronas = function(origen,destino) {
       var maximoOrigen = Math.max.apply(null,origen);
       var maximoDestino = Math.max.apply(null,destino);
@@ -908,7 +912,8 @@ angular
       return max;
     }
 
-    //Debemos crear una celda del array para cada una de las neuronas, con valores iniciales por defecto
+    //Gives the initial values
+    //It is created a cell for each of the neurons
     $scope.inicializarArray = function(limite, arrayNeuronal, x, y) {
       var tipoPorDefecto = '-';
       for (var i=0; i<limite; i++) {
@@ -933,4 +938,3 @@ angular
     }
 
   }])
-saveArrayGranulle

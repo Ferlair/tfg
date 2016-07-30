@@ -12,6 +12,7 @@ angular
 
   .controller ('circularCtrl', ['$scope','grafoFactory', function($scope, grafoFactory){
 
+    //Store each neuron type at the HTML DOM
     var mosey = document.getElementById('1');
     var granulle = document.getElementById('2');
     var purkinje = document.getElementById('3');
@@ -19,18 +20,24 @@ angular
     var golgi = document.getElementById('5');
     var io = document.getElementById('6');
 
+    //Store each synapse type at the HTML DOM
     var mfgr = document.getElementById('MFGR');
     var mfgo = document.getElementById('MFGO');
     var grgo = document.getElementById('GRGO');
     var gogr = document.getElementById('GOGR');
     var gogo = document.getElementById('GOGO');
 
-
+    //Stores the json file that creates the graph
     var jsonCopy;
-    var arrayNeuronal;
-    var arrayAux = new Array();
 
-    //arrays auxiliares para cada uno de los tipos de neuronas
+    //Stores all the information about the neurons in the file and their info
+    var arrayNeuronal;
+
+    //This array is used to store information about the neurons to visualize
+    //in a range selected in individual selection
+    var arrayRange = new Array();
+
+    //aux arrays for each neuron type
     var arrayMosey;
     var arrayGranulle;
     var arrayPurkinje;
@@ -38,17 +45,13 @@ angular
     var arrayGolgi;
     var arrayIO;
 
+    //Stores a counter for each neuron to avoid hiding errors with several filters
     var arrayContadorNeuronas = new Array();
 
     //Stats info
     var arrayInfo = new Array();
 
-
-    /*$scope.dn = grafoFactory.d;*/
-
-
-
-
+    //Get all the initial references from grafoFactory
     $scope.getReferences = function() {
 
       grafoFactory.iteracionesMosey = grafoFactory.numeroMosey;
@@ -98,7 +101,12 @@ angular
       return a;
     }
 
-    //Initializes the connections array, where each array represents the synapse type
+    //Initializes the connections array, where each array represents a synapse type, being:
+    //arrayConexionesA: stores all the synapses between Mossy-Granulle neurons
+    //arrayConexionesB: stores all the synapses between Mossy-Golgi neurons
+    //arrayConexionesC: stores all the synapses between Granulle-Golgi neurons
+    //arrayConexionesD: stores all the synapses between Golgi-Granulle neurons
+    //arrayConexionesE: stores all the synapses between Golgi-Golgi neurons
     $scope.initConnectionsArray = function(arrayConexion) {
       for (var i=0;i<grafoFactory.numeroTotalNeuronas;i++) {
         arrayConexion[i]=0;
@@ -752,8 +760,8 @@ angular
       }
 
       //The array of selections is empty
-      while(arrayAux.length > 0) {
-        arrayAux.pop();
+      while(arrayRange.length > 0) {
+        arrayRange.pop();
       }
 
       var arrayPrueba = new Array();
@@ -1363,7 +1371,7 @@ angular
                 auxN = auxN.split(',');
                 for (var j=0; j<auxN.length;j++) {
                   var auxJ = auxN[j];
-                  arrayAux.push(auxJ);
+                  arrayRange.push(auxJ);
                 }
 
             }
@@ -1372,8 +1380,8 @@ angular
               jsonCopy.nodes[i].hidden = true;
             }
 
-            for (var i=0; i<arrayAux.length;i++) {
-              var aux = parseInt(arrayAux[i]);
+            for (var i=0; i<arrayRange.length;i++) {
+              var aux = parseInt(arrayRange[i]);
               jsonCopy.nodes[aux].hidden=false;
             }
             refresh();
@@ -1450,7 +1458,7 @@ angular
           auxN = auxN.split(',');
           for (var j=0; j<auxN.length;j++) {
             var auxJ = auxN[j];
-            arrayAux.push(auxJ);
+            arrayRange.push(auxJ);
           }
 
       }
@@ -1459,8 +1467,8 @@ angular
         jsonCopy.nodes[i].hidden = true;
       }
 
-      for (var i=0; i<arrayAux.length;i++) {
-        var aux = parseInt(arrayAux[i]);
+      for (var i=0; i<arrayRange.length;i++) {
+        var aux = parseInt(arrayRange[i]);
         jsonCopy.nodes[aux].hidden=false;
       }
       refresh();
