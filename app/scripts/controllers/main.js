@@ -847,26 +847,26 @@ angular
     }
 
     //Get the neurons whose the present neuron is a target
-    $scope.findIsTarget = function(arrayNeuronal, id) {
-      for (var i=0;i<arrayNeuronal.length;i++){
-        for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
-          var destino = arrayNeuronal[i].destino[j];
-          if ((destino == id) && (id != arrayNeuronal[i].id)) {
-            arrayNeuronal[id].esDestino.push(arrayNeuronal[i].id);
+    $scope.findIsTarget = function(neuronalArray, id) {
+      for (var i=0;i<neuronalArray.length;i++){
+        for (var j=0; j<neuronalArray[i].destino.length;j++) {
+          var destino = neuronalArray[i].destino[j];
+          if ((destino == id) && (id != neuronalArray[i].id)) {
+            neuronalArray[id].esDestino.push(neuronalArray[i].id);
           }
         }
       }
     }
 
     //Get the minimun weigth readed in the file
-    $scope.getMinWeigth = function(arrayNeuronal, tipo) {
+    $scope.getMinWeigth = function(neuronalArray, type) {
       var min = 0;
 
-      for (var i=0; i<arrayNeuronal.length; i++) {
-        if (arrayNeuronal[i].tipo == tipo) {
-          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
-            var minTipo = Math.min.apply(null,arrayNeuronal[i].peso);
-            min = Math.min(min, minTipo);
+      for (var i=0; i<neuronalArray.length; i++) {
+        if (neuronalArray[i].type == type) {
+          for (var j=0; j<neuronalArray[i].peso.length; j++) {
+            var minType = Math.min.apply(null,neuronalArray[i].peso);
+            min = Math.min(min, minType);
           }
         }
       }
@@ -875,16 +875,16 @@ angular
     }
 
     //Get the maximun weigth readed in the file
-    $scope.getMaxWeigth = function(arrayNeuronal, tipo) {
+    $scope.getMaxWeigth = function(neuronalArray, type) {
       var max = 0;
 
-      for (var i=0; i<arrayNeuronal.length; i++) {
+      for (var i=0; i<neuronalArray.length; i++) {
 
-        if (arrayNeuronal[i].tipo == tipo) {
+        if (neuronalArray[i].type == type) {
 
-          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
-            var maxTipo = Math.max.apply(null,arrayNeuronal[i].peso);
-            max = Math.max(max,maxTipo);
+          for (var j=0; j<neuronalArray[i].peso.length; j++) {
+            var maxType = Math.max.apply(null,neuronalArray[i].peso);
+            max = Math.max(max,maxType);
           }
 
         }
@@ -894,47 +894,47 @@ angular
     }
 
     //Find the type of a selected neuron
-    $scope.findNeuronType = function(neuronaDestino, origen, tipo) {
-      var tipoDevuelto;
-      for (var i=0; i<origen.length; i++) {
-        if (neuronaDestino == origen[i])
-          tipoDevuelto = tipo[i];
+    $scope.findNeuronType = function(targetNeuron, source, type) {
+      var typeReturned;
+      for (var i=0; i<source.length; i++) {
+        if (targetNeuron == source[i])
+          typeReturned = type[i];
       }
-      return tipoDevuelto;
+      return typeReturned;
     }
 
     //Search for the maximum neuron value in the file (source or target)
-    $scope.getNeuronNumber = function(origen,destino) {
-      var maximoOrigen = Math.max.apply(null,origen);
-      var maximoDestino = Math.max.apply(null,destino);
-      var max = Math.max(maximoOrigen, maximoDestino);
+    $scope.getNeuronNumber = function(source,target) {
+      var maxSource = Math.max.apply(null,source);
+      var maxTarget = Math.max.apply(null,target);
+      var max = Math.max(maxSource, maxTarget);
       max++;
       return max;
     }
 
     //Gives the initial values
     //It is created a cell for each of the neurons
-    $scope.initializeArray = function(limite, arrayNeuronal, x, y) {
-      var tipoPorDefecto = '-';
-      for (var i=0; i<limite; i++) {
-        var neurona = new Array();
-        var pesoInicial = 0;
-        neurona.destino = [];
-        neurona.peso = [];
-        neurona.tipoDestino = [];
-        neurona.tipoConexion = [];
-        neurona.esDestino = [];
-        neurona.id = i.toString();
-        neurona.destino.push(i.toString());
-        neurona.peso.push(pesoInicial.toString());
-        neurona.tipoDestino.push(tipoPorDefecto.toString());
-        neurona.tipo = '-';
-        neurona.x = x[i];
-        if (neurona.x == null)
-          neurona.x = 0;
-        arrayNeuronal.push(neurona);
+    $scope.initializeArray = function(limit, neuronalArray, x, y) {
+      var defaultType = '-';
+      for (var i=0; i<limit; i++) {
+        var neuron = new Array();
+        var initialWeigth = 0;
+        neuron.destino = [];
+        neuron.peso = [];
+        neuron.tipoDestino = [];
+        neuron.tipoConexion = [];
+        neuron.esDestino = [];
+        neuron.id = i.toString();
+        neuron.destino.push(i.toString());
+        neuron.peso.push(initialWeigth.toString());
+        neuron.tipoDestino.push(defaultType.toString());
+        neuron.tipo = '-';
+        neuron.x = x[i];
+        if (neuron.x == null)
+          neuron.x = 0;
+        neuronalArray.push(neuron);
       }
-      return arrayNeuronal;
+      return neuronalArray;
     }
 
   }])
