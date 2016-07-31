@@ -58,7 +58,7 @@ angular
     grafoFactory.english=false;
 
     //active the slider for choosing visualization, afther the file is correctly loaded
-    $scope.activarVisualizaciones = function() {
+    $scope.activateVisualization = function() {
       document.getElementById('color-esp').style.display = 'inline';
       document.getElementById('bn-esp').style.display = 'none';
       document.getElementById('color-eng').style.display = 'inline';
@@ -66,7 +66,7 @@ angular
     }
 
     //Initially, the visualization's slider if deactivate, until a file with neuron data is loaded
-    $scope.desactivarVisualizaciones = function() {
+    $scope.deactivateVisualization = function() {
       document.getElementById('color-esp').style.display = 'none';
       document.getElementById('bn-esp').style.display = 'inline';
       document.getElementById('color-eng').style.display = 'none';
@@ -74,7 +74,7 @@ angular
     }
 
     //Default deactivation for visualization slider
-    $scope.desactivarVisualizaciones();
+    $scope.deactivateVisualization();
 
     //If spanish language is selected, show all the info in spanish
     $scope.esp = function() {
@@ -93,19 +93,19 @@ angular
     }
 
     //Conversion of a component to an hexadecimal value
-    $scope.componenteAHex = function(componente) {
+    $scope.componentToHex = function(componente) {
       var cambio = componente.toString(16);
       return cambio.length == 1 ? "0" + cambio : cambio;
     }
 
     //Conversion from RGB to Hex
-    $scope.hexARGB = function(r,g,b) {
-      var color = "#" + $scope.componenteAHex(r) + $scope.componenteAHex(g) + $scope.componenteAHex(b);
+    $scope.hexToRGB = function(r,g,b) {
+      var color = "#" + $scope.componentToHex(r) + $scope.componentToHex(g) + $scope.componentToHex(b);
       return color;
     }
 
     //Return the interpolation level to get the accuracy color
-    $scope.obtenerNivelInterpolacion = function(peso, pesoMax, pesoMin) {
+    $scope.GetInterpolationLevel = function(peso, pesoMax, pesoMin) {
 
       //First step: max weigth and weigth to compare, are subtracted the minimun one
       //This way its possible to find the correct proportional % if the min weigth is different from zero
@@ -118,7 +118,7 @@ angular
     }
 
     //Create the color interpolation
-    $scope.interpolar = function(ratio, minR, minG, minB, maxR, maxG, maxB) {
+    $scope.interpolate = function(ratio, minR, minG, minB, maxR, maxG, maxB) {
 
       var r;
       var g;
@@ -169,9 +169,9 @@ angular
           repetidoDestino = arrayNeuronasA.indexOf(destino);
           arrayNeuronasA.push(destino);
 
-          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
-          var interpolado = $scope.interpolar(ratio, 247, 0, 255, 72, 0, 66);
-          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
+          var interpolado = $scope.interpolate(ratio, 247, 0, 255, 72, 0, 66);
+          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
         //Synapses Mossy-Golgi
@@ -201,9 +201,9 @@ angular
           repetidoDestino = arrayNeuronasB.indexOf(destino);
           arrayNeuronasB.push(destino);
 
-          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
-          var interpolado = $scope.interpolar(ratio, 64, 255, 0, 7, 72, 0);
-          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
+          var interpolado = $scope.interpolate(ratio, 64, 255, 0, 7, 72, 0);
+          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
       }
@@ -236,9 +236,9 @@ angular
 
           repetidoDestino = arrayNeuronasC.indexOf(destino);
           arrayNeuronasC.push(destino);
-          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
-          var interpolado = $scope.interpolar(ratio, 26, 0, 255, 0, 0, 72);
-          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
+          var interpolado = $scope.interpolate(ratio, 26, 0, 255, 0, 0, 72);
+          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
       }
@@ -271,9 +271,9 @@ angular
 
           repetidoDestino = arrayNeuronasD.indexOf(destino);
           arrayNeuronasD.push(destino);
-          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
-          var interpolado = $scope.interpolar(ratio,255, 0, 0, 72, 0, 0);
-          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
+          var interpolado = $scope.interpolate(ratio,255, 0, 0, 72, 0, 0);
+          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
         //Synapses Golgi-Golgi
@@ -302,9 +302,9 @@ angular
 
           repetidoDestino = arrayNeuronasE.indexOf(destino);
           arrayNeuronasE.push(destino);
-          var ratio = $scope.obtenerNivelInterpolacion(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
-          var interpolado = $scope.interpolar(ratio,255, 154, 0, 81, 55, 0);
-          color = $scope.hexARGB(interpolado[0],interpolado[1],interpolado[2]);
+          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
+          var interpolado = $scope.interpolate(ratio,255, 154, 0, 81, 55, 0);
+          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
           ocultar = false;
         }
       }
@@ -313,7 +313,7 @@ angular
     }
 
     //Show the neuron info after loading the neuron file
-    $scope.escribirDatos = function(){
+    $scope.writeData = function(){
 
       //Show in spanish if active
       var div =  document.getElementById('especificaciones-esp');
@@ -355,11 +355,11 @@ angular
 
 
       $scope.checked = true;
-      $scope.activarVisualizaciones();
+      $scope.activateVisualization();
     }
 
     //Remove the old info to set the new one at display
-    $scope.reiniciarInfo = function() {
+    $scope.reloadData = function() {
       var nodoABorrar = document.getElementById('especificaciones-esp');
         while (nodoABorrar.firstChild) {
             nodoABorrar.removeChild(nodoABorrar.firstChild);
@@ -380,7 +380,7 @@ angular
     }
 
     //Get the color of the edges
-    $scope.colorearAristas = function(arrayNeuronal) {
+    $scope.colorEdges = function(arrayNeuronal) {
       var color;
       var origen;
       var destino;
@@ -419,7 +419,7 @@ angular
     }
 
     //Generate the JSON which let the creation of the graph
-    $scope.generarJSON = function(arrayNeuronal) {
+    $scope.generateJSON = function(arrayNeuronal) {
 
         var nombreArista = 0;
         var index=0;
@@ -428,7 +428,7 @@ angular
         var jsonObj = { nodes: [{}], edges: [{}]};
 
         //Gives the default values to the node variable
-        function getNodo() {
+        function getNode() {
           return {
             id: "",
             label: "",
@@ -439,7 +439,7 @@ angular
         };
 
         //Gives the default values to the edge variable
-        function getAristas() {
+        function getEdges() {
           return {
             id: "",
             source: "",
@@ -449,7 +449,7 @@ angular
 
         //Creates the initial visualization json
         for (var i=0; i<arrayNeuronal.length; i++) {
-          var nodo = getNodo();
+          var nodo = getNode();
 
           //Mossy Fibers
           if (arrayNeuronal[i].tipo == '0') {
@@ -467,7 +467,7 @@ angular
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
+              var arista = getEdges();
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
@@ -499,7 +499,7 @@ angular
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
+              var arista = getEdges();
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
@@ -532,7 +532,7 @@ angular
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
+              var arista = getEdges();
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
@@ -565,7 +565,7 @@ angular
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
+              var arista = getEdges();
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
@@ -598,7 +598,7 @@ angular
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
+              var arista = getEdges();
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
@@ -631,7 +631,7 @@ angular
             jsonObj.nodes[i] = nodo;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getAristas();
+              var arista = getEdges();
               arista.source="n"+arrayNeuronal[i].id;
               arista.target="n"+arrayNeuronal[i].destino[j];
               arista.id="e"+ arista.source+'+'+arista.target;
@@ -660,7 +660,7 @@ angular
           jsonCopy.edges[i].hidden = false;
         }
 
-        $scope.escribirDatos();
+        $scope.writeData();
         grafoFactory.saveArrayMossy(arrayMosey);
         grafoFactory.saveArrayGranulle(arrayGranulle);
         grafoFactory.saveArrayPurkinje(arrayPurkinje);
@@ -668,7 +668,7 @@ angular
         grafoFactory.saveArrayGolgi(arrayGolgi);
         grafoFactory.saveArrayIO(arrayIO);
         grafoFactory.saveJSON(jsonCopy);
-        $scope.colorearAristas(arrayNeuronal);
+        $scope.colorEdges(arrayNeuronal);
         $scope.cleanEdges(arrayNeuronal);
     }
 
@@ -743,7 +743,7 @@ angular
     }*/
 
     //Load all the info from the neuron file
-    $scope.cargarNeuronas = function($fileContent) {
+    $scope.loadNeurons = function($fileContent) {
       var lineas = $fileContent.split("\n");
       var lineasLeidas = new Array();
       var palabrasPorLineas;
@@ -757,7 +757,7 @@ angular
       var tipoDestino = [];
       var tipoConexion = [];
 
-      $scope.reiniciarInfo();
+      $scope.reloadData();
 
 
       for (var j=0; j<lineas.length; j++) {
@@ -783,11 +783,11 @@ angular
       }
 
       //Get the total neuron number in the file
-      grafoFactory.numeroTotalNeuronas = $scope.obtenerNumeroNeuronas(origen,destino);
+      grafoFactory.numeroTotalNeuronas = $scope.getNeuronNumber(origen,destino);
 
       //Initializes array with a default value for all the neurons in the file
       //Initial value is ID equal to the neuron number, target the same neuron and weigth '0'
-      arrayNeuronal = $scope.inicializarArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
+      arrayNeuronal = $scope.initializeArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
 
 
 
@@ -798,7 +798,7 @@ angular
           var p = peso[j];
           arrayNeuronal[origen[j]].peso.push(p.toString());
           arrayNeuronal[origen[j]].destino.push(destino[j]); //Adding target
-          var tipoAux = $scope.encontrarTipoNeurona(destino[j],origen, tipo);
+          var tipoAux = $scope.findNeuronType(destino[j],origen, tipo);
           arrayNeuronal[origen[j]].tipoDestino.push(tipoAux); //Adding type target
         }
       }
@@ -828,58 +828,45 @@ angular
 
       //Getting the neurons whose the present neuron is a target
       for (var i=0;i<arrayNeuronal.length;i++) {
-        $scope.buscarEsDestino(arrayNeuronal, i);
+        $scope.findTarget(arrayNeuronal, i);
       }
-      grafoFactory.maxPesoMossey = $scope.getMaxPeso(arrayNeuronal, 0);
-      grafoFactory.maxPesoGranulle = $scope.getMaxPeso(arrayNeuronal, 1);
-      grafoFactory.maxPesoPurkinje = $scope.getMaxPeso(arrayNeuronal, 2);
-      grafoFactory.maxPesoDCN = $scope.getMaxPeso(arrayNeuronal, 3);
-      grafoFactory.maxPesoGolgi = $scope.getMaxPeso(arrayNeuronal, 4);
-      grafoFactory.maxPesoIO = $scope.getMaxPeso(arrayNeuronal, 5);
-      grafoFactory.minPesoMossey = $scope.getMinPeso(arrayNeuronal, 0);
-      grafoFactory.minPesoGranulle = $scope.getMinPeso(arrayNeuronal, 1);
-      grafoFactory.minPesoPurkinje = $scope.getMinPeso(arrayNeuronal, 2);
-      grafoFactory.minPesoDCN = $scope.getMinPeso(arrayNeuronal, 3);
-      grafoFactory.minPesoGolgi = $scope.getMinPeso(arrayNeuronal, 4);
-      grafoFactory.minPesoIO = $scope.getMinPeso(arrayNeuronal, 5);
+      grafoFactory.maxPesoMossey = $scope.getMaxWeigth(arrayNeuronal, 0);
+      grafoFactory.maxPesoGranulle = $scope.getMaxWeigth(arrayNeuronal, 1);
+      grafoFactory.maxPesoPurkinje = $scope.getMaxWeigth(arrayNeuronal, 2);
+      grafoFactory.maxPesoDCN = $scope.getMaxWeigth(arrayNeuronal, 3);
+      grafoFactory.maxPesoGolgi = $scope.getMaxWeigth(arrayNeuronal, 4);
+      grafoFactory.maxPesoIO = $scope.getMaxWeigth(arrayNeuronal, 5);
+      grafoFactory.minPesoMossey = $scope.getMinWeigth(arrayNeuronal, 0);
+      grafoFactory.minPesoGranulle = $scope.getMinWeigth(arrayNeuronal, 1);
+      grafoFactory.minPesoPurkinje = $scope.getMinWeigth(arrayNeuronal, 2);
+      grafoFactory.minPesoDCN = $scope.getMinWeigth(arrayNeuronal, 3);
+      grafoFactory.minPesoGolgi = $scope.getMinWeigth(arrayNeuronal, 4);
+      grafoFactory.minPesoIO = $scope.getMinWeigth(arrayNeuronal, 5);
       grafoFactory.saveNeuronalArray(arrayNeuronal);
-      $scope.generarJSON(arrayNeuronal);
+      $scope.generateJSON(arrayNeuronal);
     }
 
     //Get the neurons whose the present neuron is a target
-<<<<<<< HEAD
-    $scope.findIsTarget = function(neuronalArray, id) {
-      for (var i=0;i<neuronalArray.length;i++){
-        for (var j=0; j<neuronalArray[i].destino.length;j++) {
-          var destino = neuronalArray[i].destino[j];
-          if ((destino == id) && (id != neuronalArray[i].id)) {
-            neuronalArray[id].esDestino.push(neuronalArray[i].id);
-=======
-    $scope.buscarEsDestino = function(arrayNeuronal, id) {
+    $scope.findTarget = function(arrayNeuronal, id) {
       for (var i=0;i<arrayNeuronal.length;i++){
         for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
           var destino = arrayNeuronal[i].destino[j];
           if ((destino == id) && (id != arrayNeuronal[i].id)) {
             arrayNeuronal[id].esDestino.push(arrayNeuronal[i].id);
->>>>>>> parent of 2d6f23f... -
           }
         }
       }
     }
 
     //Get the minimun weigth readed in the file
-<<<<<<< HEAD
-    $scope.getMinWeigth = function(neuronalArray, type) {
-=======
-    $scope.getMinPeso = function(arrayNeuronal, tipo) {
->>>>>>> parent of 2d6f23f... -
+    $scope.getMinWeigth = function(arrayNeuronal, tipo) {
       var min = 0;
 
-      for (var i=0; i<neuronalArray.length; i++) {
-        if (neuronalArray[i].type == type) {
-          for (var j=0; j<neuronalArray[i].peso.length; j++) {
-            var minType = Math.min.apply(null,neuronalArray[i].peso);
-            min = Math.min(min, minType);
+      for (var i=0; i<arrayNeuronal.length; i++) {
+        if (arrayNeuronal[i].tipo == tipo) {
+          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
+            var minTipo = Math.min.apply(null,arrayNeuronal[i].peso);
+            min = Math.min(min, minTipo);
           }
         }
       }
@@ -888,20 +875,16 @@ angular
     }
 
     //Get the maximun weigth readed in the file
-<<<<<<< HEAD
-    $scope.getMaxWeigth = function(neuronalArray, type) {
-=======
-    $scope.getMaxPeso = function(arrayNeuronal, tipo) {
->>>>>>> parent of 2d6f23f... -
+    $scope.getMaxWeigth = function(arrayNeuronal, tipo) {
       var max = 0;
 
-      for (var i=0; i<neuronalArray.length; i++) {
+      for (var i=0; i<arrayNeuronal.length; i++) {
 
-        if (neuronalArray[i].type == type) {
+        if (arrayNeuronal[i].tipo == tipo) {
 
-          for (var j=0; j<neuronalArray[i].peso.length; j++) {
-            var maxType = Math.max.apply(null,neuronalArray[i].peso);
-            max = Math.max(max,maxType);
+          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
+            var maxTipo = Math.max.apply(null,arrayNeuronal[i].peso);
+            max = Math.max(max,maxTipo);
           }
 
         }
@@ -911,63 +894,27 @@ angular
     }
 
     //Find the type of a selected neuron
-<<<<<<< HEAD
-    $scope.findNeuronType = function(targetNeuron, source, type) {
-      var typeReturned;
-      for (var i=0; i<source.length; i++) {
-        if (targetNeuron == source[i])
-          typeReturned = type[i];
-=======
-    $scope.encontrarTipoNeurona = function(neuronaDestino, origen, tipo) {
+    $scope.findNeuronType = function(neuronaDestino, origen, tipo) {
       var tipoDevuelto;
       for (var i=0; i<origen.length; i++) {
         if (neuronaDestino == origen[i])
           tipoDevuelto = tipo[i];
->>>>>>> parent of 2d6f23f... -
       }
-      return typeReturned;
+      return tipoDevuelto;
     }
 
     //Search for the maximum neuron value in the file (source or target)
-<<<<<<< HEAD
-    $scope.getNeuronNumber = function(source,target) {
-      var maxSource = Math.max.apply(null,source);
-      var maxTarget = Math.max.apply(null,target);
-      var max = Math.max(maxSource, maxTarget);
-=======
-    $scope.obtenerNumeroNeuronas = function(origen,destino) {
+    $scope.getNeuronNumber = function(origen,destino) {
       var maximoOrigen = Math.max.apply(null,origen);
       var maximoDestino = Math.max.apply(null,destino);
       var max = Math.max(maximoOrigen, maximoDestino);
->>>>>>> parent of 2d6f23f... -
       max++;
       return max;
     }
 
     //Gives the initial values
     //It is created a cell for each of the neurons
-<<<<<<< HEAD
-    $scope.initializeArray = function(limit, neuronalArray, x, y) {
-      var defaultType = '-';
-      for (var i=0; i<limit; i++) {
-        var neuron = new Array();
-        var initialWeigth = 0;
-        neuron.destino = [];
-        neuron.peso = [];
-        neuron.tipoDestino = [];
-        neuron.tipoConexion = [];
-        neuron.esDestino = [];
-        neuron.id = i.toString();
-        neuron.destino.push(i.toString());
-        neuron.peso.push(initialWeigth.toString());
-        neuron.tipoDestino.push(defaultType.toString());
-        neuron.tipo = '-';
-        neuron.x = x[i];
-        if (neuron.x == null)
-          neuron.x = 0;
-        neuronalArray.push(neuron);
-=======
-    $scope.inicializarArray = function(limite, arrayNeuronal, x, y) {
+    $scope.initializeArray = function(limite, arrayNeuronal, x, y) {
       var tipoPorDefecto = '-';
       for (var i=0; i<limite; i++) {
         var neurona = new Array();
@@ -986,9 +933,8 @@ angular
         if (neurona.x == null)
           neurona.x = 0;
         arrayNeuronal.push(neurona);
->>>>>>> parent of 2d6f23f... -
       }
-      return neuronalArray;
+      return arrayNeuronal;
     }
 
   }])
