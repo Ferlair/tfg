@@ -16,13 +16,13 @@ angular
     var jsonCopy;
 
     //Stores the neuron quantity of each type
-    var numeroMosey = 0;
-    var numeroGranulle = 0;
-    var numeroPurkinje = 0;
-    var numeroDcn = 0;
-    var numeroGolgi = 0;
-    var numeroIo = 0;
-    var numeroTotalNeuronas = 0;
+    var moseyNumber = 0;
+    var granulleNumber = 0;
+    var purkinjeNumber = 0;
+    var DCNNumber = 0;
+    var golgiNumber = 0;
+    var IONumber = 0;
+    var totalNeuronNumber = 0;
 
     //Stores the neurons of each type
     var arrayMosey = [];
@@ -32,17 +32,17 @@ angular
     var arrayGolgi = [];
     var arrayIO = [];
 
-    var arrayNeuronasA = [];
-    var arrayNeuronasB = [];
-    var arrayNeuronasC = [];
-    var arrayNeuronasD = [];
-    var arrayNeuronasE = [];
+    var ANeuronArray = [];
+    var BNeuronArray = [];
+    var CNeuronArray = [];
+    var DNeuronArray = [];
+    var ENeuronArray = [];
 
-    var arrayConexionesA = [];
-    var arrayConexionesB = [];
-    var arrayConexionesC = [];
-    var arrayConexionesD = [];
-    var arrayConexionesE = [];
+    var ASynapseArray = [];
+    var BSynapseArray = [];
+    var CSynapseArray = [];
+    var DSynapseArray = [];
+    var ESynapseArray = [];
 
     //Info about the total neurons of eacht type to display
     var infoTotal = 0;
@@ -93,9 +93,9 @@ angular
     }
 
     //Conversion of a component to an hexadecimal value
-    $scope.componentToHex = function(componente) {
-      var cambio = componente.toString(16);
-      return cambio.length == 1 ? "0" + cambio : cambio;
+    $scope.componentToHex = function(component) {
+      var change = component.toString(16);
+      return change.length == 1 ? "0" + change : change;
     }
 
     //Conversion from RGB to Hex
@@ -105,15 +105,15 @@ angular
     }
 
     //Return the interpolation level to get the accuracy color
-    $scope.GetInterpolationLevel = function(peso, pesoMax, pesoMin) {
+    $scope.GetInterpolationLevel = function(weigth, weigthMax, weigthMin) {
 
       //First step: max weigth and weigth to compare, are subtracted the minimun one
       //This way its possible to find the correct proportional % if the min weigth is different from zero
-      pesoMax = pesoMax - pesoMin;
-      peso = peso - pesoMin;
+      weigthMax = weigthMax - weigthMin;
+      weigth = weigth - weigthMin;
 
       //Finally, its divided by 100 to get a value between 0 and 1
-      var aux = Math.round((peso * 100) / pesoMax);
+      var aux = Math.round((weigth * 100) / weigthMax);
       return aux/100;
     }
 
@@ -124,13 +124,13 @@ angular
       var g;
       var b;
 
-      var rangoR = (Math.abs(maxR-minR)) * ratio;
-      var rangoG = (Math.abs(maxG-minG)) * ratio;
-      var rangoB = (Math.abs(maxB-minB)) * ratio;
+      var rangeR = (Math.abs(maxR-minR)) * ratio;
+      var rangeG = (Math.abs(maxG-minG)) * ratio;
+      var rangeB = (Math.abs(maxB-minB)) * ratio;
 
-      r = maxR + Math.round(rangoR);
-      g = maxG + Math.round(rangoG);
-      b = maxB + Math.round(rangoB);
+      r = maxR + Math.round(rangeR);
+      g = maxG + Math.round(rangeG);
+      b = maxB + Math.round(rangeB);
 
       return [r,g,b];
     }
@@ -162,12 +162,12 @@ angular
           obj.destino = destino;
           obj.enlace = id;
 
-          arrayConexionesA.push(obj);
-          repetidoOrigen = arrayNeuronasA.indexOf(origen);
-          arrayNeuronasA.push(origen);
+          ASynapseArray.push(obj);
+          repetidoOrigen = ANeuronArray.indexOf(origen);
+          ANeuronArray.push(origen);
 
-          repetidoDestino = arrayNeuronasA.indexOf(destino);
-          arrayNeuronasA.push(destino);
+          repetidoDestino = ANeuronArray.indexOf(destino);
+          ANeuronArray.push(destino);
 
           var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
           var interpolado = $scope.interpolate(ratio, 247, 0, 255, 72, 0, 66);
@@ -194,12 +194,12 @@ angular
           obj.destino = destino;
           obj.enlace = id;
 
-          arrayConexionesB.push(obj);
-          repetidoOrigen = arrayNeuronasB.indexOf(origen);
-          arrayNeuronasB.push(origen);
+          BSynapseArray.push(obj);
+          repetidoOrigen = BNeuronArray.indexOf(origen);
+          BNeuronArray.push(origen);
 
-          repetidoDestino = arrayNeuronasB.indexOf(destino);
-          arrayNeuronasB.push(destino);
+          repetidoDestino = BNeuronArray.indexOf(destino);
+          BNeuronArray.push(destino);
 
           var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
           var interpolado = $scope.interpolate(ratio, 64, 255, 0, 7, 72, 0);
@@ -230,12 +230,12 @@ angular
           obj.destino = destino;
           obj.enlace = id;
 
-          arrayConexionesC.push(obj);
-          repetidoOrigen = arrayNeuronasC.indexOf(origen);
-          arrayNeuronasC.push(origen);
+          CSynapseArray.push(obj);
+          repetidoOrigen = CNeuronArray.indexOf(origen);
+          CNeuronArray.push(origen);
 
-          repetidoDestino = arrayNeuronasC.indexOf(destino);
-          arrayNeuronasC.push(destino);
+          repetidoDestino = CNeuronArray.indexOf(destino);
+          CNeuronArray.push(destino);
           var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
           var interpolado = $scope.interpolate(ratio, 26, 0, 255, 0, 0, 72);
           color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
@@ -265,12 +265,12 @@ angular
           obj.destino = destino;
           obj.enlace = id;
 
-          arrayConexionesD.push(obj);
-          repetidoOrigen = arrayNeuronasD.indexOf(origen);
-          arrayNeuronasD.push(origen);
+          DSynapseArray.push(obj);
+          repetidoOrigen = DNeuronArray.indexOf(origen);
+          DNeuronArray.push(origen);
 
-          repetidoDestino = arrayNeuronasD.indexOf(destino);
-          arrayNeuronasD.push(destino);
+          repetidoDestino = DNeuronArray.indexOf(destino);
+          DNeuronArray.push(destino);
           var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
           var interpolado = $scope.interpolate(ratio,255, 0, 0, 72, 0, 0);
           color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
@@ -296,12 +296,12 @@ angular
           obj.destino = destino;
           obj.enlace = id;
 
-          arrayConexionesE.push(obj);
-          repetidoOrigen = arrayNeuronasE.indexOf(origen);
-          arrayNeuronasE.push(origen);
+          ESynapseArray.push(obj);
+          repetidoOrigen = ENeuronArray.indexOf(origen);
+          ENeuronArray.push(origen);
 
-          repetidoDestino = arrayNeuronasE.indexOf(destino);
-          arrayNeuronasE.push(destino);
+          repetidoDestino = ENeuronArray.indexOf(destino);
+          ENeuronArray.push(destino);
           var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
           var interpolado = $scope.interpolate(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
@@ -360,14 +360,14 @@ angular
 
     //Remove the old info to set the new one at display
     $scope.reloadData = function() {
-      var nodoABorrar = document.getElementById('especificaciones-esp');
-        while (nodoABorrar.firstChild) {
-            nodoABorrar.removeChild(nodoABorrar.firstChild);
+      var nodeToRemove = document.getElementById('especificaciones-esp');
+        while (nodeToRemove.firstChild) {
+            nodeToRemove.removeChild(nodeToRemove.firstChild);
         }
 
-        var nodoABorrar = document.getElementById('especificaciones-eng');
-          while (nodoABorrar.firstChild) {
-              nodoABorrar.removeChild(nodoABorrar.firstChild);
+        var nodeToRemove = document.getElementById('especificaciones-eng');
+          while (nodeToRemove.firstChild) {
+              nodeToRemove.removeChild(nodeToRemove.firstChild);
         }
 
         infoTotal = 0;
@@ -382,38 +382,38 @@ angular
     //Get the color of the edges
     $scope.colorEdges = function(arrayNeuronal) {
       var color;
-      var origen;
-      var destino;
+      var source;
+      var target;
 
       for (var i=1; i<jsonCopy.edges.length; i++) {
-        origen = jsonCopy.edges[i].source.substr(1);
-        destino = jsonCopy.edges[i].target.substr(1);
+        source = jsonCopy.edges[i].source.substr(1);
+        target = jsonCopy.edges[i].target.substr(1);
 
-        if (origen != destino){
-        var posicion=-1;
-        var esta = false;
+        if (source != target){
+        var position =-1;
+        var included = false;
 
-        while (!esta) {
-          posicion++;
-          esta = arrayNeuronal[origen].destino[posicion] == destino;
+        while (!included) {
+          position++;
+          included = arrayNeuronal[source].destino[position] == target;
         }
 
-        var peso = arrayNeuronal[origen].peso[posicion];
-        var tipoOrigen = arrayNeuronal[origen].tipo;
-        var tipoDestino = arrayNeuronal[origen].tipoDestino[posicion];
-        color = $scope.getColor(peso, tipoOrigen, tipoDestino, origen, destino, arrayNeuronal);
+        var weigth = arrayNeuronal[source].peso[position];
+        var sourceType = arrayNeuronal[source].tipo;
+        var targetType = arrayNeuronal[source].tipoDestino[position];
+        color = $scope.getColor(weigth, sourceType, targetType, source, target, arrayNeuronal);
         jsonCopy.edges[i].color = color[0];
         jsonCopy.edges[i].hidden = color[1];
-        grafoFactory.arrayNeuronasA = arrayNeuronasA;
-        grafoFactory.arrayNeuronasB = arrayNeuronasB;
-        grafoFactory.arrayNeuronasC = arrayNeuronasC;
-        grafoFactory.arrayNeuronasD = arrayNeuronasD;
-        grafoFactory.arrayNeuronasE = arrayNeuronasE;
-        grafoFactory.arrayConexionesA = arrayConexionesA;
-        grafoFactory.arrayConexionesB = arrayConexionesB;
-        grafoFactory.arrayConexionesC = arrayConexionesC;
-        grafoFactory.arrayConexionesD = arrayConexionesD;
-        grafoFactory.arrayConexionesE = arrayConexionesE;
+        grafoFactory.arrayNeuronasA = ANeuronArray;
+        grafoFactory.CNeuronArray = BNeuronArray;
+        grafoFactory.arrayNeuronasC = CNeuronArray;
+        grafoFactory.arrayNeuronasD = DNeuronArray;
+        grafoFactory.arrayNeuronasE = ENeuronArray;
+        grafoFactory.arrayConexionesA = ASynapseArray;
+        grafoFactory.arrayConexionesB = BSynapseArray;
+        grafoFactory.arrayConexionesC = CSynapseArray;
+        grafoFactory.arrayConexionesD = DSynapseArray;
+        grafoFactory.arrayConexionesE = ESynapseArray;
       }
       }
     }
@@ -478,8 +478,8 @@ angular
                 jsonObj.edges.push(arista);
               }
             }
-            numeroMosey++;
-            grafoFactory.numeroMosey = numeroMosey;
+            moseyNumber++;
+            grafoFactory.moseyNumber = moseyNumber;
           }
 
           //Granulle Cells
@@ -511,8 +511,8 @@ angular
               }
             }
 
-            numeroGranulle++;
-            grafoFactory.numeroGranulle = numeroGranulle;
+            granulleNumber++;
+            grafoFactory.granulleNumber = granulleNumber;
           }
 
           //Purkinje Cells
@@ -544,8 +544,8 @@ angular
               }
             }
 
-            numeroPurkinje++;
-            grafoFactory.numeroPurkinje = numeroPurkinje;
+            purkinjeNumber++;
+            grafoFactory.purkinjeNumber = purkinjeNumber;
           }
 
           //DCN Cells
@@ -577,8 +577,8 @@ angular
               }
             }
 
-            numeroDcn++;
-            grafoFactory.numeroDcn = numeroDcn;
+            DCNNumber++;
+            grafoFactory.DCNNumber = DCNNumber;
           }
 
           //Golgi Cells
@@ -610,8 +610,8 @@ angular
               }
             }
 
-            numeroGolgi++;
-            grafoFactory.numeroGolgi = numeroGolgi;
+            golgiNumber++;
+            grafoFactory.golgiNumber = golgiNumber;
           }
 
           //IO Cells
@@ -643,14 +643,14 @@ angular
               }
             }
 
-            numeroIo++;
-            grafoFactory.numeroIo = numeroIo;
+            IONumber++;
+            grafoFactory.IONumber = IONumber;
           }
 
 
 
-          numeroTotalNeuronas++;
-          grafoFactory.numeroTotalNeuronas = numeroTotalNeuronas;
+          totalNeuronNumber++;
+          grafoFactory.numeroTotalNeuronas = totalNeuronNumber;
 
         }
 
