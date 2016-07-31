@@ -405,7 +405,7 @@ angular
         jsonCopy.edges[i].color = color[0];
         jsonCopy.edges[i].hidden = color[1];
         grafoFactory.arrayNeuronasA = ANeuronArray;
-        grafoFactory.CNeuronArray = BNeuronArray;
+        grafoFactory.arrayNeuronasB = BNeuronArray;
         grafoFactory.arrayNeuronasC = CNeuronArray;
         grafoFactory.arrayNeuronasD = DNeuronArray;
         grafoFactory.arrayNeuronasE = ENeuronArray;

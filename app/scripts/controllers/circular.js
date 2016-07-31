@@ -46,7 +46,7 @@ angular
     var arrayIO;
 
     //Stores a counter for each neuron to avoid hiding errors with several filters
-    var arrayContadorNeuronas = new Array();
+    var neuronCounterArray = new Array();
 
     //Stats info
     var arrayInfo = new Array();
@@ -81,12 +81,12 @@ angular
     }
 
     //Returns the position of an edge inside graph's json
-    $scope.searchEdge = function (origen, destino){
-      var nombreABuscar = 'en'+origen+'+'+'n'+destino;
+    $scope.searchEdge = function (source, target){
+      var searchingName = 'en'+source+'+'+'n'+target;
       var pos;
       for (var i=0; i<jsonCopy.edges.length; i++) {
         var id= jsonCopy.edges[i].id;
-        if (id == nombreABuscar)
+        if (id == searchingName)
             pos = i;
       }
       return pos;
@@ -107,31 +107,31 @@ angular
     //arrayConexionesC: stores all the synapses between Granulle-Golgi neurons
     //arrayConexionesD: stores all the synapses between Golgi-Granulle neurons
     //arrayConexionesE: stores all the synapses between Golgi-Golgi neurons
-    $scope.initConnectionsArray = function(arrayConexion) {
+    $scope.initConnectionsArray = function(synapseArray) {
       for (var i=0;i<grafoFactory.numeroTotalNeuronas;i++) {
-        arrayConexion[i]=0;
+        synapseArray[i]=0;
       }
       for (var j=0;j<grafoFactory.arrayConexionesA.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesA[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesA[j].destino]++;
+        synapseArray[grafoFactory.arrayConexionesA[j].origen]++;
+        synapseArray[grafoFactory.arrayConexionesA[j].destino]++;
       }
       for (var j=0;j<grafoFactory.arrayConexionesB.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesB[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesB[j].destino]++;
+        synapseArray[grafoFactory.arrayConexionesB[j].origen]++;
+        synapseArray[grafoFactory.arrayConexionesB[j].destino]++;
       }
       for (var j=0;j<grafoFactory.arrayConexionesC.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesC[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesC[j].destino]++;
+        synapseArray[grafoFactory.arrayConexionesC[j].origen]++;
+        synapseArray[grafoFactory.arrayConexionesC[j].destino]++;
       }
       for (var j=0;j<grafoFactory.arrayConexionesD.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesD[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesD[j].destino]++;
+        synapseArray[grafoFactory.arrayConexionesD[j].origen]++;
+        synapseArray[grafoFactory.arrayConexionesD[j].destino]++;
       }
       for (var j=0;j<grafoFactory.arrayConexionesE.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesE[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesE[j].destino]++;
+        synapseArray[grafoFactory.arrayConexionesE[j].origen]++;
+        synapseArray[grafoFactory.arrayConexionesE[j].destino]++;
       }
-      return arrayConexion;
+      return synapseArray;
     }
 
     //Establishes the initial state of the app
@@ -147,7 +147,7 @@ angular
       arrayGolgi = grafoFactory.loadArrayGolgi();
       arrayIO = grafoFactory.loadArrayIO();
       $scope.getReferences();
-      arrayContadorNeuronas = $scope.initConnectionsArray(arrayContadorNeuronas);
+      neuronCounterArray = $scope.initConnectionsArray(neuronCounterArray);
       arrayInfo = $scope.initStatsArray();
       grafoFactory.load(jsonCopy);
     }
@@ -157,7 +157,6 @@ angular
     //Restart 'container' element
     //Clean the canvas before showing a new graph
     function refresh() {
-      console.log('usamos refresh');
       var g = document.querySelector('#container2');
       var p = g.parentNode;
       p.removeChild(g);
@@ -175,8 +174,8 @@ angular
       console.log('-----------------------');
       for (var i=0;i<jsonCopy.edges.length;i++) {
         var id = jsonCopy.edges[i].id;
-        var valor = jsonCopy.edges[i].hidden;
-        console.log('| '+id+' | '+valor+' |');
+        var value = jsonCopy.edges[i].hidden;
+        console.log('| '+id+' | '+value+' |');
         console.log('-----------------------');
       }
       console.log('-----------------------');
@@ -188,9 +187,9 @@ angular
       console.log;
       console.log('-----------------------');
       for (var i=0;i<jsonCopy.nodes.length;i++) {
-        var id = jsonCopy.nodes[i].id;visualize
-        var valor = jsonCopy.nodes[i].hidden;
-        console.log('| '+id+' | '+valor+' |');
+        var id = jsonCopy.nodes[i].id;
+        var value = jsonCopy.nodes[i].hidden;
+        console.log('| '+id+' | '+value+' |');
         console.log('-----------------------');
       }
       console.log('-----------------------');
@@ -203,15 +202,15 @@ angular
 
       for (var i=0; i<arrayNeuronal[id].destino.length; i++) {
         var auxHide;
-        var destino = arrayNeuronal[id].destino[i];
-        var pos = $scope.searchEdge(id, destino);
+        var target = arrayNeuronal[id].destino[i];
+        var pos = $scope.searchEdge(id, target);
         auxHide = jsonCopy.edges[pos].hidden;
         hide = auxHide;
       }
       if (hide && (arrayNeuronal[id].esDestino.length>0)) {
         for (var i=0; i<arrayNeuronal[id].esDestino.length;i++){
-          var destino = arrayNeuronal[id].esDestino[i];
-          var pos = $scope.searchEdge(destino, id);
+          var target = arrayNeuronal[id].esDestino[i];
+          var pos = $scope.searchEdge(target, id);
           hide = jsonCopy.edges[pos].hidden;
         }
       }
@@ -237,19 +236,19 @@ angular
           jsonCopy.nodes[arrayMosey[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
-          var origen = arrayMosey[i];
-          for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
-            var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.searchEdge(origen, destino);
+          var source = arrayMosey[i];
+          for (var j=0; j<arrayNeuronal[source].destino.length;j++) {
+            var target = arrayNeuronal[source].destino[j];
+            var pos = $scope.searchEdge(source, target);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //The edge(s) that the removed neuron is the target must be removed too
-          for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
-            var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.searchEdge(destino, origen);
+          for (var j=0; j<arrayNeuronal[source].esDestino.length;j++){
+            var target = arrayNeuronal[source].esDestino[j];
+            var pos = $scope.searchEdge(target, source);
             jsonCopy.edges[pos].hidden = true;
-            $scope.checkNoEdges(destino);
+            $scope.checkNoEdges(target);
           }
 
         }
@@ -267,36 +266,36 @@ angular
                 jsonCopy.nodes[arrayMosey[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
-                var origen = arrayMosey[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayMosey[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = false;
-                  jsonCopy.nodes[destino].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
                 }
               }
               else {
                 jsonCopy.nodes[arrayMosey[j]].hidden = true;
 
-                var origen = arrayMosey[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayMosey[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.checkNoEdges(destino);
+                  $scope.checkNoEdges(target);
                 }
               }
           }
@@ -323,19 +322,19 @@ angular
           jsonCopy.nodes[arrayGranulle[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
-          var origen = arrayGranulle[i];
-          for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
-            var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.searchEdge(origen, destino);
+          var source = arrayGranulle[i];
+          for (var j=0; j<arrayNeuronal[source].destino.length;j++) {
+            var target = arrayNeuronal[source].destino[j];
+            var pos = $scope.searchEdge(source, target);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //The edge(s) that the removed neuron is the target must be removed too
-          for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
-            var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.searchEdge(destino, origen);
+          for (var j=0; j<arrayNeuronal[source].esDestino.length;j++){
+            var target = arrayNeuronal[source].esDestino[j];
+            var pos = $scope.searchEdge(target, source);
             jsonCopy.edges[pos].hidden = true;
-            $scope.checkNoEdges(destino);
+            $scope.checkNoEdges(target);
           }
         }
 
@@ -354,37 +353,37 @@ angular
                 jsonCopy.nodes[arrayGranulle[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
-                var origen = arrayGranulle[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayGranulle[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = false;
-                  jsonCopy.nodes[destino].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
                 }
               }
               else {
                 jsonCopy.nodes[arrayGranulle[j]].hidden = true;
 
 
-                var origen = arrayGranulle[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayGranulle[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.checkNoEdges(destino);
+                  $scope.checkNoEdges(target);
                 }
               }
           }
@@ -412,19 +411,19 @@ angular
           jsonCopy.nodes[arrayPurkinje[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
-          var origen = arrayPurkinje[i];
-          for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
-            var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.searchEdge(origen, destino);
+          var source = arrayPurkinje[i];
+          for (var j=0; j<arrayNeuronal[source].destino.length;j++) {
+            var target = arrayNeuronal[source].destino[j];
+            var pos = $scope.searchEdge(source, target);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //The edge(s) that the removed neuron is the target must be removed too
-          for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
-            var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.searchEdge(destino, origen);
+          for (var j=0; j<arrayNeuronal[source].esDestino.length;j++){
+            var target = arrayNeuronal[source].esDestino[j];
+            var pos = $scope.searchEdge(target, source);
             jsonCopy.edges[pos].hidden = true;
-            $scope.checkNoEdges(destino);
+            $scope.checkNoEdges(target);
           }
         }
 
@@ -441,38 +440,38 @@ angular
                 jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
-                var origen = arrayPurkinje[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayPurkinje[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = false;
-                  jsonCopy.nodes[destino].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
                 }
               }
               else {
                 jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
 
 
-                var origen = arrayPurkinje[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayPurkinje[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
 
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.checkNoEdges(destino);
+                  $scope.checkNoEdges(target);
                 }
               }
 
@@ -499,19 +498,19 @@ angular
           jsonCopy.nodes[arrayDCN[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
-          var origen = arrayDCN[i];
-          for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
-            var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.searchEdge(origen, destino);
+          var source = arrayDCN[i];
+          for (var j=0; j<arrayNeuronal[source].destino.length;j++) {
+            var target = arrayNeuronal[source].destino[j];
+            var pos = $scope.searchEdge(source, target);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //The edge(s) that the removed neuron is the target must be removed too
-          for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
-            var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.searchEdge(destino, origen);
+          for (var j=0; j<arrayNeuronal[source].esDestino.length;j++){
+            var target = arrayNeuronal[source].esDestino[j];
+            var pos = $scope.searchEdge(target, source);
             jsonCopy.edges[pos].hidden = true;
-            $scope.checkNoEdges(destino);
+            $scope.checkNoEdges(target);
           }
         }
 
@@ -529,38 +528,38 @@ angular
                 jsonCopy.nodes[arrayDCN[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
-                var origen = arrayDCN[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayDCN[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = false;
-                  jsonCopy.nodes[destino].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
                 }
               }
               else {
                 jsonCopy.nodes[arrayDCN[j]].hidden = true;
 
 
-                var origen = arrayDCN[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayDCN[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
 
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.checkNoEdges(destino);
+                  $scope.checkNoEdges(target);
                 }
               }
 
@@ -587,19 +586,19 @@ angular
           jsonCopy.nodes[arrayGolgi[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
-          var origen = arrayGolgi[i];
-          for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
-            var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.searchEdge(origen, destino);
+          var source = arrayGolgi[i];
+          for (var j=0; j<arrayNeuronal[source].destino.length;j++) {
+            var target = arrayNeuronal[source].destino[j];
+            var pos = $scope.searchEdge(source, target);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //The edge(s) that the removed neuron is the target must be removed too
-          for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
-            var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.searchEdge(destino, origen);
+          for (var j=0; j<arrayNeuronal[source].esDestino.length;j++){
+            var target = arrayNeuronal[source].esDestino[j];
+            var pos = $scope.searchEdge(target, source);
             jsonCopy.edges[pos].hidden = true;
-            $scope.checkNoEdges(destino);
+            $scope.checkNoEdges(target);
           }
         }
 
@@ -616,38 +615,38 @@ angular
                 jsonCopy.nodes[arrayGolgi[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
-                var origen = arrayGolgi[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayGolgi[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = false;
-                  jsonCopy.nodes[destino].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
                 }
               }
               else {
                 jsonCopy.nodes[arrayGolgi[j]].hidden = true;
 
 
-                var origen = arrayGolgi[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayGolgi[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var target = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
 
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var target = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(target, source);
                   jsonCopy.edges[pos].hidden = true;
-                  $scope.checkNoEdges(destino);
+                  $scope.checkNoEdges(target);
                 }
               }
 
@@ -675,17 +674,17 @@ angular
           jsonCopy.nodes[arrayIO[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
-          var origen = arrayIO[i];
-          for (var j=0; j<arrayNeuronal[origen].destino.length;j++) {
-            var destino = arrayNeuronal[origen].destino[j];
-            var pos = $scope.searchEdge(origen, destino);
+          var source = arrayIO[i];
+          for (var j=0; j<arrayNeuronal[source].destino.length;j++) {
+            var destino = arrayNeuronal[source].destino[j];
+            var pos = $scope.searchEdge(source, destino);
             jsonCopy.edges[pos].hidden = true;
           }
 
           //The edge(s) that the removed neuron is the target must be removed too
-          for (var j=0; j<arrayNeuronal[origen].esDestino.length;j++){
-            var destino = arrayNeuronal[origen].esDestino[j];
-            var pos = $scope.searchEdge(destino, origen);
+          for (var j=0; j<arrayNeuronal[source].esDestino.length;j++){
+            var destino = arrayNeuronal[source].esDestino[j];
+            var pos = $scope.searchEdge(destino, source);
             jsonCopy.edges[pos].hidden = true;
             $scope.checkNoEdges(destino);
           }
@@ -704,17 +703,17 @@ angular
                 jsonCopy.nodes[arrayIO[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
-                var origen = arrayIO[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayIO[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var destino = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, destino);
                   jsonCopy.edges[pos].hidden = false;
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var destino = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(destino, source);
                   jsonCopy.edges[pos].hidden = false;
                   jsonCopy.nodes[destino].hidden = false;
                 }
@@ -723,17 +722,17 @@ angular
                 jsonCopy.nodes[arrayIO[j]].hidden = true;
 
 
-                var origen = arrayIO[j];
-                for (var z=0; z<arrayNeuronal[origen].destino.length;z++) {
-                  var destino = arrayNeuronal[origen].destino[z];
-                  var pos = $scope.searchEdge(origen, destino);
+                var source = arrayIO[j];
+                for (var z=0; z<arrayNeuronal[source].destino.length;z++) {
+                  var destino = arrayNeuronal[source].destino[z];
+                  var pos = $scope.searchEdge(source, destino);
                   jsonCopy.edges[pos].hidden = true;
                 }
 
 
-                for (var z=0; z<arrayNeuronal[origen].esDestino.length;z++){
-                  var destino = arrayNeuronal[origen].esDestino[z];
-                  var pos = $scope.searchEdge(destino, origen);
+                for (var z=0; z<arrayNeuronal[source].esDestino.length;z++){
+                  var destino = arrayNeuronal[source].esDestino[z];
+                  var pos = $scope.searchEdge(destino, source);
                   jsonCopy.edges[pos].hidden = true;
                   $scope.checkNoEdges(destino);
                 }
@@ -1480,10 +1479,10 @@ angular
     $scope.checkCounterA = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasA.length; i++) {
         if (mfgr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]++;
+          neuronCounterArray[grafoFactory.arrayNeuronasA[i]]++;
         }
         if (!mfgr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]--;
+          neuronCounterArray[grafoFactory.arrayNeuronasA[i]]--;
         }
       }
       $scope.showConnections();
@@ -1493,10 +1492,10 @@ angular
     $scope.checkCounterB = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasB.length; i++) {
         if (mfgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasB[i]]++;
+          neuronCounterArray[grafoFactory.arrayNeuronasB[i]]++;
         }
         if (!mfgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasB[i]]--;
+          neuronCounterArray[grafoFactory.arrayNeuronasB[i]]--;
         }
       }
       $scope.showConnections();
@@ -1506,10 +1505,10 @@ angular
     $scope.checkCounterC = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasC.length; i++) {
         if (grgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasC[i]]++;
+          neuronCounterArray[grafoFactory.arrayNeuronasC[i]]++;
         }
         if (!grgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasC[i]]--;
+          neuronCounterArray[grafoFactory.arrayNeuronasC[i]]--;
         }
       }
       $scope.showConnections();
@@ -1519,10 +1518,10 @@ angular
     $scope.checkCounterD = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasD.length; i++) {
         if (gogr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasD[i]]++;
+          neuronCounterArray[grafoFactory.arrayNeuronasD[i]]++;
         }
         if (!gogr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasD[i]]--;
+          neuronCounterArray[grafoFactory.arrayNeuronasD[i]]--;
         }
       }
       $scope.showConnections();
@@ -1532,21 +1531,21 @@ angular
     $scope.checkCounterE = function() {
       for (var i=0; i<grafoFactory.arrayNeuronasE.length; i++) {
         if (gogo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasE[i]]++;
+          neuronCounterArray[grafoFactory.arrayNeuronasE[i]]++;
         }
         if (!gogo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasE[i]]--;
+          neuronCounterArray[grafoFactory.arrayNeuronasE[i]]--;
         }
       }
       $scope.showConnections();
     }
 
-    //Chech whether if the neuron can be removed according to the arrayContadorNeuronas
-    //If the neuron at arrayContadorNeuronas has a 0 value, it can be removed
+    //Chech whether if the neuron can be removed according to the neuronCounterArray
+    //If the neuron at neuronCounterArray has a 0 value, it can be removed
     //with a value grater than 0, removal of the neuron is forbidden
     $scope.checkRemoval = function (neuronaAEliminar) {
       var permiso = false;
-      var aux = arrayContadorNeuronas[neuronaAEliminar];
+      var aux = neuronCounterArray[neuronaAEliminar];
 
       if (aux == 0)
         permiso = true;
