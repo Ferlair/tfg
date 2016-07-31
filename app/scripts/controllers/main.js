@@ -136,180 +136,180 @@ angular
     }
 
     //Get the color for an edge
-    $scope.getColor = function(peso, tipoOrigen, tipoDestino, origen, destino, arrayNeuronal) {
+    $scope.getColor = function(weigth, sourceType, targetType, s, t, arrayNeuronal) {
       var color;
-      var ocultar = true;
+      var hide = true;
 
       //Synapses with Mossy origin
-      if (tipoOrigen=='0') {
+      if (sourceType =='0') {
         //Synapses Mossy-Granulle
-        if (tipoDestino=='1') {
-          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('A');
-          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('A');
+        if (targetType=='1') {
+          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('A');
+          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('A');
 
-          if (repetidoOrigen == -1)
-          arrayNeuronal[origen].tipoConexion.push('A');
+          if (sourceRepeated == -1)
+          arrayNeuronal[s].tipoConexion.push('A');
 
-          if (repetidoDestino == -1)
-          arrayNeuronal[destino].tipoConexion.push('A');
+          if (targetRepeated == -1)
+          arrayNeuronal[t].tipoConexion.push('A');
 
-          var source = "n"+origen;
-          var target = "n"+destino;
+          var source = "n"+s;
+          var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= origen;
-          obj.destino = destino;
+          obj.origen= s;
+          obj.destino = t;
           obj.enlace = id;
 
           ASynapseArray.push(obj);
-          repetidoOrigen = ANeuronArray.indexOf(origen);
-          ANeuronArray.push(origen);
+          sourceRepeated = ANeuronArray.indexOf(s);
+          ANeuronArray.push(s);
 
-          repetidoDestino = ANeuronArray.indexOf(destino);
-          ANeuronArray.push(destino);
+          targetRepeated = ANeuronArray.indexOf(t);
+          ANeuronArray.push(t);
 
-          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
-          var interpolado = $scope.interpolate(ratio, 247, 0, 255, 72, 0, 66);
-          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
-          ocultar = false;
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
+          var interpolated = $scope.interpolate(ratio, 247, 0, 255, 72, 0, 66);
+          color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
+          hide = false;
         }
         //Synapses Mossy-Golgi
-        if (tipoDestino == '4') {
-          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('B');
-          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('B');
+        if (targetType == '4') {
+          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('B');
+          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('B');
 
-          if (repetidoOrigen == -1)
-          arrayNeuronal[origen].tipoConexion.push('B');
+          if (sourceRepeated == -1)
+          arrayNeuronal[s].tipoConexion.push('B');
 
-          if (repetidoDestino == -1)
-          arrayNeuronal[destino].tipoConexion.push('B');
+          if (targetRepeated == -1)
+          arrayNeuronal[t].tipoConexion.push('B');
 
-          var source = "n"+origen;
-          var target = "n"+destino;
+          var source = "n"+s;
+          var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= origen;
-          obj.destino = destino;
+          obj.origen= s;
+          obj.destino = t;
           obj.enlace = id;
 
           BSynapseArray.push(obj);
-          repetidoOrigen = BNeuronArray.indexOf(origen);
-          BNeuronArray.push(origen);
+          sourceRepeated = BNeuronArray.indexOf(s);
+          BNeuronArray.push(s);
 
-          repetidoDestino = BNeuronArray.indexOf(destino);
-          BNeuronArray.push(destino);
+          targetRepeated = BNeuronArray.indexOf(t);
+          BNeuronArray.push(t);
 
-          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
-          var interpolado = $scope.interpolate(ratio, 64, 255, 0, 7, 72, 0);
-          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
-          ocultar = false;
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
+          var interpolated = $scope.interpolate(ratio, 64, 255, 0, 7, 72, 0);
+          color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
+          hide = false;
         }
       }
 
       //Synapses with Granulle origin
-      if (tipoOrigen == '1') {
+      if (sourceType == '1') {
         //Synapses Granulle-Golgi
-        if (tipoDestino == '4'){
-          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('C');
-          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('C');
+        if (targetType == '4'){
+          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('C');
+          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('C');
 
-          if (repetidoOrigen == -1)
-          arrayNeuronal[origen].tipoConexion.push('C');
+          if (sourceRepeated == -1)
+          arrayNeuronal[s].tipoConexion.push('C');
 
-          if (repetidoDestino == -1)
-          arrayNeuronal[destino].tipoConexion.push('C');
+          if (targetRepeated == -1)
+          arrayNeuronal[t].tipoConexion.push('C');
 
-          var source = "n"+origen;
-          var target = "n"+destino;
+          var source = "n"+s;
+          var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= origen;
-          obj.destino = destino;
+          obj.origen= s;
+          obj.destino = t;
           obj.enlace = id;
 
           CSynapseArray.push(obj);
-          repetidoOrigen = CNeuronArray.indexOf(origen);
-          CNeuronArray.push(origen);
+          sourceRepeated = CNeuronArray.indexOf(s);
+          CNeuronArray.push(s);
 
-          repetidoDestino = CNeuronArray.indexOf(destino);
-          CNeuronArray.push(destino);
-          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
-          var interpolado = $scope.interpolate(ratio, 26, 0, 255, 0, 0, 72);
-          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
-          ocultar = false;
+          targetRepeated = CNeuronArray.indexOf(t);
+          CNeuronArray.push(t);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
+          var interpolated = $scope.interpolate(ratio, 26, 0, 255, 0, 0, 72);
+          color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
+          hide = false;
         }
       }
 
       //Synapses with Golgi origin
-      if (tipoOrigen == '4') {
+      if (sourceType == '4') {
         //Synapses Golgi-Granulle
-        if (tipoDestino == '1') {
-          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('D');
-          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('D');
+        if (targetType == '1') {
+          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('D');
+          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('D');
 
-          if (repetidoOrigen == -1)
-          arrayNeuronal[origen].tipoConexion.push('D');
+          if (sourceRepeated == -1)
+          arrayNeuronal[s].tipoConexion.push('D');
 
-          if (repetidoDestino == -1)
-          arrayNeuronal[destino].tipoConexion.push('D');
+          if (targetRepeated == -1)
+          arrayNeuronal[t].tipoConexion.push('D');
 
-          var source = "n"+origen;
-          var target = "n"+destino;
+          var source = "n"+s;
+          var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= origen;
-          obj.destino = destino;
+          obj.origen= s;
+          obj.destino = t;
           obj.enlace = id;
 
           DSynapseArray.push(obj);
-          repetidoOrigen = DNeuronArray.indexOf(origen);
-          DNeuronArray.push(origen);
+          sourceRepeated = DNeuronArray.indexOf(s);
+          DNeuronArray.push(s);
 
-          repetidoDestino = DNeuronArray.indexOf(destino);
-          DNeuronArray.push(destino);
-          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
-          var interpolado = $scope.interpolate(ratio,255, 0, 0, 72, 0, 0);
-          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
-          ocultar = false;
+          targetRepeated = DNeuronArray.indexOf(t);
+          DNeuronArray.push(t);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
+          var interpolated = $scope.interpolate(ratio,255, 0, 0, 72, 0, 0);
+          color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
+          hide = false;
         }
         //Synapses Golgi-Golgi
-        if (tipoDestino == '4') {
-          var repetidoOrigen = arrayNeuronal[origen].tipoConexion.indexOf('E');
-          var repetidoDestino = arrayNeuronal[destino].tipoConexion.indexOf('E');
+        if (targetType == '4') {
+          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('E');
+          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('E');
 
-          if (repetidoOrigen == -1)
-          arrayNeuronal[origen].tipoConexion.push('E');
+          if (sourceRepeated == -1)
+          arrayNeuronal[s].tipoConexion.push('E');
 
-          if (repetidoDestino == -1)
-          arrayNeuronal[destino].tipoConexion.push('E');
+          if (targetRepeated == -1)
+          arrayNeuronal[t].tipoConexion.push('E');
 
-          var source = "n"+origen;
-          var target = "n"+destino;
+          var source = "n"+s;
+          var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= origen;
-          obj.destino = destino;
+          obj.origen= s;
+          obj.destino = t;
           obj.enlace = id;
 
           ESynapseArray.push(obj);
-          repetidoOrigen = ENeuronArray.indexOf(origen);
-          ENeuronArray.push(origen);
+          sourceRepeated = ENeuronArray.indexOf(s);
+          ENeuronArray.push(s);
 
-          repetidoDestino = ENeuronArray.indexOf(destino);
-          ENeuronArray.push(destino);
-          var ratio = $scope.GetInterpolationLevel(peso, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
-          var interpolado = $scope.interpolate(ratio,255, 154, 0, 81, 55, 0);
-          color = $scope.hexToRGB(interpolado[0],interpolado[1],interpolado[2]);
-          ocultar = false;
+          targetRepeated = ENeuronArray.indexOf(t);
+          ENeuronArray.push(t);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
+          var interpolated = $scope.interpolate(ratio,255, 154, 0, 81, 55, 0);
+          color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
+          hide = false;
         }
       }
 
-      return [color, ocultar];
+      return [color, hide];
     }
 
     //Show the neuron info after loading the neuron file
@@ -904,35 +904,35 @@ angular
     }
 
     //Search for the maximum neuron value in the file (source or target)
-    $scope.getNeuronNumber = function(origen,destino) {
-      var maximoOrigen = Math.max.apply(null,origen);
-      var maximoDestino = Math.max.apply(null,destino);
-      var max = Math.max(maximoOrigen, maximoDestino);
+    $scope.getNeuronNumber = function(source,target) {
+      var maxSource = Math.max.apply(null,source);
+      var maxTarget = Math.max.apply(null,target);
+      var max = Math.max(maxSource, maxTarget);
       max++;
       return max;
     }
 
     //Gives the initial values
     //It is created a cell for each of the neurons
-    $scope.initializeArray = function(limite, arrayNeuronal, x, y) {
-      var tipoPorDefecto = '-';
-      for (var i=0; i<limite; i++) {
-        var neurona = new Array();
-        var pesoInicial = 0;
-        neurona.destino = [];
-        neurona.peso = [];
-        neurona.tipoDestino = [];
-        neurona.tipoConexion = [];
-        neurona.esDestino = [];
-        neurona.id = i.toString();
-        neurona.destino.push(i.toString());
-        neurona.peso.push(pesoInicial.toString());
-        neurona.tipoDestino.push(tipoPorDefecto.toString());
-        neurona.tipo = '-';
-        neurona.x = x[i];
-        if (neurona.x == null)
-          neurona.x = 0;
-        arrayNeuronal.push(neurona);
+    $scope.initializeArray = function(limit, arrayNeuronal, x, y) {
+      var defaultType = '-';
+      for (var i=0; i<limit; i++) {
+        var neuron = new Array();
+        var initialWeigth = 0;
+        neuron.destino = [];
+        neuron.peso = [];
+        neuron.tipoDestino = [];
+        neuron.tipoConexion = [];
+        neuron.esDestino = [];
+        neuron.id = i.toString();
+        neuron.destino.push(i.toString());
+        neuron.peso.push(initialWeigth.toString());
+        neuron.tipoDestino.push(defaultType.toString());
+        neuron.tipo = '-';
+        neuron.x = x[i];
+        if (neuron.x == null)
+          neuron.x = 0;
+        arrayNeuronal.push(neuron);
       }
       return arrayNeuronal;
     }
