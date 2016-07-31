@@ -741,46 +741,46 @@ angular
 
     //Load all the info from the neuron file
     $scope.loadNeurons = function($fileContent) {
-      var lineas = $fileContent.split("\n");
-      var lineasLeidas = new Array();
-      var palabrasPorLineas;
-      var origen = [];
-      var destino = [];
+      var lines = $fileContent.split("\n");
+      var splittedLines = new Array();
+      var wordsByLine;
+      var source = [];
+      var target = [];
       var x = [];
       var y = [];
-      var tipo = [];
-      var peso = [];
+      var type = [];
+      var weigth = [];
       var arrayNeuronal = new Array();
-      var tipoDestino = [];
-      var tipoConexion = [];
+      //var tipoDestino = [];
+      //var tipoConexion = [];
 
       $scope.reloadData();
 
 
-      for (var j=0; j<lineas.length; j++) {
-        var aux = lineas[j].replace(/\s+/g, " ");
+      for (var j=0; j<lines.length; j++) {
+        var aux = lines[j].replace(/\s+/g, " ");
 
         //Check if there any comma at the string, and its replaced if is the case, for float operations
         aux = aux.replace(/,/g,".");
 
         //Check if there is a final line break to avoid errors
         if (aux != "") {
-          lineasLeidas.push(aux);
+          splittedLines.push(aux);
         }
       }
 
-      for (var i=0; i<lineasLeidas.length; i++) {
-        palabrasPorLineas = lineasLeidas[i].split(" ");
-        origen[i] = palabrasPorLineas[0];
-        destino[i] = palabrasPorLineas[1];
-        x[i] = palabrasPorLineas[2];
-        y[i] = palabrasPorLineas[3];
-        tipo[i] = palabrasPorLineas[5];
-        peso[i] = palabrasPorLineas[6];
+      for (var i=0; i<splittedLines.length; i++) {
+        wordsByLine = splittedLines[i].split(" ");
+        source[i] = wordsByLine[0];
+        target[i] = wordsByLine[1];
+        x[i] = wordsByLine[2];
+        y[i] = wordsByLine[3];
+        type[i] = wordsByLine[5];
+        weigth[i] = wordsByLine[6];
       }
 
       //Get the total neuron number in the file
-      grafoFactory.numeroTotalNeuronas = $scope.getNeuronNumber(origen,destino);
+      grafoFactory.numeroTotalNeuronas = $scope.getNeuronNumber(source,target);
 
       //Initializes array with a default value for all the neurons in the file
       //Initial value is ID equal to the neuron number, target the same neuron and weigth '0'
@@ -789,28 +789,28 @@ angular
 
 
       //Reading one by one each neuron and adding their target neuron and weigth
-      for (var j=0; j<destino.length; j++) {
-        var elementoRepetido = arrayNeuronal[origen[j]].destino.indexOf(destino[j]);
-        if (elementoRepetido==-1) {
-          var p = peso[j];
-          arrayNeuronal[origen[j]].peso.push(p.toString());
-          arrayNeuronal[origen[j]].destino.push(destino[j]); //Adding target
-          var tipoAux = $scope.findNeuronType(destino[j],origen, tipo);
-          arrayNeuronal[origen[j]].tipoDestino.push(tipoAux); //Adding type target
+      for (var j=0; j<target.length; j++) {
+        var repeatedElem = arrayNeuronal[source[j]].destino.indexOf(target[j]);
+        if (repeatedElem==-1) {
+          var p = weigth[j];
+          arrayNeuronal[source[j]].peso.push(p.toString());
+          arrayNeuronal[source[j]].destino.push(target[j]); //Adding target
+          var auxType = $scope.findNeuronType(target[j],source, type);
+          arrayNeuronal[source[j]].tipoDestino.push(auxType); //Adding type target
         }
       }
 
       //Getting neuron type
-      for (var i=0; i<origen.length; i++) {
-        var auxTipo = tipo[i];
-        var auxPos = origen[i];
+      for (var i=0; i<source.length; i++) {
+        var auxType = type[i];
+        var auxPos = source[i];
 
         //Initially each neuron has no type assigned, so it is given the first value founded as type, while
         //if there were any other type in the file (which would be an error in the file data)
         //the next are rejected to avoid multiple values for the type of the same neuron ()
         if (arrayNeuronal[auxPos].tipo == '-') {
 
-          arrayNeuronal[auxPos].tipo = auxTipo;
+          arrayNeuronal[auxPos].tipo = auxType;
         }
       }
 
@@ -818,9 +818,9 @@ angular
 
 
       for (var i=0; i<(arrayNeuronal.length); i++) {
-        var pesoPorDefecto = 0;
+        var defaultWeigth = 0;
         if (arrayNeuronal[i].tipo == '-')
-          arrayNeuronal[i].tipo = pesoPorDefecto.toString();
+          arrayNeuronal[i].tipo = defaultWeigth.toString();
       }
 
       //Getting the neurons whose the present neuron is a target
