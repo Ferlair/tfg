@@ -16,7 +16,7 @@ angular
     var jsonCopy;
 
     //Stores the neuron quantity of each type
-    var moseyNumber = 0;
+    var mossyNumber = 0;
     var granulleNumber = 0;
     var purkinjeNumber = 0;
     var DCNNumber = 0;
@@ -421,9 +421,6 @@ angular
     //Generate the JSON which let the creation of the graph
     $scope.generateJSON = function(arrayNeuronal) {
 
-        var nombreArista = 0;
-        var index=0;
-
         //Creation of the json object which stores the node and edge info
         var jsonObj = { nodes: [{}], edges: [{}]};
 
@@ -449,65 +446,65 @@ angular
 
         //Creates the initial visualization json
         for (var i=0; i<arrayNeuronal.length; i++) {
-          var nodo = getNode();
+          var node = getNode();
 
           //Mossy Fibers
           if (arrayNeuronal[i].tipo == '0') {
             arrayMosey.push(arrayNeuronal[i].id);
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
+            node.id = "n"+arrayNeuronal[i].id;
+            node.label = "neurona "+arrayNeuronal[i].id;
             var radius = 1;
             var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 0.000001;
-            nodo.hidden = false;
-            jsonObj.nodes[i] = nodo;
+            node.x=x;
+            node.y=y;
+            node.size = 0.000001;
+            node.hidden = false;
+            jsonObj.nodes[i] = node;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getEdges();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
+              var edge = getEdges();
+              edge.source="n"+arrayNeuronal[i].id;
+              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
+                jsonObj.edges[0] = edge;
               }
               else {
-                jsonObj.edges.push(arista);
+                jsonObj.edges.push(edge);
               }
             }
-            moseyNumber++;
-            grafoFactory.moseyNumber = moseyNumber;
+            mossyNumber++;
+            grafoFactory.mossyNumber = mossyNumber;
           }
 
           //Granulle Cells
           else if (arrayNeuronal[i].tipo == '1'){
             arrayGranulle.push(arrayNeuronal[i].id);
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
+            node.id = "n"+arrayNeuronal[i].id;
+            node.label = "neurona "+arrayNeuronal[i].id;
             var radius = 4;
             var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 0.001;
-            nodo.hidden = false;
+            node.x=x;
+            node.y=y;
+            node.size = 0.001;
+            node.hidden = false;
 
-            jsonObj.nodes[i] = nodo;
+            jsonObj.nodes[i] = node;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getEdges();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
+              var edge = getEdges();
+              edge.source="n"+arrayNeuronal[i].id;
+              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
+                jsonObj.edges[0] = edge;
               }
               else {
-                jsonObj.edges.push(arista);
+                jsonObj.edges.push(edge);
               }
             }
 
@@ -518,29 +515,29 @@ angular
           //Purkinje Cells
           else if(arrayNeuronal[i].tipo == '2') {
             arrayPurkinje.push(arrayNeuronal[i].id);
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
+            node.id = "n"+arrayNeuronal[i].id;
+            node.label = "neurona "+arrayNeuronal[i].id;
             var radius = 6;
             var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 0.0003;
-            nodo.hidden = false;
+            node.x=x;
+            node.y=y;
+            node.size = 0.0003;
+            node.hidden = false;
 
-            jsonObj.nodes[i] = nodo;
+            jsonObj.nodes[i] = node;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getEdges();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
+              var edge = getEdges();
+              edge.source="n"+arrayNeuronal[i].id;
+              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
+                jsonObj.edges[0] = edge;
               }
               else {
-                jsonObj.edges.push(arista);
+                jsonObj.edges.push(edge);
               }
             }
 
@@ -551,29 +548,29 @@ angular
           //DCN Cells
           else if(arrayNeuronal[i].tipo == '3'){
             arrayDCN.push(arrayNeuronal[i].id);
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
+            node.id = "n"+arrayNeuronal[i].id;
+            node.label = "neurona "+arrayNeuronal[i].id;
             var radius = 8;
             var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 0.0004;
-            nodo.hidden = false;
+            node.x=x;
+            node.y=y;
+            node.size = 0.0004;
+            node.hidden = false;
 
-            jsonObj.nodes[i] = nodo;
+            jsonObj.nodes[i] = node;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getEdges();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
+              var edge = getEdges();
+              edge.source="n"+arrayNeuronal[i].id;
+              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
+                jsonObj.edges[0] = edge;
               }
               else {
-                jsonObj.edges.push(arista);
+                jsonObj.edges.push(edge);
               }
             }
 
@@ -584,29 +581,29 @@ angular
           //Golgi Cells
           else if(arrayNeuronal[i].tipo == '4'){
             arrayGolgi.push(arrayNeuronal[i].id);
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
+            node.id = "n"+arrayNeuronal[i].id;
+            node.label = "neurona "+arrayNeuronal[i].id;
             var radius = 10;
             var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 0.0005;
-            nodo.hidden = false;
+            node.x=x;
+            node.y=y;
+            node.size = 0.0005;
+            node.hidden = false;
 
-            jsonObj.nodes[i] = nodo;
+            jsonObj.nodes[i] = node;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getEdges();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
+              var edge = getEdges();
+              edge.source="n"+arrayNeuronal[i].id;
+              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
+                jsonObj.edges[0] = edge;
               }
               else {
-                jsonObj.edges.push(arista);
+                jsonObj.edges.push(edge);
               }
             }
 
@@ -617,29 +614,29 @@ angular
           //IO Cells
           else if(arrayNeuronal[i].tipo == '5'){
             arrayIO.push(arrayNeuronal[i].id);
-            nodo.id = "n"+arrayNeuronal[i].id;
-            nodo.label = "neurona "+arrayNeuronal[i].id;
+            node.id = "n"+arrayNeuronal[i].id;
+            node.label = "neurona "+arrayNeuronal[i].id;
             var radius = 12;
             var angle = (arrayNeuronal[i].x)*Math.PI*2;
             var x = Math.cos(angle)*radius;
             var y = Math.sin(angle)*radius;
-            nodo.x=x;
-            nodo.y=y;
-            nodo.size = 0.006;
-            nodo.hidden = false;
+            node.x=x;
+            node.y=y;
+            node.size = 0.006;
+            node.hidden = false;
 
-            jsonObj.nodes[i] = nodo;
+            jsonObj.nodes[i] = node;
 
             for (var j=0; j<arrayNeuronal[i].destino.length;j++){
-              var arista = getEdges();
-              arista.source="n"+arrayNeuronal[i].id;
-              arista.target="n"+arrayNeuronal[i].destino[j];
-              arista.id="e"+ arista.source+'+'+arista.target;
+              var edge = getEdges();
+              edge.source="n"+arrayNeuronal[i].id;
+              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
-                jsonObj.edges[0] = arista;
+                jsonObj.edges[0] = edge;
               }
               else {
-                jsonObj.edges.push(arista);
+                jsonObj.edges.push(edge);
               }
             }
 
