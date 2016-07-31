@@ -1558,16 +1558,16 @@ angular
 
       if (!mfgr.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
-          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasA[i]);
-          if (permisoEliminar) {
+          var permittedRemoval = $scope.checkRemoval(grafoFactory.arrayNeuronasA[i]);
+          if (permittedRemoval) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].hidden = true;
           }
         }
         for (var j=0; j<grafoFactory.arrayConexionesA.length;j++) {
-          var id = grafoFactory.arrayConexionesA[j].enlace; //NO SE USA!
-          var origen = grafoFactory.arrayConexionesA[j].origen;
-          var destino = grafoFactory.arrayConexionesA[j].destino;
-          var pos = $scope.searchEdge(origen, destino);
+          //var id = grafoFactory.arrayConexionesA[j].enlace; //NO SE USA!
+          var source = grafoFactory.arrayConexionesA[j].origen;
+          var target = grafoFactory.arrayConexionesA[j].destino;
+          var pos = $scope.searchEdge(source, target);
           jsonCopy.edges[pos].hidden = true;
         }
 
@@ -1577,11 +1577,11 @@ angular
           jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].hidden = false;
         }
         for (var j=0;j<grafoFactory.arrayConexionesA.length; j++) {
-          var id = grafoFactory.arrayConexionesA[j].enlace;
-          var origen = grafoFactory.arrayConexionesA[j].origen;
-          var destino = grafoFactory.arrayConexionesA[j].destino;
+          //var id = grafoFactory.arrayConexionesA[j].enlace;
+          var source = grafoFactory.arrayConexionesA[j].origen;
+          var target = grafoFactory.arrayConexionesA[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1589,17 +1589,17 @@ angular
 
       if (!mfgo.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasB.length;i++) {
-          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasB[i]);
-          if (permisoEliminar) {
+          var permittedRemoval = $scope.checkRemoval(grafoFactory.arrayNeuronasB[i]);
+          if (permittedRemoval) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasB[i]].hidden = true;
           }
         }
         for (var j=0; j<grafoFactory.arrayConexionesB.length;j++) {
-          var id = grafoFactory.arrayConexionesB[j].enlace;
-          var origen = grafoFactory.arrayConexionesB[j].origen;
-          var destino = grafoFactory.arrayConexionesB[j].destino;
+          //var id = grafoFactory.arrayConexionesB[j].enlace;
+          var source = grafoFactory.arrayConexionesB[j].origen;
+          var target = grafoFactory.arrayConexionesB[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1609,11 +1609,11 @@ angular
           jsonCopy.nodes[grafoFactory.arrayNeuronasB[i]].hidden = false;
         }
         for (var j=0;j<grafoFactory.arrayConexionesB.length; j++) {
-          var id = grafoFactory.arrayConexionesB[j].enlace;
-          var origen = grafoFactory.arrayConexionesB[j].origen;
-          var destino = grafoFactory.arrayConexionesB[j].destino;
+          //var id = grafoFactory.arrayConexionesB[j].enlace;
+          var source = grafoFactory.arrayConexionesB[j].origen;
+          var target = grafoFactory.arrayConexionesB[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1621,17 +1621,17 @@ angular
 
       if (!grgo.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasC.length;i++) {
-          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasC[i]);
-          if (permisoEliminar) {
+          var permittedRemoval = $scope.checkRemoval(grafoFactory.arrayNeuronasC[i]);
+          if (permittedRemoval) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasC[i]].hidden = true;
           }
         }
         for (var j=0; j<grafoFactory.arrayConexionesC.length;j++) {
-          var id = grafoFactory.arrayConexionesC[j].enlace;
-          var origen = grafoFactory.arrayConexionesC[j].origen;
-          var destino = grafoFactory.arrayConexionesC[j].destino;
+          //var id = grafoFactory.arrayConexionesC[j].enlace;
+          var source = grafoFactory.arrayConexionesC[j].origen;
+          var target = grafoFactory.arrayConexionesC[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1641,11 +1641,11 @@ angular
           jsonCopy.nodes[grafoFactory.arrayNeuronasC[i]].hidden = false;
         }
         for (var j=0;j<grafoFactory.arrayConexionesC.length; j++) {
-          var id = grafoFactory.arrayConexionesC[j].enlace;
-          var origen = grafoFactory.arrayConexionesC[j].origen;
-          var destino = grafoFactory.arrayConexionesC[j].destino;
+          //var id = grafoFactory.arrayConexionesC[j].enlace;
+          var source = grafoFactory.arrayConexionesC[j].origen;
+          var target = grafoFactory.arrayConexionesC[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1653,17 +1653,17 @@ angular
 
       if (!gogr.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasD.length;i++) {
-          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasD[i]);
-          if (permisoEliminar) {
+          var permittedRemoval = $scope.checkRemoval(grafoFactory.arrayNeuronasD[i]);
+          if (permittedRemoval) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasD[i]].hidden = true;
           }
         }
         for (var j=0; j<grafoFactory.arrayConexionesD.length;j++) {
-          var id = grafoFactory.arrayConexionesD[j].enlace;
-          var origen = grafoFactory.arrayConexionesD[j].origen;
-          var destino = grafoFactory.arrayConexionesD[j].destino;
+          //var id = grafoFactory.arrayConexionesD[j].enlace;
+          var source = grafoFactory.arrayConexionesD[j].origen;
+          var target = grafoFactory.arrayConexionesD[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1673,11 +1673,11 @@ angular
           jsonCopy.nodes[grafoFactory.arrayNeuronasD[i]].hidden = false;
         }
         for (var j=0;j<grafoFactory.arrayConexionesD.length; j++) {
-          var id = grafoFactory.arrayConexionesD[j].enlace;
-          var origen = grafoFactory.arrayConexionesD[j].origen;
-          var destino = grafoFactory.arrayConexionesD[j].destino;
+          //var id = grafoFactory.arrayConexionesD[j].enlace;
+          var source = grafoFactory.arrayConexionesD[j].origen;
+          var target = grafoFactory.arrayConexionesD[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1685,17 +1685,17 @@ angular
 
       if (!gogo.checked) {
         for (var i=0; i<grafoFactory.arrayNeuronasE.length;i++) {
-          var permisoEliminar = $scope.checkRemoval(grafoFactory.arrayNeuronasE[i]);
-          if (permisoEliminar) {
+          var permittedRemoval = $scope.checkRemoval(grafoFactory.arrayNeuronasE[i]);
+          if (permittedRemoval) {
             jsonCopy.nodes[grafoFactory.arrayNeuronasE[i]].hidden = true;
           }
         }
         for (var j=0; j<grafoFactory.arrayConexionesE.length;j++) {
-          var id = grafoFactory.arrayConexionesE[j].enlace;
-          var origen = grafoFactory.arrayConexionesE[j].origen;
-          var destino = grafoFactory.arrayConexionesE[j].destino;
+          //var id = grafoFactory.arrayConexionesE[j].enlace;
+          var source = grafoFactory.arrayConexionesE[j].origen;
+          var target = grafoFactory.arrayConexionesE[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1705,11 +1705,11 @@ angular
           jsonCopy.nodes[grafoFactory.arrayNeuronasE[i]].hidden = false;
         }
         for (var j=0;j<grafoFactory.arrayConexionesE.length; j++) {
-          var id = grafoFactory.arrayConexionesE[j].enlace;
-          var origen = grafoFactory.arrayConexionesE[j].origen;
-          var destino = grafoFactory.arrayConexionesE[j].destino;
+          //var id = grafoFactory.arrayConexionesE[j].enlace;
+          var source = grafoFactory.arrayConexionesE[j].origen;
+          var target = grafoFactory.arrayConexionesE[j].destino;
 
-          var pos = $scope.searchEdge(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
@@ -1727,38 +1727,38 @@ angular
     //Creates the visualization from the input at the individual selection
     $scope.visualize = function(){
 
-      var valor = document.getElementById("inputNeuronas").value;
+      var value = document.getElementById("inputNeuronas").value;
 
-      var admitido = true;
-      var esRango = false;
+      var admitted = true;
+      var isRange = false;
 
-      if (valor=="") {
-        admitido = false;
+      if (value=="") {
+        admitted = false;
       }
 
-      else if (valor.charAt(valor.length-1) == ',') {
-        admitido = false;
+      else if (value.charAt(value.length-1) == ',') {
+        admitted = false;
       }
 
       else {
 
         //Check whether each char is an integer or coma, and if the value introduced is a range or not
-        for (var i=0; i<valor.length;i++) {
-          var aux = valor.charAt(i);
+        for (var i=0; i<value.length;i++) {
+          var aux = value.charAt(i);
           var t = !isNaN(String(aux) * 1);
             if (!t) {
               if (aux == '-') {
-                esRango = true;
+                isRange = true;
               }
               else if (aux != ',') {
-               admitido = false;
+               admitted = false;
               }
             }
         }
       }
 
       //If there were any mistakes at introducing data
-      if (!admitido) {
+      if (!admitted) {
         if (grafoFactory.spanish) {
           alert ('Error: \n- Sólo se admiten números enteros separados por comas sin espacios \n- Alguna de las neuronas seleccionadas pueden estar fuera de rango \n- No se permite hacer una búsqueda en blanco');
         }
@@ -1769,12 +1769,12 @@ angular
       }
 
       //If data input is correct, but not a range
-      else if (admitido && !esRango){ //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
-        $scope.manualFiltering(valor);
+      else if (admitted && !isRange){ //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
+        $scope.manualFiltering(value);
       }
 
       //If data input is correct and a range
-      else if (admitido && esRango) {
+      else if (admitted && isRange) {
         $scope.filteringByRange();
       }
 
@@ -1808,17 +1808,17 @@ angular
 
     //Show the stats for the neurons active at the moment
     $scope.logNeurons = function(){
-      var contadorMossy = 0;
-      var contadorGranulle = 0;
-      var contadorPurkinje = 0;
-      var contadorDCN = 0;
-      var contadorGolgi = 0;
-      var contadorIO = 0;
+      var mossyCounter = 0;
+      var granulleCounter = 0;
+      var purkinjeCounter = 0;
+      var DCNCounter = 0;
+      var golgiCounter = 0;
+      var IOCounter = 0;
 
       //Remove the previous info to show the new one
-      var nodoABorrar = document.getElementById('log_n');
-        while (nodoABorrar.firstChild) {
-            nodoABorrar.removeChild(nodoABorrar.firstChild);
+      var nodeToRemove = document.getElementById('log_n');
+        while (nodeToRemove.firstChild) {
+            nodeToRemove.removeChild(nodeToRemove.firstChild);
         }
 
       //If the neuron is visible at the moment, is saved at the arrayInfo with '1' value, '0' otherwise
@@ -1839,36 +1839,36 @@ angular
       //look for its type and adding one to the counter
       for (var i=0; i<arrayInfo.length;i++) {
         if (arrayInfo[i] == 1) {
-          var tipo = arrayNeuronal[[i]].tipo;
-          switch (tipo) {
+          var type = arrayNeuronal[[i]].tipo;
+          switch (type) {
 
             case '0': {
-                        contadorMossy++;
+                        mossyCounter++;
                         break;
             }
 
             case '1': {
-                        contadorGranulle++;
+                        granulleCounter++;
                         break;
             }
 
             case '2': {
-                        contadorPurkinje++;
+                        purkinjeCounter++;
                         break;
             }
 
             case '3': {
-                        contadorDCN++;
+                        DCNCounter++;
                         break;
             }
 
             case '4': {
-                        contadorGolgi++;
+                        golgiCounter++;
                         break;
             }
 
             case '5': {
-                        contadorIO++;
+                        IOCounter++;
                         break;
             }
           }
@@ -1882,34 +1882,34 @@ angular
       if (grafoFactory.spanish) {
         div.innerHTML = div.innerHTML + '<center><b><font size="4">Neuronas visualizadas</font></b></center>';
         div.innerHTML = div.innerHTML + '<br><br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + contadorMossy + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + mossyCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + contadorGranulle + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + granulleCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + contadorPurkinje + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + purkinjeCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + contadorDCN + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + DCNCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + contadorGolgi + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + golgiCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + contadorIO + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + IOCounter + '</center>';
       }
 
       //Generate in english if active
       if (grafoFactory.english) {
         div.innerHTML = div.innerHTML + '<center><b><font size="4">Visualized neurons</font></b></center>';
         div.innerHTML = div.innerHTML + '<br><br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + contadorMossy + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + mossyCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + contadorGranulle + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + granulleCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + contadorPurkinje + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + purkinjeCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + contadorDCN + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + DCNCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + contadorGolgi + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + golgiCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + contadorIO + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + IOCounter + '</center>';
       }
 
 
@@ -1919,61 +1919,61 @@ angular
 
     //Show the info about the edges actives at the moment
     $scope.logEdges = function(){
-      var contadorA = 0;
-      var contadorB = 0;
-      var contadorC = 0;
-      var contadorD = 0;
-      var contadorE = 0;
+      var ACounter = 0;
+      var BCounter = 0;
+      var CCounter = 0;
+      var DCounter = 0;
+      var ECounter = 0;
 
       //Remove the previous info to show the new one
-      var nodoABorrar = document.getElementById('log_a');
-        while (nodoABorrar.firstChild) {
-            nodoABorrar.removeChild(nodoABorrar.firstChild);
+      var nodeToRemove = document.getElementById('log_a');
+        while (nodeToRemove.firstChild) {
+            nodeToRemove.removeChild(nodeToRemove.firstChild);
         }
 
       //Search all the active edges in each type of synapse
       for (var i=0; i<grafoFactory.arrayConexionesA.length;i++){
         var pos = $scope.searchEdge(grafoFactory.arrayConexionesA[i].origen, grafoFactory.arrayConexionesA[i].destino);
-        var oculto = jsonCopy.edges[pos].hidden;
+        var hidden = jsonCopy.edges[pos].hidden;
 
-        if (!oculto) {
-          contadorA++;
+        if (!hidden) {
+          ACounter++;
         }
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesB.length;i++){
         var pos = $scope.searchEdge(grafoFactory.arrayConexionesB[i].origen, grafoFactory.arrayConexionesB[i].destino);
-        var oculto = jsonCopy.edges[pos].hidden;
+        var hidden = jsonCopy.edges[pos].hidden;
 
-        if (!oculto) {
-          contadorB++;
+        if (!hidden) {
+          BCounter++;
         }
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesC.length;i++){
         var pos = $scope.searchEdge(grafoFactory.arrayConexionesC[i].origen, grafoFactory.arrayConexionesC[i].destino);
-        var oculto = jsonCopy.edges[pos].hidden;
+        var hidden = jsonCopy.edges[pos].hidden;
 
-        if (!oculto) {
-          contadorC++;
+        if (!hidden) {
+          CCounter++;
         }
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesD.length;i++){
         var pos = $scope.searchEdge(grafoFactory.arrayConexionesD[i].origen, grafoFactory.arrayConexionesD[i].destino);
-        var oculto = jsonCopy.edges[pos].hidden;
+        var hidden = jsonCopy.edges[pos].hidden;
 
-        if (!oculto) {
-          contadorD++;
+        if (!hidden) {
+          DCounter++;
         }
       }
 
       for (var i=0; i<grafoFactory.arrayConexionesE.length;i++){
         var pos = $scope.searchEdge(grafoFactory.arrayConexionesE[i].origen, grafoFactory.arrayConexionesE[i].destino);
-        var oculto = jsonCopy.edges[pos].hidden;
+        var hidden = jsonCopy.edges[pos].hidden;
 
-        if (!oculto) {
-          contadorE++;
+        if (!hidden) {
+          ECounter++;
         }
       }
 
@@ -1984,30 +1984,30 @@ angular
       if (grafoFactory.spanish) {
         div.innerHTML = div.innerHTML + '<center><b><font size="4">Sinapsis visualizadas</font></b></center>';
         div.innerHTML = div.innerHTML + '<br><br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Morado):</b> '  + contadorA + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Morado):</b> '  + ACounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Verde):</b> ' + contadorB + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Verde):</b> ' + BCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Azul):</b> ' + contadorC +  '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Azul):</b> ' + CCounter +  '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Rojo):</b> ' + contadorD + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Rojo):</b> ' + DCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Naranja):</b> ' + contadorE + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Naranja):</b> ' + ECounter + '</center>';
       }
 
       //Generate in english if active
       if (grafoFactory.english) {
         div.innerHTML = div.innerHTML + '<center><b><font size="4">Visualized synapses</font></b></center>';
         div.innerHTML = div.innerHTML + '<br><br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Purple):</b> '  + contadorA + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Purple):</b> '  + ACounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Green):</b> ' + contadorB + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Green):</b> ' + BCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Blue):</b> ' + contadorC +  '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Blue):</b> ' + CCounter +  '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Red):</b> ' + contadorD + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Red):</b> ' + DCounter + '</center>';
         div.innerHTML = div.innerHTML + '<br>';
-        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Orange):</b> ' + contadorE + '</center>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Orange):</b> ' + ECounter + '</center>';
       }
 
 
