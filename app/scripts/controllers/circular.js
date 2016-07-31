@@ -763,8 +763,8 @@ angular
         arrayRange.pop();
       }
 
-      var arrayPrueba = new Array();
-      grafoFactory.setArrayPrueba(arrayPrueba);
+      var arrayNeuronInfo = new Array();
+      grafoFactory.setArrayPrueba(arrayNeuronInfo);
       $scope.cleanEdges(arrayNeuronal);
       refresh();
       grafoFactory.load(jsonCopy);
@@ -893,23 +893,23 @@ angular
 
     //The visualization changes with the weigth variation of the weigth slider
     $scope.changeMoseyWeigth = function() {
-      var inicioPeso = $scope.sliderPesoMosey.min;
-      var finalPeso = $scope.sliderPesoMosey.max;
+      var minWeigth = $scope.sliderPesoMosey.min;
+      var maxWeigth = $scope.sliderPesoMosey.max;
 
       //Min and max weigth are calculated here
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoMossey*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoMossey*finalPeso;
+      minWeigth = minWeigth/100;
+      minWeigth = grafoFactory.minPesoMossey*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = grafoFactory.maxPesoMossey*maxWeigth;
 
       //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayMosey.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayMosey[i]].peso[j];
-          var origen = arrayNeuronal[arrayMosey[i]].id;
-          var destino = arrayNeuronal[arrayMosey[i]].destino[j];
-          var pos = $scope.searchEdge(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+          var weigth = arrayNeuronal[arrayMosey[i]].peso[j];
+          var source = arrayNeuronal[arrayMosey[i]].id;
+          var target = arrayNeuronal[arrayMosey[i]].destino[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -921,8 +921,8 @@ angular
       //Check if there are no neurons whithout any edge, remove if that's the case
       for (var i=0; i<arrayMosey.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
-          var destino = arrayNeuronal[arrayMosey[i]].destino[j];
-          $scope.checkNoEdges(destino);
+          var target = arrayNeuronal[arrayMosey[i]].destino[j];
+          $scope.checkNoEdges(target);
         }
       }
 
@@ -933,23 +933,23 @@ angular
 
     //The visualization changes with the weigth variation of the weigth slider
     $scope.changeGranulleWeigth = function () {
-      var inicioPeso = $scope.sliderPesoGranulle.min;
-      var finalPeso = $scope.sliderPesoGranulle.max;
+      var minWeigth = $scope.sliderPesoGranulle.min;
+      var maxWeigth = $scope.sliderPesoGranulle.max;
 
       //Min and max weigth are calculated here
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoGranulle*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoGranulle*finalPeso;
+      minWeigth = minWeigth/100;
+      minWeigth = grafoFactory.minPesoGranulle*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = grafoFactory.maxPesoGranulle*maxWeigth;
 
       //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayGranulle.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayGranulle[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayGranulle[i]].peso[j];
-          var origen = arrayNeuronal[arrayGranulle[i]].id;
-          var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
-          var pos = $scope.searchEdge(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+          var weigth = arrayNeuronal[arrayGranulle[i]].peso[j];
+          var source = arrayNeuronal[arrayGranulle[i]].id;
+          var target = arrayNeuronal[arrayGranulle[i]].destino[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -961,8 +961,8 @@ angular
       //Check if there are no neurons whithout any edge, remove if that's the case
       for (var i=0; i<arrayGranulle.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayGranulle[i]].peso.length;j++) {
-          var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
-          $scope.checkNoEdges(destino);
+          var target = arrayNeuronal[arrayGranulle[i]].destino[j];
+          $scope.checkNoEdges(target);
         }
       }
 
@@ -973,23 +973,23 @@ angular
 
     //The visualization changes with the weigth variation of the weigth slider
     $scope.changePurkinjeWeigth = function () {
-      var inicioPeso = $scope.sliderPesoPurkinje.min;
-      var finalPeso = $scope.sliderPesoPurkinje.max;
+      var minWeigth = $scope.sliderPesoPurkinje.min;
+      var maxWeigth = $scope.sliderPesoPurkinje.max;
 
       //Min and max weigth are calculated here
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoPurkinje*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoPurkinje*finalPeso;
+      minWeigth = minWeigth/100;
+      minWeigth = grafoFactory.minPesoPurkinje*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = grafoFactory.maxPesoPurkinje*maxWeigth;
 
       //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayPurkinje.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayPurkinje[i]].peso[j];
-          var origen = arrayNeuronal[arrayPurkinje[i]].id;
-          var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
-          var pos = $scope.searchEdge(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+          var weigth = arrayNeuronal[arrayPurkinje[i]].peso[j];
+          var source = arrayNeuronal[arrayPurkinje[i]].id;
+          var target = arrayNeuronal[arrayPurkinje[i]].destino[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -1001,8 +1001,8 @@ angular
       //Check if there are no neurons whithout any edge, remove if that's the case
       for (var i=0; i<arrayPurkinje.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].peso.length;j++) {
-          var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
-          $scope.checkNoEdges(destino);
+          var target = arrayNeuronal[arrayPurkinje[i]].destino[j];
+          $scope.checkNoEdges(target);
         }
       }
 
@@ -1013,23 +1013,23 @@ angular
 
     //The visualization changes with the weigth variation of the weigth slider
     $scope.changeDCNWeigth = function () {
-      var inicioPeso = $scope.sliderPesoDCN.min;
-      var finalPeso = $scope.sliderPesoDCN.max;
+      var minWeigth = $scope.sliderPesoDCN.min;
+      var maxWeigth = $scope.sliderPesoDCN.max;
 
       //Min and max weigth are calculated here
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoDCN*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoDCN*finalPeso;
+      minWeigth = minWeigth/100;
+      minWeigth = grafoFactory.minPesoDCN*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = grafoFactory.maxPesoDCN*maxWeigth;
 
       //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayDCN.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayDCN[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayDCN[i]].peso[j];
-          var origen = arrayNeuronal[arrayDCN[i]].id;
-          var destino = arrayNeuronal[arrayDCN[i]].destino[j];
-          var pos = $scope.searchEdge(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+          var weigth = arrayNeuronal[arrayDCN[i]].peso[j];
+          var source = arrayNeuronal[arrayDCN[i]].id;
+          var target = arrayNeuronal[arrayDCN[i]].destino[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -1041,8 +1041,8 @@ angular
       //Check if there are no neurons whithout any edge, remove if that's the case
       for (var i=0; i<arrayDCN.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayDCN[i]].peso.length;j++) {
-          var destino = arrayNeuronal[arrayDCN[i]].destino[j];
-          $scope.checkNoEdges(destino);
+          var target = arrayNeuronal[arrayDCN[i]].destino[j];
+          $scope.checkNoEdges(target);
         }
       }
 
@@ -1053,23 +1053,23 @@ angular
 
     //The visualization changes with the weigth variation of the weigth slider
     $scope.changeGolgiWeigth = function () {
-      var inicioPeso = $scope.sliderPesoGolgi.min;
-      var finalPeso = $scope.sliderPesoGolgi.max;
+      var minWeigth = $scope.sliderPesoGolgi.min;
+      var maxWeigth = $scope.sliderPesoGolgi.max;
 
       //Min and max weigth are calculated here
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoGolgi*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoGolgi*finalPeso;
+      minWeigth = minWeigth/100;
+      minWeigth = grafoFactory.minPesoGolgi*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = grafoFactory.maxPesoGolgi*maxWeigth;
 
       //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayGolgi.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayGolgi[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayGolgi[i]].peso[j];
-          var origen = arrayNeuronal[arrayGolgi[i]].id;
-          var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
-          var pos = $scope.searchEdge(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+          var weigth = arrayNeuronal[arrayGolgi[i]].peso[j];
+          var source = arrayNeuronal[arrayGolgi[i]].id;
+          var target = arrayNeuronal[arrayGolgi[i]].destino[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -1081,8 +1081,8 @@ angular
       //Check if there are no neurons whithout any edge, remove if that's the case
       for (var i=0; i<arrayGolgi.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayGolgi[i]].peso.length;j++) {
-          var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
-          $scope.checkNoEdges(destino);
+          var target = arrayNeuronal[arrayGolgi[i]].destino[j];
+          $scope.checkNoEdges(target);
         }
       }
 
@@ -1093,23 +1093,23 @@ angular
 
     //The visualization changes with the weigth variation of the weigth slider
     $scope.changeIOWeigth = function () {
-      var inicioPeso = $scope.sliderPesoIO.min;
-      var finalPeso = $scope.sliderPesoIO.max;
+      var minWeigth = $scope.sliderPesoIO.min;
+      var maxWeigth = $scope.sliderPesoIO.max;
 
       //Min and max weigth are calculated here
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoIO*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoIO*finalPeso;
+      minWeigth = minWeigth/100;
+      minWeigth = grafoFactory.minPesoIO*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = grafoFactory.maxPesoIO*maxWeigth;
 
       //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayIO.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayIO[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayIO[i]].peso[j];
-          var origen = arrayNeuronal[arrayIO[i]].id;
-          var destino = arrayNeuronal[arrayIO[i]].destino[j];
-          var pos = $scope.searchEdge(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+          var weigth = arrayNeuronal[arrayIO[i]].peso[j];
+          var source = arrayNeuronal[arrayIO[i]].id;
+          var target = arrayNeuronal[arrayIO[i]].destino[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -1121,8 +1121,8 @@ angular
       //Check if there are no neurons whithout any edge, remove if that's the case
       for (var i=0; i<arrayIO.length;i++) {
         for (var j=0; j<arrayNeuronal[arrayIO[i]].peso.length;j++) {
-          var destino = arrayNeuronal[arrayIO[i]].destino[j];
-          $scope.checkNoEdges(destino);
+          var target = arrayNeuronal[arrayIO[i]].destino[j];
+          $scope.checkNoEdges(target);
         }
       }
 
@@ -1187,64 +1187,64 @@ angular
     }*/
 
     //Function to go back in the app's UI
-    $scope.back = function(valor){
-      if (valor == 1) {
+    $scope.back = function(value){
+      if (value == 1) {
         document.getElementById('seleccion_neuronas').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      if (valor == 2) {
+      if (value == 2) {
         document.getElementById('seleccion_grupos').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      if (valor == 3) {
+      if (value == 3) {
         document.getElementById('slider').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      if (valor == 4) {
+      if (value == 4) {
         document.getElementById('sliderPeso').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      if (valor ==5) {
+      if (value ==5) {
         document.getElementById('seleccionManual').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      if (valor == 6) {
+      if (value == 6) {
         document.getElementById('registro').style.display = "none";
         document.getElementById('seleccion_filtros').style.display = "inline";
       }
 
-      if (valor == 7) {
+      if (value == 7) {
         document.getElementById('estadisticas_n').style.display = "none";
         document.getElementById('registro').style.display = "inline";
       }
 
-      if (valor == 8) {
+      if (value == 8) {
         document.getElementById('estadisticas_a').style.display = "none";
         document.getElementById('registro').style.display = "inline";
       }
     }
 
     //Function to display the desired option selected in the UI
-    $scope.display = function(valor) {
+    $scope.display = function(value) {
       document.getElementById('seleccion_filtros').style.display = "none";
 
       //Show select by neuronal type
-      if (valor == 1) {
+      if (value == 1) {
         document.getElementById('seleccion_neuronas').style.display = "inline";
       }
 
       //Show select by synapse type
-      if (valor == 2) {
+      if (value == 2) {
         document.getElementById('seleccion_grupos').style.display = "inline";
       }
 
       //Show the ID slider filter
-      if (valor == 3) {
+      if (value == 3) {
         document.getElementById('sliderPeso').style.display = "none";
         document.getElementById('seleccionManual').style.display = "none";
         document.getElementById('slider').style.visibility = "visible";
@@ -1253,7 +1253,7 @@ angular
       }
 
       //Show the weigth slider filter
-      if (valor == 4) {
+      if (value == 4) {
         document.getElementById('slider').style.display = "none";
         document.getElementById('seleccionManual').style.display = "none";
         document.getElementById('sliderPeso').style.visibility = "visible";
@@ -1262,7 +1262,7 @@ angular
       }
 
       //Show the individual selection window
-      if (valor == 5) {
+      if (value == 5) {
         document.getElementById('sliderPeso').style.display = "none";
         document.getElementById('slider').style.display = "none";
         document.getElementById('seleccionManual').style.visibility = "visible";
@@ -1271,12 +1271,12 @@ angular
       }
 
       //Show the selecting log window
-      if (valor == 6) {
+      if (value == 6) {
         document.getElementById('registro').style.display = "inline";
       }
 
       //Show the neuron stats
-      if (valor == 8) {
+      if (value == 8) {
         document.getElementById('registro').style.display = "none";
         document.getElementById('log_a').style.display = "inline";
       }
@@ -1284,21 +1284,21 @@ angular
 
     //Returns all the targets for a selected neuron
     $scope.getTargets = function(neurona) {
-      var resultado;
-      var iteraciones = arrayNeuronal[neurona].destino.length;
+      var result;
+      var iterations = arrayNeuronal[neurona].destino.length;
 
-      for (var i=0; i<iteraciones;i++) {
+      for (var i=0; i<iterations;i++) {
         var aux = arrayNeuronal[neurona].destino[i];
         aux = aux.toString();
 
         if (i==0) {
-          resultado = aux;
+          result = aux;
         }
         else {
-          resultado = resultado + ',' + aux;
+          result = result + ',' + aux;
         }
       }
-      return resultado;
+      return result;
     }
 
     //Set all the synapses checked/unchecked
@@ -1334,39 +1334,39 @@ angular
     //When the user inserts a range at the individual selection, this function
     //show all the neurons inside that interval
     $scope.filteringByRange = function() {
-      var stringSeleccion = document.getElementById("inputNeuronas").value;
-      var filtradoOrigen = stringSeleccion.split('-');
-      var minRango = parseInt(filtradoOrigen[0]);
-      var maxRango = parseInt(filtradoOrigen[1]);
-      var arrayOrigenes = new Array();
-      var arrayDatos = new Array();
+      var selectionString = document.getElementById("inputNeuronas").value;
+      var sourceFilter = selectionString.split('-');
+      var minRange = parseInt(sourceFilter[0]);
+      var maxRange = parseInt(sourceFilter[1]);
+      var sourcesArray = new Array();
+      var dataArray = new Array();
 
       //Checking valid insert data
-      //minRango must be smaller than maxRango
-      //minRango must be greater or equal than the lower value of the available data
-      //maxRango must be smaller or equal than the upper value of the available data
+      //minRange must be smaller than maxRange
+      //minRange must be greater or equal than the lower value of the available data
+      //maxRange must be smaller or equal than the upper value of the available data
       var min = parseInt(arrayNeuronal[0].id);
       var max= parseInt(arrayNeuronal[arrayNeuronal.length-1].id);
-      if (minRango<=maxRango) {
-        if (minRango>=min) {
-          if (maxRango<=max) {
+      if (minRange<=maxRange) {
+        if (minRange>=min) {
+          if (maxRange<=max) {
 
             //Get all the origin neurons of the obtained range
             var i=0;
-            while (minRango<=maxRango) {
-              arrayOrigenes[i] = minRango;
+            while (minRange<=maxRange) {
+              sourcesArray[i] = minRange;
               i++;
-              minRango++;
+              minRange++;
             }
 
             //Search for all the targets of the selected neurons
-            for (var i=0; i<arrayOrigenes.length;i++) {
-              var neuronaOrigen = arrayOrigenes[i];
-              arrayDatos.push($scope.getTargets(neuronaOrigen));
+            for (var i=0; i<sourcesArray.length;i++) {
+              var sourceNeuron = sourcesArray[i];
+              dataArray.push($scope.getTargets(sourceNeuron));
             }
 
-            for (var i=0; i<arrayDatos.length;i++) {
-                var auxN = arrayDatos[i];
+            for (var i=0; i<dataArray.length;i++) {
+                var auxN = dataArray[i];
                 auxN = auxN.split(',');
                 for (var j=0; j<auxN.length;j++) {
                   var auxJ = auxN[j];
@@ -1412,17 +1412,17 @@ angular
     }
 
     //Shows all the neurons selected at the individual select window
-    $scope.manualFiltering = function(stringSeleccion) {
-      var filtradoOrigen = stringSeleccion.split(',');
+    $scope.manualFiltering = function(selectionString) {
+      var sourceFilter = selectionString.split(',');
       var min = parseInt(arrayNeuronal[0].id);
       var max = parseInt(arrayNeuronal[arrayNeuronal.length-1].id);
-      var detener = false;
-      var arrayDatos = new Array();
+      var stop = false;
+      var dataArray = new Array();
       var j=0;
 
-      while (j<filtradoOrigen.length && !detener) {
+      while (j<sourceFilter.length && !stop) {
 
-        if (filtradoOrigen[j] < min) {
+        if (sourceFilter[j] < min) {
           if (grafoFactory.spanish) {
             alert('ERROR: el valor inferior del rango introducido es menor que el valor mínimo de id disponible');
           }
@@ -1430,30 +1430,30 @@ angular
           else if (grafoFactory.english) {
             alert('ERROR: The lower value of the entered range is smaller than the minimun id value available');
           }
-          detener = true;
+          stop = true;
         }
 
-        else if (filtradoOrigen[j] > max) {
+        else if (sourceFilter[j] > max) {
           if (grafoFactory.spanish) {
             alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
           }
           else if (grafoFactory.english) {
             alert('ERROR: The upper value of the entered range is greater than the maximun id value available');
           }
-          detener = true;
+          stop = true;
         }
         j++;
       }
 
-      if (!detener) {
+      if (!stop) {
 
-      for (var i=0; i<filtradoOrigen.length;i++) {
-        var neuronaOrigen = filtradoOrigen[i];
-        arrayDatos.push($scope.getTargets(neuronaOrigen));
+      for (var i=0; i<sourceFilter.length;i++) {
+        var sourceNeuron = sourceFilter[i];
+        dataArray.push($scope.getTargets(sourceNeuron));
       }
 
-      for (var i=0; i<arrayDatos.length;i++) {
-          var auxN = arrayDatos[i];
+      for (var i=0; i<dataArray.length;i++) {
+          var auxN = dataArray[i];
           auxN = auxN.split(',');
           for (var j=0; j<auxN.length;j++) {
             var auxJ = auxN[j];
@@ -1543,14 +1543,14 @@ angular
     //Chech whether if the neuron can be removed according to the neuronCounterArray
     //If the neuron at neuronCounterArray has a 0 value, it can be removed
     //with a value grater than 0, removal of the neuron is forbidden
-    $scope.checkRemoval = function (neuronaAEliminar) {
-      var permiso = false;
-      var aux = neuronCounterArray[neuronaAEliminar];
+    $scope.checkRemoval = function (neuronToRemove) {
+      var permit = false;
+      var aux = neuronCounterArray[neuronToRemove];
 
       if (aux == 0)
-        permiso = true;
+        permit = true;
 
-      return permiso;
+      return permit;
     }
 
     //Generate the visualization of the synapses group
