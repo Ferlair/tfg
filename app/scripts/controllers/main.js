@@ -850,8 +850,8 @@ angular
     $scope.findTarget = function(arrayNeuronal, id) {
       for (var i=0;i<arrayNeuronal.length;i++){
         for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
-          var destino = arrayNeuronal[i].destino[j];
-          if ((destino == id) && (id != arrayNeuronal[i].id)) {
+          var target = arrayNeuronal[i].destino[j];
+          if ((target == id) && (id != arrayNeuronal[i].id)) {
             arrayNeuronal[id].esDestino.push(arrayNeuronal[i].id);
           }
         }
@@ -859,14 +859,14 @@ angular
     }
 
     //Get the minimun weigth readed in the file
-    $scope.getMinWeigth = function(arrayNeuronal, tipo) {
+    $scope.getMinWeigth = function(arrayNeuronal, type) {
       var min = 0;
 
       for (var i=0; i<arrayNeuronal.length; i++) {
-        if (arrayNeuronal[i].tipo == tipo) {
+        if (arrayNeuronal[i].tipo == type) {
           for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
-            var minTipo = Math.min.apply(null,arrayNeuronal[i].peso);
-            min = Math.min(min, minTipo);
+            var minType = Math.min.apply(null,arrayNeuronal[i].peso);
+            min = Math.min(min, minType);
           }
         }
       }
@@ -875,16 +875,16 @@ angular
     }
 
     //Get the maximun weigth readed in the file
-    $scope.getMaxWeigth = function(arrayNeuronal, tipo) {
+    $scope.getMaxWeigth = function(arrayNeuronal, type) {
       var max = 0;
 
       for (var i=0; i<arrayNeuronal.length; i++) {
 
-        if (arrayNeuronal[i].tipo == tipo) {
+        if (arrayNeuronal[i].tipo == type) {
 
           for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
-            var maxTipo = Math.max.apply(null,arrayNeuronal[i].peso);
-            max = Math.max(max,maxTipo);
+            var maxType = Math.max.apply(null,arrayNeuronal[i].peso);
+            max = Math.max(max,maxType);
           }
 
         }
@@ -894,13 +894,13 @@ angular
     }
 
     //Find the type of a selected neuron
-    $scope.findNeuronType = function(neuronaDestino, origen, tipo) {
-      var tipoDevuelto;
-      for (var i=0; i<origen.length; i++) {
-        if (neuronaDestino == origen[i])
-          tipoDevuelto = tipo[i];
+    $scope.findNeuronType = function(targetNeuron, source, type) {
+      var returnedType;
+      for (var i=0; i<source.length; i++) {
+        if (targetNeuron == source[i])
+          returnedType = type[i];
       }
-      return tipoDevuelto;
+      return returnedType;
     }
 
     //Search for the maximum neuron value in the file (source or target)
