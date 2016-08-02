@@ -1,3 +1,6 @@
+<!--<input type="button" value="mostrar aristas" ng-click="showEdges()">
+<input type="button" value="mostrar nodos" ng-click="showNodes()">-->
+
 <div id="seleccion_filtros">
   <center><input id="boton_grupo_neuronal" type="button" ng-click="display(1)"></center><br>
   <center><input id="boton_tipo_conexion" type="button" ng-click="display(2)"></center><br>
@@ -9,7 +12,7 @@
 
 
 <div id="seleccion_neuronas" style="display:none">
-    Selecciona las neuronas que quieres visualizar: <br><br>
+    Seleccione el tipo de neurona: <br><br>
     <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="checkMossy()" checked> Mossy Fibers</label><br><br>
     <label><input id="2" type ="checkbox" name ="neurona" value = "Granulle Cells" ng-click="checkGranulle()" checked> Granulle Cells</label><br><br>
     <label><input id="3" type ="checkbox" name ="neurona" value = "Purkinje Cells" ng-click="checkPurkinje()" checked> Purkinje Cells</label><br><br>

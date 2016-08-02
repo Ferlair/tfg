@@ -169,7 +169,7 @@ angular
           targetRepeated = ANeuronArray.indexOf(t);
           ANeuronArray.push(t);
 
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthMossey, grafoFactory.minWeigthMossey);
           var interpolated = $scope.interpolate(ratio, 247, 0, 255, 72, 0, 66);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -201,7 +201,7 @@ angular
           targetRepeated = BNeuronArray.indexOf(t);
           BNeuronArray.push(t);
 
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoMossey, grafoFactory.minPesoMossey);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthMossey, grafoFactory.minWeigthMossey);
           var interpolated = $scope.interpolate(ratio, 64, 255, 0, 7, 72, 0);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -236,7 +236,7 @@ angular
 
           targetRepeated = CNeuronArray.indexOf(t);
           CNeuronArray.push(t);
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoGranulle, grafoFactory.minPesoGranulle);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthGranulle, grafoFactory.minWeigthGranulle);
           var interpolated = $scope.interpolate(ratio, 26, 0, 255, 0, 0, 72);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -271,7 +271,7 @@ angular
 
           targetRepeated = DNeuronArray.indexOf(t);
           DNeuronArray.push(t);
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthGolgi, grafoFactory.minWeigthGolgi);
           var interpolated = $scope.interpolate(ratio,255, 0, 0, 72, 0, 0);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -302,7 +302,7 @@ angular
 
           targetRepeated = ENeuronArray.indexOf(t);
           ENeuronArray.push(t);
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxPesoGolgi, grafoFactory.minPesoGolgi);
+          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthGolgi, grafoFactory.minWeigthGolgi);
           var interpolated = $scope.interpolate(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -404,16 +404,16 @@ angular
         color = $scope.getColor(weigth, sourceType, targetType, source, target, arrayNeuronal);
         jsonCopy.edges[i].color = color[0];
         jsonCopy.edges[i].hidden = color[1];
-        grafoFactory.arrayNeuronasA = ANeuronArray;
-        grafoFactory.arrayNeuronasB = BNeuronArray;
-        grafoFactory.arrayNeuronasC = CNeuronArray;
-        grafoFactory.arrayNeuronasD = DNeuronArray;
-        grafoFactory.arrayNeuronasE = ENeuronArray;
-        grafoFactory.arrayConexionesA = ASynapseArray;
-        grafoFactory.arrayConexionesB = BSynapseArray;
-        grafoFactory.arrayConexionesC = CSynapseArray;
-        grafoFactory.arrayConexionesD = DSynapseArray;
-        grafoFactory.arrayConexionesE = ESynapseArray;
+        grafoFactory.ANeuronArray = ANeuronArray;
+        grafoFactory.BNeuronArray = BNeuronArray;
+        grafoFactory.CNeuronArray = CNeuronArray;
+        grafoFactory.DNeuronArray = DNeuronArray;
+        grafoFactory.ENeuronArray = ENeuronArray;
+        grafoFactory.ASynapsesArray = ASynapseArray;
+        grafoFactory.BSynapsesArray = BSynapseArray;
+        grafoFactory.CSynapsesArray = CSynapseArray;
+        grafoFactory.DSynapsesArray = DSynapseArray;
+        grafoFactory.ESynapsesArray = ESynapseArray;
       }
       }
     }
@@ -827,18 +827,18 @@ angular
       for (var i=0;i<arrayNeuronal.length;i++) {
         $scope.findTarget(arrayNeuronal, i);
       }
-      grafoFactory.maxPesoMossey = $scope.getMaxWeigth(arrayNeuronal, 0);
-      grafoFactory.maxPesoGranulle = $scope.getMaxWeigth(arrayNeuronal, 1);
-      grafoFactory.maxPesoPurkinje = $scope.getMaxWeigth(arrayNeuronal, 2);
-      grafoFactory.maxPesoDCN = $scope.getMaxWeigth(arrayNeuronal, 3);
-      grafoFactory.maxPesoGolgi = $scope.getMaxWeigth(arrayNeuronal, 4);
-      grafoFactory.maxPesoIO = $scope.getMaxWeigth(arrayNeuronal, 5);
-      grafoFactory.minPesoMossey = $scope.getMinWeigth(arrayNeuronal, 0);
-      grafoFactory.minPesoGranulle = $scope.getMinWeigth(arrayNeuronal, 1);
-      grafoFactory.minPesoPurkinje = $scope.getMinWeigth(arrayNeuronal, 2);
-      grafoFactory.minPesoDCN = $scope.getMinWeigth(arrayNeuronal, 3);
-      grafoFactory.minPesoGolgi = $scope.getMinWeigth(arrayNeuronal, 4);
-      grafoFactory.minPesoIO = $scope.getMinWeigth(arrayNeuronal, 5);
+      grafoFactory.maxWeigthMossey = $scope.getMaxWeigth(arrayNeuronal, 0);
+      grafoFactory.maxWeigthGranulle = $scope.getMaxWeigth(arrayNeuronal, 1);
+      grafoFactory.maxWeigthPurkinje = $scope.getMaxWeigth(arrayNeuronal, 2);
+      grafoFactory.maxWeigthDCN = $scope.getMaxWeigth(arrayNeuronal, 3);
+      grafoFactory.maxWeigthGolgi = $scope.getMaxWeigth(arrayNeuronal, 4);
+      grafoFactory.maxWeigthIO = $scope.getMaxWeigth(arrayNeuronal, 5);
+      grafoFactory.minWeigthMossey = $scope.getMinWeigth(arrayNeuronal, 0);
+      grafoFactory.minWeigthGranulle = $scope.getMinWeigth(arrayNeuronal, 1);
+      grafoFactory.minWeigthPurkinje = $scope.getMinWeigth(arrayNeuronal, 2);
+      grafoFactory.minWeigthDCN = $scope.getMinWeigth(arrayNeuronal, 3);
+      grafoFactory.minWeigthGolgi = $scope.getMinWeigth(arrayNeuronal, 4);
+      grafoFactory.minWeigthIO = $scope.getMinWeigth(arrayNeuronal, 5);
       grafoFactory.saveNeuronalArray(arrayNeuronal);
       $scope.generateJSON(arrayNeuronal);
     }
