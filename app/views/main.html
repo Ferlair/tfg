@@ -1,9 +1,9 @@
-<div id="idioma-esp">
+<div id="lang-esp">
 <ul>
   <br>
-  <p id="titulo"> Visualización neuronal
-  <button id="bandera_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
-  <button id="bandera_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
+  <p id="title"> Visualización neuronal
+  <button id="flag_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
+  <button id="flag_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
 </ul>
 
 <br>
@@ -11,15 +11,15 @@
 <br>
 <br>
 
-<div id="todo">
-<div class="mascara">
+<div id="all">
+<div class="mask">
   <input type="file" id="myFile" accept=".txt" on-read-file="loadNeurons($fileContent)" ng-model="modelo" ng-change="saludo()"/>
 </div>
 <br><br>
-<div id="especificaciones-esp" ng-show = "checked">
+<div id="specs-esp" ng-show = "checked">
 </div>
 
-<hr class="separador" style="color:#000;" width="50%">
+<hr class="separator" style="color:#000;" width="50%">
 
 <!-- Slider de opciones de visualización -->
 <table>
@@ -40,12 +40,12 @@
 
 <!-- --------------------------------------- -->
 
-<div id="idioma-eng" style="display: none">
+<div id="lang-eng" style="display: none">
 <ul>
   <br>
-  <p id="titulo"> Neuronal Visualization
-  <button id="bandera_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
-  <button id="bandera_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
+  <p id="title"> Neuronal Visualization
+  <button id="flag_esp" style="background: url(../app/images/bandera_esp.png)" ng-click="esp()"/>
+  <button id="flag_eng" style="background: url(../app/images/bandera_eng.png)" ng-click="eng()"/></p>
 
 </ul>
 
@@ -55,15 +55,15 @@
 <br>
 
 
-<div id="todo">
-<div class="mascara-eng">
+<div id="all">
+<div class="mask-eng">
   <input type="file" accept=".txt" on-read-file="loadNeurons($fileContent)"/>
 </div>
 <br><br>
-<div id="especificaciones-eng" ng-show = "checked">
+<div id="specs-eng" ng-show = "checked">
 </div>
 
-<hr class="separador" style="color:#000;" width="50%">
+<hr class="separator" style="color:#000;" width="50%">
 
 <!-- Slider de opciones de visualización -->
 <table>

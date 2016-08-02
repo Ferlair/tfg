@@ -10,7 +10,7 @@
 angular
   .module('tfgApp')
 
-  .controller('MainCtrl',['$scope','grafoFactory', function($scope, grafoFactory){
+  .controller('MainCtrl',['$scope','graphFactory', function($scope, graphFactory){
 
     //Stores the json to create the graph
     var jsonCopy;
@@ -54,8 +54,8 @@ angular
     var infoIO = 0;
 
     //Language selected, spanish by default
-    grafoFactory.spanish=true;
-    grafoFactory.english=false;
+    graphFactory.spanish=true;
+    graphFactory.english=false;
 
     //active the slider for choosing visualization, afther the file is correctly loaded
     $scope.activateVisualization = function() {
@@ -78,18 +78,18 @@ angular
 
     //If spanish language is selected, show all the info in spanish
     $scope.esp = function() {
-      grafoFactory.spanish = true;
-      grafoFactory.english = false;
-      document.getElementById('idioma-eng').style.display = "none";
-      document.getElementById('idioma-esp').style.display = "inline";
+      graphFactory.spanish = true;
+      graphFactory.english = false;
+      document.getElementById('lang-eng').style.display = "none";
+      document.getElementById('lang-esp').style.display = "inline";
     }
 
     //If english language is selected, showw all the info in english
     $scope.eng = function() {
-      grafoFactory.spanish = false;
-      grafoFactory.english = true;
-      document.getElementById('idioma-esp').style.display = "none";
-      document.getElementById('idioma-eng').style.display = "inline";
+      graphFactory.spanish = false;
+      graphFactory.english = true;
+      document.getElementById('lang-esp').style.display = "none";
+      document.getElementById('lang-eng').style.display = "inline";
     }
 
     //Conversion of a component to an hexadecimal value
@@ -144,23 +144,23 @@ angular
       if (sourceType =='0') {
         //Synapses Mossy-Granulle
         if (targetType=='1') {
-          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('A');
-          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('A');
+          var sourceRepeated = arrayNeuronal[s].synapseType.indexOf('A');
+          var targetRepeated = arrayNeuronal[t].synapseType.indexOf('A');
 
           if (sourceRepeated == -1)
-          arrayNeuronal[s].tipoConexion.push('A');
+          arrayNeuronal[s].synapseType.push('A');
 
           if (targetRepeated == -1)
-          arrayNeuronal[t].tipoConexion.push('A');
+          arrayNeuronal[t].synapseType.push('A');
 
           var source = "n"+s;
           var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= s;
-          obj.destino = t;
-          obj.enlace = id;
+          obj.source= s;
+          obj.target = t;
+          obj.link = id;
 
           ASynapseArray.push(obj);
           sourceRepeated = ANeuronArray.indexOf(s);
@@ -169,30 +169,30 @@ angular
           targetRepeated = ANeuronArray.indexOf(t);
           ANeuronArray.push(t);
 
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthMossey, grafoFactory.minWeigthMossey);
+          var ratio = $scope.GetInterpolationLevel(weigth, graphFactory.maxWeigthMossey, graphFactory.minWeigthMossey);
           var interpolated = $scope.interpolate(ratio, 247, 0, 255, 72, 0, 66);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
         }
         //Synapses Mossy-Golgi
         if (targetType == '4') {
-          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('B');
-          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('B');
+          var sourceRepeated = arrayNeuronal[s].synapseType.indexOf('B');
+          var targetRepeated = arrayNeuronal[t].synapseType.indexOf('B');
 
           if (sourceRepeated == -1)
-          arrayNeuronal[s].tipoConexion.push('B');
+          arrayNeuronal[s].synapseType.push('B');
 
           if (targetRepeated == -1)
-          arrayNeuronal[t].tipoConexion.push('B');
+          arrayNeuronal[t].synapseType.push('B');
 
           var source = "n"+s;
           var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= s;
-          obj.destino = t;
-          obj.enlace = id;
+          obj.source= s;
+          obj.target = t;
+          obj.link = id;
 
           BSynapseArray.push(obj);
           sourceRepeated = BNeuronArray.indexOf(s);
@@ -201,7 +201,7 @@ angular
           targetRepeated = BNeuronArray.indexOf(t);
           BNeuronArray.push(t);
 
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthMossey, grafoFactory.minWeigthMossey);
+          var ratio = $scope.GetInterpolationLevel(weigth, graphFactory.maxWeigthMossey, graphFactory.minWeigthMossey);
           var interpolated = $scope.interpolate(ratio, 64, 255, 0, 7, 72, 0);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -212,23 +212,23 @@ angular
       if (sourceType == '1') {
         //Synapses Granulle-Golgi
         if (targetType == '4'){
-          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('C');
-          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('C');
+          var sourceRepeated = arrayNeuronal[s].synapseType.indexOf('C');
+          var targetRepeated = arrayNeuronal[t].synapseType.indexOf('C');
 
           if (sourceRepeated == -1)
-          arrayNeuronal[s].tipoConexion.push('C');
+          arrayNeuronal[s].synapseType.push('C');
 
           if (targetRepeated == -1)
-          arrayNeuronal[t].tipoConexion.push('C');
+          arrayNeuronal[t].synapseType.push('C');
 
           var source = "n"+s;
           var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= s;
-          obj.destino = t;
-          obj.enlace = id;
+          obj.source= s;
+          obj.target = t;
+          obj.link = id;
 
           CSynapseArray.push(obj);
           sourceRepeated = CNeuronArray.indexOf(s);
@@ -236,7 +236,7 @@ angular
 
           targetRepeated = CNeuronArray.indexOf(t);
           CNeuronArray.push(t);
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthGranulle, grafoFactory.minWeigthGranulle);
+          var ratio = $scope.GetInterpolationLevel(weigth, graphFactory.maxWeigthGranulle, graphFactory.minWeigthGranulle);
           var interpolated = $scope.interpolate(ratio, 26, 0, 255, 0, 0, 72);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -247,23 +247,23 @@ angular
       if (sourceType == '4') {
         //Synapses Golgi-Granulle
         if (targetType == '1') {
-          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('D');
-          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('D');
+          var sourceRepeated = arrayNeuronal[s].synapseType.indexOf('D');
+          var targetRepeated = arrayNeuronal[t].synapseType.indexOf('D');
 
           if (sourceRepeated == -1)
-          arrayNeuronal[s].tipoConexion.push('D');
+          arrayNeuronal[s].synapseType.push('D');
 
           if (targetRepeated == -1)
-          arrayNeuronal[t].tipoConexion.push('D');
+          arrayNeuronal[t].synapseType.push('D');
 
           var source = "n"+s;
           var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= s;
-          obj.destino = t;
-          obj.enlace = id;
+          obj.source= s;
+          obj.target = t;
+          obj.link = id;
 
           DSynapseArray.push(obj);
           sourceRepeated = DNeuronArray.indexOf(s);
@@ -271,30 +271,30 @@ angular
 
           targetRepeated = DNeuronArray.indexOf(t);
           DNeuronArray.push(t);
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthGolgi, grafoFactory.minWeigthGolgi);
+          var ratio = $scope.GetInterpolationLevel(weigth, graphFactory.maxWeigthGolgi, graphFactory.minWeigthGolgi);
           var interpolated = $scope.interpolate(ratio,255, 0, 0, 72, 0, 0);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
         }
         //Synapses Golgi-Golgi
         if (targetType == '4') {
-          var sourceRepeated = arrayNeuronal[s].tipoConexion.indexOf('E');
-          var targetRepeated = arrayNeuronal[t].tipoConexion.indexOf('E');
+          var sourceRepeated = arrayNeuronal[s].synapseType.indexOf('E');
+          var targetRepeated = arrayNeuronal[t].synapseType.indexOf('E');
 
           if (sourceRepeated == -1)
-          arrayNeuronal[s].tipoConexion.push('E');
+          arrayNeuronal[s].synapseType.push('E');
 
           if (targetRepeated == -1)
-          arrayNeuronal[t].tipoConexion.push('E');
+          arrayNeuronal[t].synapseType.push('E');
 
           var source = "n"+s;
           var target = "n"+t;
           var id = "e"+source+"+"+target;
 
           var obj = new Array();
-          obj.origen= s;
-          obj.destino = t;
-          obj.enlace = id;
+          obj.source= s;
+          obj.target = t;
+          obj.link = id;
 
           ESynapseArray.push(obj);
           sourceRepeated = ENeuronArray.indexOf(s);
@@ -302,7 +302,7 @@ angular
 
           targetRepeated = ENeuronArray.indexOf(t);
           ENeuronArray.push(t);
-          var ratio = $scope.GetInterpolationLevel(weigth, grafoFactory.maxWeigthGolgi, grafoFactory.minWeigthGolgi);
+          var ratio = $scope.GetInterpolationLevel(weigth, graphFactory.maxWeigthGolgi, graphFactory.minWeigthGolgi);
           var interpolated = $scope.interpolate(ratio,255, 154, 0, 81, 55, 0);
           color = $scope.hexToRGB(interpolated[0],interpolated[1],interpolated[2]);
           hide = false;
@@ -316,7 +316,7 @@ angular
     $scope.writeData = function(){
 
       //Show in spanish if active
-      var div =  document.getElementById('especificaciones-esp');
+      var div =  document.getElementById('specs-esp');
 
       div.innerHTML = div.innerHTML + 'Información sobre los datos neuronales cargados:';
       div.innerHTML = div.innerHTML + '<br><br>';
@@ -335,7 +335,7 @@ angular
       div.innerHTML = div.innerHTML + '<b>Neuronas tipo IO: </b>' + infoIO;
 
       //Show in english if active
-      var div =  document.getElementById('especificaciones-eng');
+      var div =  document.getElementById('specs-eng');
 
       div.innerHTML = div.innerHTML + 'Loaded data info:';
       div.innerHTML = div.innerHTML + '<br><br>';
@@ -360,12 +360,12 @@ angular
 
     //Remove the old info to set the new one at display
     $scope.reloadData = function() {
-      var nodeToRemove = document.getElementById('especificaciones-esp');
+      var nodeToRemove = document.getElementById('specs-esp');
         while (nodeToRemove.firstChild) {
             nodeToRemove.removeChild(nodeToRemove.firstChild);
         }
 
-        var nodeToRemove = document.getElementById('especificaciones-eng');
+        var nodeToRemove = document.getElementById('specs-eng');
           while (nodeToRemove.firstChild) {
               nodeToRemove.removeChild(nodeToRemove.firstChild);
         }
@@ -395,25 +395,25 @@ angular
 
         while (!included) {
           position++;
-          included = arrayNeuronal[source].destino[position] == target;
+          included = arrayNeuronal[source].target[position] == target;
         }
 
-        var weigth = arrayNeuronal[source].peso[position];
-        var sourceType = arrayNeuronal[source].tipo;
-        var targetType = arrayNeuronal[source].tipoDestino[position];
+        var weigth = arrayNeuronal[source].weigth[position];
+        var sourceType = arrayNeuronal[source].type;
+        var targetType = arrayNeuronal[source].targetType[position];
         color = $scope.getColor(weigth, sourceType, targetType, source, target, arrayNeuronal);
         jsonCopy.edges[i].color = color[0];
         jsonCopy.edges[i].hidden = color[1];
-        grafoFactory.ANeuronArray = ANeuronArray;
-        grafoFactory.BNeuronArray = BNeuronArray;
-        grafoFactory.CNeuronArray = CNeuronArray;
-        grafoFactory.DNeuronArray = DNeuronArray;
-        grafoFactory.ENeuronArray = ENeuronArray;
-        grafoFactory.ASynapsesArray = ASynapseArray;
-        grafoFactory.BSynapsesArray = BSynapseArray;
-        grafoFactory.CSynapsesArray = CSynapseArray;
-        grafoFactory.DSynapsesArray = DSynapseArray;
-        grafoFactory.ESynapsesArray = ESynapseArray;
+        graphFactory.ANeuronArray = ANeuronArray;
+        graphFactory.BNeuronArray = BNeuronArray;
+        graphFactory.CNeuronArray = CNeuronArray;
+        graphFactory.DNeuronArray = DNeuronArray;
+        graphFactory.ENeuronArray = ENeuronArray;
+        graphFactory.ASynapsesArray = ASynapseArray;
+        graphFactory.BSynapsesArray = BSynapseArray;
+        graphFactory.CSynapsesArray = CSynapseArray;
+        graphFactory.DSynapsesArray = DSynapseArray;
+        graphFactory.ESynapsesArray = ESynapseArray;
       }
       }
     }
@@ -449,7 +449,7 @@ angular
           var node = getNode();
 
           //Mossy Fibers
-          if (arrayNeuronal[i].tipo == '0') {
+          if (arrayNeuronal[i].type == '0') {
             arrayMosey.push(arrayNeuronal[i].id);
             node.id = "n"+arrayNeuronal[i].id;
             node.label = "neurona "+arrayNeuronal[i].id;
@@ -463,10 +463,10 @@ angular
             node.hidden = false;
             jsonObj.nodes[i] = node;
 
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].target.length;j++){
               var edge = getEdges();
               edge.source="n"+arrayNeuronal[i].id;
-              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.target="n"+arrayNeuronal[i].target[j];
               edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
                 jsonObj.edges[0] = edge;
@@ -476,11 +476,11 @@ angular
               }
             }
             mossyNumber++;
-            grafoFactory.mossyNumber = mossyNumber;
+            graphFactory.mossyNumber = mossyNumber;
           }
 
           //Granulle Cells
-          else if (arrayNeuronal[i].tipo == '1'){
+          else if (arrayNeuronal[i].type == '1'){
             arrayGranulle.push(arrayNeuronal[i].id);
             node.id = "n"+arrayNeuronal[i].id;
             node.label = "neurona "+arrayNeuronal[i].id;
@@ -495,10 +495,10 @@ angular
 
             jsonObj.nodes[i] = node;
 
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].target.length;j++){
               var edge = getEdges();
               edge.source="n"+arrayNeuronal[i].id;
-              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.target="n"+arrayNeuronal[i].target[j];
               edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
                 jsonObj.edges[0] = edge;
@@ -509,11 +509,11 @@ angular
             }
 
             granulleNumber++;
-            grafoFactory.granulleNumber = granulleNumber;
+            graphFactory.granulleNumber = granulleNumber;
           }
 
           //Purkinje Cells
-          else if(arrayNeuronal[i].tipo == '2') {
+          else if(arrayNeuronal[i].type == '2') {
             arrayPurkinje.push(arrayNeuronal[i].id);
             node.id = "n"+arrayNeuronal[i].id;
             node.label = "neurona "+arrayNeuronal[i].id;
@@ -528,10 +528,10 @@ angular
 
             jsonObj.nodes[i] = node;
 
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].target.length;j++){
               var edge = getEdges();
               edge.source="n"+arrayNeuronal[i].id;
-              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.target="n"+arrayNeuronal[i].target[j];
               edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
                 jsonObj.edges[0] = edge;
@@ -542,11 +542,11 @@ angular
             }
 
             purkinjeNumber++;
-            grafoFactory.purkinjeNumber = purkinjeNumber;
+            graphFactory.purkinjeNumber = purkinjeNumber;
           }
 
           //DCN Cells
-          else if(arrayNeuronal[i].tipo == '3'){
+          else if(arrayNeuronal[i].type == '3'){
             arrayDCN.push(arrayNeuronal[i].id);
             node.id = "n"+arrayNeuronal[i].id;
             node.label = "neurona "+arrayNeuronal[i].id;
@@ -561,10 +561,10 @@ angular
 
             jsonObj.nodes[i] = node;
 
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].target.length;j++){
               var edge = getEdges();
               edge.source="n"+arrayNeuronal[i].id;
-              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.target="n"+arrayNeuronal[i].target[j];
               edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
                 jsonObj.edges[0] = edge;
@@ -575,11 +575,11 @@ angular
             }
 
             DCNNumber++;
-            grafoFactory.DCNNumber = DCNNumber;
+            graphFactory.DCNNumber = DCNNumber;
           }
 
           //Golgi Cells
-          else if(arrayNeuronal[i].tipo == '4'){
+          else if(arrayNeuronal[i].type == '4'){
             arrayGolgi.push(arrayNeuronal[i].id);
             node.id = "n"+arrayNeuronal[i].id;
             node.label = "neurona "+arrayNeuronal[i].id;
@@ -594,10 +594,10 @@ angular
 
             jsonObj.nodes[i] = node;
 
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].target.length;j++){
               var edge = getEdges();
               edge.source="n"+arrayNeuronal[i].id;
-              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.target="n"+arrayNeuronal[i].target[j];
               edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
                 jsonObj.edges[0] = edge;
@@ -608,11 +608,11 @@ angular
             }
 
             golgiNumber++;
-            grafoFactory.golgiNumber = golgiNumber;
+            graphFactory.golgiNumber = golgiNumber;
           }
 
           //IO Cells
-          else if(arrayNeuronal[i].tipo == '5'){
+          else if(arrayNeuronal[i].type == '5'){
             arrayIO.push(arrayNeuronal[i].id);
             node.id = "n"+arrayNeuronal[i].id;
             node.label = "neurona "+arrayNeuronal[i].id;
@@ -627,10 +627,10 @@ angular
 
             jsonObj.nodes[i] = node;
 
-            for (var j=0; j<arrayNeuronal[i].destino.length;j++){
+            for (var j=0; j<arrayNeuronal[i].target.length;j++){
               var edge = getEdges();
               edge.source="n"+arrayNeuronal[i].id;
-              edge.target="n"+arrayNeuronal[i].destino[j];
+              edge.target="n"+arrayNeuronal[i].target[j];
               edge.id="e"+ edge.source+'+'+edge.target;
               if (i==0 && j==0) {
                 jsonObj.edges[0] = edge;
@@ -641,13 +641,13 @@ angular
             }
 
             IONumber++;
-            grafoFactory.IONumber = IONumber;
+            graphFactory.IONumber = IONumber;
           }
 
 
 
           totalNeuronNumber++;
-          grafoFactory.numeroTotalNeuronas = totalNeuronNumber;
+          graphFactory.numeroTotalNeuronas = totalNeuronNumber;
 
         }
 
@@ -658,13 +658,13 @@ angular
         }
 
         $scope.writeData();
-        grafoFactory.saveArrayMossy(arrayMosey);
-        grafoFactory.saveArrayGranulle(arrayGranulle);
-        grafoFactory.saveArrayPurkinje(arrayPurkinje);
-        grafoFactory.saveArrayDCN(arrayDCN);
-        grafoFactory.saveArrayGolgi(arrayGolgi);
-        grafoFactory.saveArrayIO(arrayIO);
-        grafoFactory.saveJSON(jsonCopy);
+        graphFactory.saveArrayMossy(arrayMosey);
+        graphFactory.saveArrayGranulle(arrayGranulle);
+        graphFactory.saveArrayPurkinje(arrayPurkinje);
+        graphFactory.saveArrayDCN(arrayDCN);
+        graphFactory.saveArrayGolgi(arrayGolgi);
+        graphFactory.saveArrayIO(arrayIO);
+        graphFactory.saveJSON(jsonCopy);
         $scope.colorEdges(arrayNeuronal);
         $scope.cleanEdges(arrayNeuronal);
     }
@@ -672,10 +672,10 @@ angular
     //Remove neurons which only connecton is with themselves
     $scope.cleanEdges = function(arrayNeuronal){
       for (var i=0; i<arrayNeuronal.length;i++) {
-        if (arrayNeuronal[i].destino.length == 1) {
+        if (arrayNeuronal[i].target.length == 1) {
           jsonCopy.nodes[i].hidden = true;
         }
-        if (arrayNeuronal[i].tipoConexion.length == 0) {
+        if (arrayNeuronal[i].synapseType.length == 0) {
           jsonCopy.nodes[i].hidden = true;
         }
       }
@@ -684,7 +684,7 @@ angular
     //Counts all the neurons of each type and in total
     $scope.getInfo = function(arrayNeuronal){
       for (var i=0;i<arrayNeuronal.length; i++) {
-        switch(arrayNeuronal[i].tipo) {
+        switch(arrayNeuronal[i].type) {
           case "0": {
                       infoMossy++;
                       infoTotal++;
@@ -751,8 +751,8 @@ angular
       var type = [];
       var weigth = [];
       var arrayNeuronal = new Array();
-      //var tipoDestino = [];
-      //var tipoConexion = [];
+      //var targetType = [];
+      //var synapseType = [];
 
       $scope.reloadData();
 
@@ -780,23 +780,23 @@ angular
       }
 
       //Get the total neuron number in the file
-      grafoFactory.numeroTotalNeuronas = $scope.getNeuronNumber(source,target);
+      graphFactory.numeroTotalNeuronas = $scope.getNeuronNumber(source,target);
 
       //Initializes array with a default value for all the neurons in the file
       //Initial value is ID equal to the neuron number, target the same neuron and weigth '0'
-      arrayNeuronal = $scope.initializeArray(grafoFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
+      arrayNeuronal = $scope.initializeArray(graphFactory.numeroTotalNeuronas, arrayNeuronal,x, y);
 
 
 
       //Reading one by one each neuron and adding their target neuron and weigth
       for (var j=0; j<target.length; j++) {
-        var repeatedElem = arrayNeuronal[source[j]].destino.indexOf(target[j]);
+        var repeatedElem = arrayNeuronal[source[j]].target.indexOf(target[j]);
         if (repeatedElem==-1) {
           var p = weigth[j];
-          arrayNeuronal[source[j]].peso.push(p.toString());
-          arrayNeuronal[source[j]].destino.push(target[j]); //Adding target
+          arrayNeuronal[source[j]].weigth.push(p.toString());
+          arrayNeuronal[source[j]].target.push(target[j]); //Adding target
           var auxType = $scope.findNeuronType(target[j],source, type);
-          arrayNeuronal[source[j]].tipoDestino.push(auxType); //Adding type target
+          arrayNeuronal[source[j]].targetType.push(auxType); //Adding type target
         }
       }
 
@@ -808,9 +808,9 @@ angular
         //Initially each neuron has no type assigned, so it is given the first value founded as type, while
         //if there were any other type in the file (which would be an error in the file data)
         //the next are rejected to avoid multiple values for the type of the same neuron ()
-        if (arrayNeuronal[auxPos].tipo == '-') {
+        if (arrayNeuronal[auxPos].type == '-') {
 
-          arrayNeuronal[auxPos].tipo = auxType;
+          arrayNeuronal[auxPos].type = auxType;
         }
       }
 
@@ -819,37 +819,37 @@ angular
 
       for (var i=0; i<(arrayNeuronal.length); i++) {
         var defaultWeigth = 0;
-        if (arrayNeuronal[i].tipo == '-')
-          arrayNeuronal[i].tipo = defaultWeigth.toString();
+        if (arrayNeuronal[i].type == '-')
+          arrayNeuronal[i].type = defaultWeigth.toString();
       }
 
       //Getting the neurons whose the present neuron is a target
       for (var i=0;i<arrayNeuronal.length;i++) {
         $scope.findTarget(arrayNeuronal, i);
       }
-      grafoFactory.maxWeigthMossey = $scope.getMaxWeigth(arrayNeuronal, 0);
-      grafoFactory.maxWeigthGranulle = $scope.getMaxWeigth(arrayNeuronal, 1);
-      grafoFactory.maxWeigthPurkinje = $scope.getMaxWeigth(arrayNeuronal, 2);
-      grafoFactory.maxWeigthDCN = $scope.getMaxWeigth(arrayNeuronal, 3);
-      grafoFactory.maxWeigthGolgi = $scope.getMaxWeigth(arrayNeuronal, 4);
-      grafoFactory.maxWeigthIO = $scope.getMaxWeigth(arrayNeuronal, 5);
-      grafoFactory.minWeigthMossey = $scope.getMinWeigth(arrayNeuronal, 0);
-      grafoFactory.minWeigthGranulle = $scope.getMinWeigth(arrayNeuronal, 1);
-      grafoFactory.minWeigthPurkinje = $scope.getMinWeigth(arrayNeuronal, 2);
-      grafoFactory.minWeigthDCN = $scope.getMinWeigth(arrayNeuronal, 3);
-      grafoFactory.minWeigthGolgi = $scope.getMinWeigth(arrayNeuronal, 4);
-      grafoFactory.minWeigthIO = $scope.getMinWeigth(arrayNeuronal, 5);
-      grafoFactory.saveNeuronalArray(arrayNeuronal);
+      graphFactory.maxWeigthMossey = $scope.getMaxWeigth(arrayNeuronal, 0);
+      graphFactory.maxWeigthGranulle = $scope.getMaxWeigth(arrayNeuronal, 1);
+      graphFactory.maxWeigthPurkinje = $scope.getMaxWeigth(arrayNeuronal, 2);
+      graphFactory.maxWeigthDCN = $scope.getMaxWeigth(arrayNeuronal, 3);
+      graphFactory.maxWeigthGolgi = $scope.getMaxWeigth(arrayNeuronal, 4);
+      graphFactory.maxWeigthIO = $scope.getMaxWeigth(arrayNeuronal, 5);
+      graphFactory.minWeigthMossey = $scope.getMinWeigth(arrayNeuronal, 0);
+      graphFactory.minWeigthGranulle = $scope.getMinWeigth(arrayNeuronal, 1);
+      graphFactory.minWeigthPurkinje = $scope.getMinWeigth(arrayNeuronal, 2);
+      graphFactory.minWeigthDCN = $scope.getMinWeigth(arrayNeuronal, 3);
+      graphFactory.minWeigthGolgi = $scope.getMinWeigth(arrayNeuronal, 4);
+      graphFactory.minWeigthIO = $scope.getMinWeigth(arrayNeuronal, 5);
+      graphFactory.saveNeuronalArray(arrayNeuronal);
       $scope.generateJSON(arrayNeuronal);
     }
 
     //Get the neurons whose the present neuron is a target
     $scope.findTarget = function(arrayNeuronal, id) {
       for (var i=0;i<arrayNeuronal.length;i++){
-        for (var j=0; j<arrayNeuronal[i].destino.length;j++) {
-          var target = arrayNeuronal[i].destino[j];
+        for (var j=0; j<arrayNeuronal[i].target.length;j++) {
+          var target = arrayNeuronal[i].target[j];
           if ((target == id) && (id != arrayNeuronal[i].id)) {
-            arrayNeuronal[id].esDestino.push(arrayNeuronal[i].id);
+            arrayNeuronal[id].isTargetOf.push(arrayNeuronal[i].id);
           }
         }
       }
@@ -860,9 +860,9 @@ angular
       var min = 0;
 
       for (var i=0; i<arrayNeuronal.length; i++) {
-        if (arrayNeuronal[i].tipo == type) {
-          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
-            var minType = Math.min.apply(null,arrayNeuronal[i].peso);
+        if (arrayNeuronal[i].type == type) {
+          for (var j=0; j<arrayNeuronal[i].weigth.length; j++) {
+            var minType = Math.min.apply(null,arrayNeuronal[i].weigth);
             min = Math.min(min, minType);
           }
         }
@@ -877,10 +877,10 @@ angular
 
       for (var i=0; i<arrayNeuronal.length; i++) {
 
-        if (arrayNeuronal[i].tipo == type) {
+        if (arrayNeuronal[i].type == type) {
 
-          for (var j=0; j<arrayNeuronal[i].peso.length; j++) {
-            var maxType = Math.max.apply(null,arrayNeuronal[i].peso);
+          for (var j=0; j<arrayNeuronal[i].weigth.length; j++) {
+            var maxType = Math.max.apply(null,arrayNeuronal[i].weigth);
             max = Math.max(max,maxType);
           }
 
@@ -916,16 +916,16 @@ angular
       for (var i=0; i<limit; i++) {
         var neuron = new Array();
         var initialWeigth = 0;
-        neuron.destino = [];
-        neuron.peso = [];
-        neuron.tipoDestino = [];
-        neuron.tipoConexion = [];
-        neuron.esDestino = [];
+        neuron.target = [];
+        neuron.weigth = [];
+        neuron.targetType = [];
+        neuron.synapseType = [];
+        neuron.isTargetOf = [];
         neuron.id = i.toString();
-        neuron.destino.push(i.toString());
-        neuron.peso.push(initialWeigth.toString());
-        neuron.tipoDestino.push(defaultType.toString());
-        neuron.tipo = '-';
+        neuron.target.push(i.toString());
+        neuron.weigth.push(initialWeigth.toString());
+        neuron.targetType.push(defaultType.toString());
+        neuron.type = '-';
         neuron.x = x[i];
         if (neuron.x == null)
           neuron.x = 0;
