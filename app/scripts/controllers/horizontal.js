@@ -302,8 +302,6 @@ angular.module('tfgApp')
     $scope.checkMossy = function() {
       var minMossy = $scope.sliderMosey.min;
       var maxMossy = $scope.sliderMosey.max;
-      //console.log('array contador');
-      //console.log(neuronCounterArray);
 
       //If mossy is deactivated, all its neurons will be hidden
       if (!mosey.checked) {
@@ -390,9 +388,6 @@ angular.module('tfgApp')
           document.getElementById('idmosey').style.pointerEvents = "auto";
           document.getElementById('mossyWeigthSlider').style.pointerEvents = "auto";
       }
-
-      //console.log('array contador');
-      //console.log(neuronCounterArray);
       $scope.cleanEdges(arrayNeuronal);
       refresh();
       graphFactory.load(jsonCopy);
@@ -402,18 +397,10 @@ angular.module('tfgApp')
     $scope.checkGranulle = function() {
       var inicioGranulle = $scope.sliderGranulle.min;
       var finalGranulle = $scope.sliderGranulle.max;
-      //console.log('array contador');
-      //console.log(neuronCounterArray);
 
       //If granulle is deactivated, all its neurons will be hidden
       if (!granulle.checked) {
 
-        //console.log('arrayGranulle');
-        //console.log(arrayGranulle);
-        //console.log('aneuronarray');
-        //console.log(graphFactory.ANeuronArray);
-        //console.log('bneuronarray');
-        //console.log(graphFactory.BNeuronArray);
         for (var i=0; i<arrayGranulle.length; i++) {
           jsonCopy.nodes[arrayGranulle[i]].hidden = true;
 
@@ -466,7 +453,6 @@ angular.module('tfgApp')
                   var target = arrayNeuronal[source].target[z];
                   var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
-                  //console.log('hemos puesto a false la arista '+ jsonCopy.edges[pos].id);
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
@@ -504,12 +490,6 @@ angular.module('tfgApp')
           document.getElementById('idgranulle').style.pointerEvents = "auto";
           document.getElementById('granulleWeigthSlider').style.pointerEvents = "auto";
       }
-
-      /*for (var i=0;i<arrayNeuronal.length;i++){
-        $scope.checkNoEdges(arrayNeuronal[i].id);
-      }*/
-      //console.log('array contador');
-      //console.log(neuronCounterArray);
       $scope.cleanEdges(arrayNeuronal);
       refresh();
       graphFactory.load(jsonCopy);
@@ -1692,18 +1672,14 @@ angular.module('tfgApp')
 
     //Generate the visualization of the synapses group
     $scope.showConnections = function() {
-      //console.log('array contador');
-      //console.log(neuronCounterArray);
       if (!mfgr.checked) {
         for (var i=0; i<graphFactory.ANeuronArray.length;i++) {
           var permittedRemoval = $scope.checkRemoval(graphFactory.ANeuronArray[i]);
           if (permittedRemoval) {
             jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden = true;
-            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.ANeuronArray[i]].id + jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden);
           }
         }
         for (var j=0; j<graphFactory.ASynapsesArray.length;j++) {
-          //var id = graphFactory.ASynapsesArray[j].link; //NO SE USA!
           var source = graphFactory.ASynapsesArray[j].source;
           var target = graphFactory.ASynapsesArray[j].target;
           var pos = $scope.searchEdge(source, target);
@@ -1715,7 +1691,6 @@ angular.module('tfgApp')
       else {
         for (var i=0;i<graphFactory.ANeuronArray.length;i++) {
           jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden = false;
-          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.ANeuronArray[i]].id + jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden);
         }
         for (var j=0;j<graphFactory.ASynapsesArray.length; j++) {
           var source = graphFactory.ASynapsesArray[j].source;
@@ -1732,7 +1707,6 @@ angular.module('tfgApp')
           var permittedRemoval = $scope.checkRemoval(graphFactory.BNeuronArray[i]);
           if (permittedRemoval) {
             jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden = true;
-            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.BNeuronArray[i]].id + jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden);
           }
         }
         for (var j=0; j<graphFactory.BSynapsesArray.length;j++) {
@@ -1747,7 +1721,6 @@ angular.module('tfgApp')
       else {
         for (var i=0;i<graphFactory.BNeuronArray.length;i++) {
           jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden = false;
-          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.BNeuronArray[i]].id + jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden);
         }
         for (var j=0;j<graphFactory.BSynapsesArray.length; j++) {
           var source = graphFactory.BSynapsesArray[j].source;
@@ -1764,7 +1737,6 @@ angular.module('tfgApp')
           var permittedRemoval = $scope.checkRemoval(graphFactory.CNeuronArray[i]);
           if (permittedRemoval) {
             jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden = true;
-            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.CNeuronArray[i]].id + jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden);
           }
         }
         for (var j=0; j<graphFactory.CSynapsesArray.length;j++) {
@@ -1779,7 +1751,6 @@ angular.module('tfgApp')
       else {
         for (var i=0;i<graphFactory.CNeuronArray.length;i++) {
           jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden = false;
-          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.CNeuronArray[i]].id + jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden);
         }
         for (var j=0;j<graphFactory.CSynapsesArray.length; j++) {
           var source = graphFactory.CSynapsesArray[j].source;
@@ -1796,7 +1767,6 @@ angular.module('tfgApp')
           var permittedRemoval = $scope.checkRemoval(graphFactory.DNeuronArray[i]);
           if (permittedRemoval) {
             jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden = true;
-            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.DNeuronArray[i]].id + jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden);
           }
         }
         for (var j=0; j<graphFactory.DSynapsesArray.length;j++) {
@@ -1804,7 +1774,6 @@ angular.module('tfgApp')
           var target = graphFactory.DSynapsesArray[j].target;
 
           var pos = $scope.searchEdge(source, target);
-          //console.log('buscamos en la arista '+source + ' ' + target);
 
           jsonCopy.edges[pos].hidden = true;
         }
@@ -1812,7 +1781,6 @@ angular.module('tfgApp')
       else {
         for (var i=0;i<graphFactory.DNeuronArray.length;i++) {
           jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden = false;
-          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.DNeuronArray[i]].id + jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden);
         }
         for (var j=0;j<graphFactory.DSynapsesArray.length; j++) {
           var source = graphFactory.DSynapsesArray[j].source;
@@ -1829,7 +1797,6 @@ angular.module('tfgApp')
           var permittedRemoval = $scope.checkRemoval(graphFactory.ENeuronArray[i]);
           if (permittedRemoval) {
             jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden = true;
-            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.ENeuronArray[i]].id + jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden);
           }
         }
         for (var j=0; j<graphFactory.ESynapsesArray.length;j++) {
@@ -1844,7 +1811,6 @@ angular.module('tfgApp')
       else {
         for (var i=0;i<graphFactory.ENeuronArray.length;i++) {
           jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden = false;
-          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.ENeuronArray[i]].id + jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden);
         }
         for (var j=0;j<graphFactory.ESynapsesArray.length; j++) {
           var source = graphFactory.ESynapsesArray[j].source;
@@ -1859,8 +1825,6 @@ angular.module('tfgApp')
       for (var i=0; i<arrayNeuronal.length;i++) {
         $scope.checkNoEdges(arrayNeuronal[i].id);
       }
-      //console.log('array contador');
-      //console.log(neuronCounterArray);
       $scope.cleanEdges(arrayNeuronal);
       refresh();
       graphFactory.load(jsonCopy);

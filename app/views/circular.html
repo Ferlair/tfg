@@ -38,6 +38,7 @@
 <div id="log" style="display:none">
   <center><input id="neuron_stats_button" type="button" ng-click="logNeurons()"></center><br>
   <center><input id="synapse_stats_button" type="button" ng-click="logEdges()"></center><br>
+  <br><br>
   <center><input id="back_6" type="button" ng-click="back(6)"></center>
 </div>
 
@@ -55,10 +56,10 @@
 
 <div id="neuronInfo" ng-model="graphFactory.d" style="visibility:hidden"></div>
 
-<!-- Contenedor que muestra la imagen generada por WebGL-->
+<!-- container for storing the webGL generated image-->
 <div id="container2"></div>
 
-<!-- Contenedor para los sliders -->
+<!-- sliders container -->
 <div id="slider" style="visibility: hidden" >
 <div><b>Mossy: </b></div><br>
 <rzslider id="idmosey"
