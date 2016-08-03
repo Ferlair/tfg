@@ -1,6 +1,7 @@
 <!--<input type="button" value="mostrar aristas" ng-click="showEdges()">
 <input type="button" value="mostrar nodos" ng-click="showNodes()">-->
 
+<!--Show all the filters inside the visualization-->
 <div id="filter_selection">
   <center><input id="neuronal_group_button" type="button" ng-click="display(1)"></center><br>
   <center><input id="synapse_type_button" type="button" ng-click="display(2)"></center><br>
@@ -11,6 +12,7 @@
 </div>
 
 
+<!--Filter by neuronal group-->
 <div id="neuron_selection" style="display:none">
     Seleccione el tipo de neurona: <br><br>
     <label><input id="1" type ="checkbox" name ="neurona" value = "Mosey Fibers" ng-click="checkMossy()" checked> Mossy Fibers</label><br><br>
@@ -23,6 +25,7 @@
     <center><input id="back_1" type="button" ng-click="back(1)"></center>
 </div>
 
+<!--Filter by synapse type-->
 <div id="synapse_selection" style="display:none">
     Selecciona el tipo de sinapsis: <br><br>
     <label><input id="setAll" type="checkbox" ng-click="setAll()" > Seleccionar/Ocultar todos</label><br><br><br><br>
@@ -35,6 +38,7 @@
     <center><input id="back_2" type="button" ng-click="back(2)"></center>
 </div>
 
+<!--Stats about the visualization-->
 <div id="log" style="display:none">
   <center><input id="neuron_stats_button" type="button" ng-click="logNeurons()"></center><br>
   <center><input id="synapse_stats_button" type="button" ng-click="logEdges()"></center><br>
@@ -54,12 +58,13 @@
 
 <a href="#/"><img id="main_page_button_esp"></a>
 
+<!--When a neuron is clicked, this shows its info-->
 <div id="neuronInfo" ng-model="graphFactory.d" style="visibility:hidden"></div>
 
 <!-- container for storing the webGL generated image-->
 <div id="container2"></div>
 
-<!-- sliders container -->
+<!-- ID sliders container -->
 <div id="slider" style="visibility: hidden" >
 <div><b>Mossy: </b></div><br>
 <rzslider id="idmosey"
@@ -116,6 +121,7 @@
 <center><input id="back_3" type="button" ng-click="back(3)"></center>
 </div>
 
+<!--Weigth sliders container-->
 <div id="weigthSlider" style="visibility: hidden">
 <div id="mossyWeigthSlider">
   <div><b>Peso Mossy(%): </b></div><br>
@@ -179,6 +185,7 @@
 <center><input id="back_4" type="button" ng-click="back(4)"></center>
 </div>
 
+<!--individual selection container-->
 <div id="manualSelection" style="visibility: hidden">
   <b>Haz click sobre la/s neurona/s a visualizar</b> <br><br>
   <b>Neuronas: </b>

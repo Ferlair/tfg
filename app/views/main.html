@@ -1,3 +1,4 @@
+<!--spanish version-->
 <div id="lang-esp">
 <ul>
   <br>
@@ -10,18 +11,20 @@
 <br>
 <br>
 <br>
-
+<!--load file button-->
 <div id="all">
 <div class="mask">
   <input type="file" id="myFile" accept=".txt" on-read-file="loadNeurons($fileContent)" ng-model="modelo" ng-change="saludo()"/>
 </div>
 <br><br>
+
+<!--specs of the neurons in the file-->
 <div id="specs-esp" ng-show = "checked">
 </div>
 
 <hr class="separator" style="color:#000;" width="50%">
 
-<!-- Slider de opciones de visualización -->
+<!-- visualizations slider -->
 <table>
 <span class ="screens">
 <tr id="color-esp" style="display: none">
@@ -40,6 +43,7 @@
 
 <!-- --------------------------------------- -->
 
+<!--english version-->
 <div id="lang-eng" style="display: none">
 <ul>
   <br>
@@ -54,18 +58,20 @@
 <br>
 <br>
 
-
+<!--load file button-->
 <div id="all">
 <div class="mask-eng">
   <input type="file" accept=".txt" on-read-file="loadNeurons($fileContent)"/>
 </div>
 <br><br>
+
+<!--specs of the neurons in the file-->
 <div id="specs-eng" ng-show = "checked">
 </div>
 
 <hr class="separator" style="color:#000;" width="50%">
 
-<!-- Slider de opciones de visualización -->
+<!-- visualizations slider -->
 <table>
 <span class ="screens">
 <tr id="color-eng" style="display: none">
