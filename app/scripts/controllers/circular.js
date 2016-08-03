@@ -53,12 +53,12 @@ angular
 
     //Get all the initial references from graphFactory
     $scope.getReferences = function() {
-      graphFactory.iteracionesMosey = graphFactory.numeroMosey;
-      graphFactory.iteracionesGranulle = graphFactory.numeroGranulle + graphFactory.iteracionesMosey;
-      graphFactory.iteracionesPurkinje = graphFactory.numeroPurkinje + graphFactory.iteracionesGranulle;
-      graphFactory.iteracionesDCN = graphFactory.numeroDcn + graphFactory.iteracionesPurkinje;
-      graphFactory.iteracionesGolgi = graphFactory.numeroGolgi + graphFactory.iteracionesDCN;
-      graphFactory.iteracionesIO = graphFactory.numeroIo + graphFactory.iteracionesGolgi;
+      graphFactory.mossyIterations = graphFactory.mossyNumber;
+      graphFactory.granulleIterations = graphFactory.granulleNumber + graphFactory.mossyIterations;
+      graphFactory.purkinjeIterations = graphFactory.purkinjeNumber + graphFactory.granulleIterations;
+      graphFactory.DCNIterations = graphFactory.DCNNumber + graphFactory.purkinjeIterations;
+      graphFactory.golgiIterations = graphFactory.golgiNumber + graphFactory.DCNIterations;
+      graphFactory.IOIterations = graphFactory.IONumber + graphFactory.golgiIterations;
 
       graphFactory.iniMosey = Math.min.apply(null,arrayMosey);
       graphFactory.iniGranulle = Math.min.apply(null,arrayGranulle);
@@ -94,7 +94,7 @@ angular
     //Initializes the stats array
     $scope.initStatsArray = function() {
       var a = new Array();
-      for (var i=0;i<graphFactory.numeroTotalNeuronas;i++) {
+      for (var i=0;i<graphFactory.totalNeuronNumber;i++) {
         a.push(0);
       }
       return a;
@@ -107,7 +107,7 @@ angular
     //DSynapsesArray: stores all the synapses between Golgi-Granulle neurons
     //ESynapsesArray: stores all the synapses between Golgi-Golgi neurons
     $scope.initConnectionsArray = function(synapseArray) {
-      for (var i=0;i<graphFactory.numeroTotalNeuronas;i++) {
+      for (var i=0;i<graphFactory.totalNeuronNumber;i++) {
         synapseArray[i]=0;
       }
       for (var j=0;j<graphFactory.ASynapsesArray.length;j++) {
@@ -2088,20 +2088,20 @@ angular
   .factory('graphFactory', function graphFactory(){
     var receivedJSON;
 
-    //var numeroMosey;
-    //var numeroGranulle = 0;
-    //var numeroPurkinje = 0;
-    //var numeroDcn = 0;
-    //var numeroGolgi = 0;
-    //var numeroIo = 0;
-    //var numeroTotalNeuronas = 0;
+    var mossyNumber;
+    var granulleNumber;
+    var purkinjeNumber;
+    var DCNNumber;
+    var golgiNumber;
+    var IONumber;
+    var totalNeuronNumber;
 
-    //var iteracionesMosey;
-    //var iteracionesGranulle;
-    //var iteracionesPurkinje;
-    //var iteracionesDCN;
-    //var iteracionesGolgi;
-    //var iteracionesIO;
+    var mossyIterations;
+    var granulleIterations;
+    var purkinjeIterations;
+    var DCNIterations;
+    var golgiIterations;
+    var IOIterations;
 
     var iniMosey;
     var iniGranulle;

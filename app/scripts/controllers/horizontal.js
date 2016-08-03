@@ -11,8 +11,9 @@
  * Controller of the tfgApp
  */
 angular.module('tfgApp')
-  .controller('horizontalCtrl', ['$scope','grafoFactory', function($scope, grafoFactory) {
+  .controller('horizontalCtrl', ['$scope','graphFactory', function($scope, graphFactory) {
 
+    //Store each neuron type at the HTML DOM
     var mosey = document.getElementById('1');
     var granulle = document.getElementById('2');
     var purkinje = document.getElementById('3');
@@ -20,18 +21,24 @@ angular.module('tfgApp')
     var golgi = document.getElementById('5');
     var io = document.getElementById('6');
 
+    //Store each synapse type at the HTML DOM
     var mfgr = document.getElementById('MFGR');
     var mfgo = document.getElementById('MFGO');
     var grgo = document.getElementById('GRGO');
     var gogr = document.getElementById('GOGR');
     var gogo = document.getElementById('GOGO');
 
-
+    //Stores the json file that creates the graph
     var jsonCopy;
-    var arrayNeuronal;
-    var arrayAux = new Array();
 
-    //arrays auxiliares para cada uno de los tipos de neuronas
+    //Stores all the information about the neurons in the file and their info
+    var arrayNeuronal;
+
+    //This array is used to store information about the neurons to visualize
+    //in a range selected in individual selection
+    var arrayRange = new Array();
+
+    //aux arrays for each neuron type
     var arrayMosey;
     var arrayGranulle;
     var arrayPurkinje;
@@ -39,271 +46,189 @@ angular.module('tfgApp')
     var arrayGolgi;
     var arrayIO;
 
-    var arrayContadorNeuronas = new Array();
+    //Stores a counter for each neuron to avoid hiding errors with several filters
+    var neuronCounterArray = new Array();
+
+    //Stats info
+    var arrayInfo = new Array();
+
+    //Get all the initial references from graphFactory
+    $scope.getReferences = function() {
+      graphFactory.mossyIterations = graphFactory.mossyNumber;
+      graphFactory.granulleIterations = graphFactory.granulleNumber + graphFactory.mossyIterations;
+      graphFactory.purkinjeIterations = graphFactory.purkinjeNumber + graphFactory.granulleIterations;
+      graphFactory.DCNIterations = graphFactory.DCNNumber + graphFactory.purkinjeIterations;
+      graphFactory.golgiIterations = graphFactory.golgiNumber + graphFactory.DCNIterations;
+      graphFactory.IOIterations = graphFactory.IONumber + graphFactory.golgiIterations;
+
+      graphFactory.iniMosey = Math.min.apply(null,arrayMosey);
+      graphFactory.iniGranulle = Math.min.apply(null,arrayGranulle);
+      graphFactory.iniPurkinje = Math.min.apply(null,arrayPurkinje);
+      graphFactory.iniDCN = Math.min.apply(null,arrayDCN);
+      graphFactory.iniGolgi = Math.min.apply(null,arrayGolgi);
+      graphFactory.iniIO = Math.min.apply(null,arrayIO);
+
+      graphFactory.finMosey = Math.max.apply(null,arrayMosey);
+      graphFactory.finGranulle = Math.max.apply(null,arrayGranulle);
+      graphFactory.finPurkinje = Math.max.apply(null,arrayPurkinje);
+      graphFactory.finDCN = Math.max.apply(null,arrayDCN);
+      graphFactory.finGolgi = Math.max.apply(null,arrayGolgi);
+      graphFactory.finIO = Math.max.apply(null,arrayIO);
 
 
-    $scope.dn = grafoFactory.d;
-
-
-
-
-    $scope.obtenerReferencias = function() {
-
-      grafoFactory.iteracionesMosey = grafoFactory.numeroMosey;
-      grafoFactory.iteracionesGranulle = grafoFactory.numeroGranulle + grafoFactory.iteracionesMosey;
-      grafoFactory.iteracionesPurkinje = grafoFactory.numeroPurkinje + grafoFactory.iteracionesGranulle;
-      grafoFactory.iteracionesDCN = grafoFactory.numeroDcn + grafoFactory.iteracionesPurkinje;
-      grafoFactory.iteracionesGolgi = grafoFactory.numeroGolgi + grafoFactory.iteracionesDCN;
-      grafoFactory.iteracionesIO = grafoFactory.numeroIo + grafoFactory.iteracionesGolgi;
-
-      grafoFactory.iniMosey = Math.min.apply(null,arrayMosey);
-      grafoFactory.iniGranulle = Math.min.apply(null,arrayGranulle);
-      grafoFactory.iniPurkinje = Math.min.apply(null,arrayPurkinje);
-      grafoFactory.iniDCN = Math.min.apply(null,arrayDCN);
-      grafoFactory.iniGolgi = Math.min.apply(null,arrayGolgi);
-      grafoFactory.iniIO = Math.min.apply(null,arrayIO);
-
-      grafoFactory.finMosey = Math.max.apply(null,arrayMosey);
-      grafoFactory.finGranulle = Math.max.apply(null,arrayGranulle);
-      grafoFactory.finPurkinje = Math.max.apply(null,arrayPurkinje);
-      grafoFactory.finDCN = Math.max.apply(null,arrayDCN);
-      grafoFactory.finGolgi = Math.max.apply(null,arrayGolgi);
-      grafoFactory.finIO = Math.max.apply(null,arrayIO);
-
-
-      grafoFactory.minPeso = 0;
-      grafoFactory.maxPeso = 10;
+      graphFactory.minWeigth = 0;
+      graphFactory.maxWeigth = 10;
     }
 
-    $scope.sombrearMosey = function() {
-      for (var i=0;i<arrayMosey.length;i++) {
-        jsonCopy.nodes[arrayMosey[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearMosey = function() {
-      for (var i=0;i<arrayMosey.length;i++) {
-        jsonCopy.nodes[arrayMosey[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearGranulle = function() {
-      for (var i=0;i<arrayGranulle.length;i++) {
-        jsonCopy.nodes[arrayGranulle[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearGranulle = function() {
-      for (var i=0;i<arrayGranulle.length;i++) {
-        jsonCopy.nodes[arrayGranulle[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearPurkinje = function() {
-      for (var i=0;i<arrayPurkinje.length;i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearPurkinje = function() {
-      for (var i=0;i<arrayPurkinje.length;i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearDCN = function() {
-      for (var i=0;i<arrayDCN.length;i++) {
-        jsonCopy.nodes[arrayDCN[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearDCN = function() {
-      for (var i=0;i<arrayPurkinje.length;i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearGolgi = function() {
-      for (var i=0;i<arrayGolgi.length;i++) {
-        jsonCopy.nodes[arrayGolgi[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearGolgi = function() {
-      for (var i=0;i<arrayGolgi.length;i++) {
-        jsonCopy.nodes[arrayGolgi[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.sombrearIO = function() {
-      for (var i=0;i<arrayIO.length;i++) {
-        jsonCopy.nodes[arrayIO[i]].color = "#ff0000";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    $scope.blanquearIO = function() {
-      for (var i=0;i<arrayIO.length;i++) {
-        jsonCopy.nodes[arrayIO[i]].color = "#ffffff";
-      }
-      refresh();
-      grafoFactory.cargar(jsonCopy);
-    }
-
-    //Función que devuelve la posición de una determinada arista dentro
-    //del json del grafo
-    $scope.buscarArista = function (origen, destino){
-      var nombreABuscar = 'en'+origen+'+'+'n'+destino;
+    //Returns the position of an edge inside graph's json
+    $scope.searchEdge = function (source, target){
+      var searchingName = 'en'+source+'+'+'n'+target;
       var pos;
       for (var i=0; i<jsonCopy.edges.length; i++) {
         var id= jsonCopy.edges[i].id;
-        if (id == nombreABuscar)
+        if (id == searchingName)
             pos = i;
       }
       return pos;
     }
 
-    $scope.inicializarArrayConexiones = function(arrayConexion) {
-      for (var i=0;i<grafoFactory.numeroTotalNeuronas;i++) {
-        arrayConexion[i]=0;
+    //Initializes the stats array
+    $scope.initStatsArray = function() {
+      var a = new Array();
+      for (var i=0;i<graphFactory.totalNeuronNumber;i++) {
+        a.push(0);
       }
-      for (var j=0;j<grafoFactory.arrayConexionesA.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesA[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesA[j].destino]++;
+      return a;
+    }
+
+    //Initializes the connections array, where each array represents a synapse type, being:
+    //ASynapsesArray: stores all the synapses between Mossy-Granulle neurons
+    //BSynapsesArray: stores all the synapses between Mossy-Golgi neurons
+    //CSynapsesArray: stores all the synapses between Granulle-Golgi neurons
+    //DSynapsesArray: stores all the synapses between Golgi-Granulle neurons
+    //ESynapsesArray: stores all the synapses between Golgi-Golgi neurons
+    $scope.initConnectionsArray = function(synapseArray) {
+      for (var i=0;i<graphFactory.totalNeuronNumber;i++) {
+        synapseArray[i]=0;
       }
-      for (var j=0;j<grafoFactory.arrayConexionesB.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesB[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesB[j].destino]++;
+      for (var j=0;j<graphFactory.ASynapsesArray.length;j++) {
+        synapseArray[graphFactory.ASynapsesArray[j].source]++;
+        synapseArray[graphFactory.ASynapsesArray[j].target]++;
       }
-      for (var j=0;j<grafoFactory.arrayConexionesC.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesC[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesC[j].destino]++;
+      for (var j=0;j<graphFactory.BSynapsesArray.length;j++) {
+        synapseArray[graphFactory.BSynapsesArray[j].source]++;
+        synapseArray[graphFactory.BSynapsesArray[j].target]++;
       }
-      for (var j=0;j<grafoFactory.arrayConexionesD.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesD[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesD[j].destino]++;
+      for (var j=0;j<graphFactory.CSynapsesArray.length;j++) {
+        synapseArray[graphFactory.CSynapsesArray[j].source]++;
+        synapseArray[graphFactory.CSynapsesArray[j].target]++;
       }
-      for (var j=0;j<grafoFactory.arrayConexionesE.length;j++) {
-        arrayConexion[grafoFactory.arrayConexionesE[j].origen]++;
-        arrayConexion[grafoFactory.arrayConexionesE[j].destino]++;
+      for (var j=0;j<graphFactory.DSynapsesArray.length;j++) {
+        synapseArray[graphFactory.DSynapsesArray[j].source]++;
+        synapseArray[graphFactory.DSynapsesArray[j].target]++;
       }
-      return arrayConexion;
+      for (var j=0;j<graphFactory.ESynapsesArray.length;j++) {
+        synapseArray[graphFactory.ESynapsesArray[j].source]++;
+        synapseArray[graphFactory.ESynapsesArray[j].target]++;
+      }
+      return synapseArray;
     }
 
     $scope.modificarCoordenadas = function() {
 
-      var ancho = document.getElementById('container2').offsetWidth;
-      var alto = document.getElementById('container2').offsetHeight;
+      var width = document.getElementById('container2').offsetWidth;
+      var height = document.getElementById('container2').offsetHeight;
 
-      var tiposDeNeuronas = 6;
-      var diferenciaAlto = alto/tiposDeNeuronas;
-      var posicionAlto = diferenciaAlto;
-      var diferenciaAncho;
-      var posicionAncho;
+      var neuronTypes = 6;
+      var heightVariance = height/neuronTypes;
+      var heightPos = heightVariance;
+      var widthVariance;
+      var widthPos;
 
-      diferenciaAncho = ancho/grafoFactory.numeroMosey;
-      posicionAncho = diferenciaAncho;
+      widthVariance = width/graphFactory.mossyNumber;
+      widthPos = widthVariance;
 
       for (var i=0; i< arrayMosey.length; i++) {
-        jsonCopy.nodes[arrayMosey[i]].x = posicionAncho;
-        jsonCopy.nodes[arrayMosey[i]].y = posicionAlto;
-        posicionAncho = posicionAncho + diferenciaAncho;
+        jsonCopy.nodes[arrayMosey[i]].x = widthPos;
+        jsonCopy.nodes[arrayMosey[i]].y = heightPos;
+        widthPos = widthPos + widthVariance;
       }
 
-      diferenciaAncho = ancho/grafoFactory.numeroGranulle;
-      posicionAncho = diferenciaAncho;
-      posicionAlto = posicionAlto + diferenciaAlto;
+      widthVariance = width/graphFactory.granulleNumber;
+      widthPos = widthVariance;
+      heightPos = heightPos + heightVariance;
 
       for (var i=0; i<arrayGranulle.length; i++) {
-        jsonCopy.nodes[arrayGranulle[i]].x = posicionAncho;
-        jsonCopy.nodes[arrayGranulle[i]].y = posicionAlto;
-        posicionAncho = posicionAncho + diferenciaAncho;
+        jsonCopy.nodes[arrayGranulle[i]].x = widthPos;
+        jsonCopy.nodes[arrayGranulle[i]].y = heightPos;
+        widthPos = widthPos + widthVariance;
       }
 
-      diferenciaAncho = ancho/grafoFactory.numeroPurkinje;
-      posicionAncho = diferenciaAncho;
-      posicionAlto = posicionAlto + diferenciaAlto;
+      widthVariance = width/graphFactory.purkinjeNumber;
+      widthPos = widthVariance;
+      heightPos = heightPos + heightVariance;
 
       for (var i=0; i<arrayPurkinje.length; i++) {
-        jsonCopy.nodes[arrayPurkinje[i]].x = posicionAncho;
-        jsonCopy.nodes[arrayPurkinje[i]].y = posicionAlto;
-        posicionAncho = posicionAncho + diferenciaAncho;
+        jsonCopy.nodes[arrayPurkinje[i]].x = widthPos;
+        jsonCopy.nodes[arrayPurkinje[i]].y = heightPos;
+        widthPos = widthPos + widthVariance;
       }
 
-      diferenciaAncho = ancho/grafoFactory.numeroDcn;
-      posicionAncho = diferenciaAncho;
-      posicionAlto = posicionAlto + diferenciaAlto;
+      widthVariance = width/graphFactory.DCNNumber;
+      widthPos = widthVariance;
+      heightPos = heightPos + heightVariance;
 
       for (var i=0; i<arrayDCN.length; i++) {
-        jsonCopy.nodes[arrayDCN[i]].x = posicionAncho;
-        jsonCopy.nodes[arrayDCN[i]].y = posicionAlto;
-        posicionAncho = posicionAncho + diferenciaAncho;
+        jsonCopy.nodes[arrayDCN[i]].x = widthPos;
+        jsonCopy.nodes[arrayDCN[i]].y = heightPos;
+        widthPos = widthPos + widthVariance;
       }
 
-      diferenciaAncho = ancho/grafoFactory.numeroGolgi;
-      posicionAncho = diferenciaAncho;
-      posicionAlto = posicionAlto + diferenciaAlto;
+      widthVariance = width/graphFactory.golgiNumber;
+      widthPos = widthVariance;
+      heightPos = heightPos + heightVariance;
 
       for (var i=0; i<arrayGolgi.length; i++) {
-        jsonCopy.nodes[arrayGolgi[i]].x = posicionAncho;
-        jsonCopy.nodes[arrayGolgi[i]].y = posicionAlto;
-        posicionAncho = posicionAncho + diferenciaAncho;
+        jsonCopy.nodes[arrayGolgi[i]].x = widthPos;
+        jsonCopy.nodes[arrayGolgi[i]].y = heightPos;
+        widthPos = widthPos + widthVariance;
       }
 
-      diferenciaAncho = ancho/grafoFactory.numeroIo;
-      posicionAncho = diferenciaAncho;
-      posicionAlto = posicionAlto + diferenciaAlto;
+      widthVariance = width/graphFactory.IONumber;
+      widthPos = widthVariance;
+      heightPos = heightPos + heightVariance;
 
       for (var i=0; i<arrayIO.length; i++) {
-        jsonCopy.nodes[arrayIO[i]].x = posicionAncho;
-        jsonCopy.nodes[arrayIO[i]].y = posicionAlto;
-        posicionAncho = posicionAncho + diferenciaAncho;
+        jsonCopy.nodes[arrayIO[i]].x = widthPos;
+        jsonCopy.nodes[arrayIO[i]].y = heightPos;
+        widthPos = widthPos + widthVariance;
       }
 
     }
 
 
 
-    $scope.inicio = function() {
+    $scope.init = function() {
       refresh();
-      jsonCopy = grafoFactory.recuperarJSON();
-      arrayNeuronal = grafoFactory.recuperarArrayNeuronal();
-      arrayMosey = grafoFactory.recuperarArrayMosey();
-      arrayGranulle = grafoFactory.recuperarArrayGranulle();
-      arrayPurkinje = grafoFactory.recuperarArrayPurkinje();
-      arrayDCN = grafoFactory.recuperarArrayDCN();
-      arrayGolgi = grafoFactory.recuperarArrayGolgi();
-      arrayIO = grafoFactory.recuperarArrayIO();
-      $scope.obtenerReferencias();
+      jsonCopy = graphFactory.loadJSON();
+      arrayNeuronal = graphFactory.loadNeuronalArray();
+      arrayMosey = graphFactory.loadArrayMossy();
+      arrayGranulle = graphFactory.loadArrayGranulle();
+      arrayPurkinje = graphFactory.loadArrayPurkinje();
+      arrayDCN = graphFactory.loadArrayDCN();
+      arrayGolgi = graphFactory.loadArrayGolgi();
+      arrayIO = graphFactory.loadArrayIO();
+      $scope.getReferences();
       $scope.modificarCoordenadas();
-      grafoFactory.cargar(jsonCopy);
+      neuronCounterArray = $scope.initConnectionsArray(neuronCounterArray);
+      arrayInfo = $scope.initStatsArray();
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.inicio();
+    $scope.init();
 
-    //Función que reinicia el elemento 'container'
-    //se limpia la pizarra antes de mostrar un nuevo grafo para evitar repetición
+    //Restart 'container' element
+    //Clean the canvas before showing a new graph
     function refresh() {
       var g = document.querySelector('#container2');
       var p = g.parentNode;
@@ -315,285 +240,734 @@ angular.module('tfgApp')
       p.appendChild(c);
     }
 
-    //Mostrar/ocultar neuronas de tipo mosey
-    $scope.chequearMosey = function() {
-      var inicioMosey = $scope.sliderMosey.min;
-      var finalMosey = $scope.sliderMosey.max;
+    //Show all the edges and their states (hidden or showed) on console
+    $scope.showEdges = function(){
+      console.log;
+      console.log;
+      console.log('-----------------------');
+      for (var i=0;i<jsonCopy.edges.length;i++) {
+        var id = jsonCopy.edges[i].id;
+        var value = jsonCopy.edges[i].hidden;
+        console.log('| '+id+' | '+value+' |');
+        console.log('-----------------------');
+      }
+      console.log('-----------------------');
+    }
 
+    //Show all the nodes and their states (hidden or showed) on console
+    $scope.showNodes = function(){
+      console.log;
+      console.log;
+      console.log('-----------------------');
+      for (var i=0;i<jsonCopy.nodes.length;i++) {
+        var id = jsonCopy.nodes[i].id;
+        var value = jsonCopy.nodes[i].hidden;
+        console.log('| '+id+' | '+value+' |');
+        console.log('-----------------------');
+      }
+      console.log('-----------------------');
+    }
 
-      if (!mosey.checked) {  //Si la casilla de mosey está desactivada, no mostramos ninguna neurona de este tipo
+    //Check whether the id neuron has any visible edge
+    //The neuron is removed if it has no any visible edge
+    $scope.checkNoEdges = function(id){
+      var hide = true;
+
+      for (var i=0; i<arrayNeuronal[id].target.length; i++) {
+        var auxHide;
+        var target = arrayNeuronal[id].target[i];
+        var pos = $scope.searchEdge(id, target);
+        auxHide = jsonCopy.edges[pos].hidden;
+        hide = auxHide;
+      }
+      if (hide && (arrayNeuronal[id].isTargetOf.length>0)) {
+        for (var i=0; i<arrayNeuronal[id].isTargetOf.length;i++){
+          var target = arrayNeuronal[id].isTargetOf[i];
+          var pos = $scope.searchEdge(target, id);
+          hide = jsonCopy.edges[pos].hidden;
+        }
+      }
+
+      if (!hide) {
+        jsonCopy.nodes[id].hidden = false;
+      }
+
+      if (hide) {
+        jsonCopy.nodes[id].hidden = true;
+      }
+
+    }
+
+    //Show/hide Mossy neurons
+    $scope.checkMossy = function() {
+      var minMossy = $scope.sliderMosey.min;
+      var maxMossy = $scope.sliderMosey.max;
+      //console.log('array contador');
+      //console.log(neuronCounterArray);
+
+      //If mossy is deactivated, all its neurons will be hidden
+      if (!mosey.checked) {
         for (var i=0; i<arrayMosey.length; i++) {
           jsonCopy.nodes[arrayMosey[i]].hidden = true;
+
+          //The edge(s) for a removed neuron must be removed too
+          var source = arrayMosey[i];
+          for (var j=0; j<arrayNeuronal[source].target.length;j++) {
+            var target = arrayNeuronal[source].target[j];
+            var pos = $scope.searchEdge(source, target);
+            jsonCopy.edges[pos].hidden = true;
+          }
+
+          //The edge(s) that the removed neuron is the target must be removed too
+          for (var j=0; j<arrayNeuronal[source].isTargetOf.length;j++){
+            var target = arrayNeuronal[source].isTargetOf[j];
+            var pos = $scope.searchEdge(target, source);
+            jsonCopy.edges[pos].hidden = true;
+            $scope.checkNoEdges(target);
+          }
+
         }
 
-        //Deshabilitamos los slider de filtrado por id y peso para mosey
+        //ID and weigth slider filters are disabled now
         document.getElementById('idmosey').style.pointerEvents = "none";
-        document.getElementById('sliderPesoMosey').style.pointerEvents = "none";
+        document.getElementById('mossyWeigthSlider').style.pointerEvents = "none";
       }
-      //en caso contrario, mostramos sólo aquellas que se encuentren en el intervalo seleccionado por el slider,
-      //es decir, entre inicioMosey y finalMosey, ambos inclusive
+
+      //if Mossy is activated, there are showed just the neurons within the interval of the slider
+      //i.e. minMossy and maxMossy, both included
       else {
+
           for (var j=0; j<arrayMosey.length; j++) {
-              if (arrayMosey[j] >= inicioMosey && arrayMosey[j] <= finalMosey) {
+              if (arrayMosey[j] >= minMossy && arrayMosey[j] <= maxMossy) {
+
+                //Check whether the neuron belongs to a valid synapse
+                var isIn = graphFactory.ANeuronArray.indexOf(arrayMosey[j]);
+
+                if (isIn == -1) {
+                  isIn = graphFactory.BNeuronArray.indexOf(arrayMosey[j]);
+                }
+
+                if (isIn != -1) {
                 jsonCopy.nodes[arrayMosey[j]].hidden = false;
+
+                //If a neuron is added, its edge is added too
+                var source = arrayMosey[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = false;
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
+                }
+              }
               }
               else {
                 jsonCopy.nodes[arrayMosey[j]].hidden = true;
+                var source = arrayMosey[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
               }
           }
 
-          //Habilitamos los slider de filtrado por id y peso para mosey
+          //Enable the ID and weigth slider filters
           document.getElementById('idmosey').style.pointerEvents = "auto";
-          document.getElementById('sliderPesoMosey').style.pointerEvents = "auto";
+          document.getElementById('mossyWeigthSlider').style.pointerEvents = "auto";
       }
+
+      //console.log('array contador');
+      //console.log(neuronCounterArray);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    //Mostrar/ocultar neuronas de tipo granulle
-    $scope.chequearGranulle = function() {
+    //Show/hide Granulle neurons
+    $scope.checkGranulle = function() {
       var inicioGranulle = $scope.sliderGranulle.min;
       var finalGranulle = $scope.sliderGranulle.max;
+      //console.log('array contador');
+      //console.log(neuronCounterArray);
 
-
+      //If granulle is deactivated, all its neurons will be hidden
       if (!granulle.checked) {
+
+        //console.log('arrayGranulle');
+        //console.log(arrayGranulle);
+        //console.log('aneuronarray');
+        //console.log(graphFactory.ANeuronArray);
+        //console.log('bneuronarray');
+        //console.log(graphFactory.BNeuronArray);
         for (var i=0; i<arrayGranulle.length; i++) {
           jsonCopy.nodes[arrayGranulle[i]].hidden = true;
+
+          //The edge(s) for a removed neuron must be removed too
+          var source = arrayGranulle[i];
+          for (var j=0; j<arrayNeuronal[source].target.length;j++) {
+            var target = arrayNeuronal[source].target[j];
+            var pos = $scope.searchEdge(source, target);
+            jsonCopy.edges[pos].hidden = true;
+          }
+
+          //The edge(s) that the removed neuron is the target must be removed too
+          for (var j=0; j<arrayNeuronal[source].isTargetOf.length;j++){
+            var target = arrayNeuronal[source].isTargetOf[j];
+            var pos = $scope.searchEdge(target, source);
+            jsonCopy.edges[pos].hidden = true;
+            $scope.checkNoEdges(target);
+          }
         }
-        //Deshabilitamos los slider de filtrado por id y peso para granulle
+
+        //ID and weigth slider filters are disabled now
         document.getElementById("idgranulle").style.pointerEvents = "none";
-        document.getElementById("sliderPesoGranulle").style.pointerEvents = "none";
+        document.getElementById("granulleWeigthSlider").style.pointerEvents = "none";
       }
+
+      //if Granulle is activated, there are showed just the neurons within the interval of the slider
+      //i.e. inicioGranulle and finalGranulle, both included
       else {
+
           for (var j=0; j<arrayGranulle.length; j++) {
               if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
+
+              //Check whether the neuron belongs to a valid synapse
+              var isIn = graphFactory.ANeuronArray.indexOf(arrayGranulle[j]);
+
+              if (isIn == -1) {
+                isIn = graphFactory.CNeuronArray.indexOf(arrayGranulle[j]);
+
+                if (isIn == -1) {
+                  isIn = graphFactory.DNeuronArray.indexOf(arrayGranulle[j]);
+                }
+              }
+
+              if (isIn != -1) {
                 jsonCopy.nodes[arrayGranulle[j]].hidden = false;
+
+                //If a neuron is added, its edge is added too
+                var source = arrayGranulle[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = false;
+                  //console.log('hemos puesto a false la arista '+ jsonCopy.edges[pos].id);
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
+                }
+              }
               }
               else {
                 jsonCopy.nodes[arrayGranulle[j]].hidden = true;
+
+
+                var source = arrayGranulle[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
               }
-
-
           }
 
-          //Habilitamos los slider de filtrado por id y peso para granulle
+
+
+          //Enable the ID and weigth slider filters
           document.getElementById('idgranulle').style.pointerEvents = "auto";
-          document.getElementById('sliderPesoGranulle').style.pointerEvents = "auto";
+          document.getElementById('granulleWeigthSlider').style.pointerEvents = "auto";
       }
+
+      /*for (var i=0;i<arrayNeuronal.length;i++){
+        $scope.checkNoEdges(arrayNeuronal[i].id);
+      }*/
+      //console.log('array contador');
+      //console.log(neuronCounterArray);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    //Mostrar/ocultar neuronas de tipo purkinje
-    $scope.chequearPurkinje = function() {
+    //Show/hide Purkinje neurons
+    $scope.checkPurkinje = function() {
       var inicioPurkinje = $scope.sliderPurkinje.min;
       var finalPurkinje = $scope.sliderPurkinje.max;
 
-
+      //If purkinje is deactivated, all its neurons will be hidden
       if (!purkinje.checked) {
         for (var i=0; i<arrayPurkinje.length; i++) {
           jsonCopy.nodes[arrayPurkinje[i]].hidden = true;
+
+          //The edge(s) for a removed neuron must be removed too
+          var source = arrayPurkinje[i];
+          for (var j=0; j<arrayNeuronal[source].target.length;j++) {
+            var target = arrayNeuronal[source].target[j];
+            var pos = $scope.searchEdge(source, target);
+            jsonCopy.edges[pos].hidden = true;
+          }
+
+          //The edge(s) that the removed neuron is the target must be removed too
+          for (var j=0; j<arrayNeuronal[source].isTargetOf.length;j++){
+            var target = arrayNeuronal[source].isTargetOf[j];
+            var pos = $scope.searchEdge(target, source);
+            jsonCopy.edges[pos].hidden = true;
+            $scope.checkNoEdges(target);
+          }
         }
-        //Deshabilitamos los slider de filtrado por id y peso para purkinje
+
+        //ID and weigth slider filters are disabled now
         document.getElementById("idpurkinje").style.pointerEvents = "none";
-        document.getElementById("sliderPesoPurkinje").style.pointerEvents = "none";
+        document.getElementById("purkinjeWeigthSlider").style.pointerEvents = "none";
       }
+
+      //if Purkinje is activated, there are showed just the neurons within the interval of the slider
+      //i.e. inicioPurkinje and finalPurkinje, both included
       else {
           for (var j=0; j<arrayPurkinje.length; j++) {
               if (arrayPurkinje[j] >= inicioPurkinje && arrayPurkinje[j] <= finalPurkinje) {
                 jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
+
+                //If a neuron is added, its edge is added too
+                var source = arrayPurkinje[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = false;
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
+                }
               }
               else {
                 jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
+
+
+                var source = arrayPurkinje[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
               }
 
 
           }
 
-          //Habilitamos los slider de filtrado por id y peso para purkinje
+          //Enable the ID and weigth slider filters
           document.getElementById('idpurkinje').style.pointerEvents = "auto";
-          document.getElementById('sliderPesoPurkinje').style.pointerEvents = "auto";
+          document.getElementById('purkinjeWeigthSlider').style.pointerEvents = "auto";
       }
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    //Mostrar/ocultar neuronas de tipo dcn
-    $scope.chequearDCN = function() {
+    //Show/hide DCN neurons
+    $scope.checkDCN = function() {
       var inicioDCN = $scope.sliderDCN.min;
       var finalDCN = $scope.sliderDCN.max;
 
-
+      //If DCN is deactivated, all its neurons will be hidden
       if (!dcn.checked) {
         for (var i=0; i<arrayDCN.length; i++) {
           jsonCopy.nodes[arrayDCN[i]].hidden = true;
+
+          //The edge(s) for a removed neuron must be removed too
+          var source = arrayDCN[i];
+          for (var j=0; j<arrayNeuronal[source].target.length;j++) {
+            var target = arrayNeuronal[source].target[j];
+            var pos = $scope.searchEdge(source, target);
+            jsonCopy.edges[pos].hidden = true;
+          }
+
+          //The edge(s) that the removed neuron is the target must be removed too
+          for (var j=0; j<arrayNeuronal[source].isTargetOf.length;j++){
+            var target = arrayNeuronal[source].isTargetOf[j];
+            var pos = $scope.searchEdge(target, source);
+            jsonCopy.edges[pos].hidden = true;
+            $scope.checkNoEdges(target);
+          }
         }
-        //Deshabilitamos los slider de filtrado por id y peso para dcn
+
+        //ID and weigth slider filters are disabled now
         document.getElementById("iddcn").style.pointerEvents = "none";
-        document.getElementById("sliderPesoDCN").style.pointerEvents = "none";
+        document.getElementById("DCNWeigthSlider").style.pointerEvents = "none";
       }
+
+      //if DCN is activated, there are showed just the neurons within the interval of the slider
+      //i.e. inicioDCN and finalDCN, both included
       else {
           for (var j=0; j<arrayDCN.length; j++) {
 
               if (arrayDCN[j] >= inicioDCN && arrayDCN[j] <= finalDCN) {
                 jsonCopy.nodes[arrayDCN[j]].hidden = false;
+
+                //If a neuron is added, its edge is added too
+                var source = arrayDCN[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = false;
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
+                }
               }
               else {
                 jsonCopy.nodes[arrayDCN[j]].hidden = true;
+
+
+                var source = arrayDCN[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
               }
 
 
           }
 
-          //Habilitamos los slider de filtrado por id y peso para dcn
+          //Enable the ID and weigth slider filters
           document.getElementById('iddcn').style.pointerEvents = "auto";
-          document.getElementById('sliderPesoDCN').style.pointerEvents = "auto";
+          document.getElementById('DCNWeigthSlider').style.pointerEvents = "auto";
       }
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    //Mostrar/ocultar neuronas de tipo golgi
-    $scope.chequearGolgi = function() {
+    //Show/hide Golgi neurons
+    $scope.checkGolgi = function() {
       var inicioGolgi = $scope.sliderGolgi.min;
       var finalGolgi = $scope.sliderGolgi.max;
 
-
+      //If Golgi is deactivated, all its neurons will be hidden
       if (!golgi.checked) {
         for (var i=0; i<arrayGolgi.length; i++) {
           jsonCopy.nodes[arrayGolgi[i]].hidden = true;
+
+          //The edge(s) for a removed neuron must be removed too
+          var source = arrayGolgi[i];
+          for (var j=0; j<arrayNeuronal[source].target.length;j++) {
+            var target = arrayNeuronal[source].target[j];
+            var pos = $scope.searchEdge(source, target);
+            jsonCopy.edges[pos].hidden = true;
+          }
+
+          //The edge(s) that the removed neuron is the target must be removed too
+          for (var j=0; j<arrayNeuronal[source].isTargetOf.length;j++){
+            var target = arrayNeuronal[source].isTargetOf[j];
+            var pos = $scope.searchEdge(target, source);
+            jsonCopy.edges[pos].hidden = true;
+            $scope.checkNoEdges(target);
+          }
         }
-        //Deshabilitamos los slider de filtrado por id y peso para golgi
+
+        //ID and weigth slider filters are disabled now
         document.getElementById("idgolgi").style.pointerEvents = "none";
-        document.getElementById("sliderPesoGolgi").style.pointerEvents = "none";
+        document.getElementById("golgiWeigthSlider").style.pointerEvents = "none";
       }
+
+      //if Golgi is activated, there are showed just the neurons within the interval of the slider
+      //i.e. inicioGolgi and finalGolgi, both included
       else {
           for (var j=0; j<arrayGolgi.length; j++) {
               if (arrayGolgi[j] >= inicioGolgi && arrayGolgi[j] <= finalGolgi) {
+
+                //Check whether the neuron belongs to a valid synapse
+                var isIn = graphFactory.BNeuronArray.indexOf(arrayGolgi[j]);
+
+                if (isIn == -1) {
+                  isIn = graphFactory.CNeuronArray.indexOf(arrayGolgi[j]);
+
+                  if (isIn == -1) {
+                    isIn = graphFactory.DNeuronArray.indexOf(arrayGolgi[j]);
+
+                    if (isIn == -1) {
+                      isIn = graphFactory.ENeuronArray.indexOf(arrayGolgi[j]);
+                    }
+                  }
+                }
+
+                if (isIn != -1) {
                 jsonCopy.nodes[arrayGolgi[j]].hidden = false;
+
+                //If a neuron is added, its edge is added too
+                var source = arrayGolgi[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = false;
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
+                }
+              }
               }
               else {
                 jsonCopy.nodes[arrayGolgi[j]].hidden = true;
+
+
+                var source = arrayGolgi[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
               }
 
 
           }
 
-          //Habilitamos los slider de filtrado por id y peso para golgi
+          //Enable the ID and weigth slider filters
           document.getElementById('idgolgi').style.pointerEvents = "auto";
-          document.getElementById('sliderPesoGolgi').style.pointerEvents = "auto";
+          document.getElementById('golgiWeigthSlider').style.pointerEvents = "auto";
       }
+
+      for (var i=0;i<arrayNeuronal.length;i++){
+        $scope.checkNoEdges(arrayNeuronal[i].id);
+      }
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    //Mostrar/ocultar neuronas de tipo io
-    $scope.chequearIO = function() {
+    //Show/hide IO neurons
+    $scope.checkIO = function() {
       var inicioIO = $scope.sliderIO.min;
       var finalIO = $scope.sliderIO.max;
 
-
+      //If IO is deactivated, all its neurons will be hidden
       if (!io.checked) {
         for (var i=0; i<arrayIO.length; i++) {
           jsonCopy.nodes[arrayIO[i]].hidden = true;
+
+          //The edge(s) for a removed neuron must be removed too
+          var source = arrayIO[i];
+          for (var j=0; j<arrayNeuronal[source].target.length;j++) {
+            var target = arrayNeuronal[source].target[j];
+            var pos = $scope.searchEdge(source, target);
+            jsonCopy.edges[pos].hidden = true;
+          }
+
+          //The edge(s) that the removed neuron is the target must be removed too
+          for (var j=0; j<arrayNeuronal[source].isTargetOf.length;j++){
+            var target = arrayNeuronal[source].isTargetOf[j];
+            var pos = $scope.searchEdge(target, source);
+            jsonCopy.edges[pos].hidden = true;
+            $scope.checkNoEdges(target);
+          }
         }
 
-        //Deshabilitamos los slider de filtrado por id y peso para IO
+        //ID and weigth slider filters are disabled now
         document.getElementById("idio").style.pointerEvents = "none";
-        document.getElementById("sliderPesoIO").style.pointerEvents = "none";
+        document.getElementById("IOWeigthSlider").style.pointerEvents = "none";
       }
+
+      //if IO is activated, there are showed just the neurons within the interval of the slider
+      //i.e. inicioIO and finalIO, both included
       else {
           for (var j=0; j<arrayIO.length; j++) {
               if (arrayIO[j] >= inicioIO && arrayIO[j] <= finalIO) {
                 jsonCopy.nodes[arrayIO[j]].hidden = false;
+
+                //If a neuron is added, its edge is added too
+                var source = arrayIO[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = false;
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = false;
+                  jsonCopy.nodes[target].hidden = false;
+                }
               }
               else {
                 jsonCopy.nodes[arrayIO[j]].hidden = true;
+
+
+                var source = arrayIO[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
               }
           }
 
-          //Habilitamos los slider de filtrado por id y peso para IO
+          //Enable the ID and weigth slider filters
           document.getElementById('idio').style.pointerEvents = "auto";
-          document.getElementById('sliderPesoIO').style.pointerEvents = "auto";
+          document.getElementById('IOWeigthSlider').style.pointerEvents = "auto";
       }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.restaurar = function() {
-      document.getElementById('inputNeuronas').value="";
+    //Clean the text area at manual selection and the previous selections
+    $scope.restore = function() {
+      document.getElementById('inputNeuron').value="";
+
+      //All the neurons will be showed
       for (var i=0; i<arrayNeuronal.length;i++) {
         jsonCopy.nodes[arrayNeuronal[i].id].hidden = false;
       }
-      while(arrayAux.length > 0) {
-        arrayAux.pop();
+
+      //The array of selections is empty
+      while(arrayRange.length > 0) {
+        arrayRange.pop();
       }
+
+      var arrayNeuronInfo = new Array();
+      graphFactory.setSelectedNeuronsArray(arrayNeuronInfo);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    //Controladores para los diferentes sliders
+    //Controllers for the sliders
     $scope.sliderMosey = {
-        min: grafoFactory.iniMosey,
-        max: grafoFactory.finMosey,
+        min: graphFactory.iniMosey,
+        max: graphFactory.finMosey,
         options: {
-          floor: grafoFactory.iniMosey,
-          ceil: grafoFactory.finMosey,
+          floor: graphFactory.iniMosey,
+          ceil: graphFactory.finMosey,
           noSwitching: true
         }
     };
 
     $scope.sliderGranulle = {
-        min: grafoFactory.iniGranulle,
-        max: grafoFactory.finGranulle,
+        min: graphFactory.iniGranulle,
+        max: graphFactory.finGranulle,
         options: {
-        floor: grafoFactory.iniGranulle,
-        ceil: grafoFactory.finGranulle,
+        floor: graphFactory.iniGranulle,
+        ceil: graphFactory.finGranulle,
         noSwitching: true
       }
     };
 
     $scope.sliderPurkinje = {
-        min: grafoFactory.iniPurkinje,
-        max: grafoFactory.finPurkinje,
+        min: graphFactory.iniPurkinje,
+        max: graphFactory.finPurkinje,
         options: {
-        floor: grafoFactory.iniPurkinje,
-        ceil: grafoFactory.finPurkinje,
+        floor: graphFactory.iniPurkinje,
+        ceil: graphFactory.finPurkinje,
         noSwitching: true
       }
     };
 
     $scope.sliderDCN = {
-        min: grafoFactory.iniDCN,
-        max: grafoFactory.finDCN,
+        min: graphFactory.iniDCN,
+        max: graphFactory.finDCN,
         options: {
-        floor: grafoFactory.iniDCN,
-        ceil: grafoFactory.finDCN,
+        floor: graphFactory.iniDCN,
+        ceil: graphFactory.finDCN,
         noSwitching: true
       }
     };
 
     $scope.sliderGolgi = {
-        min: grafoFactory.iniGolgi,
-        max: grafoFactory.finGolgi,
+        min: graphFactory.iniGolgi,
+        max: graphFactory.finGolgi,
         options: {
-        floor: grafoFactory.iniGolgi,
-        ceil: grafoFactory.finGolgi,
+        floor: graphFactory.iniGolgi,
+        ceil: graphFactory.finGolgi,
         noSwitching: true
       }
     };
 
     $scope.sliderIO = {
-        min: grafoFactory.iniIO,
-        max: grafoFactory.finIO,
+        min: graphFactory.iniIO,
+        max: graphFactory.finIO,
         options: {
-        floor: grafoFactory.iniIO,
-        ceil: grafoFactory.finIO,
+        floor: graphFactory.iniIO,
+        ceil: graphFactory.finIO,
         noSwitching: true
       }
     };
 
-    $scope.sliderPesoMosey = {
+    $scope.mossyWeigthSlider = {
         min: 0,
         max: 100,
         options: {
@@ -603,7 +977,7 @@ angular.module('tfgApp')
       }
     };
 
-    $scope.sliderPesoGranulle = {
+    $scope.granulleWeigthSlider = {
         min: 0,
         max: 100,
         options: {
@@ -613,7 +987,7 @@ angular.module('tfgApp')
       }
     };
 
-    $scope.sliderPesoPurkinje = {
+    $scope.purkinjeWeigthSlider = {
         min: 0,
         max: 100,
         options: {
@@ -623,7 +997,7 @@ angular.module('tfgApp')
       }
     };
 
-    $scope.sliderPesoDCN = {
+    $scope.DCNWeigthSlider = {
         min: 0,
         max: 100,
         options: {
@@ -633,7 +1007,7 @@ angular.module('tfgApp')
       }
     };
 
-    $scope.sliderPesoGolgi = {
+    $scope.golgiWeigthSlider = {
         min: 0,
         max: 100,
         options: {
@@ -643,7 +1017,7 @@ angular.module('tfgApp')
       }
     };
 
-    $scope.sliderPesoIO = {
+    $scope.IOWeigthSlider = {
         min: 0,
         max: 100,
         options: {
@@ -653,23 +1027,25 @@ angular.module('tfgApp')
       }
     };
 
-    $scope.modificarPesoMosey = function() {
-      var inicioPeso = $scope.sliderPesoMosey.min;
-      var finalPeso = $scope.sliderPesoMosey.max;
+    //The visualization changes with the weigth variation of the weigth slider
+    $scope.changeMoseyWeigth = function() {
+      var minWeigth = $scope.mossyWeigthSlider.min;
+      var maxWeigth = $scope.mossyWeigthSlider.max;
 
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoMossey*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoMossey*finalPeso;
+      //Min and max weigth are calculated here
+      minWeigth = minWeigth/100;
+      minWeigth = graphFactory.minWeigthMossey*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = graphFactory.maxWeigthMossey*maxWeigth;
 
-
+      //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayMosey.length;i++) {
-        for (var j=0; j<arrayNeuronal[arrayMosey[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayMosey[i]].peso[j];
-          var origen = arrayNeuronal[arrayMosey[i]].id;
-          var destino = arrayNeuronal[arrayMosey[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+        for (var j=0; j<arrayNeuronal[arrayMosey[i]].weigth.length;j++) {
+          var weigth = arrayNeuronal[arrayMosey[i]].weigth[j];
+          var source = arrayNeuronal[arrayMosey[i]].id;
+          var target = arrayNeuronal[arrayMosey[i]].target[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -677,26 +1053,39 @@ angular.module('tfgApp')
           }
         }
       }
+
+      //Check if there are no neurons whithout any edge, remove if that's the case
+      for (var i=0; i<arrayMosey.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayMosey[i]].weigth.length;j++) {
+          var target = arrayNeuronal[arrayMosey[i]].target[j];
+          $scope.checkNoEdges(target);
+        }
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.modificarPesoGranulle = function () {
-      var inicioPeso = $scope.sliderPesoGranulle.min;
-      var finalPeso = $scope.sliderPesoGranulle.max;
+    //The visualization changes with the weigth variation of the weigth slider
+    $scope.changeGranulleWeigth = function () {
+      var minWeigth = $scope.granulleWeigthSlider.min;
+      var maxWeigth = $scope.granulleWeigthSlider.max;
 
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoGranulle*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoGranulle*finalPeso;
+      //Min and max weigth are calculated here
+      minWeigth = minWeigth/100;
+      minWeigth = graphFactory.minWeigthGranulle*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = graphFactory.maxWeigthGranulle*maxWeigth;
 
+      //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayGranulle.length;i++) {
-        for (var j=0; j<arrayNeuronal[arrayGranulle[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayGranulle[i]].peso[j];
-          var origen = arrayNeuronal[arrayGranulle[i]].id;
-          var destino = arrayNeuronal[arrayGranulle[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+        for (var j=0; j<arrayNeuronal[arrayGranulle[i]].weigth.length;j++) {
+          var weigth = arrayNeuronal[arrayGranulle[i]].weigth[j];
+          var source = arrayNeuronal[arrayGranulle[i]].id;
+          var target = arrayNeuronal[arrayGranulle[i]].target[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -704,26 +1093,39 @@ angular.module('tfgApp')
           }
         }
       }
+
+      //Check if there are no neurons whithout any edge, remove if that's the case
+      for (var i=0; i<arrayGranulle.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayGranulle[i]].weigth.length;j++) {
+          var target = arrayNeuronal[arrayGranulle[i]].target[j];
+          $scope.checkNoEdges(target);
+        }
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.modificarPesoPurkinje = function () {
-      var inicioPeso = $scope.sliderPesoPurkinje.min;
-      var finalPeso = $scope.sliderPesoPurkinje.max;
+    //The visualization changes with the weigth variation of the weigth slider
+    $scope.changePurkinjeWeigth = function () {
+      var minWeigth = $scope.purkinjeWeigthSlider.min;
+      var maxWeigth = $scope.purkinjeWeigthSlider.max;
 
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoPurkinje*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoPurkinje*finalPeso;
+      //Min and max weigth are calculated here
+      minWeigth = minWeigth/100;
+      minWeigth = graphFactory.minWeigthPurkinje*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = graphFactory.maxWeigthPurkinje*maxWeigth;
 
+      //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayPurkinje.length;i++) {
-        for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayPurkinje[i]].peso[j];
-          var origen = arrayNeuronal[arrayPurkinje[i]].id;
-          var destino = arrayNeuronal[arrayPurkinje[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+        for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].weigth.length;j++) {
+          var weigth = arrayNeuronal[arrayPurkinje[i]].weigth[j];
+          var source = arrayNeuronal[arrayPurkinje[i]].id;
+          var target = arrayNeuronal[arrayPurkinje[i]].target[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -731,26 +1133,39 @@ angular.module('tfgApp')
           }
         }
       }
+
+      //Check if there are no neurons whithout any edge, remove if that's the case
+      for (var i=0; i<arrayPurkinje.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayPurkinje[i]].weigth.length;j++) {
+          var target = arrayNeuronal[arrayPurkinje[i]].target[j];
+          $scope.checkNoEdges(target);
+        }
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.modificarPesoDCN = function () {
-      var inicioPeso = $scope.sliderPesoDCN.min;
-      var finalPeso = $scope.sliderPesoDCN.max;
+    //The visualization changes with the weigth variation of the weigth slider
+    $scope.changeDCNWeigth = function () {
+      var minWeigth = $scope.DCNWeigthSlider.min;
+      var maxWeigth = $scope.DCNWeigthSlider.max;
 
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoDCN*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoDCN*finalPeso;
+      //Min and max weigth are calculated here
+      minWeigth = minWeigth/100;
+      minWeigth = graphFactory.minWeigthDCN*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = graphFactory.maxWeigthDCN*maxWeigth;
 
+      //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayDCN.length;i++) {
-        for (var j=0; j<arrayNeuronal[arrayDCN[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayDCN[i]].peso[j];
-          var origen = arrayNeuronal[arrayDCN[i]].id;
-          var destino = arrayNeuronal[arrayDCN[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+        for (var j=0; j<arrayNeuronal[arrayDCN[i]].weigth.length;j++) {
+          var weigth = arrayNeuronal[arrayDCN[i]].weigth[j];
+          var source = arrayNeuronal[arrayDCN[i]].id;
+          var target = arrayNeuronal[arrayDCN[i]].target[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -758,26 +1173,39 @@ angular.module('tfgApp')
           }
         }
       }
+
+      //Check if there are no neurons whithout any edge, remove if that's the case
+      for (var i=0; i<arrayDCN.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayDCN[i]].weigth.length;j++) {
+          var target = arrayNeuronal[arrayDCN[i]].target[j];
+          $scope.checkNoEdges(target);
+        }
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.modificarPesoGolgi = function () {
-      var inicioPeso = $scope.sliderPesoGolgi.min;
-      var finalPeso = $scope.sliderPesoGolgi.max;
+    //The visualization changes with the weigth variation of the weigth slider
+    $scope.changeGolgiWeigth = function () {
+      var minWeigth = $scope.golgiWeigthSlider.min;
+      var maxWeigth = $scope.golgiWeigthSlider.max;
 
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoGolgi*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoGolgi*finalPeso;
+      //Min and max weigth are calculated here
+      minWeigth = minWeigth/100;
+      minWeigth = graphFactory.minWeigthGolgi*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = graphFactory.maxWeigthGolgi*maxWeigth;
 
+      //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayGolgi.length;i++) {
-        for (var j=0; j<arrayNeuronal[arrayGolgi[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayGolgi[i]].peso[j];
-          var origen = arrayNeuronal[arrayGolgi[i]].id;
-          var destino = arrayNeuronal[arrayGolgi[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+        for (var j=0; j<arrayNeuronal[arrayGolgi[i]].weigth.length;j++) {
+          var weigth = arrayNeuronal[arrayGolgi[i]].weigth[j];
+          var source = arrayNeuronal[arrayGolgi[i]].id;
+          var target = arrayNeuronal[arrayGolgi[i]].target[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -785,26 +1213,39 @@ angular.module('tfgApp')
           }
         }
       }
+
+      //Check if there are no neurons whithout any edge, remove if that's the case
+      for (var i=0; i<arrayGolgi.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayGolgi[i]].weigth.length;j++) {
+          var target = arrayNeuronal[arrayGolgi[i]].target[j];
+          $scope.checkNoEdges(target);
+        }
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.modificarPesoIO = function () {
-      var inicioPeso = $scope.sliderPesoIO.min;
-      var finalPeso = $scope.sliderPesoIO.max;
+    //The visualization changes with the weigth variation of the weigth slider
+    $scope.changeIOWeigth = function () {
+      var minWeigth = $scope.IOWeigthSlider.min;
+      var maxWeigth = $scope.IOWeigthSlider.max;
 
-      inicioPeso = inicioPeso/100;
-      inicioPeso = grafoFactory.minPesoIO*inicioPeso;
-      finalPeso = finalPeso/100;
-      finalPeso = grafoFactory.maxPesoIO*finalPeso;
+      //Min and max weigth are calculated here
+      minWeigth = minWeigth/100;
+      minWeigth = graphFactory.minWeigthIO*minWeigth;
+      maxWeigth = maxWeigth/100;
+      maxWeigth = graphFactory.maxWeigthIO*maxWeigth;
 
+      //Each weigth of the Mossy type are compared with the weigth interval setted by the slider
       for (var i=0; i<arrayIO.length;i++) {
-        for (var j=0; j<arrayNeuronal[arrayIO[i]].peso.length;j++) {
-          var peso = arrayNeuronal[arrayIO[i]].peso[j];
-          var origen = arrayNeuronal[arrayIO[i]].id;
-          var destino = arrayNeuronal[arrayIO[i]].destino[j];
-          var pos = $scope.buscarArista(origen, destino);
-          if (peso >=inicioPeso && peso<=finalPeso) {
+        for (var j=0; j<arrayNeuronal[arrayIO[i]].weigth.length;j++) {
+          var weigth = arrayNeuronal[arrayIO[i]].weigth[j];
+          var source = arrayNeuronal[arrayIO[i]].id;
+          var target = arrayNeuronal[arrayIO[i]].target[j];
+          var pos = $scope.searchEdge(source, target);
+          if (weigth >=minWeigth && weigth<=maxWeigth) {
             jsonCopy.edges[pos].hidden = false;
           }
           else {
@@ -812,150 +1253,260 @@ angular.module('tfgApp')
           }
         }
       }
+
+      //Check if there are no neurons whithout any edge, remove if that's the case
+      for (var i=0; i<arrayIO.length;i++) {
+        for (var j=0; j<arrayNeuronal[arrayIO[i]].weigth.length;j++) {
+          var target = arrayNeuronal[arrayIO[i]].target[j];
+          $scope.checkNoEdges(target);
+        }
+      }
+
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.mostrarPeso = function() {
-      document.getElementById('slider').style.display = "none";
-      document.getElementById('seleccionManual').style.display = "none";
-      document.getElementById('sliderPeso').style.visibility = "visible";
-      document.getElementById('sliderPeso').style.display = "inline";
-      document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
-      $scope.restaurar();
+    /*$scope.mostrarPeso = function() {
+      if (spanish) {
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('manualSelection').style.display = "none";
+        document.getElementById('weigthSlider').style.visibility = "visible";
+        document.getElementById('weigthSlider').style.display = "inline";
+        document.getElementById('neuron_selection').style.pointerEvents = "auto";
+      }
+      if (english) {
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('manualSelection').style.display = "none";
+        document.getElementById('weigthSlider').style.visibility = "visible";
+        document.getElementById('weigthSlider').style.display = "inline";
+        document.getElementById('neuron_selection').style.pointerEvents = "auto";
+      }
+      $scope.restore();
     }
 
     $scope.mostrarId = function() {
-      document.getElementById('sliderPeso').style.display = "none";
-      document.getElementById('seleccionManual').style.display = "none";
-      document.getElementById('slider').style.visibility = "visible";
-      document.getElementById('slider').style.display = "inline";
-      document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
-      $scope.restaurar();
-    }
-
-    $scope.mostrarSeleccionManual = function() {
-      document.getElementById('sliderPeso').style.display = "none";
-      document.getElementById('slider').style.display = "none";
-      document.getElementById('seleccionManual').style.visibility = "visible";
-      document.getElementById('seleccionManual').style.display = "inline";
-      document.getElementById('inputNeuronas').value="";
-    }
-
-    $scope.volver = function(valor){
-      if (valor == 1) {
-        document.getElementById('seleccion_neuronas').style.display = "none";
-      }
-
-      if (valor == 2) {
-        document.getElementById('seleccion_grupos').style.display = "none";
-      }
-
-      if (valor == 3) {
-        document.getElementById('slider').style.display = "none";
-      }
-
-      if (valor == 4) {
-        document.getElementById('sliderPeso').style.display = "none";
-      }
-
-      if (valor ==5) {
-        document.getElementById('seleccionManual').style.display = "none";
-      }
-
-      document.getElementById('seleccion_filtros').style.display = "inline";
-    }
-
-    $scope.display = function(valor) {
-      document.getElementById('seleccion_filtros').style.display = "none";
-      if (valor == 1) {
-        document.getElementById('seleccion_neuronas').style.display = "inline";
-      }
-
-      if (valor == 2) {
-        document.getElementById('seleccion_grupos').style.display = "inline";
-      }
-
-      if (valor == 3) {
-        document.getElementById('sliderPeso').style.display = "none";
-        document.getElementById('seleccionManual').style.display = "none";
+      if (spanish) {
+        document.getElementById('weigthSlider').style.display = "none";
+        document.getElementById('manualSelection').style.display = "none";
         document.getElementById('slider').style.visibility = "visible";
         document.getElementById('slider').style.display = "inline";
-        document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+        document.getElementById('neuron_selection').style.pointerEvents = "auto";
       }
 
-      if (valor == 4) {
+      //CORREGIR IDIOMA
+      if (english) {
+        document.getElementById('weigthSlider').style.display = "none";
+        document.getElementById('manualSelection').style.display = "none";
+        document.getElementById('slider').style.visibility = "visible";
+        document.getElementById('slider').style.display = "inline";
+        document.getElementById('neuron_selection').style.pointerEvents = "auto";
+      }
+      $scope.restore();
+    }*/
+
+    /*$scope.mostrarSeleccionManual = function() {
+      if (spanish) {
+        document.getElementById('weigthSlider').style.display = "none";
         document.getElementById('slider').style.display = "none";
-        document.getElementById('seleccionManual').style.display = "none";
-        document.getElementById('sliderPeso').style.visibility = "visible";
-        document.getElementById('sliderPeso').style.display = "inline";
-        document.getElementById('seleccion_neuronas').style.pointerEvents = "auto";
+        document.getElementById('manualSelection').style.visibility = "visible";
+        document.getElementById('manualSelection').style.display = "inline";
+        document.getElementById('inputNeuron').value="";
+      }
+      if (english) {
+        document.getElementById('weigthSlider').style.display = "none";
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('manualSelection').style.visibility = "visible";
+        document.getElementById('manualSelection').style.display = "inline";
+        document.getElementById('inputNeuron').value="";
+      }
+    }*/
+
+    //Function to go back in the app's UI
+    $scope.back = function(value){
+      if (value == 1) {
+        document.getElementById('neuron_selection').style.display = "none";
+        document.getElementById('filter_selection').style.display = "inline";
       }
 
-      if (valor == 5) {
-        document.getElementById('sliderPeso').style.display = "none";
+      if (value == 2) {
+        document.getElementById('synapse_selection').style.display = "none";
+        document.getElementById('filter_selection').style.display = "inline";
+      }
+
+      if (value == 3) {
         document.getElementById('slider').style.display = "none";
-        document.getElementById('seleccionManual').style.visibility = "visible";
-        document.getElementById('seleccionManual').style.display = "inline";
-        document.getElementById('inputNeuronas').value="";
+        document.getElementById('filter_selection').style.display = "inline";
+      }
+
+      if (value == 4) {
+        document.getElementById('weigthSlider').style.display = "none";
+        document.getElementById('filter_selection').style.display = "inline";
+      }
+
+      if (value ==5) {
+        document.getElementById('manualSelection').style.display = "none";
+        document.getElementById('filter_selection').style.display = "inline";
+      }
+
+      if (value == 6) {
+        document.getElementById('log').style.display = "none";
+        document.getElementById('filter_selection').style.display = "inline";
+      }
+
+      if (value == 7) {
+        document.getElementById('stats_n').style.display = "none";
+        document.getElementById('log').style.display = "inline";
+      }
+
+      if (value == 8) {
+        document.getElementById('stats_a').style.display = "none";
+        document.getElementById('log').style.display = "inline";
       }
     }
 
-    $scope.getDestinos = function(neurona) {
-      var resultado;
-      var iteraciones = arrayNeuronal[neurona].destino.length;
+    //Function to display the desired option selected in the UI
+    $scope.display = function(value) {
+      document.getElementById('filter_selection').style.display = "none";
 
-      for (var i=0; i<iteraciones;i++) {
-        var aux = arrayNeuronal[neurona].destino[i];
+      //Show select by neuronal type
+      if (value == 1) {
+        document.getElementById('neuron_selection').style.display = "inline";
+      }
+
+      //Show select by synapse type
+      if (value == 2) {
+        document.getElementById('synapse_selection').style.display = "inline";
+      }
+
+      //Show the ID slider filter
+      if (value == 3) {
+        document.getElementById('weigthSlider').style.display = "none";
+        document.getElementById('manualSelection').style.display = "none";
+        document.getElementById('slider').style.visibility = "visible";
+        document.getElementById('slider').style.display = "inline";
+        document.getElementById('neuron_selection').style.pointerEvents = "auto";
+      }
+
+      //Show the weigth slider filter
+      if (value == 4) {
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('manualSelection').style.display = "none";
+        document.getElementById('weigthSlider').style.visibility = "visible";
+        document.getElementById('weigthSlider').style.display = "inline";
+        document.getElementById('neuron_selection').style.pointerEvents = "auto";
+      }
+
+      //Show the individual selection window
+      if (value == 5) {
+        document.getElementById('weigthSlider').style.display = "none";
+        document.getElementById('slider').style.display = "none";
+        document.getElementById('manualSelection').style.visibility = "visible";
+        document.getElementById('manualSelection').style.display = "inline";
+        document.getElementById('inputNeuron').value="";
+      }
+
+      //Show the selecting log window
+      if (value == 6) {
+        document.getElementById('log').style.display = "inline";
+      }
+
+      //Show the neuron stats
+      if (value == 8) {
+        document.getElementById('log').style.display = "none";
+        document.getElementById('log_a').style.display = "inline";
+      }
+    }
+
+    //Returns all the targets for a selected neuron
+    $scope.getTargets = function(neurona) {
+      var result;
+      var iterations = arrayNeuronal[neurona].target.length;
+
+      for (var i=0; i<iterations;i++) {
+        var aux = arrayNeuronal[neurona].target[i];
         aux = aux.toString();
 
         if (i==0) {
-          resultado = aux;
+          result = aux;
         }
         else {
-          resultado = resultado + ',' + aux;
+          result = result + ',' + aux;
         }
       }
-      return resultado;
+      return result;
     }
 
-    $scope.filtradoPorRango = function() {
-      var stringSeleccion = document.getElementById("inputNeuronas").value;
-      var filtradoOrigen = stringSeleccion.split('-');
-      var minRango = parseInt(filtradoOrigen[0]);
-      var maxRango = parseInt(filtradoOrigen[1]);
-      var arrayOrigenes = new Array();
-      var arrayDatos = new Array();
+    //Set all the synapses checked/unchecked
+    $scope.setAll = function() {
+      var box = document.getElementById('setAll');
+      var group1 = document.getElementById('MFGR');
+      var group2 = document.getElementById('MFGO');
+      var group3 = document.getElementById('GRGO');
+      var group4 = document.getElementById('GOGR');
+      var group5 = document.getElementById('GOGO');
 
-      //Comprobaciones corrección de datos de entrada
-      //minRango debe ser menor que maxRango
-      //minRango debe ser mayor o igual que el valor inferior de las neuronas disponibles
-      //maxRango debe ser menor o igual que el valor superior de las neuronas disponibles
+      if (box.checked) {
+        group1.checked = true;
+        group2.checked = true;
+        group3.checked = true;
+        group4.checked = true;
+        group5.checked = true;
+      }
+      else {
+        group1.checked = false;
+        group2.checked = false;
+        group3.checked = false;
+        group4.checked = false;
+        group5.checked = false;
+      }
+      $scope.checkCounterA();
+      $scope.checkCounterB();
+      $scope.checkCounterC();
+      $scope.checkCounterD();
+      $scope.checkCounterE();
+    }
+
+    //When the user inserts a range at the individual selection, this function
+    //show all the neurons inside that interval
+    $scope.filteringByRange = function() {
+      var selectionString = document.getElementById("inputNeuron").value;
+      var sourceFilter = selectionString.split('-');
+      var minRange = parseInt(sourceFilter[0]);
+      var maxRange = parseInt(sourceFilter[1]);
+      var sourcesArray = new Array();
+      var dataArray = new Array();
+
+      //Checking valid insert data
+      //minRange must be smaller than maxRange
+      //minRange must be greater or equal than the lower value of the available data
+      //maxRange must be smaller or equal than the upper value of the available data
       var min = parseInt(arrayNeuronal[0].id);
       var max= parseInt(arrayNeuronal[arrayNeuronal.length-1].id);
-      if (minRango<=maxRango) {
-        if (minRango>=min) {
-          if (maxRango<=max) {
-            //Obtenemos todas las neuronas de origen del rango obtenido
+      if (minRange<=maxRange) {
+        if (minRange>=min) {
+          if (maxRange<=max) {
+
+            //Get all the origin neurons of the obtained range
             var i=0;
-            while (minRango<=maxRango) {
-              arrayOrigenes[i] = minRango;
+            while (minRange<=maxRange) {
+              sourcesArray[i] = minRange;
               i++;
-              minRango++;
+              minRange++;
             }
 
-            //Buscamos todos los destinos de las neuronas seleccionadas
-            for (var i=0; i<arrayOrigenes.length;i++) {
-              var neuronaOrigen = arrayOrigenes[i];
-              arrayDatos.push($scope.getDestinos(neuronaOrigen));
+            //Search for all the targets of the selected neurons
+            for (var i=0; i<sourcesArray.length;i++) {
+              var sourceNeuron = sourcesArray[i];
+              dataArray.push($scope.getTargets(sourceNeuron));
             }
 
-            for (var i=0; i<arrayDatos.length;i++) {
-                var auxN = arrayDatos[i];
+            for (var i=0; i<dataArray.length;i++) {
+                var auxN = dataArray[i];
                 auxN = auxN.split(',');
                 for (var j=0; j<auxN.length;j++) {
                   var auxJ = auxN[j];
-                  arrayAux.push(auxJ);
+                  arrayRange.push(auxJ);
                 }
 
             }
@@ -964,43 +1515,85 @@ angular.module('tfgApp')
               jsonCopy.nodes[i].hidden = true;
             }
 
-            for (var i=0; i<arrayAux.length;i++) {
-              var aux = parseInt(arrayAux[i]);
+            for (var i=0; i<arrayRange.length;i++) {
+              var aux = parseInt(arrayRange[i]);
               jsonCopy.nodes[aux].hidden=false;
             }
             refresh();
-            grafoFactory.cargar(jsonCopy);
+            graphFactory.load(jsonCopy);
           }
           else {
-            alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
+            if (graphFactory.spanish) {
+              alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
+            }
+            if (graphFactory.english) {
+              alert('ERROR: The upper value of the entered range is greater than the maximun id value available');
+            }
           }
 
         }
         else {
+          if (graphFactory.spanish)
           alert('ERROR: el valor inferior del rango introducido es menor que el valor mínimo de id disponible');
+          if (graphFactory.english)
+          alert ('ERROR: The lower value of the entered range is smaller than the minimun id value available');
         }
       }
       else {
+        if (graphFactory.spanish)
         alert('ERROR: el valor inferior del rango introducido es mayor que el valor superior');
+        if (graphFactory.english)
+        alert('ERROR: the lower value of the entered range is greater thar the upper value');
       }
     }
 
-    $scope.filtradoManual = function(stringSeleccion) {
-      var filtradoOrigen = stringSeleccion.split(',');
+    //Shows all the neurons selected at the individual select window
+    $scope.manualFiltering = function(selectionString) {
+      var sourceFilter = selectionString.split(',');
+      var min = parseInt(arrayNeuronal[0].id);
+      var max = parseInt(arrayNeuronal[arrayNeuronal.length-1].id);
+      var stop = false;
+      var dataArray = new Array();
+      var j=0;
 
-      var arrayDatos = new Array();
+      while (j<sourceFilter.length && !stop) {
 
-      for (var i=0; i<filtradoOrigen.length;i++) {
-        var neuronaOrigen = filtradoOrigen[i];
-        arrayDatos.push($scope.getDestinos(neuronaOrigen));
+        if (sourceFilter[j] < min) {
+          if (graphFactory.spanish) {
+            alert('ERROR: el valor inferior del rango introducido es menor que el valor mínimo de id disponible');
+          }
+
+          else if (graphFactory.english) {
+            alert('ERROR: The lower value of the entered range is smaller than the minimun id value available');
+          }
+          stop = true;
+        }
+
+        else if (sourceFilter[j] > max) {
+          if (graphFactory.spanish) {
+            alert('ERROR: el valor superior del rango introducido es mayor que el valor máximo de id disponible');
+          }
+          else if (graphFactory.english) {
+            alert('ERROR: The upper value of the entered range is greater than the maximun id value available');
+          }
+          stop = true;
+        }
+        j++;
       }
 
-      for (var i=0; i<arrayDatos.length;i++) {
-          var auxN = arrayDatos[i];
+      if (!stop) {
+
+      for (var i=0; i<sourceFilter.length;i++) {
+        var sourceNeuron = sourceFilter[i];
+        dataArray.push($scope.getTargets(sourceNeuron));
+      }
+
+      for (var i=0; i<dataArray.length;i++) {
+          var auxN = dataArray[i];
           auxN = auxN.split(',');
           for (var j=0; j<auxN.length;j++) {
             var auxJ = auxN[j];
-            arrayAux.push(auxJ);
+            arrayRange.push(auxJ);
           }
 
       }
@@ -1009,304 +1602,559 @@ angular.module('tfgApp')
         jsonCopy.nodes[i].hidden = true;
       }
 
-      for (var i=0; i<arrayAux.length;i++) {
-        var aux = parseInt(arrayAux[i]);
+      for (var i=0; i<arrayRange.length;i++) {
+        var aux = parseInt(arrayRange[i]);
         jsonCopy.nodes[aux].hidden=false;
       }
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
+    }
     }
 
-    $scope.ajustarContadorNeuronasA = function() {
-      for (var i=0; i<grafoFactory.arrayNeuronasA.length; i++) {
+    //Adjust the counter of the mf-gr synapses for a well-structured visualization
+    $scope.checkCounterA = function() {
+
+      for (var i=0; i<graphFactory.ANeuronArray.length; i++) {
         if (mfgr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]++;
+          neuronCounterArray[graphFactory.ANeuronArray[i]]++;
         }
         if (!mfgr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasA[i]]--;
+          neuronCounterArray[graphFactory.ANeuronArray[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasB = function() {
-      for (var i=0; i<grafoFactory.arrayNeuronasB.length; i++) {
+    //Adjust the counter of the mf-go synapses for a well-structured visualization
+    $scope.checkCounterB = function() {
+      for (var i=0; i<graphFactory.BNeuronArray.length; i++) {
         if (mfgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasB[i]]++;
+          neuronCounterArray[graphFactory.BNeuronArray[i]]++;
         }
         if (!mfgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasB[i]]--;
+          neuronCounterArray[graphFactory.BNeuronArray[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasC = function() {
-      for (var i=0; i<grafoFactory.arrayNeuronasC.length; i++) {
+    //Adjust the counter of the gr-go synapses for a well-structured visualization
+    $scope.checkCounterC = function() {
+      for (var i=0; i<graphFactory.CNeuronArray.length; i++) {
         if (grgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasC[i]]++;
+          neuronCounterArray[graphFactory.CNeuronArray[i]]++;
         }
         if (!grgo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasC[i]]--;
+          neuronCounterArray[graphFactory.CNeuronArray[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasD = function() {
-      for (var i=0; i<grafoFactory.arrayNeuronasD.length; i++) {
+    //Adjust the counter of the go-gr synapses for a well-structured visualization
+    $scope.checkCounterD = function() {
+      for (var i=0; i<graphFactory.DNeuronArray.length; i++) {
         if (gogr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasD[i]]++;
+          neuronCounterArray[graphFactory.DNeuronArray[i]]++;
         }
         if (!gogr.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasD[i]]--;
+          neuronCounterArray[graphFactory.DNeuronArray[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.ajustarContadorNeuronasE = function() {
-      for (var i=0; i<grafoFactory.arrayNeuronasE.length; i++) {
+    //Adjust the counter of the go-go synapses for a well-structured visualization
+    $scope.checkCounterE = function() {
+      for (var i=0; i<graphFactory.ENeuronArray.length; i++) {
         if (gogo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasE[i]]++;
+          neuronCounterArray[graphFactory.ENeuronArray[i]]++;
         }
         if (!gogo.checked) {
-          arrayContadorNeuronas[grafoFactory.arrayNeuronasE[i]]--;
+          neuronCounterArray[graphFactory.ENeuronArray[i]]--;
         }
       }
-      $scope.visualizarConexiones();
+      $scope.showConnections();
     }
 
-    $scope.comprobarEliminacion = function (neuronaAEliminar) {
-      var permiso = false;
-      var aux = arrayContadorNeuronas[neuronaAEliminar];
+    //Chech whether if the neuron can be removed according to the neuronCounterArray
+    //If the neuron at neuronCounterArray has a 0 value, it can be removed
+    //with a value grater than 0, removal of the neuron is forbidden
+    $scope.checkRemoval = function (neuronToRemove) {
+      var permit = false;
+      var aux = neuronCounterArray[neuronToRemove];
 
       if (aux == 0)
-        permiso = true;
+        permit = true;
 
-      return permiso;
+      return permit;
     }
 
-    $scope.visualizarConexiones = function() {
-
+    //Generate the visualization of the synapses group
+    $scope.showConnections = function() {
+      //console.log('array contador');
+      //console.log(neuronCounterArray);
       if (!mfgr.checked) {
-        for (var i=0; i<grafoFactory.arrayNeuronasA.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasA[i]);
-          if (permisoEliminar) {
-            jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].hidden = true;
+        for (var i=0; i<graphFactory.ANeuronArray.length;i++) {
+          var permittedRemoval = $scope.checkRemoval(graphFactory.ANeuronArray[i]);
+          if (permittedRemoval) {
+            jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden = true;
+            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.ANeuronArray[i]].id + jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden);
           }
         }
-        for (var j=0; j<grafoFactory.arrayConexionesA.length;j++) {
-          var id = grafoFactory.arrayConexionesA[j].enlace;
-          var origen = grafoFactory.arrayConexionesA[j].origen;
-          var destino = grafoFactory.arrayConexionesA[j].destino;
-
-          var pos = $scope.buscarArista(origen, destino);
-
+        for (var j=0; j<graphFactory.ASynapsesArray.length;j++) {
+          //var id = graphFactory.ASynapsesArray[j].link; //NO SE USA!
+          var source = graphFactory.ASynapsesArray[j].source;
+          var target = graphFactory.ASynapsesArray[j].target;
+          var pos = $scope.searchEdge(source, target);
           jsonCopy.edges[pos].hidden = true;
+          $scope.checkNoEdges(target);
         }
+
       }
       else {
-        for (var i=0;i<grafoFactory.arrayNeuronasA.length;i++) {
-          jsonCopy.nodes[grafoFactory.arrayNeuronasA[i]].hidden = false;
+        for (var i=0;i<graphFactory.ANeuronArray.length;i++) {
+          jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden = false;
+          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.ANeuronArray[i]].id + jsonCopy.nodes[graphFactory.ANeuronArray[i]].hidden);
         }
-        for (var j=0;j<grafoFactory.arrayConexionesA.length; j++) {
-          var id = grafoFactory.arrayConexionesA[j].enlace;
-          var origen = grafoFactory.arrayConexionesA[j].origen;
-          var destino = grafoFactory.arrayConexionesA[j].destino;
+        for (var j=0;j<graphFactory.ASynapsesArray.length; j++) {
+          var source = graphFactory.ASynapsesArray[j].source;
+          var target = graphFactory.ASynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
       }
 
       if (!mfgo.checked) {
-        for (var i=0; i<grafoFactory.arrayNeuronasB.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasB[i]);
-          if (permisoEliminar) {
-            jsonCopy.nodes[grafoFactory.arrayNeuronasB[i]].hidden = true;
+        for (var i=0; i<graphFactory.BNeuronArray.length;i++) {
+          var permittedRemoval = $scope.checkRemoval(graphFactory.BNeuronArray[i]);
+          if (permittedRemoval) {
+            jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden = true;
+            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.BNeuronArray[i]].id + jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden);
           }
         }
-        for (var j=0; j<grafoFactory.arrayConexionesB.length;j++) {
-          var id = grafoFactory.arrayConexionesB[j].enlace;
-          var origen = grafoFactory.arrayConexionesB[j].origen;
-          var destino = grafoFactory.arrayConexionesB[j].destino;
+        for (var j=0; j<graphFactory.BSynapsesArray.length;j++) {
+          var source = graphFactory.BSynapsesArray[j].source;
+          var target = graphFactory.BSynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
       }
       else {
-        for (var i=0;i<grafoFactory.arrayNeuronasB.length;i++) {
-          jsonCopy.nodes[grafoFactory.arrayNeuronasB[i]].hidden = false;
+        for (var i=0;i<graphFactory.BNeuronArray.length;i++) {
+          jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden = false;
+          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.BNeuronArray[i]].id + jsonCopy.nodes[graphFactory.BNeuronArray[i]].hidden);
         }
-        for (var j=0;j<grafoFactory.arrayConexionesB.length; j++) {
-          var id = grafoFactory.arrayConexionesB[j].enlace;
-          var origen = grafoFactory.arrayConexionesB[j].origen;
-          var destino = grafoFactory.arrayConexionesB[j].destino;
+        for (var j=0;j<graphFactory.BSynapsesArray.length; j++) {
+          var source = graphFactory.BSynapsesArray[j].source;
+          var target = graphFactory.BSynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
       }
 
       if (!grgo.checked) {
-        for (var i=0; i<grafoFactory.arrayNeuronasC.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasC[i]);
-          if (permisoEliminar) {
-            jsonCopy.nodes[grafoFactory.arrayNeuronasC[i]].hidden = true;
+        for (var i=0; i<graphFactory.CNeuronArray.length;i++) {
+          var permittedRemoval = $scope.checkRemoval(graphFactory.CNeuronArray[i]);
+          if (permittedRemoval) {
+            jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden = true;
+            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.CNeuronArray[i]].id + jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden);
           }
         }
-        for (var j=0; j<grafoFactory.arrayConexionesC.length;j++) {
-          var id = grafoFactory.arrayConexionesC[j].enlace;
-          var origen = grafoFactory.arrayConexionesC[j].origen;
-          var destino = grafoFactory.arrayConexionesC[j].destino;
+        for (var j=0; j<graphFactory.CSynapsesArray.length;j++) {
+          var source = graphFactory.CSynapsesArray[j].source;
+          var target = graphFactory.CSynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
       }
       else {
-        for (var i=0;i<grafoFactory.arrayNeuronasC.length;i++) {
-          jsonCopy.nodes[grafoFactory.arrayNeuronasC[i]].hidden = false;
+        for (var i=0;i<graphFactory.CNeuronArray.length;i++) {
+          jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden = false;
+          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.CNeuronArray[i]].id + jsonCopy.nodes[graphFactory.CNeuronArray[i]].hidden);
         }
-        for (var j=0;j<grafoFactory.arrayConexionesC.length; j++) {
-          var id = grafoFactory.arrayConexionesC[j].enlace;
-          var origen = grafoFactory.arrayConexionesC[j].origen;
-          var destino = grafoFactory.arrayConexionesC[j].destino;
+        for (var j=0;j<graphFactory.CSynapsesArray.length; j++) {
+          var source = graphFactory.CSynapsesArray[j].source;
+          var target = graphFactory.CSynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
       }
 
       if (!gogr.checked) {
-        for (var i=0; i<grafoFactory.arrayNeuronasD.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasD[i]);
-          if (permisoEliminar) {
-            jsonCopy.nodes[grafoFactory.arrayNeuronasD[i]].hidden = true;
+        for (var i=0; i<graphFactory.DNeuronArray.length;i++) {
+          var permittedRemoval = $scope.checkRemoval(graphFactory.DNeuronArray[i]);
+          if (permittedRemoval) {
+            jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden = true;
+            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.DNeuronArray[i]].id + jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden);
           }
         }
-        for (var j=0; j<grafoFactory.arrayConexionesD.length;j++) {
-          var id = grafoFactory.arrayConexionesD[j].enlace;
-          var origen = grafoFactory.arrayConexionesD[j].origen;
-          var destino = grafoFactory.arrayConexionesD[j].destino;
+        for (var j=0; j<graphFactory.DSynapsesArray.length;j++) {
+          var source = graphFactory.DSynapsesArray[j].source;
+          var target = graphFactory.DSynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
+          //console.log('buscamos en la arista '+source + ' ' + target);
 
           jsonCopy.edges[pos].hidden = true;
         }
       }
       else {
-        for (var i=0;i<grafoFactory.arrayNeuronasD.length;i++) {
-          jsonCopy.nodes[grafoFactory.arrayNeuronasD[i]].hidden = false;
+        for (var i=0;i<graphFactory.DNeuronArray.length;i++) {
+          jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden = false;
+          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.DNeuronArray[i]].id + jsonCopy.nodes[graphFactory.DNeuronArray[i]].hidden);
         }
-        for (var j=0;j<grafoFactory.arrayConexionesD.length; j++) {
-          var id = grafoFactory.arrayConexionesD[j].enlace;
-          var origen = grafoFactory.arrayConexionesD[j].origen;
-          var destino = grafoFactory.arrayConexionesD[j].destino;
+        for (var j=0;j<graphFactory.DSynapsesArray.length; j++) {
+          var source = graphFactory.DSynapsesArray[j].source;
+          var target = graphFactory.DSynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
       }
 
       if (!gogo.checked) {
-        for (var i=0; i<grafoFactory.arrayNeuronasE.length;i++) {
-          var permisoEliminar = $scope.comprobarEliminacion(grafoFactory.arrayNeuronasE[i]);
-          if (permisoEliminar) {
-            jsonCopy.nodes[grafoFactory.arrayNeuronasE[i]].hidden = true;
+        for (var i=0; i<graphFactory.ENeuronArray.length;i++) {
+          var permittedRemoval = $scope.checkRemoval(graphFactory.ENeuronArray[i]);
+          if (permittedRemoval) {
+            jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden = true;
+            //console.log('eliminamos el nodo '+ jsonCopy.nodes[graphFactory.ENeuronArray[i]].id + jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden);
           }
         }
-        for (var j=0; j<grafoFactory.arrayConexionesE.length;j++) {
-          var id = grafoFactory.arrayConexionesE[j].enlace;
-          var origen = grafoFactory.arrayConexionesE[j].origen;
-          var destino = grafoFactory.arrayConexionesE[j].destino;
+        for (var j=0; j<graphFactory.ESynapsesArray.length;j++) {
+          var source = graphFactory.ESynapsesArray[j].source;
+          var target = graphFactory.ESynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = true;
         }
       }
       else {
-        for (var i=0;i<grafoFactory.arrayNeuronasE.length;i++) {
-          jsonCopy.nodes[grafoFactory.arrayNeuronasE[i]].hidden = false;
+        for (var i=0;i<graphFactory.ENeuronArray.length;i++) {
+          jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden = false;
+          //console.log('añadimos el nodo '+ jsonCopy.nodes[graphFactory.ENeuronArray[i]].id + jsonCopy.nodes[graphFactory.ENeuronArray[i]].hidden);
         }
-        for (var j=0;j<grafoFactory.arrayConexionesE.length; j++) {
-          var id = grafoFactory.arrayConexionesE[j].enlace;
-          var origen = grafoFactory.arrayConexionesE[j].origen;
-          var destino = grafoFactory.arrayConexionesE[j].destino;
+        for (var j=0;j<graphFactory.ESynapsesArray.length; j++) {
+          var source = graphFactory.ESynapsesArray[j].source;
+          var target = graphFactory.ESynapsesArray[j].target;
 
-          var pos = $scope.buscarArista(origen, destino);
+          var pos = $scope.searchEdge(source, target);
 
           jsonCopy.edges[pos].hidden = false;
         }
       }
-      $scope.chequearMosey();
-      $scope.chequearGranulle();
-      $scope.chequearPurkinje();
-      $scope.chequearDCN();
-      $scope.chequearGolgi();
-      $scope.chequearIO();
+
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        $scope.checkNoEdges(arrayNeuronal[i].id);
+      }
+      //console.log('array contador');
+      //console.log(neuronCounterArray);
+      $scope.cleanEdges(arrayNeuronal);
       refresh();
-      grafoFactory.cargar(jsonCopy);
+      graphFactory.load(jsonCopy);
     }
 
-    $scope.visualizar = function(){
+    //Creates the visualization from the input at the individual selection
+    $scope.visualize = function(){
 
-      var valor = document.getElementById("inputNeuronas").value;
+      var value = document.getElementById("inputNeuron").value;
 
-      var admitido = true;
-      var esRango = false;
+      var admitted = true;
+      var isRange = false;
 
-      if (valor=="") {
-        admitido = false;
+      if (value=="") {
+        admitted = false;
       }
 
-      else if (valor.charAt(valor.length-1) == ',') {
-        admitido = false;
+      else if (value.charAt(value.length-1) == ',') {
+        admitted = false;
       }
 
       else {
-        //Comprobación carácter por carácter de que sea un entero o una coma, e invalidarlo mediante
-        //admitido = false, en caso contrario, lo que evitará que se ejecute ninguna acción
-        for (var i=0; i<valor.length;i++) {
-          var aux = valor.charAt(i);
+
+        //Check whether each char is an integer or coma, and if the value introduced is a range or not
+        for (var i=0; i<value.length;i++) {
+          var aux = value.charAt(i);
           var t = !isNaN(String(aux) * 1);
             if (!t) {
               if (aux == '-') {
-                esRango = true;
+                isRange = true;
               }
               else if (aux != ',') {
-               admitido = false;
+               admitted = false;
               }
             }
         }
       }
 
-      if (!admitido) {
-        if (grafoFactory.spanish) {
+      //If there were any mistakes at introducing data
+      if (!admitted) {
+        if (graphFactory.spanish) {
           alert ('Error: \n- Sólo se admiten números enteros separados por comas sin espacios \n- Alguna de las neuronas seleccionadas pueden estar fuera de rango \n- No se permite hacer una búsqueda en blanco');
         }
 
-        if (grafoFactory.english) {
+        if (graphFactory.english) {
           alert ('Error: \n- Only integers separated by commas without spaces are valid \n- Some of the selected neurons may be out of range \n- Blank search not allowed');
         }
       }
-      else if (admitido && !esRango){ //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
-        $scope.filtradoManual(valor);
+
+      //If data input is correct, but not a range
+      else if (admitted && !isRange){ //Si el string con las neuronas pedidas por el usuario es sintácticamente correcto, se llama a la función que realiza el filtrado
+        $scope.manualFiltering(value);
       }
 
-      else if (admitido && esRango) {
-        $scope.filtradoPorRango();
+      //If data input is correct and a range
+      else if (admitted && isRange) {
+        $scope.filteringByRange();
       }
 
+    }
+
+    //Removes neurons that only have connections with themselves
+    $scope.cleanEdges = function(arrayNeuronal){
+      for (var i=0; i<arrayNeuronal.length;i++) {
+        //Hiding neurons with just connection with themselves
+        if (arrayNeuronal[i].target.length == 1) {
+          jsonCopy.nodes[i].hidden = true;
+        }
+        //Hiding neurons that do not belong to any of the synapses type defined
+        if (arrayNeuronal[i].synapseType.length == 0) {
+          jsonCopy.nodes[i].hidden = true;
+        }
+      }
+    }
+
+    //Show the info relative to a clicked neuron
+    $scope.showEstatisticsNeurons = function(){
+      var div =  document.getElementById('neuronInfo');
+      div.innerHTML = div.innerHTML + '<b>ID: </b>' + d;
+      div.innerHTML = div.innerHTML + '<br><br>';
+      div.innerHTML = div.innerHTML + '<b>T: </b>' + tipo;
+      div.innerHTML = div.innerHTML + '<br><br>';
+
+      document.getElementById('neuronInfo').style.display="inline";
+      document.getElementById('neuronInfo').style.visibility="visible";
+    }
+
+    //Show the stats for the neurons active at the moment
+    $scope.logNeurons = function(){
+      var mossyCounter = 0;
+      var granulleCounter = 0;
+      var purkinjeCounter = 0;
+      var DCNCounter = 0;
+      var golgiCounter = 0;
+      var IOCounter = 0;
+
+      //Remove the previous info to show the new one
+      var nodeToRemove = document.getElementById('log_n');
+        while (nodeToRemove.firstChild) {
+            nodeToRemove.removeChild(nodeToRemove.firstChild);
+        }
+
+      //If the neuron is visible at the moment, is saved at the arrayInfo with '1' value, '0' otherwise
+      for (var i=0; i<jsonCopy.nodes.length;i++) {
+        var auxID = jsonCopy.nodes[i].id.split("n");
+        auxID = auxID[1];
+
+        if (jsonCopy.nodes[i].hidden == false) {
+          arrayInfo[auxID] = 1;
+        }
+
+        else if (jsonCopy.nodes[i].hidden == true) {
+          arrayInfo[auxID] = 0;
+        }
+      }
+
+      //Search in the arrayInfo for all the neurons with value '1', in that case,
+      //look for its type and adding one to the counter
+      for (var i=0; i<arrayInfo.length;i++) {
+        if (arrayInfo[i] == 1) {
+          var type = arrayNeuronal[[i]].type;
+          switch (type) {
+
+            case '0': {
+                        mossyCounter++;
+                        break;
+            }
+
+            case '1': {
+                        granulleCounter++;
+                        break;
+            }
+
+            case '2': {
+                        purkinjeCounter++;
+                        break;
+            }
+
+            case '3': {
+                        DCNCounter++;
+                        break;
+            }
+
+            case '4': {
+                        golgiCounter++;
+                        break;
+            }
+
+            case '5': {
+                        IOCounter++;
+                        break;
+            }
+          }
+        }
+      }
+
+      //Generates the HTML for info visualization
+      var div = document.getElementById('log_n');
+
+      //Generate in spanish if active
+      if (graphFactory.spanish) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Neuronas visualizadas</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + mossyCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + granulleCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + purkinjeCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + DCNCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + golgiCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + IOCounter + '</center>';
+      }
+
+      //Generate in english if active
+      if (graphFactory.english) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Visualized neurons</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy:</b> ' + mossyCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle:</b> ' + granulleCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Purkinje:</b> ' + purkinjeCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>DCN:</b> ' + DCNCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi:</b> ' + golgiCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>IO:</b> ' + IOCounter + '</center>';
+      }
+
+
+      document.getElementById('log').style.display = "none";
+      document.getElementById('stats_n').style.display = "inline";
+    }
+
+    //Show the info about the edges actives at the moment
+    $scope.logEdges = function(){
+      var ACounter = 0;
+      var BCounter = 0;
+      var CCounter = 0;
+      var DCounter = 0;
+      var ECounter = 0;
+
+      //Remove the previous info to show the new one
+      var nodeToRemove = document.getElementById('log_a');
+        while (nodeToRemove.firstChild) {
+            nodeToRemove.removeChild(nodeToRemove.firstChild);
+        }
+
+      //Search all the active edges in each type of synapse
+      for (var i=0; i<graphFactory.ASynapsesArray.length;i++){
+        var pos = $scope.searchEdge(graphFactory.ASynapsesArray[i].source, graphFactory.ASynapsesArray[i].target);
+        var hidden = jsonCopy.edges[pos].hidden;
+
+        if (!hidden) {
+          ACounter++;
+        }
+      }
+
+      for (var i=0; i<graphFactory.BSynapsesArray.length;i++){
+        var pos = $scope.searchEdge(graphFactory.BSynapsesArray[i].source, graphFactory.BSynapsesArray[i].target);
+        var hidden = jsonCopy.edges[pos].hidden;
+
+        if (!hidden) {
+          BCounter++;
+        }
+      }
+
+      for (var i=0; i<graphFactory.CSynapsesArray.length;i++){
+        var pos = $scope.searchEdge(graphFactory.CSynapsesArray[i].source, graphFactory.CSynapsesArray[i].target);
+        var hidden = jsonCopy.edges[pos].hidden;
+
+        if (!hidden) {
+          CCounter++;
+        }
+      }
+
+      for (var i=0; i<graphFactory.DSynapsesArray.length;i++){
+        var pos = $scope.searchEdge(graphFactory.DSynapsesArray[i].source, graphFactory.DSynapsesArray[i].target);
+        var hidden = jsonCopy.edges[pos].hidden;
+
+        if (!hidden) {
+          DCounter++;
+        }
+      }
+
+      for (var i=0; i<graphFactory.ESynapsesArray.length;i++){
+        var pos = $scope.searchEdge(graphFactory.ESynapsesArray[i].source, graphFactory.ESynapsesArray[i].target);
+        var hidden = jsonCopy.edges[pos].hidden;
+
+        if (!hidden) {
+          ECounter++;
+        }
+      }
+
+      //Generate the HTML for visualization
+      var div = document.getElementById('log_a');
+
+      //Generate in spanish if active
+      if (graphFactory.spanish) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Sinapsis visualizadas</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Morado):</b> '  + ACounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Verde):</b> ' + BCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Azul):</b> ' + CCounter +  '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Rojo):</b> ' + DCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Naranja):</b> ' + ECounter + '</center>';
+      }
+
+      //Generate in english if active
+      if (graphFactory.english) {
+        div.innerHTML = div.innerHTML + '<center><b><font size="4">Visualized synapses</font></b></center>';
+        div.innerHTML = div.innerHTML + '<br><br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Granulle (Purple):</b> '  + ACounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Mossy - Golgi (Green):</b> ' + BCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Granulle - Golgi (Blue):</b> ' + CCounter +  '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Granulle (Red):</b> ' + DCounter + '</center>';
+        div.innerHTML = div.innerHTML + '<br>';
+        div.innerHTML = div.innerHTML + '  <center><b>Golgi - Golgi (Orange):</b> ' + ECounter + '</center>';
+      }
+
+
+      document.getElementById('log').style.display = "none";
+      document.getElementById('stats_a').style.display = "inline";
     }
 
 
