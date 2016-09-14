@@ -231,7 +231,9 @@ angular
 
       //If mossy is deactivated, all its neurons will be hidden
       if (!mosey.checked) {
+        //console.log('mosey está deshabilitado');
         for (var i=0; i<arrayMosey.length; i++) {
+          //console.log('eliminamos la neurona '+arrayMosey[i]);
           jsonCopy.nodes[arrayMosey[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
@@ -251,7 +253,7 @@ angular
           }
 
         }
-
+        //console.log('deshabilitamos los sliders id y peso para mossey');
         //ID and weigth slider filters are disabled now
         document.getElementById('idmosey').style.pointerEvents = "none";
         document.getElementById('mossyWeigthSlider').style.pointerEvents = "none";
@@ -300,8 +302,9 @@ angular
                 }
                 }
               }
+
               }
-              else {
+              else { //hidding all the neurons that are out of the min-max id range
                 jsonCopy.nodes[arrayMosey[j]].hidden = true;
                 var source = arrayMosey[j];
                 for (var z=0; z<arrayNeuronal[source].target.length;z++) {
@@ -335,7 +338,6 @@ angular
 
       //If granulle is deactivated, all its neurons will be hidden
       if (!granulle.checked) {
-
         for (var i=0; i<arrayGranulle.length; i++) {
           jsonCopy.nodes[arrayGranulle[i]].hidden = true;
 
@@ -364,8 +366,19 @@ angular
       //if Granulle is activated, there are showed just the neurons within the interval of the slider
       //i.e. inicioGranulle and finalGranulle, both included
       else {
+          console.log('granulle está activo');
+          console.log('grupo A');
+          console.log(graphFactory.ANeuronArray);
+          console.log(graphFactory.ASynapsesArray);
+          console.log('grupo C');
+          console.log(graphFactory.CNeuronArray);
+          console.log(graphFactory.CSynapsesArray);
+          console.log('grupo D');
+          console.log(graphFactory.DNeuronArray);
+          console.log(graphFactory.DSynapsesArray);
 
           for (var j=0; j<arrayGranulle.length; j++) {
+            console.log('MIRAMOS LA NEURONA '+arrayGranulle[j]);
               if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
 
               //Check whether the neuron belongs to a valid synapse
@@ -380,6 +393,7 @@ angular
               }
 
               if (isIn != -1) {
+                console.log(arrayGranulle[j] + ' pertenece a alguno de los grupos A, C o D');
                 jsonCopy.nodes[arrayGranulle[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
@@ -388,6 +402,54 @@ angular
                   var target = arrayNeuronal[source].target[z];
                   var pos = $scope.searchEdge(source, target);
                   jsonCopy.edges[pos].hidden = false;
+                  console.log('mostramos la arista '+jsonCopy.edges[pos].id);
+
+
+                    for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
+                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo A');
+                        if (!mfgr.checked) {
+                          console.log('el tipo A está oculto');
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
+                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo B');
+                        if (!mfgo.checked) {
+                          console.log('el tipo B está oculto');
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
+                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo C');
+                        if (!grgo.checked) {
+                          console.log('el tipo C está oculto');
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
+                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo D');
+                        if (!gogr.checked) {
+                          console.log('el tipo D está oculto');
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
+                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo E');
+                        if (!gogo.checked) {
+                          console.log('el tipo C está oculto');
+                        }
+                      }
+                    }
+
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
@@ -414,6 +476,7 @@ angular
               }
               }
               else {
+                console.log(arrayGranulle[j]+ ' está fuera de rango, lo ocultamos');
                 jsonCopy.nodes[arrayGranulle[j]].hidden = true;
 
 
@@ -434,7 +497,7 @@ angular
           }
 
 
-
+          console.log('habilitamos los sliders de peso e id para granulle');
           //Enable the ID and weigth slider filters
           document.getElementById('idgranulle').style.pointerEvents = "auto";
           document.getElementById('granulleWeigthSlider').style.pointerEvents = "auto";
@@ -975,7 +1038,7 @@ angular
     };
 
     //The visualization changes with the weigth variation of the weigth slider
-    $scope.changeMoseyWeigth = function() {
+    $scope.changeMossyWeigth = function() {
       var minWeigth = $scope.mossyWeigthSlider.min;
       var maxWeigth = $scope.mossyWeigthSlider.max;
 
@@ -993,7 +1056,21 @@ angular
           var target = arrayNeuronal[arrayMosey[i]].target[j];
           var pos = $scope.searchEdge(source, target);
           if (weigth >=minWeigth && weigth<=maxWeigth) {
-            jsonCopy.edges[pos].hidden = false;
+            if (mfgr.checked) {
+              for (var z=0; z<graphFactory.ASynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+            }
+            if (mfgo.checked) {
+              for (var z=0; z<graphFactory.BSynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+
+            }
           }
           else {
             jsonCopy.edges[pos].hidden = true;
@@ -1033,7 +1110,30 @@ angular
           var target = arrayNeuronal[arrayGranulle[i]].target[j];
           var pos = $scope.searchEdge(source, target);
           if (weigth >=minWeigth && weigth<=maxWeigth) {
-            jsonCopy.edges[pos].hidden = false;
+            /*if (mfgr.checked) {
+              for (var z=0; z<graphFactory.ASynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+            }*/
+
+            if (grgo.checked) {
+              for (var z=0; z<graphFactory.CSynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+            }
+
+            /*if (gogr.checked) {
+              for (var z=0; z<graphFactory.DSynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+            }*/
+
           }
           else {
             jsonCopy.edges[pos].hidden = true;
@@ -1153,7 +1253,21 @@ angular
           var target = arrayNeuronal[arrayGolgi[i]].target[j];
           var pos = $scope.searchEdge(source, target);
           if (weigth >=minWeigth && weigth<=maxWeigth) {
-            jsonCopy.edges[pos].hidden = false;
+            if (gogr.checked) {
+              for (var z=0; z<graphFactory.DSynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+            }
+
+            if (gogo.checked) {
+              for (var z=0; z<graphFactory.ESynapsesArray.length; z++) {
+                if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[z].link) {
+                  jsonCopy.edges[pos].hidden = false;
+                }
+              }
+            }
           }
           else {
             jsonCopy.edges[pos].hidden = true;
