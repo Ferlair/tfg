@@ -231,9 +231,7 @@ angular
 
       //If mossy is deactivated, all its neurons will be hidden
       if (!mosey.checked) {
-        //console.log('mosey está deshabilitado');
         for (var i=0; i<arrayMosey.length; i++) {
-          //console.log('eliminamos la neurona '+arrayMosey[i]);
           jsonCopy.nodes[arrayMosey[i]].hidden = true;
 
           //The edge(s) for a removed neuron must be removed too
@@ -253,7 +251,7 @@ angular
           }
 
         }
-        //console.log('deshabilitamos los sliders id y peso para mossey');
+
         //ID and weigth slider filters are disabled now
         document.getElementById('idmosey').style.pointerEvents = "none";
         document.getElementById('mossyWeigthSlider').style.pointerEvents = "none";
@@ -261,7 +259,7 @@ angular
 
       //if Mossy is activated, there are showed just the neurons within the interval of the slider
       //i.e. minMossy and maxMossy, both included
-      else {
+      /*else {
           for (var j=0; j<arrayMosey.length; j++) {
               if (arrayMosey[j] >= minMossy && arrayMosey[j] <= maxMossy) {
 
@@ -273,7 +271,7 @@ angular
                 }
 
                 if (isIn != -1) {
-                jsonCopy.nodes[arrayMosey[j]].hidden = false;
+                //jsonCopy.nodes[arrayMosey[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
                 var source = arrayMosey[j];
@@ -325,7 +323,163 @@ angular
           //Enable the ID and weigth slider filters
           document.getElementById('idmosey').style.pointerEvents = "auto";
           document.getElementById('mossyWeigthSlider').style.pointerEvents = "auto";
+      }*/
+      else {
+        for (var j=0; j<arrayMosey.length; j++) {
+            if (arrayMosey[j] >= minMossy && arrayMosey[j] <= maxMossy) {
+
+              //Check whether the neuron belongs to a valid synapse
+              var isIn = graphFactory.ANeuronArray.indexOf(arrayMosey[j]);
+
+              if (isIn == -1) {
+                isIn = graphFactory.BNeuronArray.indexOf(arrayMosey[j]);
+              }
+
+              if (isIn != -1) {
+
+                //If a neuron is added, its edge is added too
+                var source = arrayMosey[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var showNeuron = true;
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+
+
+                    for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
+                        if (!mfgr.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
+                        if (!mfgo.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
+                        if (!grgo.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
+                        if (!gogr.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
+                        if (!gogo.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    if (showNeuron) {
+                      jsonCopy.nodes[arrayMosey[j]].hidden = false;
+                      jsonCopy.edges[pos].hidden = false;
+                    }
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var showNeuron = true;
+                  var target = arrayNeuronal[source].isTargetOf[z];
+
+                  //Check whether the neuron belongs to a valid synapse
+                  var isTargetIn = graphFactory.ANeuronArray.indexOf(target);
+
+                  if (isTargetIn == -1) {
+                    isTargetIn = graphFactory.BNeuronArray.indexOf(target);
+                  }
+
+                  if (isTargetIn != -1) {
+                  var pos = $scope.searchEdge(target, source);
+
+
+                  for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
+                      if (!mfgr.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
+                      if (!mfgo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
+                      if (!grgo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
+                      if (!gogr.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
+                      if (!gogo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  if (showNeuron) {
+                    jsonCopy.nodes[arrayMosey[j]].hidden = false;
+                    jsonCopy.edges[pos].hidden = false;
+                  }
+                  //jsonCopy.edges[pos].hidden = false;
+                  //jsonCopy.nodes[target].hidden = false;
+                }
+                }
+              }
+              }
+              else { //hidding all the neurons that are out of the min-max id range
+                jsonCopy.nodes[arrayMosey[j]].hidden = true;
+                var source = arrayMosey[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
+              }
+          }
+
+          //Enable the ID and weigth slider filters
+          document.getElementById('idmosey').style.pointerEvents = "auto";
+          document.getElementById('mossyWeigthSlider').style.pointerEvents = "auto";
       }
+
       $scope.cleanEdges(arrayNeuronal);
       refresh();
       graphFactory.load(jsonCopy);
@@ -366,19 +520,7 @@ angular
       //if Granulle is activated, there are showed just the neurons within the interval of the slider
       //i.e. inicioGranulle and finalGranulle, both included
       else {
-          console.log('granulle está activo');
-          console.log('grupo A');
-          console.log(graphFactory.ANeuronArray);
-          console.log(graphFactory.ASynapsesArray);
-          console.log('grupo C');
-          console.log(graphFactory.CNeuronArray);
-          console.log(graphFactory.CSynapsesArray);
-          console.log('grupo D');
-          console.log(graphFactory.DNeuronArray);
-          console.log(graphFactory.DSynapsesArray);
-
           for (var j=0; j<arrayGranulle.length; j++) {
-            console.log('MIRAMOS LA NEURONA '+arrayGranulle[j]);
               if (arrayGranulle[j] >= inicioGranulle && arrayGranulle[j] <= finalGranulle) {
 
               //Check whether the neuron belongs to a valid synapse
@@ -393,67 +535,64 @@ angular
               }
 
               if (isIn != -1) {
-                console.log(arrayGranulle[j] + ' pertenece a alguno de los grupos A, C o D');
-                jsonCopy.nodes[arrayGranulle[j]].hidden = false;
 
                 //If a neuron is added, its edge is added too
                 var source = arrayGranulle[j];
                 for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var showNeuron = true;
                   var target = arrayNeuronal[source].target[z];
                   var pos = $scope.searchEdge(source, target);
-                  jsonCopy.edges[pos].hidden = false;
-                  console.log('mostramos la arista '+jsonCopy.edges[pos].id);
 
 
                     for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
                       if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
-                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo A');
                         if (!mfgr.checked) {
-                          console.log('el tipo A está oculto');
+                          showNeuron = false;
                         }
                       }
                     }
 
                     for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
                       if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
-                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo B');
                         if (!mfgo.checked) {
-                          console.log('el tipo B está oculto');
+                          showNeuron = false;
                         }
                       }
                     }
 
                     for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
                       if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
-                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo C');
                         if (!grgo.checked) {
-                          console.log('el tipo C está oculto');
+                          showNeuron = false;
                         }
                       }
                     }
 
                     for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
                       if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
-                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo D');
                         if (!gogr.checked) {
-                          console.log('el tipo D está oculto');
+                          showNeuron = false;
                         }
                       }
                     }
 
                     for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
                       if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
-                        console.log('la arista '+jsonCopy.edges[pos].id+ ' es de tipo E');
                         if (!gogo.checked) {
-                          console.log('el tipo C está oculto');
+                          showNeuron = false;
                         }
                       }
                     }
 
+                    if (showNeuron) {
+                      jsonCopy.nodes[arrayGranulle[j]].hidden = false;
+                      jsonCopy.edges[pos].hidden = false;
+                    }
                 }
 
                 //For a neuron added, the edge that the neuron is target is added too
                 for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var showNeuron = true;
                   var target = arrayNeuronal[source].isTargetOf[z];
 
                   //Check whether the neuron belongs to a valid synapse
@@ -469,14 +608,59 @@ angular
 
                   if (isTargetIn != -1) {
                   var pos = $scope.searchEdge(target, source);
-                  jsonCopy.edges[pos].hidden = false;
-                  jsonCopy.nodes[target].hidden = false;
+
+
+                  for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
+                      if (!mfgr.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
+                      if (!mfgo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
+                      if (!grgo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
+                      if (!gogr.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
+                      if (!gogo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  if (showNeuron) {
+                    jsonCopy.nodes[arrayGranulle[j]].hidden = false;
+                    jsonCopy.edges[pos].hidden = false;
+                  }
+                  //jsonCopy.edges[pos].hidden = false;
+                  //jsonCopy.nodes[target].hidden = false;
                 }
                 }
               }
               }
               else {
-                console.log(arrayGranulle[j]+ ' está fuera de rango, lo ocultamos');
                 jsonCopy.nodes[arrayGranulle[j]].hidden = true;
 
 
@@ -496,8 +680,6 @@ angular
               }
           }
 
-
-          console.log('habilitamos los sliders de peso e id para granulle');
           //Enable the ID and weigth slider filters
           document.getElementById('idgranulle').style.pointerEvents = "auto";
           document.getElementById('granulleWeigthSlider').style.pointerEvents = "auto";
@@ -541,7 +723,7 @@ angular
 
       //if Purkinje is activated, there are showed just the neurons within the interval of the slider
       //i.e. inicioPurkinje and finalPurkinje, both included
-      else {
+      /*else {
           for (var j=0; j<arrayPurkinje.length; j++) {
               if (arrayPurkinje[j] >= inicioPurkinje && arrayPurkinje[j] <= finalPurkinje) {
                 jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
@@ -588,7 +770,155 @@ angular
           //Enable the ID and weigth slider filters
           document.getElementById('idpurkinje').style.pointerEvents = "auto";
           document.getElementById('purkinjeWeigthSlider').style.pointerEvents = "auto";
+      }*/
+      else {
+          for (var j=0; j<arrayPurkinje.length; j++) {
+              if (arrayPurkinje[j] >= inicioPurkinje && arrayPurkinje[j] <= finalPurkinje) {
+
+
+
+
+
+                //If a neuron is added, its edge is added too
+                var source = arrayPurkinje[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var showNeuron = true;
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+
+
+                    for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
+                        if (!mfgr.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
+                        if (!mfgo.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
+                        if (!grgo.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
+                        if (!gogr.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
+                      if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
+                        if (!gogo.checked) {
+                          showNeuron = false;
+                        }
+                      }
+                    }
+
+                    if (showNeuron) {
+                      jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
+                      jsonCopy.edges[pos].hidden = false;
+                    }
+                }
+
+                //For a neuron added, the edge that the neuron is target is added too
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var showNeuron = true;
+                  var target = arrayNeuronal[source].isTargetOf[z];
+
+
+
+                  
+                  var pos = $scope.searchEdge(target, source);
+
+
+                  for (var g=0; g<graphFactory.ASynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.ASynapsesArray[g].link) {
+                      if (!mfgr.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.BSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.BSynapsesArray[g].link) {
+                      if (!mfgo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.CSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.CSynapsesArray[g].link) {
+                      if (!grgo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.DSynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.DSynapsesArray[g].link) {
+                      if (!gogr.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  for (var g=0; g<graphFactory.ESynapsesArray.length; g++) {
+                    if (jsonCopy.edges[pos].id == graphFactory.ESynapsesArray[g].link) {
+                      if (!gogo.checked) {
+                        showNeuron = false;
+                      }
+                    }
+                  }
+
+                  if (showNeuron) {
+                    jsonCopy.nodes[arrayPurkinje[j]].hidden = false;
+                    jsonCopy.edges[pos].hidden = false;
+                  }
+                  //jsonCopy.edges[pos].hidden = false;
+                  //jsonCopy.nodes[target].hidden = false;
+
+                }
+
+              }
+              else {
+                jsonCopy.nodes[arrayPurkinje[j]].hidden = true;
+
+
+                var source = arrayPurkinje[j];
+                for (var z=0; z<arrayNeuronal[source].target.length;z++) {
+                  var target = arrayNeuronal[source].target[z];
+                  var pos = $scope.searchEdge(source, target);
+                  jsonCopy.edges[pos].hidden = true;
+                }
+
+                for (var z=0; z<arrayNeuronal[source].isTargetOf.length;z++){
+                  var target = arrayNeuronal[source].isTargetOf[z];
+                  var pos = $scope.searchEdge(target, source);
+                  jsonCopy.edges[pos].hidden = true;
+                  $scope.checkNoEdges(target);
+                }
+              }
+          }
+
+          //Enable the ID and weigth slider filters
+          document.getElementById('idpurkinje').style.pointerEvents = "auto";
+          document.getElementById('purkinjeWeigthSlider').style.pointerEvents = "auto";
       }
+
       $scope.cleanEdges(arrayNeuronal);
       refresh();
       graphFactory.load(jsonCopy);
